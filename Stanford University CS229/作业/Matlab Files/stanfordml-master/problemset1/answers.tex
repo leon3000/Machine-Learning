@@ -1,0 +1,368 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[latin1]{inputenc}
+\usepackage[margin=0.5in]{geometry}
+
+\everymath{\displaystyle}
+\setlength\parindent{0pt}
+
+\begin{document}
+\title{Stanford CS 229, Public Course, Problem Set 1}
+\date{\today}
+\author{Dylan Price}
+\maketitle 
+
+% custom commands
+\newcommand{\pder}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\thetaT}[0]{\theta^{T}}
+\newcommand{\ith}[1]{#1^{(i)}}
+\newcommand{\xith}[0]{\ith{x}}
+\newcommand{\yith}[0]{\ith{y}}
+\newcommand{\sumitom}[0]{\sum_{i=1}^{m}}
+
+
+\section{}
+
+\subsection*{a)}
+
+Find the Hessian of the cost function $J(\theta) = \frac{1}{2} \sumitom (\thetaT \xith - \yith)^{2}$
+
+We know that $H_{jk} = \frac{\partial^{2}J(\theta)}{\partial\theta_{j}\theta_{k}}$ \\
+
+First find $\frac{\partial J(\theta)}{\partial\theta_{k}}$,
+
+\begin{align*}
+  \pder{J(\theta)}{\theta_{k}} &= \frac{1}{2} \sumitom \pder{}{\theta_{k}} (\thetaT \xith - \yith)^{2} \\
+  &= \frac{1}{2} \sumitom 2 (\thetaT \xith - \yith)(\ith{x_{k}}) \\
+  &= \sumitom (\thetaT \xith - \yith)(\ith{x_{k}})
+\end{align*}
+
+Now find $\frac{\partial^{2}J(\theta)}{\partial\theta_{j}\theta_{k}}$, \\
+
+\begin{align*}
+  \frac{\partial^{2}J(\theta)}{\partial\theta_{j}\theta_{k}} &= \pder{}{\theta_{j}} ( \pder{J(\theta)}{\theta_{k}} ) \\
+  &= \sumitom \pder{}{\theta_{j}} ((\thetaT \xith - \yith)(\ith{x_{k}})) \\
+  &= \sumitom \ith{x_{j}} \ith{x_{k}} \text{ for } 1 \leq j \leq n \text{ and } 1 \leq k \leq n
+\end{align*}
+
+Therefore
+\begin{align*}
+  H &= 
+  \begin{bmatrix}
+    \sumitom \ith{x_{1}} \ith{x_{1}} & \sumitom \ith{x_{2}} \ith{x_{1}} & \cdots & \sumitom \ith{x_{n}} \ith{x_{1}} \\
+    \sumitom \ith{x_{1}} \ith{x_{2}} & \sumitom \ith{x_{2}} \ith{x_{2}} & \cdots & \sumitom \ith{x_{n}} \ith{x_{2}} \\
+    \vdots                           & \vdots                           & \ddots & \vdots \\
+    \sumitom \ith{x_{1}} \ith{x_{n}} & \sumitom \ith{x_{2}} \ith{x_{n}} & \cdots & \sumitom \ith{x_{n}} \ith{x_{n}} 
+  \end{bmatrix}
+  \\ &=
+  \begin{bmatrix}
+    x_{1}^{(1)} & \cdots & x_{1}^{(n)} \\
+    \vdots      & \ddots & \vdots \\
+    x_{m}^{(1)} & \cdots & x_{m}^{(n)}
+  \end{bmatrix}
+  \begin{bmatrix}
+    x_{1}^{(1)} & \cdots & x_{m}^{(1)} \\
+    \vdots      & \ddots & \vdots \\
+    x_{1}^{(n)} & \cdots & x_{m}^{(n)}
+  \end{bmatrix}
+  \\ &= X^{T} X
+\end{align*}
+
+\subsection*{b)}
+
+Show that the first iteration of Newton's method gives us $\theta^{*} = (X^{T} X)^{-1} X^{T} \vec{y}$, the solution to our least squares problem. \\
+
+One iteration of Newton's Method: \\
+$\theta := \theta - H^{-1} \nabla_{\theta} J(\theta)$ \\
+Therefore,
+
+\begin{align*}
+  \theta^{*} &= 
+  \theta - (X^{T} X)^{-1}
+  \begin{bmatrix}
+    \pder{J(\theta)}{\theta_{1}} \\
+    \vdots \\
+    \pder{J(\theta)}{\theta_{m}}
+  \end{bmatrix}
+  \\ &= 
+  \theta - (X^{T} X)^{-1}
+  \begin{bmatrix}
+    \sumitom ( \ith{x_{1}} \thetaT \xith - \ith{x_{1}} \yith ) \\
+    \vdots \\
+    \sumitom ( \ith{x_{m}} \thetaT \xith - \ith{x_{m}} \yith )
+  \end{bmatrix}
+  \\ \text{let $\theta = \vec{0}$ (initialize $\theta$)}
+  \\ &= 
+  - (X^{T} X)^{-1}
+  \begin{bmatrix}
+    \sumitom ( - \ith{x_{1}} \yith ) \\
+    \vdots \\
+    \sumitom ( - \ith{x_{m}} \yith )
+  \end{bmatrix}
+  \\ &=
+  (X^{T} X)^{-1}
+  \begin{bmatrix}
+    \sumitom ( \ith{x_{1}} \yith ) \\
+    \vdots \\
+    \sumitom ( \ith{x_{m}} \yith )
+  \end{bmatrix}
+  \\ &=
+  (X^{T} X)^{-1} X^{T} \vec{y}
+\end{align*}
+  
+
+
+\section*{2}
+
+\subsection*{a}
+See q2/ folder
+
+\subsection*{b}
+At low values of $\tau$, the classification boundaries are clustered around the positive training examples. As you increase $\tau$, these boundaries begin to merge into bigger areas, i.e. the classification boundaries look less 'local' to the positive training examples. At high values of $\tau$, the classification boundary is essentially a straight line dividing positive and negative classes. \\
+
+The decision boundary of unweighted logistic regression would look like the plots with the highest values of $\tau$. This is because as $\tau$ approaches infinity, the weight function $w^{(i)}$ goes to 1 for every training example, making the regression unweighted (that is, every training example gets the same weight).
+
+\section*{3}
+
+\subsection*{a)}
+
+\begin{align*}
+    J(\theta) &= \frac{1}{2} \sumitom \sum_{j=1}^p ((\thetaT \xith)_j - y_j^{(i)})^2 \\
+              &= \frac{1}{2} \sumitom (\thetaT \xith - y^{(i)})^T (\thetaT \xith - y^{(i)}) \\
+              & \text{Let $\vec{1}$ be a vector of all ones.} \\
+              &= \frac{1}{2} \vec{1}^T (X \theta - Y)^T (X \theta - Y) \vec{1} \\
+\end{align*}
+
+\subsection*{b)}
+
+\begin{align*}
+    J(\theta) &= \frac{1}{2} \vec{1}^T (X \theta - Y)^T (X \theta - Y) \vec{1} \\
+              &= \frac{1}{2} \vec{1}^T ((X \theta)^T - Y^T) (X \theta - Y) \vec{1} \\
+              &= \frac{1}{2} \vec{1}^T (\thetaT X^T - Y^T) (X \theta - Y) \vec{1} \\
+              &= \frac{1}{2} \vec{1}^T (\thetaT X^T X \theta - \thetaT X^T Y - Y^T X \theta + Y^T Y) \vec{1} \\
+              &= \frac{1}{2} \vec{1}^T \thetaT X^T X \theta \vec{1} - \frac{1}{2} \vec{1}^T \thetaT X^T Y \vec{1} - \frac{1}{2} \vec{1}^T Y^T X \theta \vec{1} + \frac{1}{2} \vec{1}^T Y^T Y \vec{1} \\
+\end{align*}
+
+\begin{align*}
+    \Delta_\theta J(\theta) &= \frac{1}{2} * 2 X^T X \theta - \frac{1}{2} X^T Y - \frac{1}{2} (Y^T X)^T \\
+                            &= X^T X \theta - X^T Y
+\end{align*}
+
+\begin{align*}
+    0            &= X^T X \theta - X^T Y \\
+    X^T X \theta &= X^T Y \\
+    \theta       &= (X^T X)^{-1} X^T Y \\
+\end{align*}
+
+\subsection*{c)}
+
+Consider the multivariate model $\yith = \thetaT \xith$
+\begin{align*}
+    \yith = \thetaT \xith = 
+    \begin{bmatrix}
+        \theta_{1,1} & \theta_{1,2} & \cdots & \theta_{1,n} \\
+        \theta_{2,1} & \theta_{2,2} &        &              \\
+        \vdots       &              & \ddots &              \\
+        \theta_{p,1} &              &        & \theta_{p,n} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        \xith_1 \\
+        \xith_2 \\
+        \vdots \\
+        \xith_n \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \theta_{1,1} \xith_1 & \theta_{1,2} \xith_2 & \cdots & \theta_{1,n} \xith_n \\
+        \theta_{2,1} \xith_1 & \theta_{2,2} \xith_2 &        &                      \\
+        \vdots               &                      & \ddots &                      \\
+        \theta_{p,1} \xith_1 &                      &        & \theta_{p,n} \xith_n \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \theta_1^T \xith \\
+        \theta_2^T \xith \\
+        \vdots         \\
+        \theta_p^T \xith \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \yith_1 \\
+        \yith_2 \\
+        \vdots  \\
+        \yith_p \\
+    \end{bmatrix}
+\end{align*}
+
+Therefore each row of this multivariate model corresponds to an equation of the form $\yith_j = \thetaT_j \xith$.
+
+\section*{4}
+
+\subsection*{a)}
+
+\begin{align*}
+    \ell(\varphi) &= \log \prod_{i=1}^m P(\xith, \yith; \varphi) \\
+                  &= \log \prod_{i=1}^m P(\yith) P(\xith | \yith) \\
+                  &= \sumitom \log P(\yith) P(\xith | \yith) \\
+                  &= \sumitom [ \log P(\yith) + \log \prod_{j=1}^n ( \phi_{j|\yith})^{\xith_j} (1 - \phi_{j|\yith})^{1 - \xith_j} ] \\
+                  &= \sumitom [ \log P(\yith) + \sum_{j=1}^n ( \log(\phi_{j|\yith})^{\xith_j} + \log (1 - \phi_{j|\yith})^{1 - \xith_j}) ] \\
+                  &= \sumitom [ \log P(\yith) + \sum_{j=1}^n ( \xith_j \log(\phi_{j|\yith}) + (1 - \xith_j) \log (1 - \phi_{j|\yith})) ] \\
+                  &= \sumitom [ (\yith \log \phi_y + (1 - \yith) \log (1 - \phi_y) + \sum_{j=1}^n ( \xith_j \log(\phi_{j|\yith}) + (1 - \xith_j) \log (1 - \phi_{j|\yith})) ] \\
+\end{align*}
+
+\subsection*{b)}
+
+First find $\phi_y$
+\begin{align*}
+    \nabla_{\phi_y} \ell(\varphi) &= \sumitom [ \yith \frac{1}{\phi_y} - (1 - \yith) \frac{1}{1 - \phi_y} ] \\
+\end{align*}
+\begin{align*}
+    0               &= \sumitom [ \frac{\yith}{\phi_y} - \frac{1 - \yith}{1 - \phi_y} ] \\
+                    &= \sumitom [ \yith ( 1 - \phi_y) - (1 - \yith) \phi_y ] \\
+                    &= \sumitom [ \yith - \yith \phi_y - (\phi_y - \yith \phi_y) ] \\
+                    &= \sumitom [ \yith - \yith \phi_y - \phi_y + \yith \phi_y ] \\
+                    &= \sumitom [ \yith - \phi_y ] \\
+    \sumitom \phi_y &= \sumitom \phi_y \\
+    m \phi_y        &= \sumitom \yith \\
+    \phi_y          &= \frac{\sumitom \yith}{m} = \sumitom \frac{1\{\yith = 1\}}{m}
+\end{align*}
+
+Now find $\phi_{j|y=0}$ and $\phi_{j|y=1}$
+
+\begin{align*}
+    \nabla_{\phi_{j|\yith}} \ell(\varphi) = &\nabla_{\phi_{j|\yith}} \sumitom [ (\yith \log \phi_y + (1 - \yith) \log (1 - \phi_y) ] + \\
+                                            &\nabla_{\phi_{j|\yith}} \sumitom [ \sum_{j=1}^n [ ( \xith_j \log(\phi_{j|\yith}) + (1 - \xith_j) \log (1 - \phi_{j|\yith})) ] ] \\
+\end{align*}
+
+We can drop the first term (the one containing references to $\phi_y$) since its gradient with respect to $\phi_{j|\yith}$ is 0. \\
+We can also drop $\sum_{j=1}^n$ from the second term because we are taking the gradient with respect to a single $\phi_{j|\yith}$.
+
+\begin{align*}
+    &= \nabla_{\phi_{j|\yith}} \sumitom [ \xith \log \phi_{j|\yith} + (1 - \xith) \log (1 - \phi_{j|\yith}) ] \\
+    &= \sumitom [ \xith \frac{1}{\phi_{j|\yith}} - (1 - \xith) \frac{1}{1 - \phi_{j|\yith}} ] \\
+\end{align*}
+
+\begin{align*}
+    0                       &= \sumitom [ \xith \frac{1}{\phi_{j|\yith}} - (1 - \xith) \frac{1}{1 - \phi_{j|\yith}} ] \\
+                            &= \sumitom [ \xith ( 1 - \phi_{j|\yith}) - (1 - \xith) \phi_{j|\yith} ] \\
+                            &= \sumitom [ \xith - \phi_{j|\yith} ] \\
+    \sumitom \phi_{j|\yith} &= \sumitom \xith \\
+    \sumitom \phi_{j|y=0} 1\{\yith=0\} &= \sumitom \xith 1\{\yith=0\} \\
+    \phi_{j|y=0} &= \frac{\sumitom \xith 1\{\yith=0\}}{\sumitom 1\{\yith=0\}} = \frac{\sumitom 1\{\xith=1 \land \yith=0\}}{\sumitom 1\{\yith=0\}} \\
+    \text{Similarly,} \\
+    \phi_{j|y=1} &= \frac{\sumitom 1\{\xith=1 \land \yith=1\}}{\sumitom 1\{\yith=1\}} \\
+\end{align*}
+
+\subsection*{c)}
+
+We predict $y=1$ when $P(y=1|x) \geq P(y=0|x)$ \\
+
+$P(y=1|x) \geq P(y=0|x)$ \\
+
+$P(y=1|x) - P(y=1|x) \geq 0$ \\
+
+By Bayes Rule: \\
+
+$\frac{P(x|y=1)P(y=1)}{\sum_{a \in Val(y)} P(x|y=a)P(y=a)} - \frac{P(x|y=0)P(y=0)}{\sum_{a \in Val(y)} P(x|y=a)P(y=a)} \geq 0 \\\\\\$
+
+Substituting in the equations from the beginning of the problem (and combining the denominator): \\
+
+$\frac{\phi_y \prod_{j=1}^n (\phi_{j|y=1})^{x_j} (1 - \phi_{j|y=1})^{1-x_j} - (1 - \phi_y) \prod_{j=1}^n (\phi_{j|y=0})^{x_j} (1 - \phi_{j|y=0})^{1 - x_j}}{\phi_y \prod_{j=1}^n (\phi_{j|y=1})^{x_j}(1 - \phi_{j|y=1})^{1-x_j} + (1 - \phi_y) \prod_{j=1}^n (\phi_{j|y=0})^{x_j}(1-\phi_{j|y=0})^{1-x_j}} \geq 0 \\\\\\$ 
+
+$\phi_y \prod_{j=1}^n (\phi_{j|y=1})^{x_j} (1 - \phi_{j|y=1})^{1-x_j} - (1 - \phi_y) \prod_{j=1}^n (\phi_{j|y=0})^{x_j} (1 - \phi_{j|y=0})^{1 - x_j} \geq 0 \\$ 
+
+$\phi_y \prod_{j=1}^n (\phi_{j|y=1})^{x_j} (1 - \phi_{j|y=1})^{1-x_j} \geq (1 - \phi_y) \prod_{j=1}^n (\phi_{j|y=0})^{x_j} (1 - \phi_{j|y=0})^{1 - x_j} \\$
+
+$\log \phi_y + \sum_{j=1}^n x_j \log \phi_{j|y=1} + \sum_{j=1}^n (1-x_j) \log (1 - \phi_{j|y=1}) \geq \log (1 - \phi_y) + \sum_{j=1}^n x_j \log \phi_{j|y=0} + \sum_{j=1}^n (1-x_j) \log (1 - \phi_{j|y=0})$
+
+\begin{align*}
+    \log \phi_y - \log (1 - \phi_y) &+ \sum_{j=1}^n x_j \log \phi_{j|y=1} + \sum_{j=1}^n \log (1 - \phi_{j|y=1}) - \sum_{j=1}^n x_j \log (1 - \phi_{j|y=1}) \\
+                                    &- \sum_{j=1}^n x_j \log \phi_{j|y=0} - \sum_{j=1}^n \log (1 - \phi_{j|y=0}) + \sum_{j=1}^n x_j \log (1 - \phi_{j|y=0}) \geq 0 \\
+    \log \phi_y - \log (1 - \phi_y) &+ \sum_{j=1}^n \log (1 - \phi_{j|y=1}) - \sum_{j=1}^n \log (1 - \phi_{j|y=0}) \\
+                                    &+ \sum_{j=1}^n x_j [ \log \phi_{j|y=1} - \log (1 - \phi_{j|y=1}) - \log \phi_{j|y=0} + \log ( 1 - \phi_{j|y=0})] \geq 0 \\
+\end{align*}
+define $\theta \in \mathbb{R}^{n+1}$ as 
+$
+\begin{bmatrix}
+    \theta_0 \\
+    \theta_1 \\
+    \vdots \\
+    \theta_n
+\end{bmatrix}
+$ \\
+
+let $\theta_0 = \log \phi_y - \log (1 - \phi_y) + \sum_{j=1}^n \log (1-\phi_{j|y=1}) - \sum_{j=1}^n \log (1-\phi_{j|y=0})$ \\
+let $\theta_1 = \log \phi_{1|y=1} - \log (1-\phi_{1|y=1}) - \log \phi_{1|y=0} + \log (1 - \phi_{1|y=0})$ \\
+let $\theta_2 = \log \phi_{2|y=1} - \log (1-\phi_{2|y=1}) - \log \phi_{2|y=0} + \log (1 - \phi_{2|y=0})$ \\
+... \\
+let $\theta_n = \log \phi_{n|y=1} - \log (1-\phi_{n|y=1}) - \log \phi_{n|y=0} + \log (1 - \phi_{n|y=0})$ \\
+
+then the above inequality can be rewritten as \\
+
+$\theta_0 + \theta_1 x_1 + \theta_2 x_2 + ... + \theta_n x_n \geq 0$ \\
+
+$\thetaT \begin{bmatrix} 1 \\ x \\ \end{bmatrix} \geq 0$ \\
+
+\section*{5}
+
+\subsection*{a)}
+
+\begin{align*}
+    P(y;\phi) &= (1-\phi)^{y-1} \phi \\
+              &= \exp(\log[(1-\phi)^{y-1} \phi]) \\
+              &= \exp ( (y-1) \log(1-\phi) + \log\phi ) \\
+              &= \exp ( \log(1-\phi) y - \log(1-\phi) + \log \phi ) \\
+              &= \exp ( \log(1-\phi) y - (\log(1-\phi) - \log \phi ) \\
+              &= \exp ( \log(1-\phi) y - \log(\frac{1-\phi}{\phi}) ) \\
+\end{align*}
+
+We can see this is exponential family with \\
+$\eta = \log(1-\phi)$ \\
+$T(y) = y$ \\
+$a(\eta) = \log(\frac{1-\phi}{\phi})$ \\
+$b(y) = 1$ \\
+
+Solving $\eta = \log(1-\phi)$ for $\phi$ and substituting into $a(\eta)$, we can find $a(\eta)$ in terms of $\eta$:
+\begin{align*}
+    \eta       &= \log(1-\phi) \\
+    e^{\eta}   &= 1-\phi \\
+    \phi       &= 1 - e^{\eta} \\
+    \\
+    a(\eta) &= \log \frac{1-(1-e^\eta)}{1-e^\eta} \\
+    a(\eta) &= \log \frac{e^\eta}{1-e^\eta} \\
+\end{align*}
+
+\subsection*{b)}
+
+\begin{align*}
+    g(\eta) &= E[T(y);\eta] \\
+            &= E[y] \\
+            &= \frac{1}{\phi} \\
+            &= \frac{1}{1-e^\eta} \\
+\end{align*}
+
+\subsection*{c)}
+
+Since $\eta$ is linearly related to $x$, $\eta = \thetaT x$ for some $\theta \in \mathbb{R}^n$ and $\phi = 1 - e^{\thetaT x}$.
+\begin{align*}
+    P(\yith|\xith;\phi)        &= \exp(\log(1-\phi)\yith - \log(\frac{1-\phi}{\phi})) \\
+    P(\yith|\xith;\theta)      &= \exp(\log(1 - (1-e^{\thetaT \xith}))\yith - \log(\frac{1-(1-e^{\thetaT \xith})}{1 - e^{\thetaT \xith}})) \\
+    P(\yith|\xith;\theta)      &= \exp(\log(e^{\thetaT \xith})\yith - \log(\frac{e^{\thetaT \xith}}{1 - e^{\thetaT \xith}})) \\
+    \log P(\yith|\xith;\theta) &= \log(e^{\thetaT \xith})\yith - \log(\frac{e^{\thetaT \xith}}{1 - e^{\thetaT \xith}}) \\
+                               &= \thetaT \xith \yith - ( \log e^{\thetaT \xith} - \log (1 - e^{\thetaT \xith})) \\
+                               &= \thetaT \xith \yith - \thetaT \xith + \log (1 - e^{\thetaT \xith}) \\
+\end{align*}
+
+\begin{align*}
+    \pder{}{\theta_j} \log P(\yith|\xith;\theta) &= \xith_j \yith - \xith_j - \frac{\xith_j e^{\thetaT \xith}}{1 - e^{\thetaT \xith}} \\
+        &= \xith_j \yith - \frac{\xith_j(1-e^{\thetaT \xith}) + \xith_j e^{\thetaT \xith}}{1 - e^{\thetaT \xith}} \\
+        &= \xith_j \yith - \frac{\xith_j}{1 - e^{\thetaT \xith}} \\
+        &= (\yith - \frac{1}{1-e^{\thetaT \xith}}) \xith_j \\
+\end{align*}
+
+So the stochastic gradient ascent update rule is $\theta_j := \theta_j + \alpha (\yith - \frac{1}{1 - e^{\thetaT \xith}}) \xith_j$ \\
+
+\end{document}
+
