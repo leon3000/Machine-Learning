@@ -4,7 +4,7 @@
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <hook NAME="accessories/plugins/HierarchicalIcons.properties"/>
-<node COLOR="#0033ff" CREATED="1502675416936" FOLDED="true" ID="ID_747077059" MODIFIED="1503457808904" POSITION="right" TEXT="Linear Algebra Review and Reference">
+<node COLOR="#0033ff" CREATED="1502675416936" ID="ID_747077059" MODIFIED="1503370896393" POSITION="right" TEXT="Linear Algebra Review and Reference">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1502675533435" ID="ID_1783234702" MODIFIED="1503370274003" TEXT="Basic Concepts and Notation">
@@ -13,7 +13,7 @@
 <node COLOR="#990000" CREATED="1502675555265" ID="ID_1041267735" MODIFIED="1503370274004" TEXT="Basic Notaion">
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1502676177658" ID="ID_100711671" MODIFIED="1503370274004" TEXT="x&#x4e3a;n&#x7ef4;&#x5411;&#x91cf;&#xff0c;&#x9ed8;&#x8ba4;&#x4e3a;&#x5217;&#x5411;&#x91cf;"/>
-<node COLOR="#111111" CREATED="1502676799883" ID="ID_1916870296" MODIFIED="1503457748384" TEXT="&#x77e9;&#x9635;&#x8868;&#x793a;&#x5f62;&#x5f0f;">
+<node COLOR="#111111" CREATED="1502676799883" FOLDED="true" ID="ID_1916870296" MODIFIED="1503370274005" TEXT="&#x77e9;&#x9635;&#x8868;&#x793a;&#x5f62;&#x5f0f;">
 <node COLOR="#111111" CREATED="1502677083003" ID="ID_799839726" MODIFIED="1503370274005">
 <richcontent TYPE="NODE"><html>
   <head>
@@ -50,7 +50,7 @@
 <node COLOR="#00b439" CREATED="1502675543453" ID="ID_1967740244" MODIFIED="1503370274006" TEXT="Matrix Multiplication">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1502675601541" ID="ID_31050533" MODIFIED="1503457748399" TEXT="Vector-Vector Products">
+<node COLOR="#990000" CREATED="1502675601541" FOLDED="true" ID="ID_31050533" MODIFIED="1503370274007" TEXT="Vector-Vector Products">
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1502676312201" ID="ID_552635913" MODIFIED="1503370274007" TEXT="inner product / dot product">
 <node COLOR="#111111" CREATED="1502677257145" ID="ID_1997169766" MODIFIED="1503370274007">
@@ -87,7 +87,7 @@
 </html></richcontent>
 </node>
 </node>
-<node COLOR="#990000" CREATED="1502675617620" ID="ID_477295334" MODIFIED="1503457748431" TEXT="Matrixx-Vector Products">
+<node COLOR="#990000" CREATED="1502675617620" FOLDED="true" ID="ID_477295334" MODIFIED="1503370274009" TEXT="Matrixx-Vector Products">
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1502677342555" ID="ID_1755465200" MODIFIED="1503370274009">
 <richcontent TYPE="NODE"><html>
@@ -133,7 +133,7 @@
 </html></richcontent>
 </node>
 </node>
-<node COLOR="#990000" CREATED="1502675630009" ID="ID_1756273216" MODIFIED="1503457748446" TEXT="Matrix-Matrix Products">
+<node COLOR="#990000" CREATED="1502675630009" FOLDED="true" ID="ID_1756273216" MODIFIED="1503370274010" TEXT="Matrix-Matrix Products">
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1502677463649" ID="ID_1821660964" MODIFIED="1503370274010">
 <richcontent TYPE="NODE"><html>
@@ -336,7 +336,7 @@
 <node COLOR="#00b439" CREATED="1502675906172" ID="ID_1396790397" MODIFIED="1503370274018" TEXT="Matrix Calculus">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1502675922342" ID="ID_1857241801" MODIFIED="1503457748524" TEXT="The Gradient&#x68af;&#x5ea6;&#x77e9;&#x9635;">
+<node COLOR="#990000" CREATED="1502675922342" FOLDED="true" ID="ID_1857241801" MODIFIED="1503370274018" TEXT="The Gradient&#x68af;&#x5ea6;&#x77e9;&#x9635;">
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1502686182133" ID="ID_815992029" MODIFIED="1503370274018">
 <richcontent TYPE="NODE"><html>
@@ -457,7 +457,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502761228708" HGAP="33" ID="ID_335456667" MODIFIED="1503457786800" POSITION="left" TEXT="Probability Theory Review for Machine Learning" VSHIFT="-7">
+<node COLOR="#0033ff" CREATED="1502761228708" HGAP="33" ID="ID_335456667" MODIFIED="1503370287426" POSITION="left" TEXT="Probability Theory Review for Machine Learning" VSHIFT="-7">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1502761556054" ID="ID_816197445" MODIFIED="1503370274043" TEXT="Basic Concepts">
@@ -645,10 +645,6 @@
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
-</node>
-<node COLOR="#0033ff" CREATED="1503457771004" ID="ID_638527329" MODIFIED="1503457771005" POSITION="right" TEXT="">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="SansSerif" SIZE="18"/>
 </node>
 </node>
 </map>
