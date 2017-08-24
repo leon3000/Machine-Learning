@@ -1,0 +1,5656 @@
+﻿1
+00:00:23,610 --> 00:00:26,930
+So welcome back
+
+2
+00:00:27,680 --> 00:00:30,350
+and what I want to do to is talk about
+
+3
+00:00:30,580 --> 00:00:33,700
+is wrap up our discussion on factor analysis
+
+4
+00:00:33,920 --> 00:00:34,840
+and in particular
+
+5
+00:00:35,050 --> 00:00:37,720
+what I want to do is step through
+
+6
+00:00:37,930 --> 00:00:39,980
+parts of the derivations for
+
+7
+00:00:40,190 --> 00:00:41,410
+EM for factor analysis
+
+8
+00:00:41,600 --> 00:00:43,680
+because again there are a few steps
+
+9
+00:00:43,830 --> 00:00:44,650
+in the EM derivation
+
+10
+00:00:44,830 --> 00:00:45,630
+that are particularly tricky
+
+11
+00:00:45,860 --> 00:00:48,700
+and there are specific mistakes
+
+12
+00:00:48,870 --> 00:00:49,410
+that people often make
+
+13
+00:00:49,620 --> 00:00:51,850
+on deriving EM algorithms for
+
+14
+00:00:52,050 --> 00:00:53,140
+algorithms like factor analysis.
+
+15
+00:00:53,310 --> 00:00:54,310
+So I wanted to show you
+
+16
+00:00:54,500 --> 00:00:55,530
+how to do those steps right
+
+17
+00:00:55,720 --> 00:00:56,610
+so you can apply the same ideas
+
+18
+00:00:56,840 --> 00:00:57,500
+to other problems as well.
+
+19
+00:00:58,320 --> 00:01:01,850
+And then in the second half or so of this lecture
+
+20
+00:01:02,020 --> 00:01:03,860
+I'll talk about principal component analysis
+
+21
+00:01:04,090 --> 00:01:06,510
+which is a very powerful algorithm
+
+22
+00:01:06,750 --> 00:01:09,380
+for dimensionality reduction.
+
+23
+00:01:09,610 --> 00:01:10,730
+We'll see later what that means.
+
+24
+00:01:11,000 --> 00:01:13,560
+So just a recap
+
+25
+00:01:15,460 --> 00:01:16,790
+in a previous lecture
+
+26
+00:01:17,140 --> 00:01:19,070
+I described a few properties
+
+27
+00:01:19,260 --> 00:01:20,260
+of Gaussian distributions.
+
+28
+00:01:20,990 --> 00:01:24,450
+One was that if you have a random
+
+29
+00:01:24,680 --> 00:01:27,040
+variable a random value vector X that
+
+30
+00:01:27,270 --> 00:01:29,370
+can be partitioned into two portions
+
+31
+00:01:29,570 --> 00:01:30,240
+X1 and X2
+
+32
+00:01:30,760 --> 00:01:34,930
+and if X is Gaussian with mu [inaudible]
+
+33
+00:01:35,010 --> 00:01:36,170
+and covariance sigma
+
+34
+00:01:36,250 --> 00:01:42,490
+where mu is itself a partition vector
+
+35
+00:01:43,130 --> 00:01:53,380
+and sigma is sort of a partition
+
+36
+00:01:53,670 --> 00:01:54,890
+matrix that can be written like that.
+
+37
+00:01:55,110 --> 00:01:56,820
+So I'm just writing sigma in terms of
+
+38
+00:01:57,010 --> 00:01:59,220
+the four sub-blocks.
+
+39
+00:01:59,710 --> 00:02:03,340
+Then you can look at the distribution
+
+40
+00:02:03,520 --> 00:02:04,800
+of X and ask what is the marginal
+
+41
+00:02:05,010 --> 00:02:07,770
+distribution of say X1.
+
+42
+00:02:09,920 --> 00:02:15,080
+And the answer we said last time
+
+43
+00:02:15,430 --> 00:02:17,070
+was that X1 the marginal
+
+44
+00:02:17,330 --> 00:02:21,180
+distribution of X1 is Gaussian would mean mu
+
+45
+00:02:21,500 --> 00:02:23,140
+and covariance sigma one one
+
+46
+00:02:23,490 --> 00:02:25,140
+whereas sigma one one is the upper
+
+47
+00:02:25,450 --> 00:02:27,260
+left block of that covariance matrix sigma.
+
+48
+00:02:27,620 --> 00:02:29,020
+So this one is no surprise.
+
+49
+00:02:29,370 --> 00:02:31,140
+And I also wrote down the formula
+
+50
+00:02:31,420 --> 00:02:33,140
+for computing conditional distributions
+
+51
+00:02:35,680 --> 00:02:39,840
+such as what is P of X1 given X2
+
+52
+00:02:40,770 --> 00:02:42,410
+and last time I wrote down
+
+53
+00:02:42,700 --> 00:02:45,040
+that the distribution of X1 given X2
+
+54
+00:02:45,460 --> 00:02:47,260
+would also be Gaussian
+
+55
+00:02:47,690 --> 00:02:53,350
+with parameters that I wrote as mu of
+
+56
+00:02:53,640 --> 00:02:55,220
+one given two and sigma of one given two
+
+57
+00:02:55,640 --> 00:02:59,940
+where mu of one given two is
+
+58
+00:02:59,940 --> 00:03:00,940
+– let's see [inaudible] this formula. Okay?
+
+59
+00:03:23,230 --> 00:03:26,630
+So with these formulas will be able to
+
+60
+00:03:26,950 --> 00:03:28,840
+locate a pair of
+
+61
+00:03:29,140 --> 00:03:30,840
+joint Gaussian random variables
+
+62
+00:03:31,190 --> 00:03:32,560
+X1 and X here are both vectors
+
+63
+00:03:33,010 --> 00:03:34,120
+and compute the marginal
+
+64
+00:03:34,480 --> 00:03:36,030
+and conditional distributions
+
+65
+00:03:36,410 --> 00:03:38,550
+so P of X1 or P of X1 given X2.
+
+66
+00:03:38,920 --> 00:03:42,420
+So when I come back and derive the
+
+67
+00:03:43,770 --> 00:03:45,760
+actually   I'll come back and
+
+68
+00:03:45,760 --> 00:03:46,760
+E set –
+
+69
+00:03:46,060 --> 00:03:47,710
+use the marginal formula in a second
+
+70
+00:03:48,110 --> 00:03:49,470
+and then when I come back and
+
+71
+00:03:49,770 --> 00:03:52,320
+derive from the E step in the EM algorithm
+
+72
+00:03:52,600 --> 00:03:53,360
+for factor analysis
+
+73
+00:03:53,780 --> 00:03:55,910
+I'll actually be using these
+
+74
+00:03:56,230 --> 00:03:56,980
+two formulas again.
+
+75
+00:03:57,360 --> 00:04:02,710
+And again   just to continue summarizing
+
+76
+00:04:03,050 --> 00:04:04,060
+what we did last time
+
+77
+00:04:11,480 --> 00:04:15,360
+This is an unsupervised learning problem
+
+78
+00:04:15,680 --> 00:04:19,630
+and so we're given an unlabeled training set
+
+79
+00:04:19,630 --> 00:04:20,630
+we said that in factor analysis our model –
+
+80
+00:04:20,030 --> 00:04:24,790
+where each SI is a vector in RN
+
+81
+00:04:25,050 --> 00:04:25,580
+as usual.
+
+82
+00:04:25,910 --> 00:04:32,150
+We want to model the density of X
+
+83
+00:04:32,490 --> 00:04:35,270
+and our model for X
+
+84
+00:04:35,620 --> 00:04:37,480
+would be that we imagine there's
+
+85
+00:04:37,730 --> 00:04:38,600
+a latent random variable Z
+
+86
+00:04:39,080 --> 00:04:41,810
+that's generating this [inaudible] zero
+
+87
+00:04:42,090 --> 00:04:43,190
+mean in identity covariance.
+
+88
+00:04:43,660 --> 00:04:46,940
+And Z will be some
+
+89
+00:04:47,300 --> 00:04:49,040
+low dimensional thing [inaudible]
+
+90
+00:04:49,420 --> 00:04:51,000
+and we [inaudible].
+
+91
+00:04:51,710 --> 00:04:59,480
+And we imagine that
+
+92
+00:04:59,790 --> 00:05:03,200
+X is generated as mu plus lambda Z
+
+93
+00:05:03,500 --> 00:05:05,570
+plus epsilon where epsilon is a Gaussian
+
+94
+00:05:05,880 --> 00:05:07,560
+random variable with mean zero
+
+95
+00:05:08,090 --> 00:05:10,510
+and a covariance matrix psi.
+
+96
+00:05:11,390 --> 00:05:15,330
+And so the parameters of this model are
+
+97
+00:05:15,750 --> 00:05:19,210
+mu which N-dimensional vector
+
+98
+00:05:19,590 --> 00:05:22,800
+lambda   which is an N by
+
+99
+00:05:23,140 --> 00:05:24,140
+D-dimensional vector
+
+100
+00:05:24,420 --> 00:05:26,550
+matrix   and psi which is
+
+101
+00:05:26,860 --> 00:05:29,610
+N by N and is diagonal.
+
+102
+00:05:29,850 --> 00:05:37,050
+N is a diagonal matrix.
+
+103
+00:05:37,420 --> 00:05:41,990
+So the cartoon I drew last time
+
+104
+00:05:42,260 --> 00:05:43,390
+for factor analysis was
+
+105
+00:05:43,850 --> 00:05:49,470
+I said that maybe that's the typical example
+
+106
+00:05:49,840 --> 00:05:51,000
+of data point ZI
+
+107
+00:05:51,460 --> 00:05:54,430
+if and in this example I had D equals one
+
+108
+00:05:54,910 --> 00:05:56,480
+N equals two.
+
+109
+00:05:56,970 --> 00:06:00,050
+So Z in this example is one-dimensional.
+
+110
+00:06:00,360 --> 00:06:00,920
+D equals one.
+
+111
+00:06:01,390 --> 00:06:08,010
+And so you take this data   map it to say
+
+112
+00:06:08,360 --> 00:06:10,370
+[inaudible] mu plus lambda Z and
+
+113
+00:06:10,620 --> 00:06:16,840
+that may give you some set of points there.
+
+114
+00:06:17,140 --> 00:06:19,770
+And lastly   this model was envisioning
+
+115
+00:06:20,040 --> 00:06:22,880
+that you'd place a little Gaussian bump
+
+116
+00:06:23,190 --> 00:06:25,940
+around each of these say and sample
+
+117
+00:06:37,650 --> 00:06:39,200
+that would be a typical
+
+118
+00:06:39,480 --> 00:06:40,890
+sample of the Xs under this model.
+
+119
+00:06:53,230 --> 00:06:56,970
+So how  the parameters of this model?
+
+120
+00:06:56,970 --> 00:06:57,970
+– and the Xs are then maybe
+
+121
+00:06:58,050 --> 00:07:08,750
+Well   the joint distribution of Z and X
+
+122
+00:07:09,510 --> 00:07:14,850
+is actually Gaussian where parameters given
+
+123
+00:07:15,160 --> 00:07:17,340
+by some vector [inaudible] mu XZ
+
+124
+00:07:17,710 --> 00:07:19,460
+and sum covariance matrix sigma.
+
+125
+00:07:19,860 --> 00:07:23,780
+And [inaudible] what those two things are
+
+126
+00:07:24,150 --> 00:07:26,320
+this vector [inaudible] is a vector of zeroes
+
+127
+00:07:26,690 --> 00:07:29,440
+appended to the vector mu.
+
+128
+00:07:29,860 --> 00:07:35,750
+And the matrix sigma is this partitioned matrix.
+
+129
+00:07:36,150 --> 00:07:41,430
+We also worked this out last time.
+
+130
+00:07:45,820 --> 00:07:48,080
+So you can ask what is the distribution of X
+
+131
+00:07:48,300 --> 00:07:49,040
+under this model
+
+132
+00:07:49,510 --> 00:07:53,340
+and the answer is under this model X
+
+133
+00:07:53,670 --> 00:08:00,680
+is Gaussian with mean mu and covariance
+
+134
+00:08:01,000 --> 00:08:02,540
+lambda lambda [inaudible] plus psi.
+
+135
+00:08:02,910 --> 00:08:04,420
+So let's just take the
+
+136
+00:08:04,730 --> 00:08:06,500
+second block of the mean vector
+
+137
+00:08:06,890 --> 00:08:11,930
+and take that lower right hand corner
+
+138
+00:08:12,210 --> 00:08:13,370
+block for the covariance matrix
+
+139
+00:08:13,720 --> 00:08:17,190
+and so this is really my formula for computing
+
+140
+00:08:17,550 --> 00:08:19,440
+the marginal distribution of a Gaussian
+
+141
+00:08:19,780 --> 00:08:21,010
+except that I'm computing
+
+142
+00:08:21,350 --> 00:08:23,690
+the marginal distribution of the second half
+
+143
+00:08:24,010 --> 00:08:25,540
+of the vector rather than the first half.
+
+144
+00:08:26,390 --> 00:08:28,280
+So this is the marginal distribution of X
+
+145
+00:08:28,570 --> 00:08:29,380
+under my model.
+
+146
+00:08:29,790 --> 00:08:34,180
+And so if you want to learn
+
+147
+00:08:34,630 --> 00:08:39,010
+Student:[Inaudible] initial distribution
+
+148
+00:08:39,420 --> 00:08:40,440
+Instructor (Andrew Ng):Let's see.
+
+149
+00:08:40,980 --> 00:08:42,340
+Oh   yes.
+
+150
+00:08:42,820 --> 00:08:44,410
+Yes   so in this one
+
+151
+00:08:44,760 --> 00:08:46,850
+I'm breaking down the this is really
+
+152
+00:08:47,200 --> 00:08:48,750
+I'm specifying the conditional distribution
+
+153
+00:08:49,090 --> 00:08:50,240
+of X given Z.
+
+154
+00:08:50,620 --> 00:08:52,830
+So the conditional distribution of
+
+155
+00:08:56,490 --> 00:09:03,150
+would mean mu plus lambda Z and
+
+156
+00:09:03,480 --> 00:09:05,620
+covariance psi. This is what that [inaudible].
+
+157
+00:09:12,110 --> 00:09:19,730
+So since this is the
+
+158
+00:09:20,060 --> 00:09:20,900
+marginal distribution of X
+
+159
+00:09:20,900 --> 00:09:21,900
+X given Z this is Gaussian –
+
+160
+00:09:21,340 --> 00:09:23,710
+given my training set of M
+
+161
+00:09:24,030 --> 00:09:25,030
+unlabeled examples
+
+162
+00:09:25,390 --> 00:09:27,420
+I can actually write down the log likelihood
+
+163
+00:09:27,670 --> 00:09:28,570
+of my training set.
+
+164
+00:09:28,910 --> 00:09:31,040
+So the log likelihood of my training set
+
+165
+00:09:31,510 --> 00:09:32,780
+actually   no.
+
+166
+00:09:33,130 --> 00:09:34,440
+Let's just write down the likelihood.
+
+167
+00:09:34,750 --> 00:09:38,710
+So the likelihood of my parameters given
+
+168
+00:09:39,070 --> 00:09:40,450
+my training set is the product from
+
+169
+00:09:40,800 --> 00:09:42,270
+I equals one to M of P of XI
+
+170
+00:09:42,740 --> 00:09:44,310
+given the parameters.
+
+171
+00:09:52,350 --> 00:09:54,820
+I can actually write down what that is
+
+172
+00:09:55,120 --> 00:09:57,000
+because XI is Gaussian with parameter
+
+173
+00:09:57,370 --> 00:09:59,270
+mu and variance lambda lambda
+
+174
+00:09:59,630 --> 00:10:00,900
+transpose times psi
+
+175
+00:10:01,370 --> 00:10:03,580
+so you can actually write this down as one
+
+176
+00:10:03,910 --> 00:10:09,190
+over two pi to the N over two determined of
+
+177
+00:10:09,620 --> 00:10:17,230
+and then times E to the minus one half X
+
+178
+00:10:30,250 --> 00:10:38,480
+of so that's my formula for the density
+
+179
+00:10:38,840 --> 00:10:41,280
+of a Gaussian that has mean mu and
+
+180
+00:10:41,630 --> 00:10:44,890
+covariance lambda lambda transpose plus psi.
+
+181
+00:10:45,360 --> 00:10:49,440
+So this is my likelihood of the parameters
+
+182
+00:10:49,850 --> 00:10:50,800
+given a training set.
+
+183
+00:10:51,240 --> 00:10:53,110
+And one thing you could do is actually
+
+184
+00:10:53,450 --> 00:10:55,620
+take this likelihood and try to maximize it
+
+185
+00:10:55,990 --> 00:10:57,370
+in terms of the parameters
+
+186
+00:10:57,700 --> 00:10:58,980
+try to find the [inaudible] the parameters.
+
+187
+00:11:03,270 --> 00:11:05,610
+if you sort of try take [inaudible] to get the
+
+188
+00:11:05,980 --> 00:11:07,160
+law of likelihood   take derivatives
+
+189
+00:11:07,480 --> 00:11:08,270
+set derivatives equal to zero
+
+190
+00:11:08,650 --> 00:11:10,530
+you find that you'll be unable to
+
+191
+00:11:11,380 --> 00:11:13,530
+solve for the maximum of this analytically.
+
+192
+00:11:13,530 --> 00:11:14,530
+But if you do that you find that –
+
+193
+00:11:15,220 --> 00:11:17,290
+You won't be able to solve this [inaudible]
+
+194
+00:11:17,550 --> 00:11:18,790
+likelihood estimation problem.
+
+195
+00:11:19,190 --> 00:11:20,540
+If you take the derivative of this
+
+196
+00:11:20,810 --> 00:11:21,820
+with respect to the parameters
+
+197
+00:11:22,580 --> 00:11:24,080
+set the derivatives equal to zero
+
+198
+00:11:24,570 --> 00:11:27,020
+and try to solve for the value of the parameters
+
+199
+00:11:27,390 --> 00:11:28,610
+lambda   mu   and psi [inaudible]
+
+200
+00:11:29,160 --> 00:11:31,120
+so you won't be able to do that [inaudible].
+
+201
+00:11:31,500 --> 00:11:37,980
+So what we'll use instead to estimate the
+
+202
+00:11:38,290 --> 00:11:39,460
+parameters in a factor analysis model
+
+203
+00:11:39,880 --> 00:11:41,170
+will be the EM algorithm.
+
+204
+00:11:48,280 --> 00:11:51,550
+Student:Why is the law of likelihood
+
+205
+00:11:51,920 --> 00:11:54,740
+P of X and not P of X [inaudible] X and Z
+
+206
+00:11:56,140 --> 00:11:58,040
+or something?
+
+207
+00:11:58,460 --> 00:11:59,770
+Instructor (Andrew Ng) So the question is why
+
+208
+00:12:00,160 --> 00:12:01,720
+is the likelihood P of X and
+
+209
+00:12:02,020 --> 00:12:03,050
+not P of X given Z
+
+210
+00:12:03,330 --> 00:12:04,450
+or P of X and Z.
+
+211
+00:12:09,720 --> 00:12:11,720
+so by analogy to the mixture of
+
+212
+00:12:12,050 --> 00:12:13,670
+Gaussian distributions models
+
+213
+00:12:14,130 --> 00:12:17,710
+we're given a training set that just
+
+214
+00:12:18,040 --> 00:12:24,660
+comprises a set of unlabeled training examples
+
+215
+00:12:25,840 --> 00:12:28,380
+that for convenience for whatever reason
+
+216
+00:12:28,910 --> 00:12:32,640
+it's easier for me to write down a model
+
+217
+00:12:32,640 --> 00:12:33,640
+The answer is let's see we're in the –
+
+218
+00:12:33,080 --> 00:12:33,870
+that defines the
+
+219
+00:12:34,160 --> 00:12:36,260
+joint distribution on P of X comma Z.
+
+220
+00:12:36,720 --> 00:12:42,020
+But what I would like to do is really maximize
+
+221
+00:12:42,420 --> 00:12:44,340
+as a function of my parameters
+
+222
+00:12:44,680 --> 00:12:46,450
+I'm using theta as a shorthand to denote
+
+223
+00:12:46,720 --> 00:12:47,590
+all the parameters of the model
+
+224
+00:12:48,010 --> 00:12:52,740
+I want to maximize the probability of
+
+225
+00:12:52,960 --> 00:12:54,230
+the data I actually observe.
+
+226
+00:12:54,590 --> 00:12:59,060
+And this would be actually [inaudible] theta
+
+227
+00:12:59,150 --> 00:13:01,950
+from I equals one to M
+
+228
+00:13:02,300 --> 00:13:04,630
+and this is really integrating out Z.
+
+229
+00:13:12,230 --> 00:13:15,840
+So I only ever get to observe the Xs
+
+230
+00:13:16,200 --> 00:13:18,240
+and the Zs are latent random
+
+231
+00:13:18,550 --> 00:13:20,000
+variables or hidden random variables.
+
+232
+00:13:20,420 --> 00:13:24,840
+And so what I'd like to do is do
+
+233
+00:13:25,220 --> 00:13:26,820
+this maximization in which I've
+
+234
+00:13:27,120 --> 00:13:28,370
+implicitly integrated out Z.
+
+235
+00:13:29,150 --> 00:13:30,760
+Does that make sense?
+
+236
+00:13:34,230 --> 00:13:36,160
+Actually   are there other questions
+
+237
+00:13:36,720 --> 00:13:37,640
+about the factor analysis models?
+
+238
+00:13:43,410 --> 00:13:56,730
+Okay. So here's the EM algorithm.
+
+239
+00:14:13,740 --> 00:14:15,590
+In the E step
+
+240
+00:14:15,970 --> 00:14:19,640
+we compute the conditional distribution of
+
+241
+00:14:19,950 --> 00:14:21,840
+ZI given XI in our current
+
+242
+00:14:22,130 --> 00:14:23,350
+setting of the parameters.
+
+243
+00:14:24,090 --> 00:14:25,060
+And in the M step
+
+244
+00:15:00,670 --> 00:15:03,650
+we perform this maximization.
+
+245
+00:15:04,640 --> 00:15:06,850
+And if this looks a little bit different from
+
+246
+00:15:07,260 --> 00:15:09,340
+the previous versions of EM that you've seen
+
+247
+00:15:09,740 --> 00:15:10,820
+the only difference is that
+
+248
+00:15:11,130 --> 00:15:12,370
+now I'm integrating over ZI
+
+249
+00:15:13,030 --> 00:15:17,060
+because ZI is now a Gaussian random variable
+
+250
+00:15:17,340 --> 00:15:18,510
+is now this continuous value thing
+
+251
+00:15:18,800 --> 00:15:19,890
+so rather than summing over ZI
+
+252
+00:15:20,190 --> 00:15:21,200
+I now integrate over ZI.
+
+253
+00:15:21,640 --> 00:15:23,700
+And if you replace [inaudible] of a sum
+
+254
+00:15:24,070 --> 00:15:25,550
+you [inaudible] ZI then this is
+
+255
+00:15:25,870 --> 00:15:26,880
+exactly the M step you
+
+256
+00:15:27,200 --> 00:15:28,400
+saw when we worked it out
+
+257
+00:15:28,620 --> 00:15:29,560
+from the mixture of Gaussian [inaudible].
+
+258
+00:15:29,840 --> 00:15:32,260
+So it turns out that
+
+259
+00:15:32,490 --> 00:15:35,100
+in order to implement
+
+260
+00:15:35,380 --> 00:15:36,460
+the E step and the M step
+
+261
+00:15:36,700 --> 00:15:38,390
+there are just two little things
+
+262
+00:15:38,460 --> 00:15:39,390
+there are actually sort of three key things
+
+263
+00:15:39,670 --> 00:15:40,800
+that are different from the models
+
+264
+00:15:41,070 --> 00:15:41,780
+that you saw previously
+
+265
+00:15:42,090 --> 00:15:42,990
+so I wanna talk about them.
+
+266
+00:15:43,330 --> 00:15:46,390
+The first one is that the first of the
+
+267
+00:15:46,700 --> 00:15:48,830
+which is that in the E step
+
+268
+00:15:49,160 --> 00:15:52,780
+Z is now a continuous value random variable
+
+269
+00:15:53,180 --> 00:15:56,660
+so you now need a way
+
+270
+00:15:56,930 --> 00:15:58,790
+to represent these continuous value densities
+
+271
+00:15:59,370 --> 00:16:00,040
+probably density
+
+272
+00:16:00,380 --> 00:16:01,420
+functions to represent QI of Z.
+
+273
+00:16:02,410 --> 00:16:13,030
+So fortunately in this probably
+
+274
+00:16:13,410 --> 00:16:14,840
+it's not difficult to do
+
+275
+00:16:16,900 --> 00:16:24,030
+and in particular the conditional distribution of
+
+276
+00:16:24,290 --> 00:16:24,980
+ZI given XI and
+
+277
+00:16:26,150 --> 00:16:27,750
+our parameters which
+
+278
+00:16:28,170 --> 00:16:30,840
+I'm gonna omit from this equation is
+
+279
+00:16:31,160 --> 00:16:35,790
+going to be Gaussian with mean
+
+280
+00:16:36,180 --> 00:16:40,480
+so I write like that
+
+281
+00:16:40,870 --> 00:16:49,920
+where this is going to be equal to the vector
+
+282
+00:16:50,180 --> 00:16:50,980
+zero minus
+
+283
+00:17:03,860 --> 00:17:08,000
+if you match this to the formula
+
+284
+00:17:08,400 --> 00:17:09,710
+I had previously for computing conditional
+
+285
+00:17:10,000 --> 00:17:10,960
+distributions of Gaussians
+
+286
+00:17:11,380 --> 00:17:14,010
+this corresponded to the terms mu one minus
+
+287
+00:17:14,280 --> 00:17:16,720
+sigma one two sigma two two inverse times
+
+288
+00:17:18,130 --> 00:17:21,780
+two minus mu. So those are the terms
+
+289
+00:17:22,070 --> 00:17:23,800
+corresponding to the form I had previously for
+
+290
+00:17:23,800 --> 00:17:24,800
+And the way I got this formula was –
+
+291
+00:17:24,690 --> 00:17:26,040
+computing themarginal distributions
+
+292
+00:17:26,390 --> 00:17:33,580
+of a Gaussian. And that is going to be given
+
+293
+00:17:45,650 --> 00:17:49,660
+by that   and again those are the terms
+
+294
+00:17:50,080 --> 00:17:52,200
+corresponding to the formulas I had for
+
+295
+00:17:52,530 --> 00:17:56,370
+the very first thing I did   the formulas for
+
+296
+00:17:56,670 --> 00:17:57,970
+computing conditional distributions
+
+297
+00:17:58,240 --> 00:17:59,240
+of Gaussians.
+
+298
+00:17:59,930 --> 00:18:02,220
+And so this is E step.
+
+299
+00:18:02,750 --> 00:18:04,790
+You need to compute the Q distribution.
+
+300
+00:18:05,260 --> 00:18:09,000
+You need to compute QI of ZI
+
+301
+00:18:09,460 --> 00:18:12,240
+and to do that what you actually do
+
+302
+00:18:12,510 --> 00:18:14,070
+is you compute this vector mu of
+
+303
+00:18:14,370 --> 00:18:16,080
+ZI given XI and sigma of ZI given XI
+
+304
+00:18:16,740 --> 00:18:19,570
+and together these represent the mean
+
+305
+00:18:19,880 --> 00:18:22,620
+and covariance of the distribution Q where
+
+306
+00:18:22,890 --> 00:18:23,910
+Q is going to be Gaussian
+
+307
+00:18:24,390 --> 00:18:25,370
+so that's the E step.
+
+308
+00:18:30,310 --> 00:18:36,180
+Now here's the M step then.
+
+309
+00:18:38,910 --> 00:18:43,230
+I'll just mention there are sort of two ways
+
+310
+00:18:43,520 --> 00:18:45,440
+to derive M steps for especially
+
+311
+00:18:45,720 --> 00:18:46,800
+Gaussian models like these.
+
+312
+00:18:47,110 --> 00:18:51,290
+Here's the key trick I guess which is that
+
+313
+00:18:51,950 --> 00:18:53,620
+when you compute the M step
+
+314
+00:18:54,180 --> 00:18:56,470
+you often need to compute integrals that
+
+315
+00:18:56,860 --> 00:18:57,890
+look like these.
+
+316
+00:18:59,620 --> 00:19:01,260
+And then there'll be some function of ZI.
+
+317
+00:19:01,570 --> 00:19:03,290
+Let me just write ZI there   for instance.
+
+318
+00:19:04,000 --> 00:19:07,670
+So there are two ways to compute integrals
+
+319
+00:19:07,870 --> 00:19:08,620
+like these.
+
+320
+00:19:08,990 --> 00:19:09,890
+One is if you write out
+
+321
+00:19:10,230 --> 00:19:11,670
+this is a commonly made mistake in
+
+322
+00:19:11,960 --> 00:19:13,420
+well   not mistake
+
+323
+00:19:13,740 --> 00:19:16,390
+commonly made unnecessary complication
+
+324
+00:19:16,770 --> 00:19:19,920
+One way to try to compute this integral
+
+325
+00:19:20,170 --> 00:19:21,650
+is you can write this out as
+
+326
+00:19:21,910 --> 00:19:23,210
+integral over ZI.
+
+327
+00:19:23,500 --> 00:19:24,610
+And while we know what QI is
+
+328
+00:19:25,000 --> 00:19:28,270
+right? QI is a Gaussian so two pi
+
+329
+00:19:28,600 --> 00:19:32,940
+so D over two the covariance of QI
+
+330
+00:19:33,250 --> 00:19:35,470
+is this sigma given XI
+
+331
+00:19:35,820 --> 00:19:37,790
+which you've computed
+
+332
+00:20:11,910 --> 00:20:15,610
+And so writing those out is the unnecessarily
+
+333
+00:20:15,990 --> 00:20:16,990
+complicated way to do it
+
+334
+00:20:19,090 --> 00:20:22,490
+that's the times   multiplication
+
+335
+00:20:23,300 --> 00:20:25,610
+if you actually want to evaluate this integral
+
+336
+00:20:25,930 --> 00:20:27,330
+it just looks horribly complicated.
+
+337
+00:20:27,610 --> 00:20:29,150
+I'm not quite sure how to evaluate this.
+
+338
+00:20:29,440 --> 00:20:32,610
+By far   the simpler to evaluate this integral
+
+339
+00:20:33,020 --> 00:20:37,480
+is to recognize that this is just the expectation
+
+340
+00:20:38,230 --> 00:20:39,670
+with respect to ZI drawn
+
+341
+00:20:40,120 --> 00:20:42,140
+from the distribution QI
+
+342
+00:20:42,140 --> 00:20:43,140
+if you want to actually integrate –
+
+343
+00:20:45,440 --> 00:20:47,110
+of the random variable ZI.
+
+344
+00:20:47,880 --> 00:20:50,930
+And once you've actually got this way
+
+345
+00:20:51,260 --> 00:20:52,640
+you notice that this is just the
+
+346
+00:20:52,910 --> 00:20:55,180
+expected value of ZI under the distribution QI
+
+347
+00:20:55,580 --> 00:20:59,970
+but QI is a Gaussian distribution with
+
+348
+00:21:00,180 --> 00:21:02,710
+mean given by that mu vector and
+
+349
+00:21:03,150 --> 00:21:05,000
+covariance given by that sigma vector
+
+350
+00:21:05,290 --> 00:21:06,740
+and so the expected value of ZI under
+
+351
+00:21:07,020 --> 00:21:08,160
+this distribution is jus
+
+352
+00:21:08,470 --> 00:21:09,910
+t mu of ZI given XI.
+
+353
+00:21:10,310 --> 00:21:15,520
+Does that make sense?
+
+354
+00:21:15,890 --> 00:21:19,010
+So by making those observations
+
+355
+00:21:19,430 --> 00:21:20,260
+That this is just an
+
+356
+00:21:20,610 --> 00:21:21,330
+expected value
+
+357
+00:21:21,620 --> 00:21:23,020
+there's a much easier way to compute that
+
+358
+00:21:23,300 --> 00:21:24,150
+integral. [Inaudible].
+
+359
+00:21:38,700 --> 00:21:42,740
+So we'll apply the same idea to the M step.
+
+360
+00:21:43,170 --> 00:21:45,120
+So the M step
+
+361
+00:21:45,460 --> 00:21:47,110
+we want to maximize this.
+
+362
+00:22:03,120 --> 00:22:06,240
+There's also sum over I there's
+
+363
+00:22:06,570 --> 00:22:07,860
+a summation over I outside
+
+364
+00:22:08,200 --> 00:22:09,600
+but this is essentially the term
+
+365
+00:22:09,960 --> 00:22:12,000
+inside the arg max of the M step
+
+366
+00:22:12,390 --> 00:22:15,560
+where taking the integral of a ZI and just
+
+367
+00:22:17,420 --> 00:22:20,980
+I guess just form some expectation respect
+
+368
+00:22:21,290 --> 00:22:24,330
+to the random variable ZI of this thing inside.
+
+369
+00:22:33,220 --> 00:22:36,100
+And so this simplifies to the following.
+
+370
+00:23:00,150 --> 00:23:08,090
+And it turns out actually all I did here
+
+371
+00:23:08,400 --> 00:23:09,620
+was use the fact that
+
+372
+00:23:09,910 --> 00:23:12,460
+P of X given Z times P of Z
+
+373
+00:23:12,890 --> 00:23:15,500
+equals P over X comma Z.
+
+374
+00:23:15,950 --> 00:23:17,310
+Right? That's just combining this term
+
+375
+00:23:17,580 --> 00:23:19,500
+and that term gives you the numerator
+
+376
+00:23:19,500 --> 00:23:20,500
+observe that that's actually –
+
+377
+00:23:19,830 --> 00:23:20,850
+in the original.
+
+378
+00:23:21,180 --> 00:23:23,780
+And so in turns out that
+
+379
+00:23:24,060 --> 00:23:25,050
+for factor analysis
+
+380
+00:23:25,490 --> 00:23:27,820
+in these two terms
+
+381
+00:23:28,270 --> 00:23:29,320
+this is the only one
+
+382
+00:23:29,710 --> 00:23:31,250
+that depends on the parameters.
+
+383
+00:23:35,170 --> 00:23:37,430
+The distribution P of ZI has no
+
+384
+00:23:37,790 --> 00:23:38,540
+Parameters
+
+385
+00:23:38,780 --> 00:23:41,210
+because ZI was just drawn from a Gaussian
+
+386
+00:23:41,490 --> 00:23:43,040
+with zero mean and identity covariance.
+
+387
+00:23:43,500 --> 00:23:45,980
+QI of Z was this fixed Gaussian.
+
+388
+00:23:46,260 --> 00:23:48,010
+It doesn't depend on the parameters theta
+
+389
+00:23:48,490 --> 00:23:50,390
+and so in the M step
+
+390
+00:23:50,730 --> 00:23:52,700
+we really just need to maximize this one term
+
+391
+00:23:53,020 --> 00:23:54,220
+with respect to all parameters
+
+392
+00:23:54,990 --> 00:23:56,860
+mu   lambda   and psi.
+
+393
+00:24:11,450 --> 00:24:13,400
+So let's see. There's sort of one more key step
+
+394
+00:24:13,700 --> 00:24:15,760
+I want to show but to get there
+
+395
+00:24:16,040 --> 00:24:18,840
+I have to write down an unfortunately large
+
+396
+00:24:19,150 --> 00:24:20,080
+amount of math
+
+397
+00:24:20,440 --> 00:24:28,960
+and let's go into it. Okay.
+
+398
+00:24:38,300 --> 00:24:38,990
+So in the M step
+
+399
+00:24:39,230 --> 00:24:46,770
+we want to maximize and
+
+400
+00:24:47,240 --> 00:24:49,910
+all expectations with respect to ZI
+
+401
+00:24:50,250 --> 00:24:51,870
+drawn from the distributions QI
+
+402
+00:24:52,300 --> 00:24:54,390
+and sometimes I'll be sloppy and just omit this.
+
+403
+00:25:04,730 --> 00:25:13,100
+And now this distribution P of XI given ZI
+
+404
+00:25:13,500 --> 00:25:15,120
+that is a Gaussian density
+
+405
+00:25:20,530 --> 00:25:24,480
+this is Gaussian with mean
+
+406
+00:25:24,780 --> 00:25:29,010
+given by mu plus lambda Z and
+
+407
+00:25:29,290 --> 00:25:30,440
+covariance psi.
+
+408
+00:25:30,750 --> 00:25:33,100
+And so in this step of the derivation
+
+409
+00:25:33,270 --> 00:25:34,990
+I will actually go ahead and substitute in
+
+410
+00:25:35,450 --> 00:25:37,610
+the formula for Gaussian density.
+
+411
+00:25:37,880 --> 00:25:40,360
+So I will go ahead and take those and plug it
+
+412
+00:25:40,600 --> 00:25:41,220
+into here
+
+413
+00:25:41,420 --> 00:25:43,570
+one over two pi to the N over two
+
+414
+00:25:43,930 --> 00:25:48,900
+psi inverse E to the dot   dot   dot. So I will go
+
+415
+00:25:48,900 --> 00:25:49,900
+because XI given ZI –
+
+416
+00:25:49,080 --> 00:25:52,440
+ahead and plug in the Gaussian density.
+
+417
+00:25:52,670 --> 00:25:53,240
+And when you do that
+
+418
+00:26:07,500 --> 00:26:11,910
+to not make the derivation too complicated
+
+419
+00:26:12,270 --> 00:26:14,000
+I'm actually just going to maximize this
+
+420
+00:26:14,330 --> 00:26:15,800
+with respect to the parameters lambda.
+
+421
+00:26:16,380 --> 00:26:18,470
+you want to maximize this
+
+422
+00:26:18,860 --> 00:26:19,670
+with respect to lambda
+
+423
+00:26:20,000 --> 00:26:20,690
+psi   and mu
+
+424
+00:26:21,090 --> 00:26:22,630
+but just to keep the amount of math I'm gonna
+
+425
+00:26:22,890 --> 00:26:23,640
+do in class sane
+
+426
+00:26:23,950 --> 00:26:25,200
+I'm just going to show how to maximize this
+
+427
+00:26:25,490 --> 00:26:26,880
+with respect to the matrix lambda
+
+428
+00:26:27,220 --> 00:26:28,960
+and I'll pretend that psi and mu are fixed.
+
+429
+00:26:28,960 --> 00:26:29,960
+you find that you get expectation –
+
+430
+00:26:29,320 --> 00:26:31,400
+And so if you substitute
+
+431
+00:26:31,400 --> 00:26:32,400
+excuse me. I forgot to say to maintain –
+
+432
+00:26:31,750 --> 00:26:32,610
+in the Gaussian density
+
+433
+00:26:32,890 --> 00:26:34,130
+you get some expected value of the constant.
+
+434
+00:26:34,560 --> 00:26:36,070
+The constant may depend on psi
+
+435
+00:26:36,330 --> 00:26:37,530
+but not on lambda.
+
+436
+00:26:37,920 --> 00:26:42,060
+Then mine is this thing.
+
+437
+00:26:57,180 --> 00:27:02,370
+And this quadratic term essentially came from
+
+438
+00:27:02,950 --> 00:27:05,510
+the exponent in your Gaussian density.
+
+439
+00:27:05,860 --> 00:27:07,300
+When I take log of exponent
+
+440
+00:27:07,780 --> 00:27:10,130
+then you end up with this quadratic term.
+
+441
+00:27:14,520 --> 00:27:20,450
+And so if you take the derivatives
+
+442
+00:27:24,660 --> 00:27:26,430
+of the expression above
+
+443
+00:27:33,400 --> 00:27:36,070
+with respect to the matrix lambda
+
+444
+00:27:36,530 --> 00:27:41,200
+and you set that to zero
+
+445
+00:27:42,080 --> 00:27:45,350
+we want to maximize this expression
+
+446
+00:27:45,620 --> 00:27:46,920
+with respect to the parameters lambda
+
+447
+00:27:47,220 --> 00:27:48,650
+so you take the derivative of this
+
+448
+00:27:48,880 --> 00:27:49,590
+ith respect to lambda
+
+449
+00:27:50,310 --> 00:27:51,050
+excuse me.
+
+450
+00:27:52,360 --> 00:27:53,110
+That's a minus sign
+
+451
+00:27:54,650 --> 00:27:58,810
+and set the derivate of this expression to zero
+
+452
+00:27:59,150 --> 00:28:00,710
+because you set derivatives to zero
+
+453
+00:28:00,910 --> 00:28:01,720
+to maximize things   right?
+
+454
+00:28:02,000 --> 00:28:04,420
+When you do that
+
+455
+00:28:04,730 --> 00:28:05,330
+and simplify
+
+456
+00:28:05,700 --> 00:28:07,470
+you end up with the following.
+
+457
+00:28:53,990 --> 00:28:56,670
+And so that's the in the M step
+
+458
+00:28:57,020 --> 00:29:02,260
+this is the value you should get that
+
+459
+00:29:02,720 --> 00:29:05,130
+you use to update your parameters lambda.
+
+460
+00:29:05,760 --> 00:29:11,990
+And again   the expectations are with respect
+
+461
+00:29:12,210 --> 00:29:18,010
+to ZI drawn from the distributions QI.
+
+462
+00:29:18,410 --> 00:29:23,560
+So the very last step of this derivation
+
+463
+00:29:23,880 --> 00:29:25,520
+is we need to work out
+
+464
+00:29:26,060 --> 00:29:28,400
+what these two expectations are.
+
+465
+00:29:29,480 --> 00:29:35,650
+And so the very first term EZI transpose
+
+466
+00:29:36,060 --> 00:29:43,100
+I guess is just mu of ZI give XI transpose
+
+467
+00:29:43,520 --> 00:29:46,610
+because the QI distribution has mean given by
+
+468
+00:29:49,530 --> 00:29:53,270
+To work out the other term
+
+469
+00:29:53,920 --> 00:29:56,760
+let me just remind you
+
+470
+00:29:56,970 --> 00:30:03,100
+that if you have a random variable Z that's
+
+471
+00:30:03,380 --> 00:30:04,240
+Gaussian with mean
+
+472
+00:30:04,440 --> 00:30:05,480
+mu and covariance sigma
+
+473
+00:30:05,950 --> 00:30:09,820
+then the covariance sigma is EZZ transpose
+
+474
+00:30:10,120 --> 00:30:13,960
+minus EZ EZ transpose.
+
+475
+00:30:19,750 --> 00:30:22,460
+That's one of the definitions of the covariance
+
+476
+00:30:23,010 --> 00:30:25,800
+and so this implies that EZZ transpose
+
+477
+00:30:26,100 --> 00:30:35,580
+equals sigma plus EZ EZ transpose.
+
+478
+00:30:37,080 --> 00:30:45,670
+And so this second term here becomes sigma Z
+
+479
+00:30:46,030 --> 00:30:54,930
+I to the mu I plus given XI.
+
+480
+00:31:03,830 --> 00:31:04,470
+Okay?
+
+481
+00:31:04,870 --> 00:31:08,340
+And so that's how you
+
+482
+00:31:08,610 --> 00:31:10,120
+Compute E of ZI transpose
+
+483
+00:31:10,480 --> 00:31:11,770
+and E of ZI ZI transpose
+
+484
+00:31:12,080 --> 00:31:13,630
+and substitute them back into this formula.
+
+485
+00:31:14,130 --> 00:31:16,940
+And you would then have your M step update
+
+486
+00:31:17,270 --> 00:31:19,080
+to the parameter matrix lambda.
+
+487
+00:31:20,990 --> 00:31:23,580
+And the last thing I want to point out
+
+488
+00:31:23,890 --> 00:31:25,420
+in this derivation is that it turns out
+
+489
+00:31:27,310 --> 00:31:28,190
+the name EM algorithm
+
+490
+00:31:28,390 --> 00:31:29,260
+expectation maximization
+
+491
+00:31:29,550 --> 00:31:32,710
+one common mistake for the EM algorithm
+
+492
+00:31:33,030 --> 00:31:34,690
+is in the E step
+
+493
+00:31:35,210 --> 00:31:38,110
+some want to take the expectation of the
+
+494
+00:31:38,340 --> 00:31:39,080
+random variable Z
+
+495
+00:31:40,030 --> 00:31:41,710
+and then in the M step they just plug in the
+
+496
+00:31:42,040 --> 00:31:43,310
+expected value everywhere you see it.
+
+497
+00:31:43,830 --> 00:31:44,550
+So in particular
+
+498
+00:31:44,990 --> 00:31:46,800
+one common mistake in deriving EM
+
+499
+00:31:47,110 --> 00:31:48,430
+for factor analysis is
+
+500
+00:31:48,760 --> 00:31:49,640
+to look at this and say
+
+501
+00:31:50,010 --> 00:31:51,020
+"Oh   look. I see ZZ transpose.
+
+502
+00:31:51,020 --> 00:31:52,020
+–	it's probably because of
+
+503
+00:31:51,720 --> 00:31:54,340
+Let's just plug in the expected value under the
+
+504
+00:31:54,660 --> 00:31:55,420
+Q distribution."
+
+505
+00:31:55,820 --> 00:32:04,120
+And so plug in that mu of ZI given
+
+506
+00:32:06,970 --> 00:32:08,330
+into that expectation
+
+507
+00:32:08,760 --> 00:32:13,700
+and that would be an incorrect derivation
+
+508
+00:32:14,080 --> 00:32:17,240
+of EM because it's missing this other term
+
+509
+00:32:17,560 --> 00:32:18,770
+sigma of ZI given XI.
+
+510
+00:32:19,240 --> 00:32:21,870
+So one common misconception for EM
+
+511
+00:32:22,150 --> 00:32:23,100
+is that in the E step
+
+512
+00:32:23,490 --> 00:32:24,580
+you just compute the expected value of the
+
+513
+00:32:24,830 --> 00:32:25,650
+hidden random variable
+
+514
+00:32:25,930 --> 00:32:26,650
+and the M step
+
+515
+00:32:26,910 --> 00:32:27,800
+you plug in the expected value.
+
+516
+00:32:28,090 --> 00:32:30,090
+It turns outin some algorithms that
+
+517
+00:32:30,310 --> 00:32:31,450
+turns out to be the right thing to do.
+
+518
+00:32:31,800 --> 00:32:33,710
+In the mixture of Gaussians and the mixture of
+
+519
+00:32:33,960 --> 00:32:34,690
+[inaudible] models
+
+520
+00:32:34,690 --> 00:32:35,690
+XI times mu of ZI given XI transpose –
+
+521
+00:32:34,990 --> 00:32:36,270
+that would actually give you the right answer
+
+522
+00:32:36,590 --> 00:32:37,280
+but in general
+
+523
+00:32:37,640 --> 00:32:38,900
+the EM algorithm is more complicated
+
+524
+00:32:39,200 --> 00:32:40,390
+than just taking the expected values
+
+525
+00:32:40,810 --> 00:32:41,730
+of the random variables
+
+526
+00:32:42,070 --> 00:32:44,010
+and then pretending that they were sort of
+
+527
+00:32:44,360 --> 00:32:45,160
+observed at the expected values.
+
+528
+00:32:45,500 --> 00:32:48,200
+So I wanna go through this just to illustrate that
+
+529
+00:32:48,450 --> 00:32:49,150
+step as well.
+
+530
+00:32:49,610 --> 00:32:55,120
+So just to summarize the three key things to
+
+531
+00:32:55,370 --> 00:32:57,630
+keep in that came up in this variation were
+
+532
+00:32:57,960 --> 00:32:59,210
+1.) That for the E step
+
+533
+00:32:59,490 --> 00:33:00,450
+we had a continuous
+
+534
+00:33:00,760 --> 00:33:01,660
+Gaussian random variable
+
+535
+00:33:01,950 --> 00:33:03,270
+and so to compute the E step
+
+536
+00:33:03,600 --> 00:33:05,760
+we actually compute the mean and covariance
+
+537
+00:33:06,100 --> 00:33:07,590
+of the distribution QI.
+
+538
+00:33:08,050 --> 00:33:11,110
+The second thing that came up was
+
+539
+00:33:11,440 --> 00:33:14,010
+in the M step when you see these integrals
+
+540
+00:33:14,240 --> 00:33:17,720
+sometimes if you interpret that as expectation
+
+541
+00:33:18,050 --> 00:33:19,810
+then the rest of the math becomes much easier.
+
+542
+00:33:20,040 --> 00:33:21,870
+And the final thing was
+
+543
+00:33:22,190 --> 00:33:23,650
+again in the M step
+
+544
+00:33:23,900 --> 00:33:27,610
+the EM algorithm is derived by a certain
+
+545
+00:33:27,820 --> 00:33:28,950
+maximization problem that we solve.
+
+546
+00:33:29,300 --> 00:33:31,550
+It is not necessarily just plugging the expected
+
+547
+00:33:31,760 --> 00:33:33,090
+value of ZI everywhere.
+
+548
+00:33:35,780 --> 00:33:37,620
+Let's see.
+
+549
+00:33:38,060 --> 00:33:40,110
+I feel like I just did a ton of math
+
+550
+00:33:40,330 --> 00:33:41,720
+and wrote down way too many equations.
+
+551
+00:33:42,070 --> 00:33:44,230
+And even doing this
+
+552
+00:33:44,550 --> 00:33:45,740
+I was skipping many steps.
+
+553
+00:33:46,150 --> 00:33:47,460
+So you can go to the lecture notes to see
+
+554
+00:33:47,880 --> 00:33:51,380
+all the derivations of the steps I skipped
+
+555
+00:33:51,680 --> 00:33:52,980
+like how you actually take derivatives
+
+556
+00:33:53,280 --> 00:33:54,410
+with respect to the matrix lambda
+
+557
+00:33:54,700 --> 00:33:56,490
+and how to compute the updates for the other
+
+558
+00:33:56,700 --> 00:33:57,470
+parameters as well
+
+559
+00:33:57,720 --> 00:33:58,520
+for mu and for psi
+
+560
+00:33:58,790 --> 00:33:59,860
+because this is only for lambda.
+
+561
+00:34:00,170 --> 00:34:06,460
+And so that's the factor analysis algorithm.
+
+562
+00:34:08,040 --> 00:34:10,170
+Justin?
+
+563
+00:34:10,670 --> 00:34:12,910
+Student:I was just wondering in the step
+
+564
+00:34:13,200 --> 00:34:14,130
+in the lower right board
+
+565
+00:34:14,480 --> 00:34:17,180
+you said that the second term doesn't have any
+
+566
+00:34:17,460 --> 00:34:19,240
+parameters that we're interested in.
+
+567
+00:34:19,450 --> 00:34:20,660
+The first term has all the parameters
+
+568
+00:34:20,980 --> 00:34:22,210
+so we'll [inaudible]   but it seems to me that QI
+
+569
+00:34:23,060 --> 00:34:25,850
+has a lot of parameters
+
+570
+00:34:28,990 --> 00:34:30,120
+Instructor (Andrew Ng):I see. Right.
+
+571
+00:34:30,580 --> 00:34:31,210
+Let's see.
+
+572
+00:34:31,580 --> 00:34:33,980
+So the question was doesn't the term QI
+
+573
+00:34:34,240 --> 00:34:35,150
+have parameters?
+
+574
+00:34:42,360 --> 00:34:45,320
+it actually turns out in the EM algorithm
+
+575
+00:34:45,620 --> 00:34:47,370
+sometimes P of ZI may have parameters
+
+576
+00:34:48,200 --> 00:34:50,800
+but QI of ZI may never have any parameters.
+
+577
+00:34:51,460 --> 00:34:54,120
+In the specific case of factor analysis
+
+578
+00:34:54,450 --> 00:34:55,800
+P of ZI doesn't have parameters.
+
+579
+00:34:56,230 --> 00:34:57,600
+In other examples
+
+580
+00:34:58,030 --> 00:34:59,480
+the mixture of Gaussian models say
+
+581
+00:34:59,810 --> 00:35:02,050
+ZI was a multinomial random variable
+
+582
+00:35:02,340 --> 00:35:04,860
+and so in that example PI of ZI has parameters
+
+583
+00:35:05,180 --> 00:35:07,200
+but it turns out that Q of ZI will
+
+584
+00:35:07,440 --> 00:35:08,310
+never have any parameters.
+
+585
+00:35:16,730 --> 00:35:20,600
+is Gaussian with mean given by mu of ZI
+
+586
+00:35:20,870 --> 00:35:26,840
+given XI and covariance sigma ZI given XI.
+
+587
+00:35:36,150 --> 00:35:36,750
+And so it's true that mu and sigma may
+
+588
+00:35:37,270 --> 00:35:37,970
+themselves have depended on
+
+589
+00:35:37,970 --> 00:35:38,970
+So in the EM algorithm QI is –
+
+590
+00:35:38,290 --> 00:35:39,230
+the values of the parameters
+
+591
+00:35:39,530 --> 00:35:41,400
+I had in the previous iteration of EM
+
+592
+00:35:41,720 --> 00:35:44,210
+but the way to think about Q
+
+593
+00:35:44,540 --> 00:35:46,740
+is I'm going to take the parameters from the
+
+594
+00:35:47,000 --> 00:35:48,070
+previous iteration of the algorithm
+
+595
+00:35:48,510 --> 00:35:52,780
+and use that to compute what QI of ZI is.
+
+596
+00:35:53,140 --> 00:35:56,280
+And that's the E second EM algorithm.
+
+597
+00:35:59,840 --> 00:36:02,870
+then this is a fixed distribution.
+
+598
+00:36:06,170 --> 00:36:08,240
+for mu and sigma   and just keep
+
+599
+00:36:08,240 --> 00:36:12,230
+these two values fixed as I run the M step.
+
+600
+00:36:22,840 --> 00:36:23,690
+of the parameters.
+
+601
+00:36:24,810 --> 00:36:25,970
+When I wrote down QI of ZI
+
+602
+00:36:25,970 --> 00:36:26,970
+And in particular   QI of ZI is going to be –
+
+603
+00:36:26,390 --> 00:36:28,330
+that was a function of so yeah the
+
+604
+00:36:28,330 --> 00:36:29,330
+is this Gaussian distribution –
+
+605
+00:36:28,670 --> 00:36:29,990
+parameters from the previous iteration.
+
+606
+00:36:30,290 --> 00:36:31,520
+And I want to compute the new
+
+607
+00:36:31,750 --> 00:36:32,500
+set of parameters.
+
+608
+00:36:33,110 --> 00:36:36,400
+Okay. More questions?
+
+609
+00:36:47,900 --> 00:36:50,700
+So this is probably the most math I'll ever do
+
+610
+00:36:50,930 --> 00:36:52,550
+in a lecture in this entire course.
+
+611
+00:36:58,210 --> 00:37:00,280
+Let's now talk about a different algorithm.
+
+612
+00:37:02,620 --> 00:37:05,180
+Actually   which board was I on?
+
+613
+00:37:37,730 --> 00:37:40,940
+So what I want to do now is talk about
+
+614
+00:37:41,330 --> 00:37:42,710
+an algorithm called
+
+615
+00:37:42,990 --> 00:37:44,130
+principal components analysis
+
+616
+00:37:52,580 --> 00:37:56,000
+which is often abbreviated PCA.
+
+617
+00:37:56,000 --> 00:37:57,000
+And then once I’ve computed what QI of Z is
+
+618
+00:37:56,450 --> 00:37:59,010
+Here's the idea.
+
+619
+00:37:59,540 --> 00:38:03,880
+PCA has a very similar idea as factor analysis
+
+620
+00:38:03,880 --> 00:38:04,880
+I’m gonna use these fixed values
+
+621
+00:38:04,240 --> 00:38:06,550
+but it sort of maybe gets to the problem
+
+622
+00:38:06,900 --> 00:38:09,520
+a little more directly than just factor analysis.
+
+623
+00:38:14,870 --> 00:38:18,630
+so we're still doing unsupervised learning
+
+624
+00:38:18,630 --> 00:38:19,630
+Student:So that’s – I guess I was confused
+
+625
+00:38:18,960 --> 00:38:21,710
+so given a training set of M examples
+
+626
+00:38:21,710 --> 00:38:22,710
+because in the second point over there’s
+
+627
+00:38:22,150 --> 00:38:28,100
+where each XI is an N-dimensional vector
+
+628
+00:38:28,100 --> 00:38:29,100
+a lot of – it looks like they’re parameters
+
+629
+00:38:28,430 --> 00:38:29,390
+as usual
+
+630
+00:38:29,390 --> 00:38:30,390
+but I guess they’re old iterations
+
+631
+00:38:29,760 --> 00:38:34,270
+what I like to do is reduce it to
+
+632
+00:38:34,590 --> 00:38:39,200
+a lower dimensional data set where
+
+633
+00:38:39,570 --> 00:38:44,170
+K is strictly less than N
+
+634
+00:38:44,480 --> 00:38:47,750
+and quite often will be much smaller than N.
+
+635
+00:38:48,280 --> 00:38:53,580
+So I'll give a couple examples
+
+636
+00:38:53,880 --> 00:38:54,920
+of why we want to do this.
+
+637
+00:38:55,370 --> 00:38:58,960
+Imagine that you're given a data set
+
+638
+00:38:59,270 --> 00:39:01,090
+that contains measurements and
+
+639
+00:39:01,360 --> 00:39:04,540
+unknown to you measurements of
+
+640
+00:39:06,510 --> 00:39:07,680
+and unknown to you
+
+641
+00:39:08,130 --> 00:39:10,870
+whoever collected this data actually
+
+642
+00:39:11,260 --> 00:39:14,000
+included the height of the person in
+
+643
+00:39:14,290 --> 00:39:15,390
+centimeters as well as
+
+644
+00:39:15,730 --> 00:39:17,230
+the height of the person in inches.
+
+645
+00:39:17,620 --> 00:39:19,420
+So because of rounding off to the
+
+646
+00:39:19,730 --> 00:39:21,000
+nearest centimeter or rounding off to
+
+647
+00:39:21,310 --> 00:39:23,140
+the nearest inch the values won't exactly
+
+648
+00:39:23,480 --> 00:39:24,280
+match up
+
+649
+00:39:24,660 --> 00:39:27,590
+but along two dimensions of this data anyway
+
+650
+00:39:30,150 --> 00:39:33,170
+it'll lie extremely close to a straight line
+
+651
+00:39:33,170 --> 00:39:34,170
+So the question is given –
+
+652
+00:39:33,470 --> 00:39:35,430
+but it won't lie exactly on a straight line
+
+653
+00:39:35,840 --> 00:39:36,950
+because of rounding off to the nearest
+
+654
+00:39:37,270 --> 00:39:39,380
+centimeter or inch   but lie very close to
+
+655
+00:39:39,680 --> 00:39:40,650
+the straight line.
+
+656
+00:39:41,080 --> 00:39:44,020
+And so we have a data set like this.
+
+657
+00:39:44,370 --> 00:39:45,960
+It seems that what you really care about
+
+658
+00:39:46,310 --> 00:39:47,490
+is that axis
+
+659
+00:39:47,880 --> 00:39:53,150
+and this axis is really the variable of interest.
+
+660
+00:39:53,510 --> 00:39:57,460
+That's maybe the closest thing you have
+
+661
+00:39:57,760 --> 00:39:58,550
+to the true height of a person.
+
+662
+00:39:58,970 --> 00:40:04,540
+And this other axis is just noise.
+
+663
+00:40:05,270 --> 00:40:08,680
+So if you can reduce the dimension of this data
+
+664
+00:40:09,020 --> 00:40:10,580
+from two-dimensional to one-dimensional
+
+665
+00:40:11,400 --> 00:40:13,370
+then maybe you can get rid of some
+
+666
+00:40:13,370 --> 00:40:14,370
+I don't know   people or something –
+
+667
+00:40:13,660 --> 00:40:15,010
+of the noise in this data.
+
+668
+00:40:15,520 --> 00:40:17,710
+Quite often
+
+669
+00:40:18,050 --> 00:40:19,600
+you won't know that this was cm and
+
+670
+00:40:19,820 --> 00:40:20,560
+this was inches.
+
+671
+00:40:20,810 --> 00:40:21,470
+You may have a data set
+
+672
+00:40:21,740 --> 00:40:22,420
+with a hundred attributes
+
+673
+00:40:22,720 --> 00:40:24,530
+but you just didn't happen to notice one
+
+674
+00:40:24,830 --> 00:40:25,800
+was cm and one was inches.
+
+675
+00:40:26,180 --> 00:40:32,060
+Another example that I sometimes
+
+676
+00:40:32,370 --> 00:40:35,140
+think about is some of you know that
+
+677
+00:40:35,470 --> 00:40:36,560
+my students and I work
+
+678
+00:40:37,470 --> 00:40:39,110
+with helicopters a lot.
+
+679
+00:40:39,500 --> 00:40:41,150
+So we imagined that
+
+680
+00:40:41,520 --> 00:40:44,100
+you take surveys of quizzes
+
+681
+00:40:44,330 --> 00:40:46,690
+measurements of radio control helicopter pilots.
+
+682
+00:40:47,040 --> 00:40:50,600
+Maybe one axis you have measurements
+
+683
+00:40:50,900 --> 00:40:53,660
+of your pilot's skill
+
+684
+00:40:56,740 --> 00:40:59,700
+how skillful your helicopter pilot is
+
+685
+00:41:00,300 --> 00:41:05,650
+and on another axis maybe you measure
+
+686
+00:41:05,970 --> 00:41:07,420
+how much they actually enjoy flying.
+
+687
+00:41:07,880 --> 00:41:10,890
+And maybe this is really maybe
+
+688
+00:41:11,180 --> 00:41:13,300
+this is actually roughly one-dimensional data
+
+689
+00:41:13,840 --> 00:41:17,320
+and there's some variable of interest
+
+690
+00:41:17,760 --> 00:41:19,600
+which I'll call maybe pilot attitude
+
+691
+00:41:22,860 --> 00:41:24,910
+that somehow determines their skill
+
+692
+00:41:25,250 --> 00:41:26,430
+and how much they enjoy flying.
+
+693
+00:41:26,850 --> 00:41:28,940
+And so again   if you can reduce this data
+
+694
+00:41:29,260 --> 00:41:30,700
+from two dimensions to one-dimensional
+
+695
+00:41:31,020 --> 00:41:33,100
+maybe you'd have a slightly better of measure
+
+696
+00:41:33,370 --> 00:41:34,590
+of what I'm calling
+
+697
+00:41:34,960 --> 00:41:36,120
+loosely pilot attitude
+
+698
+00:41:36,450 --> 00:41:37,560
+which may be what you really wanted to
+
+699
+00:41:38,050 --> 00:41:41,610
+So let's talk about an algorithm to do this
+
+700
+00:41:41,960 --> 00:41:43,720
+and I should come back and talk about
+
+701
+00:41:44,050 --> 00:41:46,730
+more applications of PCA later.
+
+702
+00:41:53,110 --> 00:41:55,680
+So here's the algorithm.
+
+703
+00:42:10,770 --> 00:42:16,380
+Before running PCA normally
+
+704
+00:42:16,750 --> 00:42:18,560
+you will preprocess the data as follows.
+
+705
+00:42:18,940 --> 00:42:20,670
+I'll just write this out
+
+706
+00:43:26,040 --> 00:43:28,400
+I guess. I know some of you are writing.
+
+707
+00:43:29,340 --> 00:43:32,840
+So this is maybe just an unnecessary
+
+708
+00:43:33,170 --> 00:43:33,920
+amount of writing
+
+709
+00:43:34,280 --> 00:43:36,270
+to say that compute a mean of my training sets
+
+710
+00:43:36,560 --> 00:43:37,410
+and subtract out the means
+
+711
+00:43:37,770 --> 00:43:39,330
+so now I've zeroed out the mean of my
+
+712
+00:43:39,610 --> 00:43:40,410
+training sets.
+
+713
+00:43:40,750 --> 00:43:41,590
+And the other step is
+
+714
+00:43:41,930 --> 00:43:43,960
+I'll compute the variance of each of features
+
+715
+00:43:44,370 --> 00:43:45,990
+after zeroing out the mean
+
+716
+00:43:46,330 --> 00:43:48,880
+and then I'll divide each feature
+
+717
+00:43:49,150 --> 00:43:49,890
+by the standard deviation
+
+718
+00:43:50,220 --> 00:43:52,080
+so that each of my features now has
+
+719
+00:43:52,440 --> 00:43:53,320
+equal variance.
+
+720
+00:43:53,650 --> 00:43:54,790
+So these are some standard preprocessing steps
+
+721
+00:43:55,150 --> 00:43:56,340
+we'll often do for PCA.
+
+722
+00:43:56,770 --> 00:44:00,140
+I'll just mention that sometimes the second step
+
+723
+00:44:00,440 --> 00:44:02,280
+is usually done only when your different
+
+724
+00:44:02,570 --> 00:44:03,700
+features are on different scales.
+
+725
+00:44:04,120 --> 00:44:07,610
+So if you're taking measurements of people
+
+726
+00:44:07,970 --> 00:44:11,050
+one feature may be the height
+
+727
+00:44:11,370 --> 00:44:12,610
+and another may be the weight
+
+728
+00:44:12,940 --> 00:44:13,930
+and another may be the strength
+
+729
+00:44:14,220 --> 00:44:17,030
+and another may be how they age or whatever
+
+730
+00:44:17,360 --> 00:44:19,020
+all of these quantities are on very
+
+731
+00:44:19,290 --> 00:44:19,980
+different scales
+
+732
+00:44:20,280 --> 00:44:22,880
+so you'd normally normalize the variance.
+
+733
+00:44:23,240 --> 00:44:24,160
+Sometimes
+
+734
+00:44:27,220 --> 00:44:31,420
+so for example if you're working with
+
+735
+00:44:31,740 --> 00:44:33,430
+images and the XIJs are the pixels
+
+736
+00:44:33,840 --> 00:44:36,200
+that they're are on the same scale
+
+737
+00:44:36,510 --> 00:44:38,050
+because they're all pixel intensity
+
+738
+00:44:38,360 --> 00:44:39,930
+values ranging from zero to 255
+
+739
+00:44:40,280 --> 00:44:41,680
+then you may omit this step.
+
+740
+00:44:43,480 --> 00:44:45,550
+So after preprocessing
+
+741
+00:44:45,900 --> 00:44:47,550
+let's talk about
+
+742
+00:44:47,860 --> 00:44:52,140
+how we would find the main axes along
+
+743
+00:44:52,450 --> 00:44:53,480
+which the data varies.
+
+744
+00:44:53,790 --> 00:44:55,560
+How would you find a principal axes
+
+745
+00:44:55,920 --> 00:44:56,850
+of variations ?
+
+746
+00:45:15,910 --> 00:45:20,350
+let me just go through one specific example
+
+747
+00:45:21,030 --> 00:45:22,830
+and then we'll formalize the algorithm.
+
+748
+00:45:30,910 --> 00:45:32,880
+Here's my training set
+
+749
+00:45:33,190 --> 00:45:34,240
+comprising five examples.
+
+750
+00:45:34,590 --> 00:45:36,360
+It has roughly zero mean.
+
+751
+00:45:37,490 --> 00:45:41,550
+And the variance under X1 and X2 axes
+
+752
+00:45:41,850 --> 00:45:42,800
+are the same.
+
+753
+00:45:43,560 --> 00:45:44,390
+There's X1
+
+754
+00:45:44,680 --> 00:45:45,360
+there's X2 axes.
+
+755
+00:45:45,620 --> 00:45:48,630
+And so the principal axes and variation of
+
+756
+00:45:48,920 --> 00:45:49,830
+this data is roughly the
+
+757
+00:45:50,100 --> 00:45:52,190
+positive 45-degree axis
+
+758
+00:45:52,550 --> 00:45:55,240
+so what I'd like to do is have my algorithm
+
+759
+00:45:55,560 --> 00:45:57,340
+conclude that this direction
+
+760
+00:45:57,340 --> 00:45:58,340
+if all the XIs are the same type of thing –
+
+761
+00:45:57,760 --> 00:45:58,960
+that I've drawn with this arrow U
+
+762
+00:45:59,250 --> 00:46:02,570
+is the best direction onto which to
+
+763
+00:46:02,920 --> 00:46:06,530
+project the data   so the axis by which my data
+
+764
+00:46:06,900 --> 00:46:07,590
+really varies.
+
+765
+00:46:08,000 --> 00:46:10,570
+So let's think about how we formalize.
+
+766
+00:46:10,950 --> 00:46:14,730
+One thing we want to look at is suppose
+
+767
+00:46:16,990 --> 00:46:18,220
+this is really the axis onto which
+
+768
+00:46:18,530 --> 00:46:19,470
+I want to project
+
+769
+00:46:19,800 --> 00:46:21,410
+that I want to use to capture
+
+770
+00:46:21,680 --> 00:46:23,010
+most of the variation of my data.
+
+771
+00:46:23,470 --> 00:46:25,070
+And then when I take my training set
+
+772
+00:46:25,370 --> 00:46:26,310
+and project it onto this line
+
+773
+00:46:26,670 --> 00:46:31,790
+then I get that set of points.
+
+774
+00:46:35,840 --> 00:46:37,840
+And so you notice that those dots
+
+775
+00:46:38,180 --> 00:46:39,480
+the projections of my training sets
+
+776
+00:46:39,760 --> 00:46:40,560
+onto this axis
+
+777
+00:46:40,980 --> 00:46:42,660
+has very large variance.
+
+778
+00:46:43,090 --> 00:46:45,220
+In contrast
+
+779
+00:46:49,410 --> 00:46:53,750
+let's say this is really  the worst
+
+780
+00:46:54,030 --> 00:46:55,490
+direction onto which to project my data.
+
+781
+00:46:56,170 --> 00:46:59,090
+If I project all my data onto this axis
+
+782
+00:47:07,870 --> 00:47:10,440
+then I find that the projects of
+
+783
+00:47:10,720 --> 00:47:13,420
+my data onto the purple line
+
+784
+00:47:13,760 --> 00:47:14,670
+onto this other line has
+
+785
+00:47:15,050 --> 00:47:16,060
+much smaller variance
+
+786
+00:47:16,430 --> 00:47:17,720
+that my points are clustered together
+
+787
+00:47:18,020 --> 00:47:18,790
+much more tightly.
+
+788
+00:47:19,460 --> 00:47:23,800
+So one way to formalize this notion of finding
+
+789
+00:47:24,160 --> 00:47:27,880
+the main axis of variations of data is
+
+790
+00:47:28,230 --> 00:47:30,190
+I would like to find the vector U
+
+791
+00:47:30,550 --> 00:47:33,250
+I would like to find the direction U so that
+
+792
+00:47:33,610 --> 00:47:35,500
+when I project my data onto that direction
+
+793
+00:47:35,950 --> 00:47:39,480
+the projected points vary as much as possible.
+
+794
+00:47:39,480 --> 00:47:40,480
+I take that axis –
+
+795
+00:47:39,920 --> 00:47:40,860
+So in other words
+
+796
+00:47:41,200 --> 00:47:42,570
+I'm gonna find a direction so that
+
+797
+00:47:42,900 --> 00:47:43,900
+when I project my data onto it
+
+798
+00:47:44,290 --> 00:47:47,850
+the projections are largely widely spaced out.
+
+799
+00:47:48,340 --> 00:47:51,800
+There's large variance.
+
+800
+00:47:57,120 --> 00:47:59,350
+So let's see.
+
+801
+00:48:14,270 --> 00:48:16,810
+So I want to find the direction U.
+
+802
+00:48:17,910 --> 00:48:20,460
+Just as a reminder
+
+803
+00:48:22,120 --> 00:48:24,300
+if I have a vector U of norm one
+
+804
+00:48:38,420 --> 00:48:40,080
+then the vector XI projected onto
+
+805
+00:48:40,410 --> 00:48:49,400
+U has length XI transpose U.
+
+806
+00:48:50,040 --> 00:48:54,240
+To project a vector onto to project X
+
+807
+00:48:54,580 --> 00:48:55,360
+onto unit vector
+
+808
+00:48:55,360 --> 00:48:56,360
+if I were to choose a different direction –
+
+809
+00:48:55,680 --> 00:48:56,910
+the length of the projection's just
+
+810
+00:48:57,210 --> 00:48:58,350
+XI transpose U.
+
+811
+00:48:58,720 --> 00:49:01,880
+And so to formalize my PCA problem
+
+812
+00:49:06,250 --> 00:49:11,740
+so I choose U and this is subject to the
+
+813
+00:49:12,020 --> 00:49:13,190
+constraint that the norm of U
+
+814
+00:49:14,710 --> 00:49:16,150
+but I'm going to maximize
+
+815
+00:49:25,160 --> 00:49:27,630
+the length of the projection of the
+
+816
+00:49:27,900 --> 00:49:31,380
+vectors X onto U. In particular   I want the sum
+
+817
+00:49:31,720 --> 00:49:33,950
+of square distances of the projections
+
+818
+00:49:34,250 --> 00:49:35,380
+to be far from the origin.
+
+819
+00:49:35,730 --> 00:49:37,890
+I want the projections of X onto U to
+
+820
+00:49:38,190 --> 00:49:39,220
+have large variance.
+
+821
+00:49:39,580 --> 00:49:41,990
+And just to simplify some of the math later
+
+822
+00:49:42,280 --> 00:49:43,540
+let me put a one over M in front.
+
+823
+00:49:43,910 --> 00:49:47,360
+And so that quantity on the right
+
+824
+00:49:47,730 --> 00:49:51,580
+is equal to one over M.
+
+825
+00:49:51,980 --> 00:50:00,230
+Let's see. U transpose XI times XI transpose U
+
+826
+00:50:05,610 --> 00:50:07,320
+and so can simplify and I get
+
+827
+00:50:07,610 --> 00:50:10,310
+this is U transpose times U.
+
+828
+00:50:44,460 --> 00:50:51,160
+So I want to maximize U transpose times
+
+829
+00:50:51,530 --> 00:50:54,610
+some matrix times U subject to the constraint
+
+830
+00:50:54,980 --> 00:50:57,080
+that the length of U must be equal to one.
+
+831
+00:50:57,910 --> 00:51:02,030
+And so some of you will recognize that
+
+832
+00:51:02,370 --> 00:51:04,100
+this means U must be the principal
+
+833
+00:51:04,460 --> 00:51:06,970
+eigenvector of this matrix in the middle.
+
+834
+00:51:06,970 --> 00:51:07,970
+then the length of our vector XI projected –
+
+835
+00:51:07,480 --> 00:51:09,080
+So let me just write that down and
+
+836
+00:51:09,420 --> 00:51:10,530
+say a few more words about it.
+
+837
+00:51:10,860 --> 00:51:13,810
+So this implies that U is the principal
+
+838
+00:51:14,170 --> 00:51:21,250
+eigenvector of the matrix
+
+839
+00:51:23,050 --> 00:51:24,570
+and I'll just call this matrix sigma.
+
+840
+00:51:25,050 --> 00:51:26,490
+It actually turns out to be a covariance matrix
+
+841
+00:51:33,270 --> 00:51:34,120
+equals one to M transpose.
+
+842
+00:51:34,940 --> 00:51:37,520
+Actually   let's check.
+
+843
+00:51:37,520 --> 00:51:38,520
+I'm going to choose a vector U to maximize –
+
+844
+00:51:37,880 --> 00:51:40,000
+How many of you are familiar with
+
+845
+00:51:40,340 --> 00:51:41,250
+eigenvectors?
+
+846
+00:51:41,690 --> 00:51:42,830
+Oh   cool. Lots of you
+
+847
+00:51:42,830 --> 00:51:43,830
+that the length of U is one –
+
+848
+00:51:43,150 --> 00:51:43,940
+almost all of you.
+
+849
+00:51:44,290 --> 00:51:45,080
+Great.
+
+850
+00:51:45,080 --> 00:51:46,080
+let's see   sum from I equals one to M –
+
+851
+00:51:47,220 --> 00:51:50,100
+What I'm about to
+
+852
+00:51:50,450 --> 00:51:52,190
+say is very extremely familiar
+
+853
+00:51:52,520 --> 00:51:54,260
+but it's worth saying anyway.
+
+854
+00:51:55,530 --> 00:52:01,380
+So if you have a matrix A
+
+855
+00:52:02,000 --> 00:52:02,880
+and a vector U
+
+856
+00:52:03,660 --> 00:52:05,710
+and they satisfy AU equals lambda U
+
+857
+00:52:06,120 --> 00:52:07,400
+then this is what it means for U
+
+858
+00:52:07,700 --> 00:52:08,930
+to be an eigenvector of the matrix A.
+
+859
+00:52:15,420 --> 00:52:17,630
+And the value lambda here is
+
+860
+00:52:17,940 --> 00:52:19,060
+called an eigenvalue.
+
+861
+00:52:19,470 --> 00:52:23,690
+And so the principal eigenvector is
+
+862
+00:52:24,240 --> 00:52:25,430
+just the eigenvector that
+
+863
+00:52:25,760 --> 00:52:27,170
+corresponds to the largest eigenvalue.
+
+864
+00:52:27,570 --> 00:52:31,650
+One thing that some of you may have seen
+
+865
+00:52:31,960 --> 00:52:33,020
+but I'm not sure that you have
+
+866
+00:52:33,350 --> 00:52:34,750
+and I just wanna relate this to stuff
+
+867
+00:52:35,040 --> 00:52:35,890
+that you already know as well
+
+868
+00:52:36,230 --> 00:52:39,700
+is that optimization problem is really
+
+869
+00:52:40,000 --> 00:52:44,470
+maximize U transpose U subject to
+
+870
+00:52:47,550 --> 00:52:50,060
+let me write that constraint as that
+
+871
+00:52:50,290 --> 00:52:51,220
+U transpose U equals one.
+
+872
+00:52:51,660 --> 00:52:55,600
+And so to solve this constrained
+
+873
+00:52:55,930 --> 00:52:57,190
+optimization problem
+
+874
+00:52:57,980 --> 00:52:59,920
+you write down the Lagrangian lambda
+
+875
+00:53:07,400 --> 00:53:11,090
+where that's the Lagrange multiplier
+
+876
+00:53:18,020 --> 00:53:20,910
+because there's a constraint optimization.
+
+877
+00:53:21,250 --> 00:53:23,440
+And so to actually solve this optimization
+
+878
+00:53:23,840 --> 00:53:25,920
+you take the derivative of L with respect to U
+
+879
+00:53:26,280 --> 00:53:31,230
+and that gives you sigma U minus lambda U.
+
+880
+00:53:31,640 --> 00:53:35,740
+You set the derivative equal to zero
+
+881
+00:53:36,050 --> 00:53:37,700
+and this shows that sigma U equals lambda U
+
+882
+00:53:38,180 --> 00:53:40,170
+and therefore the value of U that
+
+883
+00:53:40,450 --> 00:53:42,210
+solves this constraint optimization problem
+
+884
+00:53:42,500 --> 00:53:43,600
+that we care about must be
+
+885
+00:53:43,940 --> 00:53:44,900
+an eigenvector of sigma.
+
+886
+00:53:45,180 --> 00:53:46,030
+And in particular it turns out
+
+887
+00:53:46,230 --> 00:53:47,080
+to be the principal eigenvector.
+
+888
+00:53:50,710 --> 00:53:55,490
+So just to summarize
+
+889
+00:53:55,860 --> 00:53:58,220
+what have we done?
+
+890
+00:53:58,470 --> 00:53:59,760
+We've shown that given a training set
+
+891
+00:54:00,130 --> 00:54:01,830
+if you want to find the principal axis
+
+892
+00:54:02,140 --> 00:54:03,040
+of a variation of data
+
+893
+00:54:03,340 --> 00:54:04,750
+you want to find the 1-D axis on
+
+894
+00:54:05,160 --> 00:54:06,810
+which the data really varies the most
+
+895
+00:54:07,170 --> 00:54:09,270
+what we do is we construct
+
+896
+00:54:09,600 --> 00:54:10,890
+the covariance matrix sigma
+
+897
+00:54:11,220 --> 00:54:13,640
+the matrix sigma that I wrote down just now
+
+898
+00:54:14,000 --> 00:54:16,380
+and then you would find the principal
+
+899
+00:54:16,680 --> 00:54:18,650
+eigenvector of the matrix sigma.
+
+900
+00:54:18,990 --> 00:54:20,720
+And this gives you
+
+901
+00:54:21,110 --> 00:54:23,390
+the best 1-D subspace onto which to
+
+902
+00:54:23,640 --> 00:54:24,390
+project the data.
+
+903
+00:54:24,390 --> 00:54:25,390
+the norm of U is equal to one and –
+
+904
+00:54:31,820 --> 00:54:32,950
+And more generally
+
+905
+00:54:47,040 --> 00:54:48,300
+you would choose
+
+906
+00:55:13,350 --> 00:55:16,780
+if you wanna K-dimensional subspace onto
+
+907
+00:55:17,100 --> 00:55:17,990
+which project your date
+
+908
+00:55:18,420 --> 00:55:20,710
+you would then choose U1 through UK
+
+909
+00:55:21,040 --> 00:55:23,430
+to be the top K eigenvectors of sigma.
+
+910
+00:55:24,260 --> 00:55:25,770
+And by top K eigenvectors
+
+911
+00:55:26,080 --> 00:55:27,570
+I just mean the eigenvectors corresponding
+
+912
+00:55:28,020 --> 00:55:30,290
+to the K highest eigenvalues.
+
+913
+00:55:31,030 --> 00:55:34,170
+I guess I showed this only for
+
+914
+00:55:34,560 --> 00:55:36,810
+the case of a 1D subspace
+
+915
+00:55:37,170 --> 00:55:38,350
+but this holds more generally.
+
+916
+00:55:38,710 --> 00:55:40,110
+And now
+
+917
+00:55:40,590 --> 00:55:45,360
+the eigenvectors U1 through UK represent
+
+918
+00:55:45,770 --> 00:55:47,980
+give you a new basis with which
+
+919
+00:55:48,340 --> 00:55:49,170
+to represent your data.
+
+920
+00:55:49,640 --> 00:55:56,730
+Student:[Inaudible] diagonal?
+
+921
+00:55:57,520 --> 00:55:58,240
+Instructor (Andrew Ng):Let's see.
+
+922
+00:55:58,500 --> 00:55:59,250
+So by convention
+
+923
+00:55:59,550 --> 00:56:00,810
+the PCA will choose orthogonal axes.
+
+924
+00:56:01,320 --> 00:56:05,350
+So I think this is what I'm saying.
+
+925
+00:56:05,680 --> 00:56:07,170
+Here's one more example.
+
+926
+00:56:07,530 --> 00:56:09,020
+Imagine that you're a three-dimensional set
+
+927
+00:56:09,370 --> 00:56:13,240
+and imagine that your
+
+928
+00:56:14,860 --> 00:56:17,220
+it's very hard to draw in 3-D on the board
+
+929
+00:56:17,500 --> 00:56:18,650
+so just let me try this.
+
+930
+00:56:18,990 --> 00:56:21,470
+Imagine that here my
+
+931
+00:56:21,830 --> 00:56:23,740
+X1 and X2 axes lie on the plane of the board
+
+932
+00:56:24,150 --> 00:56:26,150
+and the X3 axis points directly
+
+933
+00:56:26,480 --> 00:56:27,450
+out of the board.
+
+934
+00:56:28,170 --> 00:56:29,610
+Imagine that you have a data set
+
+935
+00:56:30,000 --> 00:56:34,600
+where most of the data lies on
+
+936
+00:56:35,000 --> 00:56:35,830
+the plane of the board
+
+937
+00:56:36,130 --> 00:56:37,300
+but there's just a little bit of fuzz.
+
+938
+00:56:37,570 --> 00:56:38,170
+So imagine that
+
+939
+00:56:38,410 --> 00:56:39,340
+the X3 axis points orthogonally
+
+940
+00:56:39,710 --> 00:56:40,640
+out of the board
+
+941
+00:56:41,000 --> 00:56:42,840
+and all the data lies roughly
+
+942
+00:56:43,160 --> 00:56:43,920
+in the plane of the board
+
+943
+00:56:44,220 --> 00:56:46,040
+but there's just a tiny little bit of fuzz so
+
+944
+00:56:46,340 --> 00:56:48,150
+that some of the data lies
+
+945
+00:56:48,700 --> 00:56:49,810
+just a couple of millimeters
+
+946
+00:56:50,110 --> 00:56:51,080
+off the board.
+
+947
+00:56:51,460 --> 00:56:52,650
+So you run a PCA on this data.
+
+948
+00:56:52,950 --> 00:56:57,410
+You find that U1 and U2
+
+949
+00:56:57,860 --> 00:56:59,540
+will be some pair of bases that
+
+950
+00:56:59,900 --> 00:57:01,630
+essentially lie in the plane of the board
+
+951
+00:57:02,030 --> 00:57:06,650
+and U3 will be an orthogonal axis
+
+952
+00:57:06,980 --> 00:57:07,930
+at points roughly
+
+953
+00:57:08,250 --> 00:57:09,140
+out of the plane of the board.
+
+954
+00:57:09,730 --> 00:57:13,390
+So if I reduce
+
+955
+00:57:13,700 --> 00:57:14,930
+this data to two dimensions
+
+956
+00:57:15,250 --> 00:57:16,610
+then the bases U1 and U2 now
+
+957
+00:57:17,670 --> 00:57:19,640
+give me a new basis with which
+
+958
+00:57:19,920 --> 00:57:21,290
+to construct my lower dimensional
+
+959
+00:57:21,570 --> 00:57:22,470
+representation of the data.
+
+960
+00:57:24,540 --> 00:57:27,290
+Just to be complete about what that means
+
+961
+00:57:27,610 --> 00:57:36,830
+previously we have say fairly high
+
+962
+00:57:36,830 --> 00:57:37,830
+three-dimensional data set –
+
+963
+00:57:37,140 --> 00:57:39,290
+dimensional input data XI and RN
+
+964
+00:57:39,670 --> 00:57:42,690
+and now if I want to represent my data
+
+965
+00:57:43,270 --> 00:57:44,250
+in this new basis
+
+966
+00:57:44,340 --> 00:57:45,930
+given by U1 up to UK
+
+967
+00:58:03,270 --> 00:58:06,270
+instead I would take each of my original
+
+968
+00:58:06,800 --> 00:58:09,400
+training examples XI and I would now
+
+969
+00:58:09,710 --> 00:58:12,510
+represent it or replace it with a different vector
+
+970
+00:58:12,900 --> 00:58:14,080
+which I call YI
+
+971
+00:58:14,750 --> 00:58:16,000
+and that would be computed
+
+972
+00:58:16,350 --> 00:58:21,180
+as U1 transpose XI U2 transpose XI.
+
+973
+00:58:29,120 --> 00:58:37,090
+And so the YIs are going to be K-dimensional
+
+974
+00:58:40,190 --> 00:58:42,160
+your choice of K will be less than N
+
+975
+00:58:42,500 --> 00:58:45,150
+so this represents a lower dimensional
+
+976
+00:58:45,470 --> 00:58:47,000
+representation of your data
+
+977
+00:58:47,350 --> 00:58:49,510
+and serves as an approximate representation
+
+978
+00:58:49,810 --> 00:58:50,650
+of your original data
+
+979
+00:58:51,320 --> 00:58:52,980
+where you're using only K numbers
+
+980
+00:58:53,270 --> 00:58:54,490
+to represent each training example
+
+981
+00:58:54,850 --> 00:59:01,670
+rather than N numbers. Let's see.
+
+982
+00:59:17,640 --> 00:59:19,050
+Is it possible not to have eigenvectors but
+
+983
+00:59:19,330 --> 00:59:20,220
+have trivial eigenvectors?
+
+984
+00:59:31,470 --> 00:59:32,000
+Instructor (Andrew Ng):Let's see.
+
+985
+00:59:32,230 --> 00:59:33,810
+What do you mean by trivial eigenvectors?
+
+986
+00:59:42,090 --> 00:59:42,700
+Instructor (Andrew Ng):Oh   okay.
+
+987
+00:59:42,950 --> 00:59:43,660
+Yes   so I see.
+
+988
+00:59:43,980 --> 00:59:46,010
+Let me see if I can get this right.
+
+989
+00:59:50,970 --> 00:59:52,470
+that don't have a full set of eigenvectors.
+
+990
+00:59:52,900 --> 00:59:53,930
+Sorry
+
+991
+00:59:54,290 --> 00:59:55,690
+deficient I think is what it's called.
+
+992
+00:59:56,010 --> 00:59:56,650
+Is that right
+
+993
+00:59:56,970 --> 00:59:57,700
+Ziko? Yeah.
+
+994
+00:59:58,060 --> 00:59:58,830
+So some matrices are deficient and
+
+995
+00:59:59,120 --> 01:00:00,660
+actually don't have a full set of eigenvectors
+
+996
+01:00:01,070 --> 01:00:02,800
+like an N by N matrix that
+
+997
+01:00:03,100 --> 01:00:04,990
+does not have N distinct eigenvectors
+
+998
+01:00:05,320 --> 01:00:06,770
+but that turns out not to be possible
+
+999
+01:00:07,140 --> 01:00:09,360
+in this case because the covariance matrix
+
+1000
+01:00:09,710 --> 01:00:10,620
+sigma is symmetric
+
+1001
+01:00:10,940 --> 01:00:13,930
+and symmetric matrices are never deficient
+
+1002
+01:00:14,330 --> 01:00:15,610
+so the matrix sigma will always have
+
+1003
+01:00:15,910 --> 01:00:16,710
+a full set of eigenvectors.
+
+1004
+01:00:17,260 --> 01:00:23,610
+It's possible that if you there's one other issue
+
+1005
+01:00:23,840 --> 01:00:25,070
+which is repeated eigenvalues.
+
+1006
+01:00:25,390 --> 01:00:27,190
+So for example
+
+1007
+01:00:27,560 --> 01:00:30,530
+it turns out that in this example
+
+1008
+01:00:30,900 --> 01:00:34,150
+if my covariance matrix looks like this
+
+1009
+01:00:34,150 --> 01:00:35,150
+where K will be less –
+
+1010
+01:00:39,440 --> 01:00:42,370
+it turns out that the identity of the first two
+
+1011
+01:00:42,690 --> 01:00:43,560
+eigenvectors is ambiguous.
+
+1012
+01:00:43,970 --> 01:00:47,100
+And by that I mean you can choose this
+
+1013
+01:00:47,410 --> 01:00:49,570
+to be U1 and this to be U2
+
+1014
+01:00:50,020 --> 01:00:53,270
+or I can just as well rotate these eigenvectors
+
+1015
+01:00:53,710 --> 01:00:56,690
+and choose that to be U1 and that to be U2
+
+1016
+01:00:57,360 --> 01:00:59,600
+or even choose that to be U1 and
+
+1017
+01:01:00,180 --> 01:01:01,180
+that to be U2
+
+1018
+01:01:01,560 --> 01:01:02,360
+and so on.
+
+1019
+01:01:02,600 --> 01:01:04,490
+And so when you apply PCA
+
+1020
+01:01:04,910 --> 01:01:06,690
+one thing to keep in mind is
+
+1021
+01:01:07,010 --> 01:01:08,980
+sometimes eigenvectors can
+
+1022
+01:01:09,340 --> 01:01:10,860
+rotate freely within their subspaces
+
+1023
+01:01:11,360 --> 01:01:13,380
+when you have repeated eigenvalues
+
+1024
+01:01:13,790 --> 01:01:15,240
+or close to repeated eigenvalues.
+
+1025
+01:01:15,630 --> 01:01:20,340
+And so the way to think about the vectors U
+
+1026
+01:01:20,340 --> 01:01:21,340
+So there are some matrices that are –
+
+1027
+01:01:21,340 --> 01:01:22,340
+I think the term is degenerate –
+
+1028
+01:01:20,680 --> 01:01:22,270
+is think of as a basis with which to
+
+1029
+01:01:22,600 --> 01:01:23,450
+represent your data
+
+1030
+01:01:23,700 --> 01:01:25,630
+but the basis vectors can sometimes
+
+1031
+01:01:25,900 --> 01:01:26,630
+rotate freely
+
+1032
+01:01:26,960 --> 01:01:28,530
+and so it's not always useful to
+
+1033
+01:01:28,840 --> 01:01:30,370
+look at the eigenvectors one at a time
+
+1034
+01:01:30,730 --> 01:01:31,610
+and say this is my first
+
+1035
+01:01:31,880 --> 01:01:34,200
+eigenvector capturing whatever
+
+1036
+01:01:34,600 --> 01:01:35,860
+the height of a person
+
+1037
+01:01:36,240 --> 01:01:37,280
+or this is my second eigenvector
+
+1038
+01:01:37,630 --> 01:01:38,780
+and it captures their skill at or whatever.
+
+1039
+01:01:39,110 --> 01:01:40,600
+That's a very dangerous thing to do
+
+1040
+01:01:40,980 --> 01:01:42,090
+when you do PCA.
+
+1041
+01:01:43,150 --> 01:01:45,490
+What is meaningful is the subspace
+
+1042
+01:01:45,860 --> 01:01:46,750
+spanned by the eigenvectors
+
+1043
+01:01:47,130 --> 01:01:48,930
+but looking at the eigenvectors one at a time
+
+1044
+01:01:49,370 --> 01:01:50,710
+is sometimes a dangerous thing to do
+
+1045
+01:01:52,480 --> 01:01:53,330
+because they can often freely.
+
+1046
+01:01:53,760 --> 01:01:57,230
+Tiny numerical changes can cause eigenvectors
+
+1047
+01:01:57,570 --> 01:01:58,470
+to change a lot
+
+1048
+01:01:58,710 --> 01:02:00,340
+but the subspace spanned by the top K
+
+1049
+01:02:00,670 --> 01:02:02,220
+eigenvectors will usually be about the same.
+
+1050
+01:02:31,750 --> 01:02:33,500
+It actually turns out there are multiple
+
+1051
+01:02:33,930 --> 01:02:35,680
+possible interpretations of PCA.
+
+1052
+01:02:36,130 --> 01:02:37,580
+I'll just give one more
+
+1053
+01:02:37,920 --> 01:02:38,670
+without proof
+
+1054
+01:02:46,890 --> 01:02:48,390
+given a training set like this
+
+1055
+01:02:52,100 --> 01:02:53,570
+and let me just choose a direction.
+
+1056
+01:02:53,880 --> 01:02:54,720
+This is not the principal components.
+
+1057
+01:02:55,170 --> 01:02:56,640
+I choose some direction and
+
+1058
+01:02:57,350 --> 01:02:58,550
+project my data onto it
+
+1059
+01:03:01,760 --> 01:03:02,530
+This is clearly not the
+
+1060
+01:03:02,840 --> 01:03:03,690
+direction PCA would choose
+
+1061
+01:03:04,200 --> 01:03:05,100
+but what you can think of
+
+1062
+01:03:05,420 --> 01:03:06,060
+PCA as doing is
+
+1063
+01:03:06,470 --> 01:03:08,000
+choose a subspace onto
+
+1064
+01:03:08,290 --> 01:03:10,380
+which to project your data so as to
+
+1065
+01:03:10,690 --> 01:03:13,010
+minimize the sum of squares differences
+
+1066
+01:03:13,360 --> 01:03:15,150
+between the projections and the  points.
+
+1067
+01:03:15,600 --> 01:03:16,320
+So in other words
+
+1068
+01:03:16,700 --> 01:03:18,590
+another way to think of PCA
+
+1069
+01:03:18,940 --> 01:03:21,570
+is trying to minimize the sum of
+
+1070
+01:03:21,920 --> 01:03:26,270
+squares of these distances between the dots
+
+1071
+01:03:26,650 --> 01:03:29,070
+the points X and the dots onto
+
+1072
+01:03:29,370 --> 01:03:30,250
+which I'm projecting the data.
+
+1073
+01:03:30,690 --> 01:03:34,670
+It turns out they're actually I don't know.
+
+1074
+01:03:34,960 --> 01:03:36,290
+There's sort of nine or ten different
+
+1075
+01:03:36,640 --> 01:03:37,190
+interpretations of PCA.
+
+1076
+01:03:37,600 --> 01:03:38,900
+This is another one.
+
+1077
+01:03:39,240 --> 01:03:41,410
+There are a bunch of ways to derive PCA.
+
+1078
+01:03:41,710 --> 01:03:44,760
+You get play with some PCA ideas
+
+1079
+01:03:45,140 --> 01:03:46,320
+more in the next problem set.
+
+1080
+01:03:56,730 --> 01:03:58,080
+What I want to do next is talk about
+
+1081
+01:03:58,530 --> 01:04:00,070
+a few applications of PCA.
+
+1082
+01:04:16,290 --> 01:04:19,200
+Here are some ways that PCA is used.
+
+1083
+01:04:19,570 --> 01:04:21,020
+One is visualization.
+
+1084
+01:04:24,700 --> 01:04:29,130
+Very often you have high dimensional data sets.
+
+1085
+01:04:29,550 --> 01:04:30,950
+Someone gives you a 50-dimensional
+
+1086
+01:04:31,270 --> 01:04:31,910
+data set
+
+1087
+01:04:32,260 --> 01:04:34,780
+and it's very hard for you to look at a data
+
+1088
+01:04:35,080 --> 01:04:36,360
+set that's 50-dimensional and understand
+
+1089
+01:04:36,690 --> 01:04:37,710
+what's going on because you can't plot
+
+1090
+01:04:38,000 --> 01:04:38,760
+something in 50 dimensions.
+
+1091
+01:04:39,220 --> 01:04:41,260
+So common practice
+
+1092
+01:04:41,260 --> 01:04:42,260
+which is that  whatever –
+
+1093
+01:04:41,650 --> 01:04:42,380
+if you want to visualize
+
+1094
+01:04:42,670 --> 01:04:43,600
+a very high dimensional data set
+
+1095
+01:04:43,600 --> 01:04:44,600
+another view of PCA is –
+
+1096
+01:04:43,940 --> 01:04:45,790
+is to take your data and project it
+
+1097
+01:04:46,170 --> 01:04:47,460
+into say a 2-D plot
+
+1098
+01:04:47,890 --> 01:04:49,080
+or project it into a 3-D plot
+
+1099
+01:04:49,430 --> 01:04:50,820
+so you can render like a 3-D display
+
+1100
+01:04:51,180 --> 01:04:53,290
+on a computer so you can better
+
+1101
+01:04:53,640 --> 01:04:55,320
+visualize the data and look for structure.
+
+1102
+01:04:55,730 --> 01:04:59,160
+One particular example that I learned about
+
+1103
+01:04:59,490 --> 01:05:01,580
+of doing this recently was in Krishna Shenoy's
+
+1104
+01:05:01,920 --> 01:05:04,820
+lab here in Stanford in which he had
+
+1105
+01:05:05,310 --> 01:05:08,990
+readings from 50 different parts
+
+1106
+01:05:09,320 --> 01:05:09,920
+of a monkey brain.
+
+1107
+01:05:10,300 --> 01:05:12,370
+I actually don't know it was the number 50.
+
+1108
+01:05:12,690 --> 01:05:13,940
+It was tens of different parts of
+
+1109
+01:05:14,700 --> 01:05:15,460
+the monkey brain
+
+1110
+01:05:15,820 --> 01:05:17,320
+and so you'd have these
+
+1111
+01:05:17,620 --> 01:05:18,400
+50-dimensional readings
+
+1112
+01:05:18,820 --> 01:05:20,840
+50-dimensional vectors correspond to
+
+1113
+01:05:21,250 --> 01:05:22,780
+different amounts of electrical activity
+
+1114
+01:05:23,170 --> 01:05:24,500
+in different parts of the monkey brain.
+
+1115
+01:05:24,850 --> 01:05:25,810
+It was actually 50 neurons
+
+1116
+01:05:26,080 --> 01:05:29,430
+but tens of neurons   but it was tens of neurons
+
+1117
+01:05:29,760 --> 01:05:30,480
+in the monkey brain
+
+1118
+01:05:30,800 --> 01:05:32,320
+and so you have a 50dimensional time series
+
+1119
+01:05:32,670 --> 01:05:34,050
+and it's very hard to
+
+1120
+01:05:34,430 --> 01:05:35,370
+visualize very high dimensional data.
+
+1121
+01:05:35,770 --> 01:05:39,020
+But what he understood is that was use PCA
+
+1122
+01:05:39,350 --> 01:05:41,340
+to project this 50-dimensional data down
+
+1123
+01:05:41,640 --> 01:05:42,450
+to three dimensions
+
+1124
+01:05:42,800 --> 01:05:44,690
+and then you can visualize this data
+
+1125
+01:05:44,990 --> 01:05:47,160
+in three dimensions just using 3D plot
+
+1126
+01:05:47,480 --> 01:05:48,740
+so you could visualize
+
+1127
+01:05:49,070 --> 01:05:50,350
+what the monkey is thinking over time.
+
+1128
+01:05:53,280 --> 01:05:55,950
+Another common application of PCA
+
+1129
+01:05:56,320 --> 01:05:58,020
+is compression
+
+1130
+01:05:59,660 --> 01:06:01,260
+so if you have high dimensional data
+
+1131
+01:06:01,650 --> 01:06:03,430
+and you want to store it with numbers
+
+1132
+01:06:04,190 --> 01:06:05,740
+clearly PCA is a great way to do this.
+
+1133
+01:06:06,140 --> 01:06:08,400
+It turns out also that
+
+1134
+01:06:08,700 --> 01:06:11,820
+sometimes in machine learning
+
+1135
+01:06:12,650 --> 01:06:14,060
+sometimes you're just given extremely
+
+1136
+01:06:14,380 --> 01:06:15,430
+high dimensional input data
+
+1137
+01:06:15,850 --> 01:06:17,500
+and for computational reasons
+
+1138
+01:06:17,880 --> 01:06:19,210
+you don't want to deal with such
+
+1139
+01:06:19,560 --> 01:06:20,450
+high dimensional data.
+
+1140
+01:06:27,890 --> 01:06:29,350
+one common use of PCA
+
+1141
+01:06:29,770 --> 01:06:31,240
+is taking very high dimensional data
+
+1142
+01:06:31,590 --> 01:06:34,790
+and represent it with low dimensional subspace
+
+1143
+01:06:35,060 --> 01:06:36,100
+it's that YI is the representation
+
+1144
+01:06:36,350 --> 01:06:37,100
+I wrote down just now
+
+1145
+01:06:37,380 --> 01:06:38,500
+so that you can work with
+
+1146
+01:06:38,720 --> 01:06:39,540
+much lower dimensional data.
+
+1147
+01:06:39,870 --> 01:06:42,350
+And it turns out to be
+
+1148
+01:06:42,620 --> 01:06:43,970
+it's this sort of just seems to
+
+1149
+01:06:44,200 --> 01:06:45,130
+make a fact of life that when you're
+
+1150
+01:06:45,370 --> 01:06:46,560
+given extremely high dimensional data
+
+1151
+01:06:49,870 --> 01:06:51,700
+of all the high dimensional data sets
+
+1152
+01:06:52,070 --> 01:06:54,260
+I've ever seen   very high dimensional data
+
+1153
+01:06:54,570 --> 01:06:56,540
+sets often have all their points
+
+1154
+01:06:56,850 --> 01:06:58,560
+lying on much lower dimensional subspaces
+
+1155
+01:06:58,950 --> 01:07:01,430
+so very often you can dramatically reduce
+
+1156
+01:07:01,730 --> 01:07:02,710
+the dimension of your data
+
+1157
+01:07:03,070 --> 01:07:06,020
+and really be throwing too much of
+
+1158
+01:07:06,280 --> 01:07:08,560
+the information away.
+
+1159
+01:07:10,320 --> 01:07:13,120
+So let's see.
+
+1160
+01:07:13,500 --> 01:07:14,560
+If you're learning algorithms
+
+1161
+01:07:15,060 --> 01:07:15,970
+it takes a long time to run
+
+1162
+01:07:16,230 --> 01:07:18,150
+very high dimensional data.
+
+1163
+01:07:18,540 --> 01:07:19,820
+You can often use PCA to compress
+
+1164
+01:07:20,160 --> 01:07:21,040
+the data to lower dimensions
+
+1165
+01:07:21,380 --> 01:07:22,430
+so that your learning algorithm
+
+1166
+01:07:22,720 --> 01:07:23,520
+runs much faster.
+
+1167
+01:07:23,850 --> 01:07:25,870
+And you can often do this with sacrificing
+
+1168
+01:07:26,210 --> 01:07:27,220
+almost no performance
+
+1169
+01:07:27,630 --> 01:07:28,530
+in your learning algorithm.
+
+1170
+01:07:29,070 --> 01:07:31,620
+There's one other use of PCA for learning
+
+1171
+01:07:34,400 --> 01:07:36,280
+you remember when we
+
+1172
+01:07:36,590 --> 01:07:37,440
+talked about learning theory
+
+1173
+01:07:37,790 --> 01:07:38,710
+we said that
+
+1174
+01:07:39,080 --> 01:07:40,170
+the more features you have
+
+1175
+01:07:40,420 --> 01:07:42,330
+the more complex your hypothesis class
+
+1176
+01:07:42,690 --> 01:07:44,200
+if say you're doing linear classification.
+
+1177
+01:07:44,490 --> 01:07:45,340
+If you have more features
+
+1178
+01:07:45,590 --> 01:07:46,260
+you have lots of features
+
+1179
+01:07:46,670 --> 01:07:48,580
+then you may be more prone to overfitting.
+
+1180
+01:07:48,580 --> 01:07:49,580
+And so fairly –
+
+1181
+01:07:48,940 --> 01:07:51,040
+One other thing you could do with PCA
+
+1182
+01:07:51,340 --> 01:07:52,770
+is just use that to reduce the dimension
+
+1183
+01:07:53,060 --> 01:07:53,900
+of your data
+
+1184
+01:07:54,160 --> 01:07:55,940
+so that you have fewer features
+
+1185
+01:07:56,230 --> 01:07:57,220
+and you may be slightly less
+
+1186
+01:07:57,500 --> 01:07:58,320
+prone to overfitting.
+
+1187
+01:07:58,720 --> 01:08:01,620
+This particular application of PCA to learning
+
+1188
+01:08:02,000 --> 01:08:03,330
+I should say   it sometimes works.
+
+1189
+01:08:03,700 --> 01:08:04,340
+It often works.
+
+1190
+01:08:04,620 --> 01:08:06,190
+I'll actually later show a couple of examples
+
+1191
+01:08:06,580 --> 01:08:07,560
+where sort of do this and it works.
+
+1192
+01:08:07,890 --> 01:08:10,280
+But this particular application of PCA
+
+1193
+01:08:10,280 --> 01:08:11,280
+almost all the time just in practice –
+
+1194
+01:08:10,630 --> 01:08:12,950
+I find looking in the industry
+
+1195
+01:08:13,270 --> 01:08:14,450
+it also seems to be a little bit overused
+
+1196
+01:08:14,850 --> 01:08:17,520
+and in particular actually
+
+1197
+01:08:17,870 --> 01:08:18,690
+let me say more about that later.
+
+1198
+01:08:19,190 --> 01:08:21,850
+We'll come back to that later.
+
+1199
+01:08:22,260 --> 01:08:25,180
+There's a couple of other applications
+
+1200
+01:08:25,440 --> 01:08:26,160
+to talk about.
+
+1201
+01:08:26,410 --> 01:08:28,830
+One is outlier detection or anomaly detection.
+
+1202
+01:08:34,290 --> 01:08:36,550
+The idea is
+
+1203
+01:08:36,960 --> 01:08:40,000
+suppose I give you a data set.
+
+1204
+01:08:40,770 --> 01:08:41,960
+You may then run PCA to
+
+1205
+01:08:42,310 --> 01:08:44,520
+find roughly the subspace on
+
+1206
+01:08:44,820 --> 01:08:45,650
+which your data lies.
+
+1207
+01:08:46,240 --> 01:08:49,120
+And then if you want to find anomalies
+
+1208
+01:08:49,470 --> 01:08:50,370
+in future examples
+
+1209
+01:08:50,780 --> 01:08:52,140
+you then just look at your future examples
+
+1210
+01:08:52,430 --> 01:08:54,490
+and see if the lie very far from your subspace.
+
+1211
+01:08:54,880 --> 01:08:56,710
+This isn't a fantastic
+
+1212
+01:08:57,010 --> 01:08:57,780
+anomaly detection algorithm.
+
+1213
+01:09:00,190 --> 01:09:03,040
+the idea is if I give you a data set
+
+1214
+01:09:03,480 --> 01:09:06,290
+you may find a little dimensional subspace
+
+1215
+01:09:06,290 --> 01:09:07,290
+which is –
+
+1216
+01:09:06,600 --> 01:09:07,490
+on which it lies
+
+1217
+01:09:07,720 --> 01:09:09,110
+and then if you ever find a point that's far
+
+1218
+01:09:09,370 --> 01:09:10,110
+from your subspace
+
+1219
+01:09:10,490 --> 01:09:11,060
+you can factor
+
+1220
+01:09:11,350 --> 01:09:11,980
+it as an anomaly.
+
+1221
+01:09:12,320 --> 01:09:14,580
+So this really isn't the best
+
+1222
+01:09:14,870 --> 01:09:15,750
+anomaly detection algorithm
+
+1223
+01:09:16,200 --> 01:09:17,100
+but sometimes this is done.
+
+1224
+01:09:17,390 --> 01:09:21,280
+And the last application that I want to go
+
+1225
+01:09:21,580 --> 01:09:24,450
+into a little bit more in detail is
+
+1226
+01:09:25,150 --> 01:09:30,480
+matching or to find better
+
+1227
+01:09:30,830 --> 01:09:31,700
+distance calculations.
+
+1228
+01:09:37,360 --> 01:09:39,440
+So let me say what I mean by this.
+
+1229
+01:09:39,890 --> 01:09:41,250
+I'll go into much more detail on this last one.
+
+1230
+01:09:57,030 --> 01:09:59,200
+So here's the idea.
+
+1231
+01:09:59,780 --> 01:10:03,320
+Let's say you want to do face recognition
+
+1232
+01:10:03,780 --> 01:10:13,050
+So let's say you want to do face recognition
+
+1233
+01:10:13,960 --> 01:10:16,800
+and you have 100 of 100 images.
+
+1234
+01:10:19,080 --> 01:10:23,630
+So a picture of a face is like
+
+1235
+01:10:23,960 --> 01:10:24,660
+whatever
+
+1236
+01:10:24,920 --> 01:10:26,810
+some array of pixels
+
+1237
+01:10:27,200 --> 01:10:29,500
+and the pixels have different grayscale values
+
+1238
+01:10:29,850 --> 01:10:31,210
+and dependent on
+
+1239
+01:10:31,630 --> 01:10:32,960
+the different grayscale values
+
+1240
+01:10:33,270 --> 01:10:34,990
+you get different pictures of people's faces.
+
+1241
+01:10:48,360 --> 01:10:53,350
+And so you have 100 of 100 pixel images
+
+1242
+01:10:53,720 --> 01:10:54,870
+and you think of each face
+
+1243
+01:10:55,310 --> 01:10:59,870
+as a 10  000-dimensional vector
+
+1244
+01:11:00,490 --> 01:11:02,720
+which is very high dimensional.
+
+1245
+01:11:08,700 --> 01:11:11,110
+cartoon to keep in mind
+
+1246
+01:11:11,590 --> 01:11:12,680
+and you think of here's
+
+1247
+01:11:13,020 --> 01:11:16,280
+my plot of my 100-dimensional space
+
+1248
+01:11:17,140 --> 01:11:18,030
+and if you look at a lot of
+
+1249
+01:11:18,390 --> 01:11:19,490
+different pictures of faces
+
+1250
+01:11:19,910 --> 01:11:23,170
+each face will be along what will be
+
+1251
+01:11:23,460 --> 01:11:25,620
+some point in this 100  000-dimensional space.
+
+1252
+01:11:28,450 --> 01:11:30,980
+And in this cartoon
+
+1253
+01:11:32,770 --> 01:11:34,970
+I mean most of this data lies on a relatively
+
+1254
+01:11:35,300 --> 01:11:36,170
+low dimensional subspace
+
+1255
+01:11:36,510 --> 01:11:38,430
+because in this
+
+1256
+01:11:38,730 --> 01:11:40,400
+10  000-dimensional space
+
+1257
+01:11:40,400 --> 01:11:41,400
+It's not a very good –
+
+1258
+01:11:40,820 --> 01:11:42,520
+really not all points correspond to
+
+1259
+01:11:42,910 --> 01:11:44,190
+valid images of faces.
+
+1260
+01:11:44,580 --> 01:11:46,500
+The vast majority of values
+
+1261
+01:11:46,890 --> 01:11:49,630
+the vast majority of 10  000-dimensional images
+
+1262
+01:11:50,020 --> 01:11:51,560
+just correspond to random noise
+
+1263
+01:11:51,910 --> 01:11:53,290
+like looking things and don't correspond to
+
+1264
+01:11:53,620 --> 01:11:56,910
+a valid image of a face. But instead the space
+
+1265
+01:11:57,230 --> 01:11:59,610
+of possible face of images probably spans
+
+1266
+01:12:00,030 --> 01:12:01,610
+a much lowerdimensional subspace.
+
+1267
+01:12:19,990 --> 01:12:21,390
+And so what we'll do is
+
+1268
+01:12:22,730 --> 01:12:25,530
+we'll use a low dimensional subspace
+
+1269
+01:12:26,510 --> 01:12:27,360
+on which the data lies
+
+1270
+01:12:27,640 --> 01:12:30,240
+and in practice a PCA dimension of
+
+1271
+01:12:30,570 --> 01:12:32,020
+50 would be fairly typical.
+
+1272
+01:12:37,300 --> 01:12:39,870
+there's some axes that really measure
+
+1273
+01:12:40,260 --> 01:12:42,110
+the shape or the appearance of the face
+
+1274
+01:12:42,670 --> 01:12:46,170
+and there are some other axes
+
+1275
+01:12:46,850 --> 01:12:48,760
+that we're not interested in
+
+1276
+01:12:49,130 --> 01:12:50,650
+that are maybe just random noise.
+
+1277
+01:12:51,180 --> 01:12:56,750
+So what we'll do is for face recognition
+
+1278
+01:12:57,160 --> 01:12:59,060
+I might give you a picture of a face
+
+1279
+01:12:59,470 --> 01:13:01,010
+and ask you what face looks
+
+1280
+01:13:01,350 --> 01:13:02,180
+the most similar to this.
+
+1281
+01:13:02,490 --> 01:13:03,300
+I'll give you a picture of someone
+
+1282
+01:13:03,630 --> 01:13:04,560
+and ask you can you find
+
+1283
+01:13:04,890 --> 01:13:05,770
+other pictures of the same person.
+
+1284
+01:13:06,160 --> 01:13:11,050
+And so the key step to do that is to look at
+
+1285
+01:13:11,370 --> 01:13:12,130
+two faces and to compare
+
+1286
+01:13:12,440 --> 01:13:13,580
+how similar these two faces are.
+
+1287
+01:13:20,860 --> 01:13:22,580
+So here's how we'll use PCA.
+
+1288
+01:13:23,210 --> 01:13:29,510
+Given a face there and a different face there
+
+1289
+01:13:29,970 --> 01:13:32,430
+the way I'll measure the difference between
+
+1290
+01:13:32,760 --> 01:13:33,590
+these two faces is
+
+1291
+01:13:34,000 --> 01:13:34,860
+I won't just measure
+
+1292
+01:13:35,150 --> 01:13:36,350
+the Euclidian distance similarity.
+
+1293
+01:13:36,710 --> 01:13:39,470
+Instead   I'll take the space and project it
+
+1294
+01:13:42,070 --> 01:13:44,330
+take this and project it onto
+
+1295
+01:13:44,620 --> 01:13:45,470
+my 50-dimensional subspace and
+
+1296
+01:13:45,860 --> 01:13:48,380
+measure the similarity
+
+1297
+01:13:48,680 --> 01:13:50,040
+between those two points on the subspace.
+
+1298
+01:13:50,040 --> 01:13:51,040
+I want you to think of it as –
+
+1299
+01:13:50,830 --> 01:13:52,540
+And so when I do that
+
+1300
+01:13:52,950 --> 01:13:54,630
+I may end up with a face here
+
+1301
+01:13:54,940 --> 01:13:56,160
+and a face here that look very far
+
+1302
+01:13:56,530 --> 01:13:57,420
+upon the original space
+
+1303
+01:13:57,740 --> 01:13:59,350
+but when I project them onto the subspace
+
+1304
+01:13:59,740 --> 01:14:02,000
+they may end up looking much more similar.
+
+1305
+01:14:02,640 --> 01:14:04,460
+So what I want to show you
+
+1306
+01:14:04,750 --> 01:14:05,620
+a second on the laptop
+
+1307
+01:14:05,940 --> 01:14:10,470
+is given each of these training
+
+1308
+01:14:10,800 --> 01:14:15,310
+examples is a 10  000-dimensional vector
+
+1309
+01:14:15,680 --> 01:14:18,210
+I can plot that as a grayscale image
+
+1310
+01:14:18,650 --> 01:14:19,980
+and I'd get like a picture
+
+1311
+01:14:20,350 --> 01:14:21,070
+of some person's face.
+
+1312
+01:14:21,860 --> 01:14:24,160
+What I'll also show you on the laptop
+
+1313
+01:14:24,540 --> 01:14:26,140
+will be plots of my eigenvectors.
+
+1314
+01:14:26,650 --> 01:14:28,300
+And so the eigenvectors also
+
+1315
+01:14:28,700 --> 01:14:30,650
+live in a 10  000-dimensional subspace.
+
+1316
+01:14:31,140 --> 01:14:35,990
+And I plot that. You get some image that's
+
+1317
+01:14:36,350 --> 01:14:40,770
+and these images are called eigenfaces.
+
+1318
+01:14:40,770 --> 01:14:41,770
+So when you think of –
+
+1319
+01:14:41,310 --> 01:14:44,220
+And what PCA is doing is essentially
+
+1320
+01:14:44,520 --> 01:14:47,320
+using linear combinations of these eigenface
+
+1321
+01:14:47,660 --> 01:14:49,550
+images to approximate these XIs
+
+1322
+01:14:49,900 --> 01:14:52,060
+and it's the eigenfaces that span
+
+1323
+01:14:52,370 --> 01:14:53,460
+so that these
+
+1324
+01:14:53,700 --> 01:14:56,550
+bases U1   U2 and so on that
+
+1325
+01:14:56,850 --> 01:14:59,020
+span hopefully the subspace along
+
+1326
+01:14:59,330 --> 01:15:01,350
+which my faces live.
+
+1327
+01:17:22,330 --> 01:17:25,200
+So here's a training set
+
+1328
+01:17:25,570 --> 01:17:28,150
+comprising aligned images like these
+
+1329
+01:17:28,480 --> 01:17:29,570
+a much larger set
+
+1330
+01:17:29,860 --> 01:17:30,950
+than is shown here
+
+1331
+01:17:31,330 --> 01:17:32,860
+and so when you run PCA
+
+1332
+01:17:33,190 --> 01:17:41,390
+these are some of the plots of the UIs.
+
+1333
+01:17:41,760 --> 01:17:46,410
+Remember when I said plot the eigenvectors
+
+1334
+01:17:46,680 --> 01:17:47,390
+UI in the same way that it's
+
+1335
+01:17:47,700 --> 01:17:48,730
+plotting the training examples
+
+1336
+01:17:49,000 --> 01:17:49,790
+and so you end up with the
+
+1337
+01:17:50,070 --> 01:17:51,990
+eigenvectors being grayscale images like these
+
+1338
+01:17:52,290 --> 01:17:54,600
+and what approximate images of faces
+
+1339
+01:17:54,900 --> 01:17:56,470
+with linear combinations of these.
+
+1340
+01:17:56,820 --> 01:17:58,520
+So I said it's dangerous
+
+1341
+01:17:58,830 --> 01:17:59,970
+to look at individual eigenvectors
+
+1342
+01:17:59,970 --> 01:18:00,970
+onto my 50-dimensional subspace –
+
+1343
+01:18:00,370 --> 01:18:02,000
+and you really shouldn't do that
+
+1344
+01:18:02,260 --> 01:18:03,790
+but let me just do that a little bit anyway.
+
+1345
+01:18:04,120 --> 01:18:05,230
+So if you look at the first eigenvector
+
+1346
+01:18:05,590 --> 01:18:07,470
+this corresponds roughly to
+
+1347
+01:18:07,770 --> 01:18:08,890
+whether the face is illuminated
+
+1348
+01:18:09,210 --> 01:18:10,110
+from the left or the right.
+
+1349
+01:18:10,400 --> 01:18:12,160
+So depending on how heavy the weight is
+
+1350
+01:18:12,480 --> 01:18:13,220
+on this image
+
+1351
+01:18:13,540 --> 01:18:14,830
+that roughly captures variation in illumination.
+
+1352
+01:18:15,430 --> 01:18:18,220
+The second image is hard to tell.
+
+1353
+01:18:18,500 --> 01:18:19,740
+It seems to be capturing variation
+
+1354
+01:18:19,970 --> 01:18:20,960
+in overall brightness of the face.
+
+1355
+01:18:21,240 --> 01:18:23,330
+The third eigenvector
+
+1356
+01:18:23,600 --> 01:18:25,960
+capturing roughly how much of a shadow
+
+1357
+01:18:26,360 --> 01:18:27,640
+or maybe a beard or something a person
+
+1358
+01:18:27,960 --> 01:18:29,430
+has and so forth.
+
+1359
+01:18:29,840 --> 01:18:31,000
+It's dangerous to look at
+
+1360
+01:18:31,280 --> 01:18:31,850
+individual eigenvectors
+
+1361
+01:18:32,080 --> 01:18:34,610
+but it sort of slightly informs the look of it.
+
+1362
+01:18:34,890 --> 01:18:36,320
+Here's an example
+
+1363
+01:18:36,640 --> 01:18:39,560
+of a specific application of eigenfaces.
+
+1364
+01:18:39,950 --> 01:18:41,860
+This is from
+
+1365
+01:18:42,120 --> 01:18:44,580
+Sandy Pentland Alex Pentland's lab at MIT.
+
+1366
+01:18:44,870 --> 01:18:46,310
+In this display
+
+1367
+01:18:47,040 --> 01:18:49,240
+this upper leftmost image is the input
+
+1368
+01:18:49,640 --> 01:18:51,530
+to the eigenface's algorithm.
+
+1369
+01:18:52,100 --> 01:18:55,140
+The algorithm is then asked to go through
+
+1370
+01:18:55,480 --> 01:18:56,450
+a database and find the most similar faces.
+
+1371
+01:18:56,890 --> 01:18:58,700
+This second image here is
+
+1372
+01:18:59,770 --> 01:19:01,250
+what it thinks is the most similar face
+
+1373
+01:19:01,550 --> 01:19:02,340
+of the input.
+
+1374
+01:19:02,700 --> 01:19:04,640
+The next one over is the second most similar.
+
+1375
+01:19:04,900 --> 01:19:06,450
+The next one over is the third most similar
+
+1376
+01:19:06,830 --> 01:19:07,530
+and so on.
+
+1377
+01:19:07,890 --> 01:19:10,630
+And so using eigenfaces   and by measuring
+
+1378
+01:19:10,900 --> 01:19:12,230
+differences between faces
+
+1379
+01:19:12,660 --> 01:19:13,500
+in that lower dimensional subspace
+
+1380
+01:19:13,790 --> 01:19:15,240
+it is able to do a reasonable job
+
+1381
+01:19:15,560 --> 01:19:17,090
+identifying pictures of the same person
+
+1382
+01:19:17,410 --> 01:19:20,260
+even with faces of the person removed.
+
+1383
+01:19:20,630 --> 01:19:22,200
+And the next row shows the
+
+1384
+01:19:22,560 --> 01:19:23,880
+next most similar faces and so on
+
+1385
+01:19:24,100 --> 01:19:29,310
+so this one is the fourth most similar face
+
+1386
+01:19:29,670 --> 01:19:30,360
+and so on.
+
+1387
+01:19:30,680 --> 01:19:33,670
+This is a usual application of eigenfaces.
+
+1388
+01:19:35,230 --> 01:19:36,730
+The last thing I wanna say is
+
+1389
+01:19:37,050 --> 01:19:38,290
+just when people tell me
+
+1390
+01:19:39,060 --> 01:19:40,190
+about machine learning problems
+
+1391
+01:19:40,480 --> 01:19:41,530
+I do often recommend they try PCA
+
+1392
+01:19:41,890 --> 01:19:42,660
+for different things
+
+1393
+01:19:42,960 --> 01:19:44,070
+so PCA is a useful thing to know
+
+1394
+01:19:44,460 --> 01:19:45,550
+to use for compression
+
+1395
+01:19:45,880 --> 01:19:46,940
+visualization   and so on.
+
+1396
+01:19:47,210 --> 01:19:48,370
+But in industry
+
+1397
+01:19:48,700 --> 01:19:51,520
+I just tend to see PCA used slightly more often.
+
+1398
+01:19:51,790 --> 01:19:52,690
+There are also some times
+
+1399
+01:19:53,060 --> 01:19:53,990
+where you see people using PCA when
+
+1400
+01:19:54,410 --> 01:19:55,290
+they really shouldn't.
+
+1401
+01:19:55,630 --> 01:19:56,860
+So just one final piece of advice
+
+1402
+01:19:57,220 --> 01:19:59,680
+for use of PCA is before you use it
+
+1403
+01:20:00,060 --> 01:20:01,970
+also think about whether you could just do it
+
+1404
+01:20:02,340 --> 01:20:03,520
+with the original training data XI
+
+1405
+01:20:03,830 --> 01:20:05,230
+without compressing it
+
+1406
+01:20:05,630 --> 01:20:06,720
+since I've also definitely
+
+1407
+01:20:07,110 --> 01:20:08,380
+seen people compress the data when
+
+1408
+01:20:08,720 --> 01:20:09,560
+they really didn't need to.
+
+1409
+01:20:09,920 --> 01:20:11,190
+But having said that
+
+1410
+01:20:11,570 --> 01:20:13,250
+I also often advise people to use PCA for
+
+1411
+01:20:13,570 --> 01:20:14,830
+various problems and it often works.
+
+1412
+01:20:15,140 --> 01:20:16,080
+Okay.
+
+1413
+01:20:16,430 --> 01:20:17,350
+Sorry about running late.
+
+1414
+01:20:17,680 --> 01:20:18,870
+So let's wrap up for today.
+

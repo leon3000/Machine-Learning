@@ -1,10 +1,9 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1503369458896" ID="ID_1625008046" MODIFIED="1503370274078" TEXT="&#x590d;&#x4e60;&#x7b14;&#x8bb0;">
+<node COLOR="#000000" CREATED="1503369458896" ID="ID_1625008046" MODIFIED="1503469687929" TEXT="&#x590d;&#x4e60;&#x7b14;&#x8bb0;">
 <font NAME="SansSerif" SIZE="20"/>
-<hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <hook NAME="accessories/plugins/HierarchicalIcons.properties"/>
-<node COLOR="#0033ff" CREATED="1502675416936" FOLDED="true" ID="ID_747077059" MODIFIED="1503457808904" POSITION="right" TEXT="Linear Algebra Review and Reference">
+<node COLOR="#0033ff" CREATED="1502675416936" FOLDED="true" ID="ID_747077059" MODIFIED="1503468352475" POSITION="right" TEXT="Linear Algebra Review and Reference">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1502675533435" ID="ID_1783234702" MODIFIED="1503370274003" TEXT="Basic Concepts and Notation">
@@ -457,7 +456,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502761228708" HGAP="33" ID="ID_335456667" MODIFIED="1503457786800" POSITION="left" TEXT="Probability Theory Review for Machine Learning" VSHIFT="-7">
+<node COLOR="#0033ff" CREATED="1502761228708" FOLDED="true" HGAP="33" ID="ID_335456667" MODIFIED="1503469676426" POSITION="right" TEXT="Probability Theory Review for Machine Learning" VSHIFT="-7">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1502761556054" ID="ID_816197445" MODIFIED="1503370274043" TEXT="Basic Concepts">
@@ -646,9 +645,178 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503457771004" ID="ID_638527329" MODIFIED="1503457771005" POSITION="right" TEXT="">
+<node COLOR="#0033ff" CREATED="1503457771004" FOLDED="true" ID="ID_638527329" MODIFIED="1503468796038" POSITION="right" TEXT="Convex Optimization Overveiw">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1503468356830" ID="ID_1717062656" MODIFIED="1503468361141" TEXT="Introduction">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468365619" ID="ID_1440386678" MODIFIED="1503468368411" TEXT="Convex Sets">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503468372589" ID="ID_528278358" MODIFIED="1503468375052" TEXT="Examples">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1503468381449" ID="ID_1717003244" MODIFIED="1503468385394" TEXT="Convex Functions">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503468390272" ID="ID_1244244240" MODIFIED="1503468398281" TEXT="First Order Condition for Convexity">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468402590" ID="ID_61698814" MODIFIED="1503468410294" TEXT="Second Order Condition for Convexity">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468414141" ID="ID_525984664" MODIFIED="1503468451080" TEXT="Jensen&apos;s Inequality">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468427603" ID="ID_1951772275" MODIFIED="1503468453309" TEXT="Sublevel Sets">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468434742" ID="ID_498421444" MODIFIED="1503468455421" TEXT="Examples">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1503468459232" ID="ID_1403932637" MODIFIED="1503468472224" TEXT="Convex Optimization Problems">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503468476474" ID="ID_644788020" MODIFIED="1503468492830" TEXT="Global Optimality in Convex Problems">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468493850" ID="ID_914128984" MODIFIED="1503468504961" TEXT="Special Cases of Convex Problems">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468510857" ID="ID_583784495" MODIFIED="1503468512979" TEXT="Examples">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1503468545041" FOLDED="true" ID="ID_169912820" MODIFIED="1503468942389" POSITION="right" TEXT="Convex Optimization Overview(cnt&apos;d)">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1503468562643" ID="ID_1579743630" MODIFIED="1503468566167" TEXT="Recap">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468572204" ID="ID_1738174853" MODIFIED="1503468573951" TEXT="Duality">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503468576631" ID="ID_128387380" MODIFIED="1503468590742" TEXT="A motivating example:CS 229 homework grading">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468597254" ID="ID_1035948762" MODIFIED="1503468604784" TEXT="Duality in optimization">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468610149" ID="ID_441564525" MODIFIED="1503468617816" TEXT="Strong duality">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468622103" ID="ID_889382433" MODIFIED="1503468631431" TEXT="The KKT conditions">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1503468574177" ID="ID_105072518" MODIFIED="1503468645669" TEXT="Algorithms for convex optimization">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503468645671" ID="ID_121405972" MODIFIED="1503468652478" TEXT="Unconstrained optimization">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468657304" ID="ID_1924686511" MODIFIED="1503468667194" TEXT="Inequality-constrained optimization">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1503468672120" ID="ID_764108090" MODIFIED="1503468683035" TEXT="Directions for further exploration">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468701164" ID="ID_494723382" MODIFIED="1503468715436" TEXT="Appendix:THe soft-margin SVM">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503468727251" ID="ID_372381372" MODIFIED="1503468737119" TEXT="Eliminating the primal variables">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468737313" ID="ID_1906639209" MODIFIED="1503468746867" TEXT="KKT complementary">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503468747074" ID="ID_1188843572" MODIFIED="1503468753805" TEXT="Simplification">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1503468960671" FOLDED="true" ID="ID_500873311" MODIFIED="1503469180419" POSITION="right" TEXT="Hidden Markov Models Fundamentals">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1503468982844" ID="ID_1738280652" MODIFIED="1503468988983" TEXT="Markov Models">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503468996711" ID="ID_160211931" MODIFIED="1503469013031" TEXT="Two questions of a Markov Model">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1503469013031" ID="ID_439675155" MODIFIED="1503469027861" TEXT="Probability of a state sequence"/>
+<node COLOR="#111111" CREATED="1503469033498" ID="ID_869102189" MODIFIED="1503469044348" TEXT="Maximum likelihood parameter assignment"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1503469054212" ID="ID_491793948" MODIFIED="1503469061360" TEXT="Hidden Markov Models">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503469066193" ID="ID_1908957001" MODIFIED="1503469077947" TEXT="Three questions of Hidden Markov Model">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503469077947" ID="ID_1435201315" MODIFIED="1503469109767" TEXT="Probability of an observed sequence:Forward Procedure">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503469116688" ID="ID_1566105777" MODIFIED="1503469131978" TEXT="Maximum Likelihood State Assignment:The Viterbi Algorithm">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503469138450" ID="ID_1089045080" MODIFIED="1503469148772" TEXT="Parameter Learning:EM for HMMs">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1503469182926" FOLDED="true" ID="ID_355535064" MODIFIED="1503469343311" POSITION="right" TEXT="Gaussian processes">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1503469189675" ID="ID_542575507" MODIFIED="1503469214273" TEXT="Bayesian methods">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503469214587" ID="ID_164146418" MODIFIED="1503469225313" TEXT="multivariate Gaussians">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503469231179" ID="ID_1420346478" MODIFIED="1503469236547" TEXT="Gayesian linear regression">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503469241196" ID="ID_1273061350" MODIFIED="1503469246055" TEXT="Gaussian processes">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503469246927" ID="ID_919747326" MODIFIED="1503469259820" TEXT="Probability distributions over functions with finite domains">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503469263684" ID="ID_1707512176" MODIFIED="1503469277813" TEXT="Probability distributuions over functions with infinite domains">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503469287197" ID="ID_1691278403" MODIFIED="1503469294643" TEXT="The squared exponential kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1503469299037" ID="ID_582291573" MODIFIED="1503469305265" TEXT="Gaussian process regression">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503469305267" ID="ID_1107397115" MODIFIED="1503469313764" TEXT="The Gaussian process regeression model">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1503469319917" ID="ID_1485277648" MODIFIED="1503469323412" TEXT="Prediction">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1503469331133" ID="ID_1215973730" MODIFIED="1503469333493" TEXT="Summary">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 </node>
 </map>

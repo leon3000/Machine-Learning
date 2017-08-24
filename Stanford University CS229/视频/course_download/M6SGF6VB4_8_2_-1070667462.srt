@@ -1,0 +1,5016 @@
+﻿1
+00:00:21,440 --> 00:00:27,450
+Okay. Welcome back.
+
+2
+00:00:27,600 --> 00:00:31,230
+What I want to do today is
+
+3
+00:00:31,340 --> 00:00:32,950
+wrap up our discussion on support vector machines
+
+4
+00:00:33,090 --> 00:00:36,470
+and in particular we'll also talk about the idea of kernels
+
+5
+00:00:36,610 --> 00:00:40,630
+and then talk about L1 norm, soft margin, SVM
+
+6
+00:00:40,740 --> 00:00:44,860
+which is, what will let us apply SVM even today to learn its acceptable
+
+7
+00:00:44,970 --> 00:00:47,260
+I'l l talk about the SMO algorithm,
+
+8
+00:00:47,360 --> 00:00:48,960
+is an algorithm
+
+9
+00:00:49,060 --> 00:00:50,710
+for solving the optimization problem
+
+10
+00:00:50,820 --> 00:00:52,570
+that we posed last time.
+
+11
+00:00:54,580 --> 00:00:56,550
+To recap,
+
+12
+00:00:56,650 --> 00:00:59,420
+we wrote down
+
+13
+00:00:59,520 --> 00:01:03,730
+the following context optimization problem.
+
+14
+00:01:03,840 --> 00:01:15,220
+All this is assuming that the data is linearly separable,
+
+15
+00:01:15,370 --> 00:01:17,060
+which is an assumption that I'll fix later,
+
+16
+00:01:17,190 --> 00:01:27,550
+and so with this optimization problem,
+
+17
+00:01:27,690 --> 00:01:28,750
+given a training set,
+
+18
+00:01:28,860 --> 00:01:38,360
+this will find the optimal margin classifier for the data
+
+19
+00:01:38,470 --> 00:01:41,970
+set that maximizes this geometric margin
+
+20
+00:01:42,100 --> 00:01:43,890
+from your training examples.
+
+21
+00:01:44,030 --> 00:01:48,080
+And so in the previous lecture,
+
+22
+00:01:48,190 --> 00:01:50,440
+we also derived the dual of this problem,
+
+23
+00:01:50,590 --> 00:01:54,330
+which was to maximize this.
+
+24
+00:02:22,920 --> 00:02:23,470
+And this is the dual of our primal optimization problem.
+
+25
+00:02:23,610 --> 00:02:24,700
+Here,
+
+26
+00:02:24,810 --> 00:02:28,070
+I'm using these angle brackets to denote inner product,
+
+27
+00:02:28,200 --> 00:02:32,460
+so this is just XI transpose XJ
+
+28
+00:02:32,600 --> 00:02:35,260
+for vectors XI and XJ.
+
+29
+00:02:35,370 --> 00:02:39,750
+We also worked out
+
+30
+00:02:39,830 --> 00:02:45,290
+the ways W would be given by sum over I alpha I YI XI.
+
+31
+00:02:45,380 --> 00:02:48,380
+Therefore,
+
+32
+00:02:48,480 --> 00:02:49,840
+when you need to
+
+33
+00:02:49,920 --> 00:02:53,420
+make a prediction of classification time,
+
+34
+00:02:53,530 --> 00:02:55,690
+you need to compute the value of
+
+35
+00:02:55,810 --> 00:02:57,230
+the hypothesis applied to
+
+36
+00:02:57,340 --> 00:03:03,020
+which is G of W transpose X plus B where G is that
+
+37
+00:03:03,120 --> 00:03:05,170
+threshold function that outputs plus one and minus one.
+
+38
+00:03:05,290 --> 00:03:15,120
+And so this is G of sum over I alpha I.
+
+39
+00:03:16,590 --> 00:03:21,400
+So that can also be written
+
+40
+00:03:21,530 --> 00:03:26,780
+in terms of inner products between input vectors X.
+
+41
+00:03:26,920 --> 00:03:34,150
+what I want to do is now talk about the idea of kernels,
+
+42
+00:03:34,260 --> 00:03:35,910
+which will make use of this property
+
+43
+00:03:36,020 --> 00:03:38,980
+because it turns out you can take the only dependers
+
+44
+00:03:39,140 --> 00:03:43,090
+of the algorithm on X is through these inner products.
+
+45
+00:03:43,220 --> 00:03:44,630
+In fact,
+
+46
+00:03:44,750 --> 00:03:46,770
+you can write the entire algorithm
+
+47
+00:03:46,890 --> 00:03:49,360
+without ever explicitly referring to an X vector
+
+48
+00:03:49,470 --> 00:03:54,750
+between input feature vectors.
+
+49
+00:03:56,540 --> 00:04:01,450
+And the idea of a high kernel is as following. Let's
+
+50
+00:04:01,560 --> 00:04:04,300
+say that you have an input attribute.
+
+51
+00:04:04,400 --> 00:04:08,440
+Let's just say for now
+
+52
+00:04:08,550 --> 00:04:09,600
+it's a real number.
+
+53
+00:04:09,750 --> 00:04:12,220
+Maybe this is the living area of a house
+
+54
+00:04:12,350 --> 00:04:15,170
+that you're trying to make a prediction on,
+
+55
+00:04:15,280 --> 00:04:16,570
+like whether
+
+56
+00:04:16,690 --> 00:04:17,660
+it will be sold in the next six months.
+
+57
+00:04:17,780 --> 00:04:21,760
+Quite often, we'll take this feature X
+
+58
+00:04:21,890 --> 00:04:25,010
+and we'll map it to a richer set of features.
+
+59
+00:04:25,110 --> 00:04:25,940
+So for example,
+
+60
+00:04:26,060 --> 00:04:28,300
+we will take X
+
+61
+00:04:28,380 --> 00:04:31,890
+and map it to these four polynomial features,
+
+62
+00:04:32,020 --> 00:04:36,090
+and let me acutely call this mapping Phi.
+
+63
+00:04:36,260 --> 00:04:40,100
+So we'll let Phi of X denote the mapping
+
+64
+00:04:40,230 --> 00:04:41,220
+from your original features to
+
+65
+00:04:41,360 --> 00:04:42,600
+some higher dimensional set of features.
+
+66
+00:04:42,720 --> 00:04:48,490
+if you do this and you want to use the features Phi of X,
+
+67
+00:04:48,610 --> 00:04:51,900
+then all you need to do is go back to the learning
+
+68
+00:04:52,040 --> 00:04:56,050
+algorithm and everywhere you see XI, XJ,
+
+69
+00:04:56,200 --> 00:05:02,730
+we'll replace it with the inner product between Phi of XI
+
+70
+00:05:02,860 --> 00:05:05,510
+and Phi of XJ.
+
+71
+00:05:05,650 --> 00:05:10,790
+So this corresponds to running a support vector machine
+
+72
+00:05:10,900 --> 00:05:13,130
+with the features given by Phi of X rather than with your
+
+73
+00:05:13,240 --> 00:05:15,770
+original one-dimensional input feature X.
+
+74
+00:05:15,890 --> 00:05:20,890
+And in a scenario that I want to consider,
+
+75
+00:05:21,000 --> 00:05:24,630
+sometimes Phi of X will be very high dimensional,
+
+76
+00:05:24,780 --> 00:05:32,530
+and in fact sometimes Phi of X ;
+
+77
+00:05:32,680 --> 00:05:34,100
+so for example, Phi of X
+
+78
+00:05:34,220 --> 00:05:35,850
+may contain very high degree polynomial features.
+
+79
+00:05:35,990 --> 00:05:39,540
+Sometimes Phi of X will actually even be
+
+80
+00:05:39,650 --> 00:05:40,630
+an infinite dimensional vector of features,
+
+81
+00:05:40,760 --> 00:05:42,080
+and the question is
+
+82
+00:05:42,190 --> 00:05:44,290
+if Phi of X is an extremely high dimensional,
+
+83
+00:05:44,410 --> 00:05:46,160
+then you can't actually
+
+84
+00:05:46,260 --> 00:05:49,160
+compute to these inner products very efficiently, it seems,
+
+85
+00:05:49,290 --> 00:05:50,390
+because computers need to
+
+86
+00:05:50,530 --> 00:05:53,460
+represent an extremely high dimensional
+
+87
+00:05:53,540 --> 00:05:54,910
+feature vector
+
+88
+00:05:55,030 --> 00:05:56,080
+and then take inefficient.
+
+89
+00:05:56,190 --> 00:06:04,440
+It turns out that in many important special cases,
+
+90
+00:06:04,560 --> 00:06:05,400
+we can write down
+
+91
+00:06:05,530 --> 00:06:08,980
+let's call the kernel function, denoted by K,
+
+92
+00:06:09,120 --> 00:06:12,520
+which will be this, which would be
+
+93
+00:06:12,640 --> 00:06:20,460
+inner product between those feature vectors.
+
+94
+00:06:20,610 --> 00:06:23,430
+It turns out there will be important special cases
+
+95
+00:06:23,650 --> 00:06:26,830
+where computing Phi of X is computationally very
+
+96
+00:06:26,980 --> 00:06:29,030
+expensive : maybe is impossible.
+
+97
+00:06:29,160 --> 00:06:30,390
+There's an infinite dimensional vector,
+
+98
+00:06:30,570 --> 00:06:32,470
+and you can't compute infinite dimensional vectors.
+
+99
+00:06:32,620 --> 00:06:34,410
+There will be important special cases
+
+100
+00:06:34,540 --> 00:06:36,620
+where Phi of X is very expensive to represent
+
+101
+00:06:36,800 --> 00:06:38,110
+because it is so high dimensional,
+
+102
+00:06:38,250 --> 00:06:39,230
+but nonetheless,
+
+103
+00:06:39,410 --> 00:06:42,190
+you can actually compute a kernel between XI and XJ.
+
+104
+00:06:42,330 --> 00:06:43,710
+You can compute the inner product
+
+105
+00:06:43,820 --> 00:06:47,340
+between these two vectors very inexpensively.
+
+106
+00:06:47,470 --> 00:06:51,690
+And so the idea of the support vector machine is that
+
+107
+00:06:51,910 --> 00:06:54,130
+everywhere in the algorithm
+
+108
+00:06:54,260 --> 00:06:55,490
+that you see these inner products,
+
+109
+00:06:55,660 --> 00:06:58,980
+we're going to replace it with a kernel function
+
+110
+00:06:59,140 --> 00:07:00,430
+that you can compute efficiently,
+
+111
+00:07:00,560 --> 00:07:05,070
+and that lets you work in feature spaces Phi of X
+
+112
+00:07:05,190 --> 00:07:08,850
+even if Phi of X are very high dimensional.
+
+113
+00:07:08,980 --> 00:07:14,000
+Let me now say how that's done.
+
+114
+00:07:14,130 --> 00:07:17,810
+A little bit later today,
+
+115
+00:07:17,940 --> 00:07:20,480
+we'll actually see some concrete examples of Phi of X
+
+116
+00:07:20,620 --> 00:07:21,460
+and of kernels.
+
+117
+00:07:21,590 --> 00:07:22,400
+For now,
+
+118
+00:07:22,530 --> 00:07:24,750
+let's just think about constructing kernels explicitly.
+
+119
+00:07:24,860 --> 00:07:27,460
+This best illustrates my example.
+
+120
+00:07:27,580 --> 00:07:35,510
+Let's say you have two inputs,
+
+121
+00:07:35,660 --> 00:07:36,330
+X and Z.
+
+122
+00:07:36,470 --> 00:07:39,640
+Normally I should write those as XI and XJ,
+
+123
+00:07:39,790 --> 00:07:42,340
+but I'm just going to write
+
+124
+00:07:42,430 --> 00:07:46,940
+X and Z to save on writing.
+
+125
+00:07:47,060 --> 00:07:48,430
+Let's say my kernel is K of X,
+
+126
+00:07:48,580 --> 00:07:51,770
+Z equals X transpose Z squared.
+
+127
+00:07:51,900 --> 00:08:09,530
+And so this is : right?
+
+128
+00:08:09,650 --> 00:08:13,140
+X transpose Z : this thing here is X transpose Z
+
+129
+00:08:13,260 --> 00:08:14,160
+and this thing is X transpose Z,
+
+130
+00:08:14,260 --> 00:08:16,090
+so this is X transpose Z squared.
+
+131
+00:08:16,200 --> 00:08:21,060
+And that's equal to that.
+
+132
+00:08:21,200 --> 00:08:37,590
+And so this kernel corresponds to the feature mapping
+
+133
+00:08:37,690 --> 00:09:05,210
+where Phi of X is equal to : and I'll write this down
+
+134
+00:09:05,320 --> 00:09:08,420
+for the case of N equals free, I guess.
+
+135
+00:09:08,530 --> 00:09:09,480
+And so with this definition of Phi of X,
+
+136
+00:09:09,560 --> 00:09:12,000
+you can verify for yourself that this thing becomes
+
+137
+00:09:12,420 --> 00:09:18,710
+the inner product between Phi of X and Phi of Z,
+
+138
+00:09:18,850 --> 00:09:22,750
+because to get an inner product between two vectors is ;
+
+139
+00:09:22,890 --> 00:09:25,140
+you can just take a sum of the corresponding elements
+
+140
+00:09:25,270 --> 00:09:26,910
+of the vectors.
+
+141
+00:09:27,050 --> 00:09:29,880
+You multiply them. So if this is Phi of X,
+
+142
+00:09:29,980 --> 00:09:31,670
+then the inner product between Phi of X and Phi of Z
+
+143
+00:09:31,800 --> 00:09:35,700
+will be the sum over all the elements of this vector
+
+144
+00:09:35,830 --> 00:09:38,510
+times the corresponding elements of Phi of Z,
+
+145
+00:09:38,680 --> 00:09:40,680
+and what you get is this one.
+
+146
+00:09:40,840 --> 00:09:47,390
+And so the cool thing about this is that
+
+147
+00:09:47,510 --> 00:09:50,210
+in order to compute Phi of X,
+
+148
+00:09:50,570 --> 00:09:57,930
+you need just to compute Phi of X.
+
+149
+00:09:58,030 --> 00:10:07,610
+If N is a dimension of X and Z,
+
+150
+00:10:07,720 --> 00:10:10,140
+then Phi of X
+
+151
+00:10:10,250 --> 00:10:13,400
+is a vector of all pairs of XI XJ
+
+152
+00:10:13,520 --> 00:10:14,740
+multiplied of each other,
+
+153
+00:10:14,850 --> 00:10:17,760
+and so the length of Phi of X is N squared.
+
+154
+00:10:17,880 --> 00:10:19,990
+You need order N squared time
+
+155
+00:10:20,110 --> 00:10:21,740
+just to compute Phi of X.
+
+156
+00:10:21,830 --> 00:10:24,720
+But to compute K
+
+157
+00:10:24,840 --> 00:10:39,210
+: to compute the kernel function,
+
+158
+00:10:39,340 --> 00:10:40,870
+all you need is order N time,
+
+159
+00:10:41,000 --> 00:10:46,300
+because the kernel function is defined
+
+160
+00:10:46,410 --> 00:10:49,720
+as X transpose Z squared,
+
+161
+00:10:49,820 --> 00:10:57,550
+so you just take the inner product between X and Z,
+
+162
+00:10:57,650 --> 00:10:58,830
+which is order N time and you square
+
+163
+00:10:58,940 --> 00:11:00,050
+that and you've computed this kernel function,
+
+164
+00:11:00,160 --> 00:11:01,490
+and so you just computed the inner product
+
+165
+00:11:01,630 --> 00:11:03,170
+between two vectors
+
+166
+00:11:03,320 --> 00:11:06,260
+where each vector has
+
+167
+00:11:06,400 --> 00:11:07,540
+N squared elements,
+
+168
+00:11:07,650 --> 00:11:08,760
+but you did it in N square time.
+
+169
+00:11:08,860 --> 00:11:12,590
+Student:For any kernel you find for X and Z,
+
+170
+00:11:12,710 --> 00:11:16,280
+does Phi exist for X and Z?
+
+171
+00:11:16,380 --> 00:11:18,900
+Instructor (Andrew Ng):Let me talk about that later.
+
+172
+00:11:18,990 --> 00:11:21,730
+We'll talk about what is a valid kernel later.
+
+173
+00:11:21,840 --> 00:11:25,570
+Please raise your hand if this makes sense.
+
+174
+00:11:25,690 --> 00:11:35,290
+So let me just describe
+
+175
+00:11:35,390 --> 00:11:39,590
+a couple of quick generalizations to this.
+
+176
+00:11:39,730 --> 00:11:43,010
+One is that
+
+177
+00:11:43,140 --> 00:11:49,380
+if you define KXZ to be equal to
+
+178
+00:11:49,520 --> 00:11:57,700
+X transpose Z plus C squared,
+
+179
+00:11:57,850 --> 00:11:58,620
+so again,
+
+180
+00:11:58,720 --> 00:12:00,560
+you can compute this kernel in order and time
+
+181
+00:12:00,640 --> 00:12:03,420
+then
+
+182
+00:12:03,500 --> 00:12:06,180
+that turns out to correspond to a feature vector
+
+183
+00:12:06,300 --> 00:12:09,940
+where I'm just going to add a few more elements
+
+184
+00:12:10,050 --> 00:12:24,260
+at the bottom where you add root 2. Let me read that.
+
+185
+00:12:24,380 --> 00:12:25,230
+That was
+
+186
+00:12:25,310 --> 00:12:27,130
+root 2 CX1 root 2 CX2 root 2 CX3 and C.
+
+187
+00:12:27,220 --> 00:12:33,540
+And so this is a way of creating a feature vector
+
+188
+00:12:33,650 --> 00:12:34,950
+with both the monomials,
+
+189
+00:12:35,070 --> 00:12:36,730
+meaning the first order terms,
+
+190
+00:12:36,830 --> 00:12:40,240
+as well as the quadratic or the inner product terms
+
+191
+00:12:40,330 --> 00:12:42,710
+between XI and XJ,
+
+192
+00:12:42,800 --> 00:12:46,310
+and the parameter C here allows you
+
+193
+00:12:46,420 --> 00:12:49,060
+to control the relative waiting between the monomial
+
+194
+00:12:49,170 --> 00:12:50,890
+terms, so the first order terms,
+
+195
+00:12:51,000 --> 00:12:52,720
+and the quadratic terms.
+
+196
+00:12:52,820 --> 00:12:57,430
+Again, this is still inner product
+
+197
+00:12:57,540 --> 00:12:58,950
+between vectors of length
+
+198
+00:12:59,060 --> 00:13:01,630
+and square in order N time.
+
+199
+00:13:01,780 --> 00:13:06,980
+More generally, here are some other examples of kernels.
+
+200
+00:13:07,130 --> 00:13:19,410
+Actually, a generalization of the one
+
+201
+00:13:19,520 --> 00:13:21,600
+I just derived right now would be the following kernel.
+
+202
+00:13:21,740 --> 00:13:27,950
+And so this corresponds to using
+
+203
+00:13:28,070 --> 00:13:35,190
+all N plus DQZ features of all monomials.
+
+204
+00:13:35,330 --> 00:13:40,740
+Monomials just mean the products of
+
+205
+00:13:40,850 --> 00:13:42,430
+XI XJ XK.
+
+206
+00:13:42,560 --> 00:13:51,720
+Just all the polynomial terms up to degree D and
+
+207
+00:13:51,850 --> 00:13:55,510
+plus  so on the order of N plus
+
+208
+00:13:55,610 --> 00:13:56,910
+D to the power of D,
+
+209
+00:13:57,040 --> 00:13:58,190
+so this grows exponentially in D.
+
+210
+00:13:58,280 --> 00:14:00,600
+This is a very high dimensional feature vector,
+
+211
+00:14:00,730 --> 00:14:04,740
+but again, you can implicitly construct the feature vector
+
+212
+00:14:04,860 --> 00:14:06,210
+and take inner products between them.
+
+213
+00:14:06,350 --> 00:14:08,650
+It's very computationally efficient,
+
+214
+00:14:08,770 --> 00:14:10,990
+because you just compute the inner product
+
+215
+00:14:11,120 --> 00:14:12,850
+between X and Z,
+
+216
+00:14:12,980 --> 00:14:13,730
+add C
+
+217
+00:14:13,820 --> 00:14:14,840
+and you take that real number to the power of D
+
+218
+00:14:14,970 --> 00:14:16,500
+and by plugging this in as a kernel,
+
+219
+00:14:16,610 --> 00:14:18,020
+you're implicitly working in
+
+220
+00:14:18,120 --> 00:14:19,990
+an extremely high dimensional computing space.
+
+221
+00:14:20,120 --> 00:14:30,320
+So what I've given is just a few specific examples of
+
+222
+00:14:30,480 --> 00:14:34,650
+how to create kernels.
+
+223
+00:14:34,750 --> 00:14:39,370
+I want to go over just a few specific examples of kernels.
+
+224
+00:14:39,490 --> 00:14:40,780
+So let's you
+
+225
+00:14:40,880 --> 00:14:41,850
+ask you more generally
+
+226
+00:14:41,940 --> 00:14:43,240
+if you're faced with a new machine-learning problem,
+
+227
+00:14:43,360 --> 00:14:44,730
+how do you come up with a kernel?
+
+228
+00:14:44,840 --> 00:14:46,990
+There are many ways to think about it,
+
+229
+00:14:47,110 --> 00:14:48,810
+but here's one intuition that's sort of useful.
+
+230
+00:14:48,980 --> 00:14:55,140
+So given a set of attributes of X,
+
+231
+00:14:55,250 --> 00:14:57,010
+you're going to use a feature vector of Phi of X
+
+232
+00:14:57,100 --> 00:15:00,920
+and given a set of attributes Z,
+
+233
+00:15:01,060 --> 00:15:03,220
+you're going to use an input feature vector Phi of Z,
+
+234
+00:15:03,320 --> 00:15:06,830
+and so the kernel is
+
+235
+00:15:06,950 --> 00:15:08,280
+computing the inner product
+
+236
+00:15:08,370 --> 00:15:09,840
+between Phi of X and Phi of Z.
+
+237
+00:15:09,950 --> 00:15:14,670
+And so one intuition ;
+
+238
+00:15:14,840 --> 00:15:16,160
+this is a partial intuition.
+
+239
+00:15:16,270 --> 00:15:20,390
+This isn't as rigorous intuition that it is used for.
+
+240
+00:15:20,500 --> 00:15:23,190
+It is that if X and Z are very similar,
+
+241
+00:15:23,310 --> 00:15:25,860
+then Phi of X and Phi of Z
+
+242
+00:15:25,980 --> 00:15:27,330
+will be pointing in the same direction,
+
+243
+00:15:27,440 --> 00:15:31,160
+and therefore the inner product would be large.
+
+244
+00:15:31,290 --> 00:15:33,720
+Whereas in contrast,
+
+245
+00:15:33,870 --> 00:15:35,760
+if X and Z are very dissimilar,
+
+246
+00:15:35,890 --> 00:15:38,200
+then Phi of X and Phi of Z
+
+247
+00:15:38,320 --> 00:15:39,720
+may be pointing different directions,
+
+248
+00:15:39,860 --> 00:15:41,770
+and so the inner product may be small.
+
+249
+00:15:41,870 --> 00:15:44,100
+That intuition is not a rigorous one,
+
+250
+00:15:44,230 --> 00:15:45,930
+but it's sort of a useful one to think about.
+
+251
+00:15:46,020 --> 00:15:51,130
+If you're faced with a new learning problem ;
+
+252
+00:15:51,260 --> 00:15:54,270
+if I give you some random thing to classify
+
+253
+00:15:54,350 --> 00:15:56,990
+and you want to decide how to come up with a kernel,
+
+254
+00:15:57,090 --> 00:15:59,630
+one way is to try to
+
+255
+00:15:59,750 --> 00:16:04,730
+come up with the function P of XZ that is large,
+
+256
+00:16:04,890 --> 00:16:07,270
+if you want to learn the algorithm
+
+257
+00:16:07,410 --> 00:16:12,320
+to think of X and Z as similar and small.
+
+258
+00:16:12,440 --> 00:16:21,240
+Again, this isn't always true,
+
+259
+00:16:21,390 --> 00:16:23,260
+but this is one of several intuitions.
+
+260
+00:16:23,410 --> 00:16:26,720
+So if you're trying to classify some brand new thing ;
+
+261
+00:16:26,890 --> 00:16:28,000
+you're trying to classify
+
+262
+00:16:28,110 --> 00:16:28,960
+or DNA sequences
+
+263
+00:16:29,100 --> 00:16:32,090
+or something, some strange thing you want to classify,
+
+264
+00:16:32,220 --> 00:16:33,890
+one thing you could do is
+
+265
+00:16:34,000 --> 00:16:35,640
+try to come up with a kernel that's large
+
+266
+00:16:35,760 --> 00:16:37,870
+when you want the algorithm
+
+267
+00:16:38,020 --> 00:16:39,340
+to think these are similar things
+
+268
+00:16:39,450 --> 00:16:42,460
+or these are dissimilar.
+
+269
+00:16:42,640 --> 00:16:44,840
+And so this answers the question of
+
+270
+00:16:44,970 --> 00:16:48,090
+For example
+
+271
+00:16:48,230 --> 00:16:49,310
+let's say I have something I want to classify,
+
+272
+00:16:49,450 --> 00:16:50,620
+and let's say I write down the function
+
+273
+00:16:50,760 --> 00:16:55,550
+that I think is a good measure of
+
+274
+00:16:55,690 --> 00:16:56,790
+how similar or dissimilar
+
+275
+00:16:56,930 --> 00:16:58,570
+X and Z are for my specific problem.
+
+276
+00:16:58,750 --> 00:17:03,380
+Let's say I write down K of XZ equals E to the minus.
+
+277
+00:17:03,560 --> 00:17:09,080
+Let's say I write down this function,
+
+278
+00:17:09,240 --> 00:17:14,670
+and I think this is a good measure of
+
+279
+00:17:14,790 --> 00:17:17,090
+how similar X and Z are.
+
+280
+00:17:17,210 --> 00:17:20,070
+The question, then,
+
+281
+00:17:21,910 --> 00:17:22,470
+is this really a valid kernel?
+
+282
+00:17:22,600 --> 00:17:29,250
+In other words,
+
+283
+00:17:29,370 --> 00:17:32,850
+to understand how we can construct kernels ;
+
+284
+00:17:32,940 --> 00:17:34,100
+if I write down the function like that,
+
+285
+00:17:34,220 --> 00:17:34,860
+the question is does
+
+286
+00:17:34,990 --> 00:17:36,650
+there really exist some Phi
+
+287
+00:17:36,760 --> 00:17:40,230
+such that KXZ
+
+288
+00:17:40,370 --> 00:17:42,970
+is equal to the inner product?
+
+289
+00:17:43,120 --> 00:17:51,670
+And that's the question of is K a valid kernel.
+
+290
+00:17:51,800 --> 00:18:01,990
+It turns out that there is a result that
+
+291
+00:18:02,140 --> 00:18:04,410
+characterizes necessary and sufficient conditions
+
+292
+00:18:04,540 --> 00:18:06,270
+for when a function K
+
+293
+00:18:06,380 --> 00:18:08,560
+that you might choose is a valid kernel.
+
+294
+00:18:08,710 --> 00:18:11,970
+I should go ahead show part of that result now.
+
+295
+00:18:12,110 --> 00:18:18,690
+Suppose K is a valid kernel,
+
+296
+00:18:18,860 --> 00:18:24,930
+and when I say K is a kernel,
+
+297
+00:18:25,070 --> 00:18:27,900
+what I mean is there does indeed exist some function Phi
+
+298
+00:18:28,030 --> 00:18:29,110
+for which this holds true.
+
+299
+00:18:29,240 --> 00:18:40,700
+Then let any set of points X1 up to XM be given.
+
+300
+00:18:40,830 --> 00:18:49,790
+Let me define a matrix K.
+
+301
+00:18:49,920 --> 00:18:56,820
+I apologize for overloading notation.
+
+302
+00:18:56,960 --> 00:18:59,480
+K I'm going to use to denote
+
+303
+00:18:59,610 --> 00:19:00,770
+both the kernel function,
+
+304
+00:19:00,890 --> 00:19:03,840
+which is the function of X and Z as well as a matrix.
+
+305
+00:19:03,970 --> 00:19:08,920
+Unfortunately, there aren't enough alphabets.
+
+306
+00:19:09,030 --> 00:19:10,960
+Well, that's not true.
+
+307
+00:19:11,110 --> 00:19:16,880
+We need to find the kernel matrix to be an M-by-M
+
+308
+00:19:16,960 --> 00:19:19,080
+matrix such that K subscript IJ is equal to
+
+309
+00:19:19,190 --> 00:19:25,350
+the kernel function applied to two of my examples.
+
+310
+00:19:25,450 --> 00:19:40,580
+Then it turns out that
+
+311
+00:19:40,690 --> 00:19:42,310
+for any vector Z that's indimensional,
+
+312
+00:19:42,410 --> 00:19:47,350
+I want you to consider Z transpose KZ.
+
+313
+00:19:47,470 --> 00:20:09,170
+By definition of matrix multiplication,
+
+314
+00:20:09,300 --> 00:20:10,730
+this is that,
+
+315
+00:20:10,860 --> 00:20:20,940
+and so KIJ is a kernel function
+
+316
+00:20:21,060 --> 00:20:22,210
+between XI and XJ,
+
+317
+00:20:22,600 --> 00:20:24,720
+so that must equal to this.
+
+318
+00:20:24,830 --> 00:20:29,390
+I assume that K is a valid kernel function,
+
+319
+00:20:29,530 --> 00:20:31,970
+and so there must exist such a value for Phi.
+
+320
+00:20:32,110 --> 00:20:39,260
+This is the inner product between two feature vectors,
+
+321
+00:20:39,380 --> 00:20:41,690
+so let me just make that inner product the explicit.
+
+322
+00:20:41,790 --> 00:20:45,500
+I'm going to sum over the elements of this vector,
+
+323
+00:20:45,620 --> 00:20:48,650
+and I'm going to use Phi XI subscript K
+
+324
+00:20:48,760 --> 00:20:51,260
+just to denote the K element of this vector.
+
+325
+00:20:51,390 --> 00:21:05,020
+Just rearrange sums.
+
+326
+00:21:05,150 --> 00:21:06,330
+You get sum over K.
+
+327
+00:21:06,450 --> 00:21:27,660
+This next set may look familiar to some of you,
+
+328
+00:21:27,770 --> 00:21:46,300
+which is just : right?
+
+329
+00:21:46,440 --> 00:21:49,920
+Therefore, this is the sum of squares
+
+330
+00:21:50,050 --> 00:21:53,730
+and it must therefore be greater than or equal to zero.
+
+331
+00:21:53,860 --> 00:21:58,360
+Do you want to
+
+332
+00:21:58,510 --> 00:21:59,890
+take a minute to look for all the steps
+
+333
+00:22:00,010 --> 00:22:01,600
+and just make sure you buy them all?
+
+334
+00:22:01,720 --> 00:22:13,350
+Oh, this is the inner product
+
+335
+00:22:13,530 --> 00:22:16,600
+between the vector of Phi of XI and Phi of XJ,
+
+336
+00:22:16,700 --> 00:22:22,070
+so the inner product between two vectors is the sum over
+
+337
+00:22:22,190 --> 00:22:24,370
+the elements of the vectors of the corresponding element.
+
+338
+00:22:24,480 --> 00:22:27,730
+Student:
+
+339
+00:22:27,820 --> 00:22:28,930
+Instructor (Andrew Ng):Oh, yes it is.
+
+340
+00:22:29,060 --> 00:22:35,230
+This is just A transpose B equals sum over K, AK BK,
+
+341
+00:22:35,330 --> 00:22:36,920
+so that's just this.
+
+342
+00:22:37,040 --> 00:22:39,780
+This is the sum of
+
+343
+00:22:39,890 --> 00:22:41,520
+K of the K elements of this vector.
+
+344
+00:22:41,640 --> 00:22:47,220
+Take a look at this and make sure it makes sense.
+
+345
+00:22:47,300 --> 00:22:51,230
+Questions about this?
+
+346
+00:22:51,350 --> 00:23:00,360
+So just to summarize,
+
+347
+00:23:00,480 --> 00:23:04,300
+what we showed was that for any vector Z,
+
+348
+00:23:04,430 --> 00:23:08,720
+Z transpose KZ is greater than or equal to zero,
+
+349
+00:23:08,850 --> 00:23:12,680
+and this is one of the standard definitions of a matrix,
+
+350
+00:23:12,830 --> 00:23:18,340
+the matrix K being posisemidefinite when a matrix K is
+
+351
+00:23:18,460 --> 00:23:20,770
+posisemidefinite, that is, K is equal to zero.
+
+352
+00:23:20,900 --> 00:23:25,260
+Just to summarize,
+
+353
+00:23:25,370 --> 00:23:26,730
+what was shown is that
+
+354
+00:23:26,830 --> 00:23:32,720
+if K is a valid kernel ;
+
+355
+00:23:32,830 --> 00:23:33,460
+in other words,
+
+356
+00:23:33,570 --> 00:23:34,760
+if K is a function for which
+
+357
+00:23:34,880 --> 00:23:37,770
+there exists some Phi
+
+358
+00:23:37,890 --> 00:23:41,610
+such that K of XI XJ is the inner product
+
+359
+00:23:41,740 --> 00:23:43,040
+between Phi of XI and Phi of XJ.
+
+360
+00:23:43,160 --> 00:23:45,230
+So if K is a valid kernel,
+
+361
+00:23:45,350 --> 00:23:46,150
+we showed,
+
+362
+00:23:46,250 --> 00:23:49,970
+then, that the kernel matrix must be posisemidefinite.
+
+363
+00:23:50,120 --> 00:24:02,940
+It turns out that the conversen
+
+364
+00:24:03,110 --> 00:24:06,160
+and so this gives you a test
+
+365
+00:24:06,320 --> 00:24:12,450
+for whether a function K is a valid kernel.
+
+366
+00:24:12,610 --> 00:24:15,880
+So this is a theorem due to Mercer,
+
+367
+00:24:16,010 --> 00:24:18,430
+and so kernels are also sometimes called Mercer kernels.
+
+368
+00:24:18,550 --> 00:24:19,590
+It means the same thing.
+
+369
+00:24:19,680 --> 00:24:20,860
+It just means it's a valid kernel.
+
+370
+00:24:20,960 --> 00:24:27,050
+Let K of XZ be given.
+
+371
+00:24:27,160 --> 00:24:36,730
+Then K is a valid kernel ;
+
+372
+00:24:36,810 --> 00:24:43,780
+it's a Mercer kernel, i.e.,
+
+373
+00:24:43,890 --> 00:24:50,760
+there exists a Phi such that KXZ
+
+374
+00:24:50,850 --> 00:24:59,530
+equals Phi of X transpose Phi of Z : if
+
+375
+00:24:59,630 --> 00:25:01,180
+and only if
+
+376
+00:25:01,280 --> 00:25:07,150
+for any set of M examples,
+
+377
+00:25:07,250 --> 00:25:13,790
+and this really means for any set of M points.
+
+378
+00:25:13,930 --> 00:25:15,090
+It's not necessarily a training set.
+
+379
+00:25:15,190 --> 00:25:16,160
+It's just any
+
+380
+00:25:16,240 --> 00:25:17,360
+set of M points you may choose.
+
+381
+00:25:17,450 --> 00:25:22,510
+It holds true
+
+382
+00:25:22,690 --> 00:25:23,720
+that the kernel matrix,
+
+383
+00:25:23,830 --> 00:25:32,540
+capital K that I defined just now,
+
+384
+00:25:32,700 --> 00:25:39,210
+is symmetric posisemidefinite.
+
+385
+00:25:39,330 --> 00:25:51,930
+And so I proved only one direction of this result.
+
+386
+00:25:52,040 --> 00:25:54,010
+I proved that if it's a valid kernel,
+
+387
+00:25:54,110 --> 00:25:55,620
+then K is
+
+388
+00:25:55,690 --> 00:25:56,880
+symmetry posisemidefinite,
+
+389
+00:25:57,010 --> 00:25:59,280
+but the converse I didn't show.
+
+390
+00:25:59,410 --> 00:26:00,920
+It turns out that this is necessary
+
+391
+00:26:01,060 --> 00:26:02,820
+and a sufficient condition.
+
+392
+00:26:02,940 --> 00:26:05,590
+And so this gives you a useful test
+
+393
+00:26:05,710 --> 00:26:07,420
+for whether any function that
+
+394
+00:26:07,540 --> 00:26:08,520
+you might want to choose
+
+395
+00:26:08,640 --> 00:26:09,900
+is a kernel.
+
+396
+00:26:10,020 --> 00:26:24,460
+A concrete example of something
+
+397
+00:26:24,570 --> 00:26:28,770
+that's clearly not a valid kernel would be
+
+398
+00:26:28,930 --> 00:26:34,210
+if you find an input X such that
+
+399
+00:26:34,320 --> 00:26:36,820
+K of X, X : and this is minus one,
+
+400
+00:26:36,950 --> 00:26:38,830
+for example : then this is an example
+
+401
+00:26:38,940 --> 00:26:43,100
+of something that's clearly not a valid kernel,
+
+402
+00:26:43,230 --> 00:26:43,970
+because minus one
+
+403
+00:26:44,060 --> 00:26:51,300
+cannot possibly be equal to Phi of X transpose Phi of X, and so this would be one of many examples
+
+404
+00:26:51,410 --> 00:26:54,350
+of functions that will fail
+
+405
+00:26:54,430 --> 00:26:55,900
+to meet the conditions of this theorem,
+
+406
+00:26:56,030 --> 00:26:58,710
+because inner products of a vector itself
+
+407
+00:26:58,810 --> 00:27:30,350
+are always greater than zero.
+
+408
+00:27:30,460 --> 00:27:32,100
+So just to tie this back explicitly to an SVM,
+
+409
+00:27:32,230 --> 00:27:36,810
+let's say to use a support vector machine with a kernel,
+
+410
+00:27:36,940 --> 00:27:40,050
+what you do is you choose some function K of XZ,
+
+411
+00:27:40,160 --> 00:27:43,330
+and so you can choose ;
+
+412
+00:27:43,460 --> 00:27:44,760
+and it turns out that function
+
+413
+00:27:45,080 --> 00:27:46,620
+I wrote down just now : this is, indeed,
+
+414
+00:27:46,710 --> 00:27:47,380
+a valid kernel.
+
+415
+00:27:47,460 --> 00:27:50,440
+It is called the Galcean kernel
+
+416
+00:27:50,550 --> 00:27:52,750
+because of the similarity to Galceans.
+
+417
+00:27:52,860 --> 00:27:56,240
+So you choose some kernel function like this,
+
+418
+00:27:56,360 --> 00:28:02,620
+or you may choose X transpose Z plus C to the D vector.
+
+419
+00:28:02,770 --> 00:28:05,620
+To apply a support vector machine kernel,
+
+420
+00:28:05,740 --> 00:28:07,010
+you choose one of these functions,
+
+421
+00:28:07,120 --> 00:28:08,320
+and the choice of this
+
+422
+00:28:08,420 --> 00:28:09,440
+would depend on your problem.
+
+423
+00:28:09,550 --> 00:28:13,760
+It depends on what is a good measure of one
+
+424
+00:28:13,890 --> 00:28:15,180
+or two examples similar
+
+425
+00:28:15,290 --> 00:28:16,570
+and one or two examples different for your problem.
+
+426
+00:28:16,700 --> 00:28:19,370
+Then you go back to
+
+427
+00:28:19,480 --> 00:28:21,200
+our formulation of support vector machine,
+
+428
+00:28:21,320 --> 00:28:23,740
+and you have to use the dual formulation,
+
+429
+00:28:23,870 --> 00:28:29,140
+and you then replace everywhere you see these things,
+
+430
+00:28:29,280 --> 00:28:40,610
+you replace it with K of XI, XJ.
+
+431
+00:28:40,720 --> 00:28:42,820
+And you then run
+
+432
+00:28:43,070 --> 00:28:44,830
+exactly the same support vector machine algorithm,
+
+433
+00:28:44,940 --> 00:28:47,350
+only everywhere you see these inner products,
+
+434
+00:28:47,460 --> 00:28:48,430
+you replace them with that,
+
+435
+00:28:48,500 --> 00:28:50,170
+and what you've just done
+
+436
+00:28:50,280 --> 00:28:52,680
+is you've taken a support vector machine
+
+437
+00:28:52,780 --> 00:28:55,470
+and you've taken each of your feature vectors X
+
+438
+00:28:55,580 --> 00:28:59,580
+and you've replaced it with implicitly a very high
+
+439
+00:28:59,700 --> 00:29:03,300
+dimensional feature vector. It turns out that
+
+440
+00:29:03,410 --> 00:29:06,160
+the Galcean kernel corresponds to a feature vector that'
+
+441
+00:29:06,260 --> 00:29:10,410
+infinite dimensional. Nonetheless,
+
+442
+00:29:10,510 --> 00:29:12,050
+you can run a support vector machine
+
+443
+00:29:12,160 --> 00:29:13,860
+in a finite amount of time,
+
+444
+00:29:13,950 --> 00:29:15,380
+even though you're working with
+
+445
+00:29:15,490 --> 00:29:16,620
+infinite dimensional feature vectors,
+
+446
+00:29:16,740 --> 00:29:21,440
+because all you ever need to do is compute these things,
+
+447
+00:29:21,570 --> 00:29:24,060
+and you don't ever need to represent
+
+448
+00:29:24,140 --> 00:29:26,800
+these infinite dimensional feature vectors explicitly.
+
+449
+00:29:26,910 --> 00:29:31,380
+Why is this a good idea?
+
+450
+00:29:31,460 --> 00:29:32,640
+It turns out
+
+451
+00:29:32,740 --> 00:29:35,290
+I think I started off talking about
+
+452
+00:29:35,420 --> 00:29:39,970
+support vector machines. I started saying that
+
+453
+00:29:40,080 --> 00:29:41,260
+we wanted to start to develop non-linear learning
+
+454
+00:29:41,360 --> 00:29:43,570
+algorithms. So here's one useful picture to keep in mind,
+
+455
+00:29:43,680 --> 00:29:49,710
+which is that let's say your original data ;
+
+456
+00:29:49,810 --> 00:29:51,100
+I didn't mean to draw that slanted.
+
+457
+00:29:51,180 --> 00:29:52,760
+Let's say you have one-dimensional input data.
+
+458
+00:29:52,840 --> 00:29:54,880
+You just have one feature X and R.
+
+459
+00:29:54,960 --> 00:29:57,970
+What a kernel does is the following.
+
+460
+00:29:58,050 --> 00:30:00,840
+It takes your original input data and maps it
+
+461
+00:30:00,950 --> 00:30:02,660
+to a very high dimensional feature space.
+
+462
+00:30:02,780 --> 00:30:04,100
+In the case of Galcean kernels,
+
+463
+00:30:04,220 --> 00:30:05,640
+an infinite dimensional feature space ;
+
+464
+00:30:05,780 --> 00:30:09,350
+for pedagogical reasons,
+
+465
+00:30:09,480 --> 00:30:10,770
+I'll draw two dimensions here.
+
+466
+00:30:10,880 --> 00:30:15,690
+So say very high dimensional feature space where : like
+
+467
+00:30:15,890 --> 00:30:24,440
+so. So it takes all your data
+
+468
+00:30:24,570 --> 00:30:26,300
+in R1 and maps it to R infinity,
+
+469
+00:30:26,440 --> 00:30:30,800
+and then you run a support vector machine
+
+470
+00:30:30,940 --> 00:30:33,720
+in this infinite dimensional space and also exponentially
+
+471
+00:30:33,850 --> 00:30:35,200
+high dimensional space,
+
+472
+00:30:35,300 --> 00:30:38,390
+and you'll find the optimal margin classifier ;
+
+473
+00:30:38,500 --> 00:30:39,360
+in other words,
+
+474
+00:30:39,460 --> 00:30:41,270
+the classifier that separates your data
+
+475
+00:30:41,360 --> 00:30:42,530
+in this very high dimensional space
+
+476
+00:30:42,640 --> 00:30:44,620
+with the largest possible geometric margin.
+
+477
+00:30:44,770 --> 00:30:49,690
+In this example that you just drew anyway,
+
+478
+00:30:49,810 --> 00:30:52,240
+whereas your data was not linearly separable
+
+479
+00:30:52,370 --> 00:30:54,120
+in your originally one dimensional space,
+
+480
+00:30:54,220 --> 00:30:55,280
+when you map it
+
+481
+00:30:55,380 --> 00:30:57,130
+to this much higher dimensional space,
+
+482
+00:30:57,270 --> 00:30:58,020
+it becomes linearly separable,
+
+483
+00:30:58,150 --> 00:30:59,020
+so you can use
+
+484
+00:30:59,160 --> 00:31:02,680
+your linear classifier to which data is not
+
+485
+00:31:02,780 --> 00:31:04,550
+really separable in your original space.
+
+486
+00:31:04,660 --> 00:31:08,330
+This is what support vector machines output nonlinear
+
+487
+00:31:08,460 --> 00:31:11,890
+decision boundaries and in the entire process,
+
+488
+00:31:12,020 --> 00:31:13,700
+all you ever need to do is solve
+
+489
+00:31:13,820 --> 00:31:14,960
+complex optimization problems.
+
+490
+00:31:15,080 --> 00:31:21,440
+Questions about any of this?
+
+491
+00:31:21,560 --> 00:31:24,550
+Student: sigmer?
+
+492
+00:31:24,670 --> 00:31:27,400
+Instructor (Andrew Ng):Yeah, so sigmer is ;
+
+493
+00:31:27,510 --> 00:31:28,240
+let's see.
+
+494
+00:31:28,320 --> 00:31:31,730
+Well, I was going to talk about [inaudible] later.
+
+495
+00:31:31,880 --> 00:31:33,730
+One way to choose sigmer
+
+496
+00:31:33,820 --> 00:31:37,700
+is save aside a small amount of your data
+
+497
+00:31:37,790 --> 00:31:41,470
+and try different values of sigmer and train an SVM
+
+498
+00:31:41,580 --> 00:31:42,520
+using, say,
+
+499
+00:31:42,620 --> 00:31:43,690
+two thirds of your data.
+
+500
+00:31:43,770 --> 00:31:46,010
+Try different values of sigmer,
+
+501
+00:31:46,090 --> 00:31:47,480
+then see what works best on a separate
+
+502
+00:31:47,570 --> 00:31:49,920
+hold out cross validation set : on a separate set that
+
+503
+00:31:50,020 --> 00:31:50,860
+you're testing.
+
+504
+00:31:50,950 --> 00:31:56,020
+Something about learning algorithms
+
+505
+00:31:56,160 --> 00:31:58,580
+we talked about
+
+506
+00:31:58,650 --> 00:31:59,650
+locally linear aggressions bandwidth parameter,
+
+507
+00:31:59,780 --> 00:32:00,960
+so there are a number of parameters
+
+508
+00:32:01,100 --> 00:32:02,600
+to some of these algorithms that
+
+509
+00:32:02,700 --> 00:32:03,570
+you can choose IDs
+
+510
+00:32:03,680 --> 00:32:05,330
+by saving aside some data to test on.
+
+511
+00:32:05,470 --> 00:32:08,930
+I'll talk more about model selection explicitly.
+
+512
+00:32:09,060 --> 00:32:11,850
+Are there other questions?
+
+513
+00:32:11,950 --> 00:32:13,520
+Student:So how do you know that
+
+514
+00:32:13,620 --> 00:32:16,220
+moving it up to high dimensional space
+
+515
+00:32:16,350 --> 00:32:18,520
+is going to give you that kind of separation?
+
+516
+00:32:18,650 --> 00:32:20,340
+Instructor (Andrew Ng):Good question.
+
+517
+00:32:20,440 --> 00:32:22,640
+Usually, you don't know
+
+518
+00:32:22,790 --> 00:32:25,920
+Sometimes you can know,
+
+519
+00:32:26,050 --> 00:32:27,210
+but in most cases,
+
+520
+00:32:27,330 --> 00:32:28,340
+you won't know] actually
+
+521
+00:32:28,440 --> 00:32:29,300
+going to linearly separable,
+
+522
+00:32:29,400 --> 00:32:31,780
+so the next topic will be
+
+523
+00:32:31,900 --> 00:32:32,940
+which is what SVMs
+
+524
+00:32:33,050 --> 00:32:36,290
+that work even though the data
+
+525
+00:32:36,430 --> 00:32:37,350
+is not linearly separable.
+
+526
+00:32:37,470 --> 00:32:41,760
+Student:If you tend linearly separated
+
+527
+00:32:41,890 --> 00:32:43,900
+by mapping a higher dimension,
+
+528
+00:32:44,020 --> 00:32:47,500
+couldn't you also just use [inaudible] higher dimension?
+
+529
+00:32:47,630 --> 00:32:52,450
+Instructor (Andrew Ng):So very right. This is a question
+
+530
+00:32:52,550 --> 00:32:53,940
+about what to do if you can't separate it
+
+531
+00:32:54,060 --> 00:32:55,060
+in higher dimensional space.
+
+532
+00:32:55,190 --> 00:32:58,110
+Let me try to address that work
+
+533
+00:32:58,210 --> 00:32:59,810
+with a discussion of  soft margin SVMs.
+
+534
+00:32:59,940 --> 00:33:02,280
+Okay.
+
+535
+00:33:02,380 --> 00:33:09,270
+Student:What if you run an SVM algorithm
+
+536
+00:33:09,380 --> 00:33:10,400
+that assumes the data
+
+537
+00:33:10,510 --> 00:33:12,170
+are linearly separable on data
+
+538
+00:33:12,280 --> 00:33:14,830
+that is not actually linearly separable?
+
+539
+00:33:14,970 --> 00:33:17,200
+Instructor (Andrew Ng):You guys are really giving me
+
+540
+00:33:17,300 --> 00:33:18,630
+a hard time about whether
+
+541
+00:33:18,730 --> 00:33:19,850
+the data's linearly separable.
+
+542
+00:33:19,950 --> 00:33:22,480
+It turns out this algorithm won't work
+
+543
+00:33:22,580 --> 00:33:23,920
+if the data is not linearly separable,
+
+544
+00:33:24,030 --> 00:33:25,440
+but I'll change that in a second
+
+545
+00:33:25,540 --> 00:33:26,640
+and make it work.
+
+546
+00:33:27,030 --> 00:33:31,890
+If I move on to talk about that,
+
+547
+00:33:31,970 --> 00:33:37,670
+let me just say one final word about kernels,
+
+548
+00:33:37,790 --> 00:33:56,170
+which is that I talked about kernels
+
+549
+00:33:56,280 --> 00:33:58,500
+in a context of support vector machines,
+
+550
+00:33:58,610 --> 00:34:03,850
+and the idea of kernels was what really made support
+
+551
+00:34:03,950 --> 00:34:04,920
+vector machines
+
+552
+00:34:05,010 --> 00:34:06,260
+a very powerful learning algorithm,
+
+553
+00:34:06,360 --> 00:34:09,090
+actually towards the end of today's lecture if I have time
+
+554
+00:34:09,200 --> 00:34:11,690
+I'll actually give a couple more examples
+
+555
+00:34:11,800 --> 00:34:12,980
+It turns out that the idea of kernels
+
+556
+00:34:13,120 --> 00:34:16,690
+is actually more general than support vector machines,
+
+557
+00:34:16,810 --> 00:34:22,360
+and in particular, we took this SVM algorithm
+
+558
+00:34:22,490 --> 00:34:24,500
+and we derived a dual,
+
+559
+00:34:24,610 --> 00:34:27,340
+and that was what let us write the entire algorithm
+
+560
+00:34:27,460 --> 00:34:29,630
+in terms of inner products of these.
+
+561
+00:34:29,760 --> 00:34:33,720
+It turns out that you can take many of the other
+
+562
+00:34:33,830 --> 00:34:36,060
+algorithms that you've seen in this class : in fact,
+
+563
+00:34:36,170 --> 00:34:39,100
+it turns out you can take most of the linear algorithms
+
+564
+00:34:39,230 --> 00:34:40,260
+we talked about,
+
+565
+00:34:40,350 --> 00:34:40,960
+such as
+
+566
+00:34:41,040 --> 00:34:42,350
+linear regression, logistic regression
+
+567
+00:34:42,440 --> 00:34:46,270
+and it turns out you can take all of these algorithms
+
+568
+00:34:46,400 --> 00:34:47,550
+and rewrite them entirely
+
+569
+00:34:47,670 --> 00:34:49,950
+in terms of these inner products.
+
+570
+00:34:50,060 --> 00:34:54,040
+So if you have any algorithm
+
+571
+00:34:54,110 --> 00:34:55,890
+that you can rewrite in terms of inner products,
+
+572
+00:34:55,990 --> 00:34:56,750
+then that means
+
+573
+00:34:56,840 --> 00:34:57,530
+you can replace it
+
+574
+00:34:57,610 --> 00:35:02,410
+with K of XI XJ
+
+575
+00:35:02,510 --> 00:35:05,710
+and that means that you can take any of theses algorithms
+
+576
+00:35:05,830 --> 00:35:08,080
+and implicitly map the features vectors
+
+577
+00:35:08,180 --> 00:35:09,520
+of these very high dimensional feature spaces
+
+578
+00:35:09,620 --> 00:35:12,010
+and have the algorithm still work.
+
+579
+00:35:12,120 --> 00:35:16,490
+The idea of kernels is perhaps most widely used
+
+580
+00:35:16,580 --> 00:35:17,550
+with support vector machines,
+
+581
+00:35:17,640 --> 00:35:19,040
+but it is actually more general than that,
+
+582
+00:35:19,140 --> 00:35:21,260
+and you can take many of the other algorithms
+
+583
+00:35:21,380 --> 00:35:23,330
+that you've seen and many of the algorithms that
+
+584
+00:35:23,440 --> 00:35:26,840
+we'll see later this quarter as well and write them
+
+585
+00:35:26,920 --> 00:35:29,250
+in terms of inner products and thereby kernalize them
+
+586
+00:35:29,370 --> 00:35:30,930
+and apply them to infinite dimensional feature spaces.
+
+587
+00:35:31,080 --> 00:35:34,660
+You'll actually get to play with many of
+
+588
+00:35:34,730 --> 00:35:36,480
+these ideas more in the next problem set.
+
+589
+00:35:36,780 --> 00:35:46,700
+Let's talk about non-linear decision boundaries,
+
+590
+00:35:46,820 --> 00:35:52,350
+and this is the idea of : it's called the
+
+591
+00:35:52,460 --> 00:35:57,020
+L1 norm soft margin SVM.
+
+592
+00:35:57,250 --> 00:35:58,040
+Machine only people sometimes
+
+593
+00:35:58,120 --> 00:35:59,230
+aren't great at coming up with good names,
+
+594
+00:35:59,310 --> 00:36:01,210
+but here's the idea.
+
+595
+00:36:01,310 --> 00:36:02,640
+Let's say I have a data set.
+
+596
+00:36:02,730 --> 00:36:13,970
+This is a linearly separable data set,
+
+597
+00:36:14,170 --> 00:36:18,440
+but what I do if I have a couple of other examples there
+
+598
+00:36:18,590 --> 00:36:20,850
+that makes the data nonlinearly separable,
+
+599
+00:36:20,960 --> 00:36:25,950
+and in fact, sometimes
+
+600
+00:36:26,100 --> 00:36:28,770
+what should we do?
+
+601
+00:36:28,880 --> 00:36:30,260
+Acually even if the data is
+
+602
+00:36:30,370 --> 00:36:31,890
+linearly separable,
+
+603
+00:36:31,990 --> 00:36:32,870
+maybe you might not want to.
+
+604
+00:36:32,950 --> 00:36:34,100
+So for example, this is a very nice data set.
+
+605
+00:36:34,180 --> 00:36:35,760
+It looks like there's a great decision boundary
+
+606
+00:36:35,840 --> 00:36:36,600
+that separates the two
+
+607
+00:36:36,680 --> 00:36:41,150
+Well, what if I had just one outlier down here?
+
+608
+00:36:41,230 --> 00:36:44,210
+What should we de ?
+
+609
+00:36:44,390 --> 00:36:45,270
+I could still linearly separate this data
+
+610
+00:36:45,400 --> 00:36:47,080
+set with something
+
+611
+00:36:47,190 --> 00:36:47,940
+like that,
+
+612
+00:36:48,020 --> 00:36:49,060
+but I'm somehow
+
+613
+00:36:49,170 --> 00:36:51,040
+letting one slightly
+
+614
+00:36:51,140 --> 00:36:52,820
+suspicious example skew
+
+615
+00:36:52,930 --> 00:36:54,200
+my entire decision boundary by a lot,
+
+616
+00:36:54,310 --> 00:36:59,040
+and so what I'm going to talk about now is
+
+617
+00:36:59,150 --> 00:37:00,010
+the L1 norm soft margin SVM,
+
+618
+00:37:00,110 --> 00:37:03,770
+which is a slightly modified formulation
+
+619
+00:37:03,860 --> 00:37:06,390
+of the SVM optimization problem.
+
+620
+00:37:06,480 --> 00:37:08,040
+They will let us deal with
+
+621
+00:37:08,170 --> 00:37:09,290
+both of these cases : one
+
+622
+00:37:09,410 --> 00:37:11,210
+where one of the data's just not linearly separable
+
+623
+00:37:11,300 --> 00:37:12,010
+and two,
+
+624
+00:37:12,100 --> 00:37:13,130
+what if you have some examples
+
+625
+00:37:13,220 --> 00:37:15,620
+that you'd rather not get  in a training set.
+
+626
+00:37:15,720 --> 00:37:17,650
+Maybe with an outlier here,
+
+627
+00:37:17,750 --> 00:37:20,000
+maybe you actually prefer to choose
+
+628
+00:37:20,090 --> 00:37:23,270
+that original decision boundary and not try so hard to get
+
+629
+00:37:23,380 --> 00:37:27,420
+that training example. Here's the formulation.
+
+630
+00:37:27,530 --> 00:37:48,920
+Our SVM primal problem was to minimize one-half
+
+631
+00:37:49,040 --> 00:38:04,270
+squared. So this is our original problem,
+
+632
+00:38:04,400 --> 00:38:07,390
+and I'm going to modify this
+
+633
+00:38:07,520 --> 00:38:09,900
+by adding the following.
+
+634
+00:38:09,990 --> 00:38:23,980
+In other words,
+
+635
+00:38:24,100 --> 00:38:26,470
+I'm gonna add these penalty terms, CIs,
+
+636
+00:38:26,560 --> 00:38:28,470
+and I'm going to demand that
+
+637
+00:38:28,550 --> 00:38:30,620
+each of my training examples is separated with
+
+638
+00:38:30,720 --> 00:38:34,470
+functional margin greater than or equal to one minus CI,
+
+639
+00:38:34,570 --> 00:38:36,670
+and you remember
+
+640
+00:38:36,780 --> 00:38:47,900
+if this is greater than zero
+
+641
+00:38:48,040 --> 00:38:51,050
+was it two lectures ago
+
+642
+00:38:51,130 --> 00:38:53,820
+that I said that if the function margin is greater than zero,
+
+643
+00:38:53,920 --> 00:38:56,110
+that implies you classified it correctly.
+
+644
+00:38:56,250 --> 00:39:02,010
+If it's less than zero,
+
+645
+00:39:02,140 --> 00:39:03,110
+then you misclassified it.
+
+646
+00:39:03,220 --> 00:39:07,340
+By setting some of the CIs to be larger than one,
+
+647
+00:39:07,460 --> 00:39:09,920
+I can actually have some examples with functional
+
+648
+00:39:10,030 --> 00:39:11,570
+margin negative,
+
+649
+00:39:11,700 --> 00:39:15,110
+and therefore I'm allowing my algorithm to misclassify
+
+650
+00:39:15,260 --> 00:39:16,990
+some of the examples of the training set.
+
+651
+00:39:17,120 --> 00:39:21,230
+However, I'll encourage the algorithm not to do that
+
+652
+00:39:21,340 --> 00:39:23,520
+by adding to the optimization objective,
+
+653
+00:39:23,640 --> 00:39:24,850
+this sort of penalty term
+
+654
+00:39:24,950 --> 00:39:27,660
+that penalizes setting CIs to be large.
+
+655
+00:39:27,790 --> 00:39:30,730
+This is an optimization problem
+
+656
+00:39:30,910 --> 00:39:34,860
+where the parameters are WB and all of the CIs
+
+657
+00:39:35,010 --> 00:39:39,670
+and this is also a convex optimization problem.
+
+658
+00:39:39,780 --> 00:39:47,820
+It turns out that similar to how we worked on
+
+659
+00:39:47,910 --> 00:39:49,840
+the dual of the support vector machine,
+
+660
+00:39:49,920 --> 00:39:51,470
+we can also work out
+
+661
+00:39:51,570 --> 00:39:52,950
+the dual for this optimization problem.
+
+662
+00:39:53,050 --> 00:39:54,870
+I won't actually do it,
+
+663
+00:39:54,980 --> 00:39:57,200
+but just to show you the steps,
+
+664
+00:39:57,310 --> 00:39:58,610
+what you do is you construct  Alpha R,
+
+665
+00:39:58,760 --> 00:40:05,520
+and I'm going to use Alpha and R to denote the
+
+666
+00:40:05,600 --> 00:40:08,950
+multipliers no corresponding to this set of constraints
+
+667
+00:40:09,090 --> 00:40:10,120
+that we had previously
+
+668
+00:40:10,280 --> 00:40:11,880
+and this new set of constraints on the CI] zero.
+
+669
+00:40:12,000 --> 00:40:15,140
+This gives us a use of the multipliers.
+
+670
+00:40:15,270 --> 00:40:17,150
+The will be
+
+671
+00:40:17,270 --> 00:40:25,620
+optimizationobjective minus sum
+
+672
+00:40:25,760 --> 00:40:48,080
+from plus CI minus ;
+
+673
+00:40:48,350 --> 00:40:48,970
+and so there's our
+
+674
+00:40:49,070 --> 00:40:50,260
+optimization objective
+
+675
+00:40:50,390 --> 00:40:51,160
+minus
+
+676
+00:40:51,240 --> 00:40:54,900
+or plus Alpha times each of these constraints,
+
+677
+00:40:55,030 --> 00:40:56,210
+which are greater or equal to zero.
+
+678
+00:40:56,320 --> 00:41:22,790
+I won't redivide the entire dual again,
+
+679
+00:41:22,900 --> 00:41:30,610
+but it's really the same, and when you derive the dual of
+
+680
+00:41:30,750 --> 00:41:32,560
+this optimization problem and when you simplify,
+
+681
+00:41:32,660 --> 00:41:36,000
+you find that you get the following.
+
+682
+00:41:36,110 --> 00:41:37,810
+You have to maximize
+
+683
+00:41:37,950 --> 00:41:42,880
+which is actually the same as before.
+
+684
+00:41:43,010 --> 00:42:21,560
+So it turns out
+
+685
+00:42:21,670 --> 00:42:24,190
+when you derive the dual and simply,
+
+686
+00:42:24,260 --> 00:42:26,650
+it turns out that the only way the dual changes
+
+687
+00:42:26,730 --> 00:42:29,580
+compared to the previous one is that rather than
+
+688
+00:42:29,680 --> 00:42:31,710
+constraint that the Alpha are greater than or equal to zero,
+
+689
+00:42:31,860 --> 00:42:34,090
+we now have a constraint that the Alphas are
+
+690
+00:42:34,200 --> 00:42:35,090
+between zero and C.
+
+691
+00:42:35,230 --> 00:42:38,100
+This derivation isn't very hard,
+
+692
+00:42:38,210 --> 00:42:39,440
+and you're encouraged to go home
+
+693
+00:42:39,550 --> 00:42:40,590
+and try to do it yourself.
+
+694
+00:42:40,670 --> 00:42:42,270
+It's really essentially the same math,
+
+695
+00:42:42,350 --> 00:42:43,320
+and when you simply,
+
+696
+00:42:43,430 --> 00:42:48,110
+it turns out you can simply the R of the multiplier away
+
+697
+00:42:48,210 --> 00:42:50,920
+and you end up with just these constraints of the Alphas.
+
+698
+00:42:51,010 --> 00:43:05,780
+Just as an aside,
+
+699
+00:43:05,910 --> 00:43:10,100
+I won't derive these, either.
+
+700
+00:43:10,250 --> 00:43:11,310
+It turns out that
+
+701
+00:43:11,450 --> 00:43:12,740
+remember,
+
+702
+00:43:12,840 --> 00:43:15,570
+I wrote down the conditions in the last lecture.
+
+703
+00:43:15,660 --> 00:43:20,130
+The necessary conditions for something to be
+
+704
+00:43:20,280 --> 00:43:21,910
+an optimal solution to constrain optimization problems.
+
+705
+00:43:22,030 --> 00:43:22,900
+So if you used the  conditions,
+
+706
+00:43:23,000 --> 00:43:27,790
+it turns out
+
+707
+00:43:27,880 --> 00:43:30,090
+you can actually derive conversions conditions,
+
+708
+00:43:30,220 --> 00:43:32,360
+so we want to solve this optimization problem.
+
+709
+00:43:32,470 --> 00:43:34,350
+When do we know
+
+710
+00:43:34,460 --> 00:43:37,340
+the Alphas have converged to the global optimum?
+
+711
+00:43:37,470 --> 00:43:40,160
+It turns out you can use the following.
+
+712
+00:43:40,280 --> 00:44:19,170
+I don't want to say a lot about these.
+
+713
+00:44:19,290 --> 00:44:24,550
+It turns out from the conditions you can derive these
+
+714
+00:44:24,700 --> 00:44:26,930
+as the conversion conditions for an algorithm
+
+715
+00:44:27,040 --> 00:44:29,280
+that you might choose to use to try to
+
+716
+00:44:29,400 --> 00:44:31,440
+solve the optimization problem in terms of the Alphas.
+
+717
+00:44:31,570 --> 00:44:38,140
+That's the L1 norm soft margin SVM,
+
+718
+00:44:38,290 --> 00:44:40,760
+and this is the change the algorithm
+
+719
+00:44:40,910 --> 00:44:43,750
+that lets us handle non-linearly separable data sets
+
+720
+00:44:43,870 --> 00:44:44,840
+as well as single outliers
+
+721
+00:44:44,990 --> 00:44:47,640
+that may still be linearly separable
+
+722
+00:44:47,770 --> 00:44:48,550
+but you may
+
+723
+00:44:48,700 --> 00:44:49,560
+choose not to separate .
+
+724
+00:44:49,670 --> 00:44:56,440
+Questions about this?
+
+725
+00:44:56,520 --> 00:45:18,300
+Raise your hand if this stuff makes sense at all. Great.
+
+726
+00:45:18,410 --> 00:46:00,600
+So the last thing I want to do is talk about an algorithm
+
+727
+00:46:00,720 --> 00:46:06,920
+for actually solving this optimization problem.
+
+728
+00:46:07,040 --> 00:46:11,690
+We wrote down this dual optimization problem
+
+729
+00:46:11,790 --> 00:46:13,260
+with convergence criteria,
+
+730
+00:46:13,330 --> 00:46:15,900
+so let's come up with an efficient algorithm
+
+731
+00:46:16,020 --> 00:46:17,940
+to actually solve this optimization problem.
+
+732
+00:46:18,050 --> 00:46:24,500
+I want to do this partly to give me an excuse to talk about
+
+733
+00:46:24,620 --> 00:46:26,110
+an algorithm called coordinate assent,
+
+734
+00:46:26,220 --> 00:46:27,440
+which is useful to do.
+
+735
+00:46:27,530 --> 00:46:30,970
+What I actually want to do is tell you
+
+736
+00:46:31,080 --> 00:46:34,170
+about an algorithm called coordinate assent,
+
+737
+00:46:34,290 --> 00:46:35,830
+which is a useful algorithm to know about,
+
+738
+00:46:35,930 --> 00:46:37,950
+and it'll turn out that it won't
+
+739
+00:46:38,060 --> 00:46:40,220
+apply in the simplest form to this problem,
+
+740
+00:46:40,310 --> 00:46:42,900
+but we'll then be able to modify it slightly
+
+741
+00:46:42,990 --> 00:46:45,690
+and then it'll give us a very efficient algorithm
+
+742
+00:46:45,970 --> 00:46:47,720
+for solving this optimization problem.
+
+743
+00:46:47,830 --> 00:46:49,950
+That was the other reason
+
+744
+00:46:50,040 --> 00:46:52,060
+that I had to derive the dual, not only so that
+
+745
+00:46:52,170 --> 00:46:54,250
+we could use kernels but also so that
+
+746
+00:46:54,360 --> 00:46:57,420
+we can apply an algorithm like the SMO algorithm.
+
+747
+00:46:57,570 --> 00:47:02,840
+First, let's talk about coordinate assent,
+
+748
+00:47:02,950 --> 00:47:05,780
+which is another  optimization algorithm.
+
+749
+00:47:05,890 --> 00:47:19,550
+To describe coordinate assent,
+
+750
+00:47:19,650 --> 00:47:22,240
+I just want you to consider the problem of
+
+751
+00:47:22,350 --> 00:47:29,680
+if we want to maximize some function W,
+
+752
+00:47:29,820 --> 00:47:32,380
+which is a function of Alpha one through Alpha M
+
+753
+00:47:32,480 --> 00:47:34,330
+with no constraints.
+
+754
+00:47:34,410 --> 00:47:41,410
+So for now, forget about the constraint that the Alpha]
+
+755
+00:47:41,560 --> 00:47:43,170
+must be between zero and C.
+
+756
+00:47:43,300 --> 00:47:46,100
+Forget about the constraint that some of YI Alpha I
+
+757
+00:47:46,180 --> 00:47:47,000
+must be equal to zero.
+
+758
+00:47:47,110 --> 00:47:54,820
+Then this is the coordinate assent algorithm.
+
+759
+00:47:54,960 --> 00:47:57,490
+It will repeat  until convergence
+
+760
+00:47:57,600 --> 00:48:01,300
+and will do
+
+761
+00:48:01,390 --> 00:48:02,360
+for I equals one to M.
+
+762
+00:48:02,470 --> 00:48:07,760
+Theof coordinate assent essentially holds all the
+
+763
+00:48:07,840 --> 00:48:10,280
+parameters except Alpha I fixed
+
+764
+00:48:10,390 --> 00:48:14,330
+and then it just  maximizes this function
+
+765
+00:48:14,450 --> 00:48:16,850
+with respect to just one of the parameters.
+
+766
+00:48:16,960 --> 00:48:21,950
+Let me write that as Alpha I gets updated
+
+767
+00:48:22,060 --> 00:48:33,610
+as over Alpha I hat of W Alpha one Alpha I minus one.
+
+768
+00:48:33,740 --> 00:48:43,830
+This is really the fancy way of
+
+769
+00:48:43,940 --> 00:48:50,610
+saying hold everything except Alpha I fixed.
+
+770
+00:48:50,740 --> 00:48:58,710
+Just optimize W by optimization objective with respect to
+
+771
+00:48:58,820 --> 00:49:02,890
+only Alpha I. This is just a fancy way of writing it.
+
+772
+00:49:02,970 --> 00:49:05,720
+This is coordinate assent.
+
+773
+00:49:05,810 --> 00:49:15,890
+One picture that's kind of useful  for coordinate assent is
+
+774
+00:49:15,990 --> 00:49:17,760
+if you imagine
+
+775
+00:49:17,880 --> 00:49:19,530
+you're trying to optimize a quadratic function,
+
+776
+00:49:19,610 --> 00:49:25,740
+it really looks like that.
+
+777
+00:49:25,820 --> 00:49:30,740
+These are the contours of the quadratic function
+
+778
+00:49:30,860 --> 00:49:31,860
+and the minimums here.
+
+779
+00:49:31,950 --> 00:49:34,540
+This is what coordinate assent would look like.
+
+780
+00:49:34,630 --> 00:49:39,780
+These are my  call this Alpha two and I'll call this
+
+781
+00:49:39,900 --> 00:49:42,000
+Alpha one. My Alpha one Alpha two axis,
+
+782
+00:49:42,160 --> 00:49:43,540
+and so let's say I start down here.
+
+783
+00:49:43,630 --> 00:49:47,610
+Then I'm going to begin by minimizing this with respect
+
+784
+00:49:47,720 --> 00:49:49,520
+to Alpha one. I go there.
+
+785
+00:49:49,830 --> 00:49:51,910
+And then at my new point,
+
+786
+00:49:52,000 --> 00:49:53,640
+I'll minimize with respect to Alpha two,
+
+787
+00:49:53,730 --> 00:49:55,310
+and so I might go to someplace like that.
+
+788
+00:49:55,410 --> 00:49:59,520
+Then, I'll minimize with respect to Alpha one goes back
+
+789
+00:49:59,630 --> 00:50:00,430
+to Alpha two and so on.
+
+790
+00:50:00,540 --> 00:50:07,290
+You're always taking these axis-aligned steps
+
+791
+00:50:07,370 --> 00:50:10,360
+to get to the minimum.
+
+792
+00:50:10,470 --> 00:50:13,730
+It turns out that t
+
+793
+00:50:13,820 --> 00:50:16,620
+here's a modification to this.
+
+794
+00:50:16,720 --> 00:50:17,760
+There are variations of this as well.
+
+795
+00:50:17,870 --> 00:50:19,860
+The way I describe the algorithm,
+
+796
+00:50:19,960 --> 00:50:22,250
+we're always doing this in alternating order.
+
+797
+00:50:22,350 --> 00:50:24,330
+We always optimize with respect to Alpha one
+
+798
+00:50:24,410 --> 00:50:25,610
+then Alpha two, then Alpha one, then Alpha two.
+
+799
+00:50:25,710 --> 00:50:29,400
+What I'm about to say
+
+800
+00:50:29,520 --> 00:50:31,020
+applies only in higher dimensions,
+
+801
+00:50:31,120 --> 00:50:33,460
+but it turns out if you have a lot of parameters,
+
+802
+00:50:33,570 --> 00:50:34,970
+Alpha one through Alpha M,
+
+803
+00:50:35,090 --> 00:50:37,660
+you may not choose to always visit them in a fixed order.
+
+804
+00:50:37,760 --> 00:50:38,670
+You may choose
+
+805
+00:50:38,760 --> 00:50:40,430
+which Alphas update next depending on
+
+806
+00:50:40,570 --> 00:50:42,910
+what you think will allow you to make the most progress.
+
+807
+00:50:43,050 --> 00:50:44,300
+If you have only two parameters,
+
+808
+00:50:44,410 --> 00:50:47,270
+it makes sense to alternate between them.
+
+809
+00:50:47,380 --> 00:50:48,380
+If you have higher dimensional parameters,
+
+810
+00:50:48,460 --> 00:50:51,680
+sometimes you may choose to update them
+
+811
+00:50:51,800 --> 00:50:52,870
+in a different order
+
+812
+00:50:53,000 --> 00:51:01,330
+if you think doing so would let you
+
+813
+00:51:01,440 --> 00:51:03,490
+make faster progress towards the maximum.
+
+814
+00:51:03,620 --> 00:51:05,650
+It turns out that
+
+815
+00:51:05,770 --> 00:51:10,030
+coordinate assent compared to some of the algorithms
+
+816
+00:51:10,140 --> 00:51:11,190
+we saw previously : compared to,
+
+817
+00:51:11,310 --> 00:51:13,560
+say, Newton's method,
+
+818
+00:51:13,650 --> 00:51:15,190
+coordinate assent will usually take a lot more steps,
+
+819
+00:51:15,300 --> 00:51:19,080
+but the chief advantage of coordinate assent
+
+820
+00:51:19,180 --> 00:51:20,380
+when it works well is that
+
+821
+00:51:20,460 --> 00:51:29,030
+sometimes the optimization objective W sometimes
+
+822
+00:51:29,110 --> 00:51:31,540
+is very inexpensive to optimize W
+
+823
+00:51:31,660 --> 00:51:32,930
+with respect to any one of your parameters,
+
+824
+00:51:33,020 --> 00:51:36,770
+and so coordinate assent has to take many more iterations
+
+825
+00:51:36,890 --> 00:51:40,020
+than, say, Newton's method in order to converge.
+
+826
+00:51:40,140 --> 00:51:44,210
+It turns out that there are many optimization problems
+
+827
+00:51:44,320 --> 00:51:48,170
+for which it's particularly easy to fix
+
+828
+00:51:48,290 --> 00:51:49,410
+all but one of the parameters and optimize
+
+829
+00:51:49,500 --> 00:51:50,660
+with respect to just that one parameter,
+
+830
+00:51:50,770 --> 00:51:52,680
+and if that's true,
+
+831
+00:51:52,800 --> 00:51:55,870
+then the inner group of coordinate assent with optimizing
+
+832
+00:51:55,970 --> 00:51:58,440
+with respect to Alpha I can be done very quickly and
+
+833
+00:51:58,560 --> 00:52:00,090
+cause. It turns out that this will be true
+
+834
+00:52:00,210 --> 00:52:05,160
+when we modify this algorithm to solve the SVM
+
+835
+00:52:05,290 --> 00:52:06,540
+optimization problem.
+
+836
+00:52:06,690 --> 00:52:13,740
+Questions about this? Okay.
+
+837
+00:52:13,830 --> 00:52:49,770
+Let's go ahead and apply this
+
+838
+00:52:49,870 --> 00:52:52,450
+to our support vector machine dual optimization problem.
+
+839
+00:52:52,550 --> 00:52:59,000
+It turns out that coordinate assent in its basic form
+
+840
+00:52:59,090 --> 00:53:00,810
+does not work for the following reason.
+
+841
+00:53:01,110 --> 00:53:02,470
+The reason is
+
+842
+00:53:02,570 --> 00:53:04,150
+we have constrains on the Alpha Is. Mainly,
+
+843
+00:53:04,260 --> 00:53:09,030
+what we can recall from what we worked out previously,
+
+844
+00:53:09,120 --> 00:53:11,590
+we have a constraint that
+
+845
+00:53:11,690 --> 00:53:17,490
+the sum of Y Alpha I must be equal to zero, and so if you fix
+
+846
+00:53:17,590 --> 00:53:18,770
+all the Alphas except for one,
+
+847
+00:53:18,860 --> 00:53:21,770
+then you can't change one Alpha
+
+848
+00:53:21,860 --> 00:53:23,350
+without violating the constraint.
+
+849
+00:53:23,430 --> 00:53:26,300
+If I just try to change Alpha one,
+
+850
+00:53:26,410 --> 00:53:29,350
+Alpha one is actually exactly determined as a function
+
+851
+00:53:29,450 --> 00:53:30,390
+the other Alphas
+
+852
+00:53:30,490 --> 00:53:32,110
+because this was sum to zero.
+
+853
+00:53:32,220 --> 00:53:36,040
+The SMO algorithm, by the way,
+
+854
+00:53:36,140 --> 00:53:38,170
+is due to John Platt,
+
+855
+00:53:38,240 --> 00:53:39,360
+a colleague at Microsoft.
+
+856
+00:53:39,430 --> 00:53:41,330
+The SMO algorithm,
+
+857
+00:53:41,430 --> 00:53:44,390
+therefore, instead of trying to change one Alpha at a time,
+
+858
+00:53:44,480 --> 00:53:52,880
+we will try to change two Alphas at a time.
+
+859
+00:53:52,980 --> 00:53:57,550
+This is called the SMO algorithm,
+
+860
+00:53:57,680 --> 00:53:59,800
+in a sense the sequential minimal optimization
+
+861
+00:53:59,890 --> 00:54:02,570
+and the term minimal refers to the fact that
+
+862
+00:54:02,660 --> 00:54:05,990
+we're choosing the smallest number of Alpha Is to
+
+863
+00:54:06,070 --> 00:54:07,130
+change at a time, which in this case,
+
+864
+00:54:07,210 --> 00:54:09,100
+we need to change at least two at a time.
+
+865
+00:54:09,210 --> 00:54:13,850
+So then go ahead and outline the algorithm.
+
+866
+00:54:13,950 --> 00:54:25,040
+We will select two Alphas to change,
+
+867
+00:54:25,140 --> 00:54:26,380
+some Alpha I and Alpha J;
+
+868
+00:54:26,470 --> 00:54:30,100
+it just means a rule of thumb.
+
+869
+00:54:30,220 --> 00:54:36,600
+We'll hold all the Alpha Ks fixed
+
+870
+00:54:36,720 --> 00:54:45,680
+except Alpha I and Alpha J
+
+871
+00:54:45,780 --> 00:54:57,590
+and optimize W  Alpha with respect to Alpha I
+
+872
+00:54:57,680 --> 00:55:02,170
+and Alpha J subject to all the constraints.
+
+873
+00:55:02,280 --> 00:55:19,540
+It turns out the key step
+
+874
+00:55:19,620 --> 00:55:22,650
+which I'm going to work out is this one,
+
+875
+00:55:22,750 --> 00:55:28,940
+which is how do you optimize W of Alpha with respect to
+
+876
+00:55:29,030 --> 00:55:31,520
+the two parameters that you just chose to update and
+
+877
+00:55:31,590 --> 00:55:36,720
+subject to the constraints? I'll do that in a second.
+
+878
+00:55:36,790 --> 00:55:41,250
+You would keep running this algorithm until you
+
+879
+00:55:41,350 --> 00:55:46,070
+have satisfied these convergence criteria up to Epsilon.
+
+880
+00:55:46,160 --> 00:55:53,190
+What I want to do now is describe
+
+881
+00:55:53,240 --> 00:55:55,100
+how to do this [inaudible] ;
+
+882
+00:55:55,170 --> 00:55:59,080
+how to optimize W of Alpha with respect to Alpha I
+
+883
+00:55:59,190 --> 00:56:02,910
+and Alpha J, and it turns out that it's
+
+884
+00:56:03,020 --> 00:56:04,400
+because you can do this extremely efficiently
+
+885
+00:56:04,520 --> 00:56:06,760
+that the SMO algorithm works well.
+
+886
+00:56:06,840 --> 00:56:09,380
+The for the SMO algorithm can be done extremely
+
+887
+00:56:09,460 --> 00:56:11,550
+efficiently, so it may take a large number of iterations
+
+888
+00:56:11,630 --> 00:56:12,460
+to converge,
+
+889
+00:56:12,540 --> 00:56:14,100
+but each iteration is very cheap.
+
+890
+00:56:14,200 --> 00:56:19,060
+Let's talk about that.
+
+891
+00:56:19,140 --> 00:56:43,820
+So in order to derive that step
+
+892
+00:56:43,900 --> 00:56:46,320
+where we update in respect to Alpha I and Alpha J,
+
+893
+00:56:46,410 --> 00:56:48,890
+I'm actually going to use Alpha one and Alpha two .
+
+894
+00:56:48,970 --> 00:56:54,230
+I'm gonna update Alpha one and Alpha two. In general,
+
+895
+00:56:54,320 --> 00:56:55,940
+this could be any Alpha I and Alpha J,
+
+896
+00:56:56,020 --> 00:56:58,700
+but just to make my notation
+
+897
+00:56:58,780 --> 00:56:59,930
+on the board easier,
+
+898
+00:57:00,030 --> 00:57:01,200
+I'm going to derive the derivation for Alpha one and
+
+899
+00:57:01,300 --> 00:57:05,320
+Alpha two and the general completely analogous.
+
+900
+00:57:05,440 --> 00:57:09,510
+On every step
+
+901
+00:57:09,590 --> 00:57:12,890
+of the algorithm with respect to constraint,
+
+902
+00:57:12,990 --> 00:57:15,040
+that sum over I Alpha I YI
+
+903
+00:57:15,150 --> 00:57:16,540
+is equal to zero
+
+904
+00:57:16,640 --> 00:57:17,730
+This is one of the constraints
+
+905
+00:57:17,820 --> 00:57:21,450
+we had previously for our dual optimization problem.
+
+906
+00:57:21,540 --> 00:57:23,080
+This means that
+
+907
+00:57:23,170 --> 00:57:31,950
+Alpha one Y1 plus Alpha two Y2 must be equal to this,
+
+908
+00:57:32,040 --> 00:57:43,600
+to which I'm going to denote by Zeta.
+
+909
+00:57:43,720 --> 00:57:53,700
+So we also have the constraint that the Alpha Is must be
+
+910
+00:57:53,800 --> 00:57:56,120
+between zero and C. We had two constraints on our dual.
+
+911
+00:57:56,230 --> 00:57:58,200
+This was one of the constraints. This was the other one.
+
+912
+00:57:58,290 --> 00:58:00,970
+In pictures,
+
+913
+00:58:01,050 --> 00:58:30,390
+the constraint that the Alpha Is is between zero and C,
+
+914
+00:58:30,460 --> 00:58:32,690
+that is often called the Bosk constraint,
+
+915
+00:58:32,870 --> 00:58:38,150
+and so if I draw Alpha one and Alpha two, then I
+
+916
+00:58:38,240 --> 00:58:54,800
+have a constraint that the values of Alpha one and Alpha
+
+917
+00:58:54,900 --> 00:58:57,280
+two must lie within this box that ranges from zero to C.
+
+918
+00:58:57,370 --> 00:59:00,460
+And so the picture of the algorithm is as follows.
+
+919
+00:59:00,590 --> 00:59:03,680
+I have some constraint
+
+920
+00:59:03,760 --> 00:59:11,600
+that Alpha one Y1 plus Alpha two Y2 must equal to Zeta,
+
+921
+00:59:11,680 --> 00:59:27,410
+and so this implies that Alpha one must be equal to
+
+922
+00:59:27,540 --> 00:59:30,460
+Zeta minus Alpha two Y2 over Y1,
+
+923
+00:59:30,590 --> 00:59:38,080
+and so what I want to do
+
+924
+00:59:38,150 --> 00:59:40,470
+is I want to optimize the objective with respect to this.
+
+925
+00:59:40,540 --> 00:59:47,740
+What I can do is plug in my definition for
+
+926
+00:59:47,850 --> 00:59:49,140
+Alpha oneas a function of Alpha two
+
+927
+00:59:49,220 --> 00:59:53,050
+and so this becomes W of Alpha one must be equal to
+
+928
+00:59:53,120 --> 00:59:56,960
+Zeta minus Alpha two Y2 over Y1, Alpha two,
+
+929
+00:59:57,040 --> 01:00:03,040
+Alpha three and so on,
+
+930
+01:00:03,120 --> 01:00:06,710
+and it turns out that because W is a quadratic function ;
+
+931
+01:00:06,790 --> 01:00:08,290
+if you look back to our earlier definition of W,
+
+932
+01:00:08,370 --> 01:00:09,730
+you find it's a quadratic function in all the Alphas ;
+
+933
+01:00:09,810 --> 01:00:13,570
+it turns out that if you look at this expression for W
+
+934
+01:00:13,940 --> 01:00:16,280
+and if you view it as just a function of Alpha two,
+
+935
+01:00:16,390 --> 01:00:19,260
+you find thatthis is a one dimensional
+
+936
+01:00:19,360 --> 01:00:21,070
+quadratic function of Alpha two
+
+937
+01:00:21,160 --> 01:00:23,810
+if you hold Alpha three, Alpha four and so on fixed,
+
+938
+01:00:23,890 --> 01:00:29,400
+and so this can be simplified to some expression of the
+
+939
+01:00:29,480 --> 01:00:33,900
+form A Alpha two squared plus B Alpha two plus C.
+
+940
+01:00:33,990 --> 01:00:36,400
+This is a standard quadratic function.
+
+941
+01:00:36,480 --> 01:00:38,890
+This is really easy to optimize.
+
+942
+01:00:38,970 --> 01:00:42,290
+We know how to optimize ;
+
+943
+01:00:42,410 --> 01:00:43,910
+when did we learn this?
+
+944
+01:00:44,000 --> 01:00:45,460
+This was high school or undergrad or something.
+
+945
+01:00:45,540 --> 01:00:46,410
+You know how to
+
+946
+01:00:46,500 --> 01:00:47,470
+optimize quadratic functions like these.
+
+947
+01:00:47,550 --> 01:00:48,720
+You just do that and that
+
+948
+01:00:48,810 --> 01:00:51,180
+gives you the optimal value for Alpha two.
+
+949
+01:00:51,260 --> 01:00:57,250
+The last step with a Bosk constraint like this : just
+
+950
+01:00:57,360 --> 01:00:57,990
+in pictures,
+
+951
+01:00:58,070 --> 01:01:00,240
+you know your solution
+
+952
+01:01:00,330 --> 01:01:02,300
+must lie on this line, and so
+
+953
+01:01:02,390 --> 01:01:06,540
+there'll be some sort of quadratic function over this line,
+
+954
+01:01:06,610 --> 01:01:10,860
+say, and so if you minimize the quadratic function,
+
+955
+01:01:10,970 --> 01:01:12,100
+maybe you get a value that lies in the box,
+
+956
+01:01:12,240 --> 01:01:13,010
+and if so,
+
+957
+01:01:13,110 --> 01:01:14,480
+then you're done.
+
+958
+01:01:14,580 --> 01:01:16,200
+Or if your quadratic function looks like this,
+
+959
+01:01:16,310 --> 01:01:18,200
+maybe when you optimize your quadratic function,
+
+960
+01:01:18,300 --> 01:01:20,090
+you may end up with a value outside,
+
+961
+01:01:20,200 --> 01:01:23,050
+so you end up with a solution like that. If that happens,
+
+962
+01:01:23,150 --> 01:01:24,290
+you clip your solution
+
+963
+01:01:24,420 --> 01:01:27,680
+just to map it back inside the box.
+
+964
+01:01:27,800 --> 01:01:29,890
+That'll
+
+965
+01:01:29,980 --> 01:01:32,430
+give you the optimal solution of this quadratic
+
+966
+01:01:32,570 --> 01:01:36,480
+optimization problem subject to your solution satisfying
+
+967
+01:01:36,570 --> 01:01:39,240
+this box constraint and lying on this straight line ;
+
+968
+01:01:39,380 --> 01:01:41,570
+in other words,
+
+969
+01:01:41,660 --> 01:01:43,480
+subject to the solution lying on
+
+970
+01:01:43,570 --> 01:01:45,540
+this line segment within the box.
+
+971
+01:01:45,640 --> 01:01:55,390
+Having solved the Alpha two this way,
+
+972
+01:01:55,500 --> 01:01:58,180
+you can clip it if necessary to get it back
+
+973
+01:01:58,290 --> 01:01:59,250
+within the box constraint
+
+974
+01:01:59,360 --> 01:02:03,010
+and then we have Alpha one as a function of Alpha two
+
+975
+01:02:03,120 --> 01:02:06,850
+and this allows you to optimize W
+
+976
+01:02:06,970 --> 01:02:09,090
+with respect to Alpha one and Alpha two quickly,
+
+977
+01:02:09,190 --> 01:02:11,040
+subject to all the constraints,
+
+978
+01:02:11,120 --> 01:02:12,670
+and the key step is really just s
+
+979
+01:02:12,740 --> 01:02:15,980
+ort of one dequadratic optimization,
+
+980
+01:02:16,080 --> 01:02:19,000
+which we do very quickly, which is what makes the inner
+
+981
+01:02:19,110 --> 01:02:20,390
+loop of the SMO algorithm very efficient.
+
+982
+01:02:20,490 --> 01:02:33,320
+Student:You mentioned here that
+
+983
+01:02:33,420 --> 01:02:35,700
+we can change whatever,
+
+984
+01:02:35,800 --> 01:02:38,050
+but the SMO algorithm,
+
+985
+01:02:38,110 --> 01:02:42,170
+we can change two at a time,
+
+986
+01:02:42,290 --> 01:02:43,340
+so how is that [inaudible] understand that.
+
+987
+01:02:43,420 --> 01:02:44,290
+Instructor (Andrew Ng):Right.
+
+988
+01:02:44,370 --> 01:02:47,670
+Let's say I want to change ;
+
+989
+01:02:47,760 --> 01:02:52,220
+as I run optimization algorithm,
+
+990
+01:02:52,310 --> 01:02:54,230
+I have to respect the constraint that
+
+991
+01:02:54,340 --> 01:03:01,330
+sum over I Alpha I YI must be equal to zero, so this is a linear constraint
+
+992
+01:03:01,450 --> 01:03:06,500
+that I didn't have
+
+993
+01:03:06,580 --> 01:03:10,960
+when I was talking about ascent.
+
+994
+01:03:11,040 --> 01:03:12,240
+Suppose I tried to change just Alpha one.
+
+995
+01:03:12,350 --> 01:03:16,880
+Then I know that Alpha one must be equal to the sum
+
+996
+01:03:17,000 --> 01:03:21,340
+from I equals two to M Alpha I YI divided by Y1, right,
+
+997
+01:03:21,470 --> 01:03:28,570
+and so Alpha one can actually be written
+
+998
+01:03:28,680 --> 01:03:30,750
+exactly as a function of Alpha two, Alpha three and so on
+
+999
+01:03:30,850 --> 01:03:31,750
+through Alpha M.
+
+1000
+01:03:31,850 --> 01:03:34,200
+And so if I hold Alpha two, Alpha three,
+
+1001
+01:03:34,280 --> 01:03:36,480
+Alpha four through Alpha M fixed,
+
+1002
+01:03:36,580 --> 01:03:37,960
+then I can't change Alpha one,
+
+1003
+01:03:38,050 --> 01:03:39,500
+because Alpha one is the final [inaudible].
+
+1004
+01:03:39,590 --> 01:03:41,230
+Whereas in contrast,
+
+1005
+01:03:41,300 --> 01:03:44,760
+if I choose to change Alpha one and Alpha two
+
+1006
+01:03:44,830 --> 01:03:48,580
+at the same time,then I still have a constraint
+
+1007
+01:03:48,680 --> 01:03:50,520
+and so I know Alpha one and Alpha two
+
+1008
+01:03:50,610 --> 01:03:52,740
+must satisfy that linear constraint
+
+1009
+01:03:52,870 --> 01:03:59,050
+but at least this way I can change Alpha one
+
+1010
+01:03:59,190 --> 01:03:59,970
+if I also change Alpha two
+
+1011
+01:04:00,060 --> 01:04:02,120
+accordingly to make sure this satisfies the constraint.
+
+1012
+01:04:02,220 --> 01:04:04,820
+Student:[Inaudible].
+
+1013
+01:04:04,930 --> 01:04:12,050
+Instructor (Andrew Ng):So Zeta was defined [inaudible].
+
+1014
+01:04:12,130 --> 01:04:16,670
+So on each iteration,
+
+1015
+01:04:16,760 --> 01:04:19,570
+I have some setting of the parameters,
+
+1016
+01:04:19,650 --> 01:04:20,860
+Alpha one, Alpha two, Alpha three and so on,
+
+1017
+01:04:20,930 --> 01:04:23,520
+and I want to change Alpha one and Alpha two, say.
+
+1018
+01:04:23,620 --> 01:04:26,380
+So from the previous iteration,
+
+1019
+01:04:26,480 --> 01:04:30,400
+let's say I had not validated the constraint,
+
+1020
+01:04:30,510 --> 01:04:32,950
+so that holds true, and so I'm just defining
+
+1021
+01:04:33,080 --> 01:04:34,310
+Zeta to be equal to this,
+
+1022
+01:04:34,410 --> 01:04:40,480
+because Alpha one Y1 plus Alpha two Y2
+
+1023
+01:04:40,560 --> 01:04:41,910
+must be equal to sum from I equals to M of that,
+
+1024
+01:04:41,990 --> 01:04:44,740
+and so I'm just defining this to be Zeta.
+
+1025
+01:04:44,820 --> 01:05:00,090
+Student:[Inaudible].
+
+1026
+01:05:00,180 --> 01:05:02,550
+Instructor (Andrew Ng):On every iteration,
+
+1027
+01:05:02,650 --> 01:05:05,460
+you change maybe a different pair of Alphas to update.
+
+1028
+01:05:05,580 --> 01:05:08,660
+The way you do this is something I don't want to talk
+
+1029
+01:05:09,260 --> 01:05:11,200
+about I'll say a couple more words about that,
+
+1030
+01:05:11,300 --> 01:05:13,790
+but the basic outline of the algorithm is
+
+1031
+01:05:13,880 --> 01:05:15,650
+on every iteration of the algorithm,
+
+1032
+01:05:15,730 --> 01:05:17,910
+you're going to select some Alpha I
+
+1033
+01:05:20,490 --> 01:05:21,360
+and Alpha J to update like on this board.
+
+1034
+01:05:21,520 --> 01:05:23,150
+So that's an Alpha I
+
+1035
+01:05:23,260 --> 01:05:24,910
+and an Alpha J to update via some [inaudible]
+
+1036
+01:05:25,000 --> 01:05:26,750
+and then you use the procedure I just described to
+
+1037
+01:05:26,830 --> 01:05:29,120
+actually update Alpha I and Alpha J.
+
+1038
+01:05:29,210 --> 01:05:33,630
+What I actually just talked about was the procedure
+
+1039
+01:05:33,720 --> 01:05:37,570
+to optimize W with respect to Alpha I and Alpha J.
+
+1040
+01:05:37,680 --> 01:05:40,240
+I didn't actually talk about the for choosing Alpha I
+
+1041
+01:05:40,360 --> 01:05:43,780
+and Alpha J.
+
+1042
+01:05:43,880 --> 01:05:48,190
+Student:What is the function MW?
+
+1043
+01:05:48,300 --> 01:05:53,270
+Instructor (Andrew Ng):MW is way up there.
+
+1044
+01:05:53,380 --> 01:05:54,340
+I'll just write it again.
+
+1045
+01:05:54,440 --> 01:05:55,980
+W of Alpha is that function we had previously.
+
+1046
+01:05:56,090 --> 01:05:57,860
+W of Alpha was the sum over I ;
+
+1047
+01:05:57,950 --> 01:06:01,700
+this is about solving the : it was that thing.
+
+1048
+01:06:01,790 --> 01:06:12,100
+All of this is about solving the optimization problem
+
+1049
+01:06:12,190 --> 01:06:14,160
+for the SVM, so this is the objective function we had,
+
+1050
+01:06:14,270 --> 01:06:15,760
+so that's W of Alpha.
+
+1051
+01:06:15,850 --> 01:06:25,800
+Student:[Inaudible]? Exchanging one of the Alphas ;
+
+1052
+01:06:25,880 --> 01:06:28,300
+optimizing that one,
+
+1053
+01:06:28,410 --> 01:06:30,580
+you can make the other one
+
+1054
+01:06:30,670 --> 01:06:32,080
+that you have to change work, right?
+
+1055
+01:06:32,160 --> 01:06:33,450
+Instructor (Andrew Ng):What do you mean works?
+
+1056
+01:06:33,530 --> 01:06:37,460
+Student:It will get farther from its optimal.
+
+1057
+01:06:37,560 --> 01:06:42,430
+Instructor (Andrew Ng):Let me translate it differently.
+
+1058
+01:06:42,510 --> 01:06:45,590
+What we're trying to do is we're trying to optimize
+
+1059
+01:06:45,680 --> 01:06:47,380
+the objective function W of Alpha,
+
+1060
+01:06:47,490 --> 01:06:50,390
+so the metric of progress that we care about
+
+1061
+01:06:50,470 --> 01:06:53,210
+is whether W of Alpha is getting better on every iteration,
+
+1062
+01:06:53,320 --> 01:06:58,180
+and so what is true for coordinate assent and for SMO is
+
+1063
+01:06:58,290 --> 01:07:01,380
+on every iteration: W of Alpha can only increase.
+
+1064
+01:07:01,490 --> 01:07:03,420
+It may stay the same or it may increase.
+
+1065
+01:07:03,500 --> 01:07:05,680
+It can't get worse. It's true that eventually,
+
+1066
+01:07:05,760 --> 01:07:07,970
+the Alphas will converge at some value.
+
+1067
+01:07:08,070 --> 01:07:10,440
+It's true that in intervening iterations,
+
+1068
+01:07:10,510 --> 01:07:13,650
+one of the Alphas may move further away
+
+1069
+01:07:13,750 --> 01:07:14,980
+and then closer
+
+1070
+01:07:15,080 --> 01:07:16,910
+and further
+
+1071
+01:07:17,020 --> 01:07:19,710
+and closer to its final value,
+
+1072
+01:07:19,790 --> 01:07:20,400
+one of a
+
+1073
+01:07:20,470 --> 01:07:21,650
+but what we really care about is that
+
+1074
+01:07:21,720 --> 01:07:28,860
+W of Alpha is getting better every time,
+
+1075
+01:07:28,970 --> 01:07:29,690
+which is true.
+
+1076
+01:07:29,800 --> 01:07:31,570
+Just a couple more words on SMO
+
+1077
+01:07:31,680 --> 01:07:32,910
+before I wrap up on this.
+
+1078
+01:07:33,020 --> 01:07:37,990
+One is that John Platt's original algorithm
+
+1079
+01:07:38,070 --> 01:07:39,680
+talked about a for choosing
+
+1080
+01:07:39,760 --> 01:07:43,470
+which values or pairs, Alpha I and Alpha J,
+
+1081
+01:07:43,570 --> 01:07:45,350
+to update next is one of those things
+
+1082
+01:07:45,480 --> 01:07:49,360
+that's not conceptually complicated
+
+1083
+01:07:49,490 --> 01:07:51,870
+but it's very complicated to explain in words.
+
+1084
+01:07:51,970 --> 01:07:53,080
+I won't talk about that here.
+
+1085
+01:07:53,160 --> 01:07:55,960
+If you want to learn about it, go ahead
+
+1086
+01:07:56,070 --> 01:08:02,450
+and look up John Platt's paper on the SMO algorithm.
+
+1087
+01:08:02,550 --> 01:08:04,260
+The [inaudible] is pretty easy to read,
+
+1088
+01:08:04,380 --> 01:08:11,370
+and later on, we'll also posting a handouton the course
+
+1089
+01:08:11,490 --> 01:08:15,740
+homepage with some of a simplified version of this
+
+1090
+01:08:15,900 --> 01:08:17,190
+that you can use in problems.
+
+1091
+01:08:17,300 --> 01:08:19,500
+You can see some of the process readings in more details.
+
+1092
+01:08:19,610 --> 01:08:25,980
+One other thing that I didn't talk about
+
+1093
+01:08:26,050 --> 01:08:27,880
+was how to update the parameter B.
+
+1094
+01:08:27,960 --> 01:08:30,630
+So this is solving all your Alphas.
+
+1095
+01:08:30,720 --> 01:08:33,650
+This is also the Alpha that allows us to get W.
+
+1096
+01:08:33,730 --> 01:08:35,140
+The other thing I didn't talk about
+
+1097
+01:08:35,220 --> 01:08:36,230
+was how to compute the parameter B,
+
+1098
+01:08:36,350 --> 01:08:39,050
+and it turns out that again is actually not very difficult.
+
+1099
+01:08:39,160 --> 01:08:42,930
+I'll let you read about that yourself with the notes that
+
+1100
+01:08:43,050 --> 01:08:44,020
+we'll post
+
+1101
+01:08:44,110 --> 01:08:46,580
+along with the next problems.
+
+1102
+01:08:46,700 --> 01:08:54,280
+To wrap up today's lecture,
+
+1103
+01:08:54,370 --> 01:08:56,330
+what I want to do is just tell you briefly about
+
+1104
+01:08:56,440 --> 01:08:58,690
+a couple of examples of applications of SVMs.
+
+1105
+01:08:58,790 --> 01:09:27,790
+Let's consider the problem of
+
+1106
+01:09:27,860 --> 01:09:29,350
+Handler's Integer Recognition.
+
+1107
+01:09:29,470 --> 01:09:32,810
+In Handler's Integer Recognition,
+
+1108
+01:09:32,890 --> 01:09:34,750
+you're given a pixel array
+
+1109
+01:09:34,860 --> 01:09:39,730
+with a scanned image of,
+
+1110
+01:09:39,850 --> 01:09:42,180
+say, a zip code somewhere in Britain.
+
+1111
+01:09:42,300 --> 01:09:43,430
+This is an array of pixels,
+
+1112
+01:09:43,520 --> 01:09:45,720
+and some of these pixels will be on
+
+1113
+01:09:45,820 --> 01:09:47,670
+and other pixels will be off.
+
+1114
+01:09:47,780 --> 01:09:50,980
+This combination of pixels being on
+
+1115
+01:09:51,060 --> 01:09:53,510
+maybe represents the character one.
+
+1116
+01:09:53,620 --> 01:09:56,870
+The question is
+
+1117
+01:09:56,960 --> 01:09:58,980
+given an input feature vector like this,
+
+1118
+01:09:59,070 --> 01:10:02,070
+if you have, say,
+
+1119
+01:10:02,150 --> 01:10:05,730
+ten pixels by ten pixels,
+
+1120
+01:10:05,830 --> 01:10:08,490
+then you have a hundred dimensional feature vector,
+
+1121
+01:10:08,600 --> 01:10:16,660
+then [inaudible]. If you have ten pixels by ten pixels,
+
+1122
+01:10:16,770 --> 01:10:18,370
+you have 100 features,
+
+1123
+01:10:18,480 --> 01:10:20,990
+and maybe these are binary features of XB01
+
+1124
+01:10:21,090 --> 01:10:24,870
+or maybe the Xs are gray scale values corresponding to
+
+1125
+01:10:24,980 --> 01:10:27,470
+how dark each of these pixels was.
+
+1126
+01:10:27,540 --> 01:10:30,590
+Turns out for many years,
+
+1127
+01:10:30,690 --> 01:10:34,870
+there was a neuronetwork that
+
+1128
+01:10:34,960 --> 01:10:37,170
+was a champion algorithm
+
+1129
+01:10:37,280 --> 01:10:38,860
+for Handler's Integer Recognition.
+
+1130
+01:10:39,000 --> 01:10:41,150
+And it turns out that
+
+1131
+01:10:41,260 --> 01:10:44,930
+you can apply an SVM with the following kernel.
+
+1132
+01:10:45,250 --> 01:10:49,290
+It turns out either the polynomial kernel
+
+1133
+01:10:49,410 --> 01:11:04,360
+or the Galcean kernel works fine for this problem,
+
+1134
+01:11:04,470 --> 01:11:08,290
+and just by writing down this kernel and throwing an
+
+1135
+01:11:08,370 --> 01:11:12,090
+SVM at it, an SVM gave performance
+
+1136
+01:11:12,200 --> 01:11:14,730
+comparable to the very best neuronetworks.
+
+1137
+01:11:14,850 --> 01:11:16,420
+This is surprising
+
+1138
+01:11:16,520 --> 01:11:22,580
+because support vector machine doesn't
+
+1139
+01:11:22,660 --> 01:11:25,100
+take into account any knowledge about the pixels,
+
+1140
+01:11:25,210 --> 01:11:30,310
+and in particular, it doesn't know that this pixel is next
+
+1141
+01:11:30,410 --> 01:11:34,430
+to that pixel because it's just representing the pixel
+
+1142
+01:11:34,550 --> 01:11:35,770
+intensity value as a vector.
+
+1143
+01:11:35,850 --> 01:11:37,930
+And so this means the performance of SVM
+
+1144
+01:11:38,080 --> 01:11:39,480
+would be the same even
+
+1145
+01:11:39,560 --> 01:11:40,520
+if you were to shuffle
+
+1146
+01:11:40,600 --> 01:11:41,470
+all the pixels around.
+
+1147
+01:11:41,560 --> 01:11:49,850
+let's say comparable to the very best neuronetworks,
+
+1148
+01:11:49,970 --> 01:11:53,080
+which had been under very careful development
+
+1149
+01:11:53,180 --> 01:11:54,280
+for many years.
+
+1150
+01:11:54,380 --> 01:12:01,950
+I want to tell you about one other cool example,
+
+1151
+01:12:02,050 --> 01:12:04,480
+which is SVMs are also used also
+
+1152
+01:12:04,570 --> 01:12:08,110
+to classify other fairly esoteric objects.
+
+1153
+01:12:08,210 --> 01:12:12,980
+So for example, let's say you want to classify
+
+1154
+01:12:13,120 --> 01:12:15,050
+protein sequences into different classes of proteins.
+
+1155
+01:12:15,130 --> 01:12:16,060
+Every time I do this,
+
+1156
+01:12:16,140 --> 01:12:18,700
+I suspect that
+
+1157
+01:12:18,780 --> 01:12:20,310
+biologists in the room cringe,
+
+1158
+01:12:20,410 --> 01:12:21,320
+so I apologize for that.
+
+1159
+01:12:21,400 --> 01:12:25,090
+There are 20 amino acids,
+
+1160
+01:12:25,150 --> 01:12:28,990
+and proteins in our bodies are made up
+
+1161
+01:12:29,090 --> 01:12:30,210
+by sequences of amino acids.
+
+1162
+01:12:30,320 --> 01:12:33,750
+Even though there are 20 amino acids and 26 alphabets,
+
+1163
+01:12:34,220 --> 01:12:36,900
+I'm going to denote amino acids by the
+
+1164
+01:12:37,010 --> 01:12:39,540
+alphabet A through Z with apologizes to the biologists.
+
+1165
+01:12:39,650 --> 01:13:06,940
+Here's an amino acid sequence represented
+
+1166
+01:13:07,020 --> 01:13:09,080
+by a series of alphabets.
+
+1167
+01:13:09,150 --> 01:13:24,330
+So suppose I want to assign this protein into a few classes
+
+1168
+01:13:24,450 --> 01:13:26,240
+depending on what type of protein it is.
+
+1169
+01:13:26,320 --> 01:13:28,310
+The question is
+
+1170
+01:13:28,390 --> 01:13:30,850
+how do I construct my feature vector?
+
+1171
+01:13:30,930 --> 01:13:34,780
+This is challenging for many reasons,
+
+1172
+01:13:34,890 --> 01:13:35,870
+one of which is that
+
+1173
+01:13:35,980 --> 01:13:38,060
+protein sequences can be of different lengths.
+
+1174
+01:13:38,150 --> 01:13:40,090
+There are some very long protein sequences
+
+1175
+01:13:40,240 --> 01:13:41,210
+and some very short ones,
+
+1176
+01:13:41,290 --> 01:13:43,580
+and so you can't have a feature saying
+
+1177
+01:13:43,660 --> 01:13:46,990
+what is the amino acid in the 100th position,
+
+1178
+01:13:47,080 --> 01:13:47,850
+because maybe
+
+1179
+01:13:47,920 --> 01:13:49,390
+there is no 100th position in this protein sequence.
+
+1180
+01:13:49,500 --> 01:13:51,750
+Some are very long. Some are very short.
+
+1181
+01:13:51,850 --> 01:13:54,830
+Here's my feature representation,
+
+1182
+01:13:54,930 --> 01:13:57,730
+which is I'm going to write down
+
+1183
+01:13:57,840 --> 01:14:02,870
+all possible combinations of four alphabets.
+
+1184
+01:14:02,960 --> 01:14:04,340
+I'm going to write down AAAA,
+
+1185
+01:14:04,430 --> 01:14:11,940
+AAAB, AAAC down to AAAZ
+
+1186
+01:14:12,020 --> 01:14:14,550
+and then AABA and so on.
+
+1187
+01:14:14,640 --> 01:14:15,450
+You get the idea.
+
+1188
+01:14:15,530 --> 01:14:27,330
+Write down all possible combinations of four alphabets
+
+1189
+01:14:27,430 --> 01:14:29,970
+and my feature representation will be
+
+1190
+01:14:30,060 --> 01:14:32,810
+I'm going to scan through this sequence of amino acids
+
+1191
+01:14:32,880 --> 01:14:34,390
+and count how often
+
+1192
+01:14:34,490 --> 01:14:36,950
+each of these subsequences occur.
+
+1193
+01:14:37,040 --> 01:14:41,160
+So for example, BAJT occurs twice
+
+1194
+01:14:41,220 --> 01:14:42,820
+and so I'll put a two there,
+
+1195
+01:14:42,910 --> 01:14:44,220
+and none of these sequences occur,
+
+1196
+01:14:44,300 --> 01:14:45,590
+so I'll put a zero there.
+
+1197
+01:14:45,690 --> 01:14:47,800
+I guess I have a one here and a zero there.
+
+1198
+01:14:47,910 --> 01:14:51,620
+This very long vector
+
+1199
+01:14:51,740 --> 01:14:55,910
+will be my feature representation for protein.
+
+1200
+01:14:56,000 --> 01:14:59,840
+This representation applies no matter how long my
+
+1201
+01:14:59,930 --> 01:15:01,370
+protein sequence is. How large is this?
+
+1202
+01:15:01,450 --> 01:15:11,060
+Well, it turns out this is going to be in R20 to the four,
+
+1203
+01:15:11,180 --> 01:15:12,340
+and so
+
+1204
+01:15:12,420 --> 01:15:16,910
+you have a 160,000 dimensional feature vector,
+
+1205
+01:15:17,020 --> 01:15:19,480
+which is reasonably large,
+
+1206
+01:15:19,590 --> 01:15:21,350
+even by modern computer standards.
+
+1207
+01:15:21,450 --> 01:15:24,740
+Clearly, we don't want to explicitly
+
+1208
+01:15:24,820 --> 01:15:26,250
+represent these high dimensional feature vectors.
+
+1209
+01:15:26,330 --> 01:15:27,930
+Imagine you have 1,000 examples
+
+1210
+01:15:28,010 --> 01:15:29,890
+and you store this as double [inaudible].
+
+1211
+01:15:29,970 --> 01:15:31,130
+Even on modern day computers,
+
+1212
+01:15:31,230 --> 01:15:31,950
+this is big.
+
+1213
+01:15:32,040 --> 01:15:34,990
+It turns out that
+
+1214
+01:15:35,070 --> 01:15:43,970
+there's an efficient dynamic programming algorithm
+
+1215
+01:15:44,060 --> 01:15:44,880
+that can efficiently compute inner products
+
+1216
+01:15:44,950 --> 01:15:45,870
+between these feature vectors,
+
+1217
+01:15:45,970 --> 01:15:46,770
+and so we can apply
+
+1218
+01:15:46,840 --> 01:15:47,480
+this feature representation,
+
+1219
+01:15:47,560 --> 01:15:48,770
+even though it's a ridiculously high feature vector to
+
+1220
+01:15:48,880 --> 01:15:53,060
+classify protein sequences. I won't talk about
+
+1221
+01:15:53,160 --> 01:15:54,310
+the]algorithm.
+
+1222
+01:15:54,390 --> 01:15:57,330
+If any of you have seen the algorithm
+
+1223
+01:15:57,410 --> 01:15:58,460
+for finding subsequences,
+
+1224
+01:15:58,550 --> 01:16:01,250
+it's kind of reminiscent of that.
+
+1225
+01:16:01,320 --> 01:16:03,130
+You can look those up
+
+1226
+01:16:03,220 --> 01:16:04,310
+if you're interested.
+
+1227
+01:16:04,380 --> 01:16:07,270
+This is just another example of a cool kernel,
+
+1228
+01:16:07,360 --> 01:16:09,270
+and more generally,
+
+1229
+01:16:09,360 --> 01:16:12,070
+if you're faced with some new machine-learning
+
+1230
+01:16:12,170 --> 01:16:14,440
+problem, sometimes you can choose a standard kernel
+
+1231
+01:16:14,520 --> 01:16:15,170
+like a Galcean kernel,
+
+1232
+01:16:15,240 --> 01:16:19,070
+and sometimes there are research papers written on
+
+1233
+01:16:19,200 --> 01:16:21,470
+how to come up with a new kernel for a new problem.
+
+1234
+01:16:21,580 --> 01:16:28,380
+Two last sentences I want to say.
+
+1235
+01:16:28,460 --> 01:16:30,770
+Where are we now?
+
+1236
+01:16:30,860 --> 01:16:32,280
+That wraps up SVMs,
+
+1237
+01:16:32,380 --> 01:16:34,170
+which many people would consider
+
+1238
+01:16:34,250 --> 01:16:35,720
+one of the most effective
+
+1239
+01:16:35,790 --> 01:16:36,890
+off the shelf learning algorithms,
+
+1240
+01:16:36,990 --> 01:16:39,110
+and so as of today,
+
+1241
+01:16:39,190 --> 01:16:41,190
+you've actually seen a lot of learning algorithms.
+
+1242
+01:16:41,680 --> 01:16:43,340
+I want to close this class by saying congrats.
+
+1243
+01:16:43,450 --> 01:16:45,490
+You're now well qualified to actually go
+
+1244
+01:16:45,600 --> 01:16:47,070
+and apply learning algorithms to a lot of problems.
+
+1245
+01:16:47,150 --> 01:16:50,640
+We're still in week four of the quarter,
+
+1246
+01:16:50,730 --> 01:16:51,440
+so there's more to come.
+
+1247
+01:16:51,530 --> 01:16:53,190
+In particular, what I want to do next is talk about
+
+1248
+01:16:53,280 --> 01:16:55,570
+how to really understand the learning algorithms
+
+1249
+01:16:55,670 --> 01:16:57,080
+and when they work well and
+
+1250
+01:16:57,160 --> 01:16:59,500
+when they work poorly and to take the tools
+
+1251
+01:16:59,600 --> 01:17:01,050
+which you now have and really talk about
+
+1252
+01:17:01,140 --> 01:17:02,280
+how you can use them really well.
+
+1253
+01:17:02,360 --> 01:17:04,200
+We'll start to do that in the next lecture.
+
+1254
+01:17:04,300 --> 01:17:05,640
+Thanks.
+

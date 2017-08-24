@@ -1,0 +1,4776 @@
+﻿1
+00:00:23,790 --> 00:00:24,970
+All right, okay,
+
+2
+00:00:24,970 --> 00:00:27,920
+so let's get started with today's material.
+
+3
+00:00:31,200 --> 00:00:33,450
+So welcome back to the second lecture.
+
+4
+00:00:34,310 --> 00:00:37,760
+What I want to do today is talk about linear regression,
+
+5
+00:00:38,080 --> 00:00:41,350
+gradient descent, and the normal equations.
+
+6
+00:00:42,270 --> 00:00:45,390
+And I should also say, lecture notes have been
+
+7
+00:00:45,620 --> 00:00:48,060
+posted online and so if some of the math
+
+8
+00:00:48,210 --> 00:00:50,430
+I go over today, I go over rather quickly,
+
+9
+00:00:50,580 --> 00:00:53,070
+if you want to see every equation written out and
+
+10
+00:00:53,240 --> 00:00:55,050
+work through the details more slowly yourself,
+
+11
+00:00:55,580 --> 00:00:56,840
+go to the course homepage
+
+12
+00:00:57,040 --> 00:01:00,820
+and download detailed lecture notes that pretty
+
+13
+00:01:01,080 --> 00:01:02,910
+much describe all the mathematical,
+
+14
+00:01:03,040 --> 00:01:04,750
+technical contents I'm going to go over today.
+
+15
+00:01:04,750 --> 00:01:05,750
+Today, I'm also going to delve into a fair amount –
+
+16
+00:01:08,650 --> 00:01:10,070
+some amount of linear algebra,
+
+17
+00:01:10,820 --> 00:01:12,690
+and so if you would like to see
+
+18
+00:01:12,890 --> 00:01:14,490
+a refresher on linear algebra,
+
+19
+00:01:15,610 --> 00:01:17,880
+this week's discussion section will be taught
+
+20
+00:01:18,050 --> 00:01:20,570
+by the TAs and will be a refresher on linear algebra.
+
+21
+00:01:20,860 --> 00:01:23,820
+So if some of the linear algebra I talk about today
+
+22
+00:01:23,990 --> 00:01:26,480
+sort of seems to be going by pretty quickly,
+
+23
+00:01:26,650 --> 00:01:28,710
+or if you just want to see some of the things
+
+24
+00:01:28,910 --> 00:01:31,530
+I'm claiming today with our proof,
+
+25
+00:01:31,700 --> 00:01:33,070
+if you want to just see some of those things
+
+26
+00:01:33,220 --> 00:01:34,350
+written out in detail,
+
+27
+00:01:34,720 --> 00:01:36,580
+you can come to this week'sdiscussion section.
+
+28
+00:01:41,230 --> 00:01:43,930
+So I just want to start by showing you a fun video.
+
+29
+00:01:44,790 --> 00:01:48,010
+Remember at the last lecture, the initial lecture,
+
+30
+00:01:48,180 --> 00:01:49,780
+I talked about supervised learning.
+
+31
+00:01:50,020 --> 00:01:51,760
+And supervised learning was this
+
+32
+00:01:51,940 --> 00:01:54,790
+machine-learning problem where I said we're going
+
+33
+00:01:54,960 --> 00:01:58,490
+to tell the algorithm what the close right answer is
+
+34
+00:01:59,010 --> 00:02:02,460
+for a number of examples,
+
+35
+00:02:02,810 --> 00:02:03,980
+and then we want the algorithm to
+
+36
+00:02:04,140 --> 00:02:05,250
+replicate more of the same
+
+37
+00:02:05,410 --> 00:02:08,120
+So the example I had at the first lecture was
+
+38
+00:02:08,310 --> 00:02:10,450
+the problem of predicting housing prices,
+
+39
+00:02:10,610 --> 00:02:11,950
+where you may have a training set,
+
+40
+00:02:12,490 --> 00:02:13,650
+and we tell the algorithm
+
+41
+00:02:13,820 --> 00:02:16,020
+what the "right" housing price was for
+
+42
+00:02:16,190 --> 00:02:17,670
+every house in the training set.
+
+43
+00:02:18,250 --> 00:02:19,640
+And then you want the algorithm to learn the
+
+44
+00:02:19,800 --> 00:02:22,530
+relationship between sizes of houses and the prices,
+
+45
+00:02:22,760 --> 00:02:26,100
+and essentially produce more of the "right" answer.
+
+46
+00:02:26,830 --> 00:02:30,230
+So let me show you a video now. Load the big screen,
+
+47
+00:02:30,780 --> 00:02:31,500
+please.
+
+48
+00:02:31,660 --> 00:02:32,660
+So I'll show you a video now
+
+49
+00:02:33,410 --> 00:02:34,930
+that was from Dean Pomerleau
+
+50
+00:02:35,240 --> 00:02:37,280
+at some work he did at Carnegie Mellon
+
+51
+00:02:38,580 --> 00:02:40,140
+on applied supervised learning to
+
+52
+00:02:40,310 --> 00:02:41,680
+get a car to drive itself.
+
+53
+00:02:42,810 --> 00:02:45,030
+This is work on a vehicle
+
+54
+00:02:45,220 --> 00:02:46,370
+known as Alvin.
+
+55
+00:02:46,540 --> 00:02:48,950
+It was done sort of about 15 years ago,
+
+56
+00:02:49,920 --> 00:02:55,910
+and I think it was a very elegant example
+
+57
+00:02:56,220 --> 00:02:58,730
+of the sorts of things you can get
+
+58
+00:02:58,880 --> 00:03:00,400
+supervised or any algorithms to do.
+
+59
+00:03:01,180 --> 00:03:02,560
+On the video,
+
+60
+00:03:02,720 --> 00:03:04,540
+you hear Dean Pomerleau's voice
+
+61
+00:03:04,710 --> 00:03:06,620
+mention and algorithm called Neural Network.
+
+62
+00:03:06,870 --> 00:03:08,170
+I'll say a little bit about that later,
+
+63
+00:03:08,520 --> 00:03:11,050
+but the essential learning algorithm
+
+64
+00:03:11,220 --> 00:03:12,820
+for this is something called gradient descent,
+
+65
+00:03:12,970 --> 00:03:15,310
+which I will talk about later in today's lecture.
+
+66
+00:03:15,520 --> 00:03:19,620
+Let's watch the video. [Video plays]
+
+67
+00:04:25,590 --> 00:04:26,600
+Instructor (Andrew Ng):So two comments, right.
+
+68
+00:04:26,780 --> 00:04:28,740
+One is this is supervised learning
+
+69
+00:04:28,940 --> 00:04:30,890
+because it's learning from a human driver,
+
+70
+00:04:31,210 --> 00:04:33,110
+in which a human driver shows that
+
+71
+00:04:33,310 --> 00:04:34,930
+we're on this segment of the road,
+
+72
+00:04:35,110 --> 00:04:36,160
+I will steer at this angle.
+
+73
+00:04:36,350 --> 00:04:38,330
+This segment of the road, I'll steer at this angle.
+
+74
+00:04:38,670 --> 00:04:40,120
+And so the human provides the number
+
+75
+00:04:40,300 --> 00:04:43,140
+of "correct" steering directions to the car,
+
+76
+00:04:43,500 --> 00:04:46,130
+and then it's the job of the car to try to learn to
+
+77
+00:04:47,000 --> 00:04:49,740
+produce more of these "correct" steering directions
+
+78
+00:04:49,970 --> 00:04:51,370
+that keeps the car on the road.
+
+79
+00:04:52,380 --> 00:04:54,820
+On the monitor display up here,
+
+80
+00:04:55,060 --> 00:04:56,940
+I just want to tell you
+
+81
+00:04:57,110 --> 00:04:58,310
+a little bit about what this display means.
+
+82
+00:04:58,500 --> 00:04:59,970
+So on the upper left
+
+83
+00:05:00,140 --> 00:05:01,580
+where the mouse pointer is moving,
+
+84
+00:05:01,880 --> 00:05:04,290
+this horizontal line actually shows
+
+85
+00:05:04,450 --> 00:05:06,050
+the human steering direction,
+
+86
+00:05:06,390 --> 00:05:10,040
+and this white bar, or this white area right here
+
+87
+00:05:10,300 --> 00:05:13,680
+shows the steering direction chosen
+
+88
+00:05:13,890 --> 00:05:16,740
+by the human driver, by moving the steering wheel.
+
+89
+00:05:16,930 --> 00:05:18,770
+The human is steering a little bit to the left
+
+90
+00:05:18,940 --> 00:05:21,290
+here indicated by the position of this white region.
+
+91
+00:05:21,680 --> 00:05:25,810
+This second line here where Mouse is pointing, the
+
+92
+00:05:26,020 --> 00:05:29,210
+second line here is the output of the learning algorithm,
+
+93
+00:05:29,400 --> 00:05:30,340
+and where the learning algorithm
+
+94
+00:05:30,510 --> 00:05:32,380
+currently thinks is the right steering direction.
+
+95
+00:05:32,640 --> 00:05:34,840
+And right now what you're seeing is the learning
+
+96
+00:05:35,030 --> 00:05:36,740
+algorithm just at the very beginning of training,
+
+97
+00:05:36,920 --> 00:05:39,180
+and so there's just no idea of where to steer.
+
+98
+00:05:39,380 --> 00:05:40,510
+And so its output,
+
+99
+00:05:40,690 --> 00:05:42,520
+this little white smear over
+
+100
+00:05:42,690 --> 00:05:44,210
+the entire range of steering directions.
+
+101
+00:05:44,420 --> 00:05:46,620
+And as the algorithm collects more examples
+
+102
+00:05:46,910 --> 00:05:47,950
+and learns of a time,
+
+103
+00:05:48,110 --> 00:05:49,930
+you see it start to
+
+104
+00:05:50,110 --> 00:05:51,920
+more confidently choose a steering direction.
+
+105
+00:05:52,290 --> 00:05:53,720
+So let's keep watching the video.
+
+106
+00:05:55,060 --> 00:05:59,290
+[Video plays]
+
+107
+00:08:39,830 --> 00:08:41,820
+All right, so who thought driving
+
+108
+00:08:41,980 --> 00:08:43,290
+could be that dramatic, right?
+
+109
+00:08:44,330 --> 00:08:46,370
+Switch back to the chalkboard, please.
+
+110
+00:08:47,560 --> 00:08:51,170
+I should say, this work was done about 15 years ago
+
+111
+00:08:51,490 --> 00:08:53,060
+and autonomous driving
+
+112
+00:08:53,250 --> 00:08:54,360
+has come a long way.
+
+113
+00:08:54,520 --> 00:08:55,870
+So many of you will have heard
+
+114
+00:08:56,020 --> 00:08:57,060
+of the DARPA Grand Challenge,
+
+115
+00:08:57,210 --> 00:08:59,560
+where one of my colleagues, Sebastian Thrun,
+
+116
+00:08:59,710 --> 00:09:02,110
+the winning team's drive a car
+
+117
+00:09:02,270 --> 00:09:03,700
+across a desert by itself.
+
+118
+00:09:03,860 --> 00:09:05,940
+So Alvin was, I think, absolutely
+
+119
+00:09:06,080 --> 00:09:07,320
+amazing work for its time,
+
+120
+00:09:07,480 --> 00:09:11,060
+but autonomous driving has obviously come a
+
+121
+00:09:11,200 --> 00:09:12,740
+long way since then.
+
+122
+00:09:14,260 --> 00:09:17,980
+So what you just saw was an example,
+
+123
+00:09:18,170 --> 00:09:19,970
+again, of supervised learning,
+
+124
+00:09:20,200 --> 00:09:21,990
+and in particular it was an example of
+
+125
+00:09:22,210 --> 00:09:24,570
+what they call the regression problem,
+
+126
+00:09:25,100 --> 00:09:27,340
+because the vehicle is trying to predict a
+
+127
+00:09:27,510 --> 00:09:29,740
+continuous value variables of a continuous value
+
+128
+00:09:29,930 --> 00:09:33,860
+steering directions, we call the regression problem.
+
+129
+00:09:35,690 --> 00:09:37,730
+And what I want to do today is talk about
+
+130
+00:09:37,930 --> 00:09:40,570
+our first supervised learning algorithm,
+
+131
+00:09:40,880 --> 00:09:42,980
+and it will also be to a regression task.
+
+132
+00:09:44,860 --> 00:09:48,190
+So for the running example that
+
+133
+00:09:48,350 --> 00:09:50,660
+I'm going to use throughout today's lecture,
+
+134
+00:09:50,940 --> 00:09:53,270
+you're going to return to the example
+
+135
+00:09:53,460 --> 00:09:55,580
+of trying to predict housing prices.
+
+136
+00:09:55,800 --> 00:10:05,870
+So here's actually a dataset collected
+
+137
+00:10:06,040 --> 00:10:08,340
+by TA, Dan Ramage,
+
+138
+00:10:08,540 --> 00:10:11,490
+on housing prices in Portland, Oregon.
+
+139
+00:10:27,480 --> 00:10:29,890
+So here's a dataset of a number
+
+140
+00:10:30,090 --> 00:10:32,650
+of houses of different sizes,
+
+141
+00:10:33,590 --> 00:10:42,580
+and here are their asking prices in thousands of dollars
+
+142
+00:10:44,050 --> 00:10:46,330
+$200,000.
+
+143
+00:10:53,790 --> 00:11:00,580
+And so we can take this data and plot it, square feet,
+
+144
+00:11:01,780 --> 00:11:08,240
+best price, and so you make your other dataset like that.
+
+145
+00:11:08,610 --> 00:11:11,010
+And the question is, given a dataset like this,
+
+146
+00:11:11,190 --> 00:11:13,260
+or given what we call a training set like this,
+
+147
+00:11:13,730 --> 00:11:14,720
+how do you learn to predict
+
+148
+00:11:14,890 --> 00:11:15,950
+the relationship between the size
+
+149
+00:11:16,110 --> 00:11:17,940
+of the house and the price of the house?
+
+150
+00:11:19,800 --> 00:11:21,080
+So I'm actually going to come back
+
+151
+00:11:21,270 --> 00:11:23,370
+and modify this task a little bit more later,
+
+152
+00:11:23,630 --> 00:11:27,250
+but let me go ahead and introduce some notation,
+
+153
+00:11:27,510 --> 00:11:29,230
+which I'll be using, actually,
+
+154
+00:11:29,400 --> 00:11:30,800
+throughout the rest of this course.
+
+155
+00:11:32,810 --> 00:11:34,230
+The first piece of notation is
+
+156
+00:11:34,970 --> 00:11:38,390
+I'm going to let the lower case alphabet M
+
+157
+00:11:38,980 --> 00:11:41,080
+denote the number of training examples,
+
+158
+00:11:41,320 --> 00:11:42,510
+and that just means the number of rows,
+
+159
+00:11:42,690 --> 00:11:43,870
+or the number of examples,
+
+160
+00:11:44,040 --> 00:11:45,380
+houses, and prices we have.
+
+161
+00:11:45,840 --> 00:11:47,340
+And in this particular dataset,
+
+162
+00:11:47,540 --> 00:11:51,930
+we have, what actually happens,
+
+163
+00:11:52,110 --> 00:11:53,830
+we have 47 training examples,
+
+164
+00:11:54,030 --> 00:11:55,580
+although I wrote down only five.
+
+165
+00:12:02,000 --> 00:12:04,340
+Okay, so throughout this quarter,
+
+166
+00:12:05,190 --> 00:12:11,730
+I'm going to use the alphabet M to
+
+167
+00:12:12,500 --> 00:12:14,920
+denote the number of training examples.
+
+168
+00:12:17,230 --> 00:12:21,670
+I'm going to use the lower case alphabet X
+
+169
+00:12:22,310 --> 00:12:27,600
+to denote the input variables,
+
+170
+00:12:33,110 --> 00:12:36,230
+which I'll often also call the features.
+
+171
+00:12:36,490 --> 00:12:38,670
+And so in this case, X would denote
+
+172
+00:12:38,870 --> 00:12:41,220
+the size of the house they were looking at.
+
+173
+00:12:42,110 --> 00:12:52,250
+I'm going to use Y to denote the "output" variable,
+
+174
+00:12:52,440 --> 00:13:01,100
+which is sometimes also called a target variable,
+
+175
+00:13:02,140 --> 00:13:06,730
+and so one pair, x, y,
+
+176
+00:13:07,480 --> 00:13:10,650
+is what comprises one training example.
+
+177
+00:13:13,400 --> 00:13:14,300
+In other words,
+
+178
+00:13:14,460 --> 00:13:16,550
+one row on the table I drew just now
+
+179
+00:13:16,880 --> 00:13:19,520
+what would be what I call one training example,
+
+180
+00:13:19,860 --> 00:13:24,850
+and the Ith training example,
+
+181
+00:13:30,690 --> 00:13:33,150
+in other words the Ith row in that table,
+
+182
+00:13:33,380 --> 00:13:40,670
+I'm going to write as XI, Y, I.
+
+183
+00:13:41,470 --> 00:13:45,590
+Okay, and so in this notation they're going to use
+
+184
+00:13:45,810 --> 00:13:49,030
+this superscript I is not exponentiation.
+
+185
+00:13:49,190 --> 00:13:51,600
+So this is not X to the power of IY to the power of I.
+
+186
+00:13:51,970 --> 00:13:53,490
+In this notation,
+
+187
+00:13:54,190 --> 00:13:57,590
+the superscript I in parentheses is just sort of an
+
+188
+00:13:57,770 --> 00:14:01,920
+index into the Ith row of my list of training examples.
+
+189
+00:14:03,460 --> 00:14:08,680
+So in supervised learning,
+
+190
+00:14:08,880 --> 00:14:12,410
+this is what we're going to do.
+
+191
+00:14:13,140 --> 00:14:16,570
+We're given a training set,
+
+192
+00:14:19,490 --> 00:14:21,980
+and we're going to feed our training set,
+
+193
+00:14:22,150 --> 00:14:24,230
+comprising our M training example,
+
+194
+00:14:24,400 --> 00:14:27,470
+so 47 training examples, into a learning algorithm.
+
+195
+00:14:35,000 --> 00:14:38,180
+Okay, and our algorithm then has
+
+196
+00:14:38,370 --> 00:14:42,030
+output function that is by tradition,
+
+197
+00:14:42,220 --> 00:14:43,730
+and for historical reasons,
+
+198
+00:14:44,460 --> 00:14:48,530
+is usually denoted lower case alphabet H,
+
+199
+00:14:48,850 --> 00:14:51,680
+and is called a hypothesis.
+
+200
+00:14:53,530 --> 00:14:54,710
+Don't worry too much about whether
+
+201
+00:14:54,880 --> 00:14:56,750
+the term hypothesis has a deep meaning.
+
+202
+00:14:57,420 --> 00:15:00,220
+It's more a term that's used for historical reasons.
+
+203
+00:15:03,100 --> 00:15:06,910
+And the hypothesis's job is to take this input.
+
+204
+00:15:09,120 --> 00:15:11,640
+There's some new.
+
+205
+00:15:12,500 --> 00:15:14,580
+What the hypothesis does is it takes this input,
+
+206
+00:15:16,410 --> 00:15:18,420
+a new living area in square feet saying
+
+207
+00:15:19,470 --> 00:15:26,960
+and output estimates the price of this house.
+
+208
+00:15:27,410 --> 00:15:33,730
+So the hypothesis H maps from inputs X to outputs Y.
+
+209
+00:15:37,620 --> 00:15:40,100
+So in order to design a learning algorithm,
+
+210
+00:15:40,310 --> 00:15:41,560
+the first thing we have to decide
+
+211
+00:15:41,740 --> 00:15:44,890
+is how we want to represent the hypothesis, right.
+
+212
+00:15:45,320 --> 00:15:47,330
+And just for this purposes of this lecture,
+
+213
+00:15:47,530 --> 00:15:49,300
+for the purposes of our first learning algorithm,
+
+214
+00:15:49,580 --> 00:15:51,110
+I'm going to use a linear
+
+215
+00:15:51,280 --> 00:15:53,060
+representation for the hypothesis.
+
+216
+00:15:53,230 --> 00:15:55,310
+So I'm going to represent my hypothesis
+
+217
+00:15:55,560 --> 00:16:01,260
+as H of X equals theta zero,
+
+218
+00:16:01,260 --> 00:16:04,010
+plus theta 1X
+
+219
+00:16:04,520 --> 00:16:07,800
+where X here is an input feature,
+
+220
+00:16:08,090 --> 00:16:11,440
+and so that's the size of the house we're considering.
+
+221
+00:16:12,320 --> 00:16:16,400
+And more generally, come back to this,
+
+222
+00:16:18,260 --> 00:16:21,880
+more generally for many regression problems
+
+223
+00:16:22,060 --> 00:16:23,830
+we may have more than one input feature.
+
+224
+00:16:24,010 --> 00:16:26,920
+So for example, if instead of just
+
+225
+00:16:27,100 --> 00:16:28,520
+knowing the size of the houses,
+
+226
+00:16:28,830 --> 00:16:35,050
+if we know also the number of
+
+227
+00:16:35,230 --> 00:16:36,580
+bedrooms in these houses,
+
+228
+00:16:43,270 --> 00:16:46,000
+let's say, then,
+
+229
+00:16:53,940 --> 00:16:58,010
+so if our training set also has a second feature,
+
+230
+00:16:58,210 --> 00:17:00,250
+the number of bedrooms in the house,
+
+231
+00:17:00,500 --> 00:17:03,320
+then you may, let's say
+
+232
+00:17:03,480 --> 00:17:08,040
+X1 denote the size and square feet.
+
+233
+00:17:08,520 --> 00:17:11,760
+Let X have script two denote the number of bedrooms,
+
+234
+00:17:15,000 --> 00:17:19,670
+and then I would write the hypothesis,
+
+235
+00:17:19,840 --> 00:17:26,200
+H of X   as theta rho
+
+236
+00:17:28,060 --> 00:17:32,900
+plus theta 1X1 plus theta 2X2.
+
+237
+00:17:33,500 --> 00:17:36,390
+Okay, and sometimes when I
+
+238
+00:17:36,560 --> 00:17:38,160
+went to take the hypothesis H,
+
+239
+00:17:38,330 --> 00:17:39,930
+and when I went to make this dependent
+
+240
+00:17:40,080 --> 00:17:41,560
+on the theta is explicit,
+
+241
+00:17:42,000 --> 00:17:43,040
+I'll sometimes write this as
+
+242
+00:17:43,040 --> 00:17:45,700
+H subscript theta of X.
+
+243
+00:17:46,140 --> 00:17:50,120
+And so this is the price that my hypothesis
+
+244
+00:17:50,290 --> 00:17:54,670
+predicts a house with features X costs.
+
+245
+00:17:55,330 --> 00:17:57,100
+So given the new house with features X,
+
+246
+00:17:57,490 --> 00:17:59,680
+a certain size and a certain number of bedrooms,
+
+247
+00:17:59,910 --> 00:18:01,800
+this is going to be the price that
+
+248
+00:18:01,960 --> 00:18:04,530
+my hypothesis predicts this house is going to cost.
+
+249
+00:18:10,420 --> 00:18:12,490
+One final piece of notation,
+
+250
+00:18:13,760 --> 00:18:23,720
+so for conciseness, just to write
+
+251
+00:18:23,880 --> 00:18:25,280
+this a bit more compactly
+
+252
+00:18:25,480 --> 00:18:27,410
+I'm going to take the convention of defining
+
+253
+00:18:27,610 --> 00:18:34,420
+X0 to be equal to one, and so I can now write H of X to
+
+254
+00:18:34,610 --> 00:18:40,520
+be equal to sum from I equals one to two of theta I,
+
+255
+00:18:40,970 --> 00:18:44,070
+oh sorry, zero to two, theta I, X I.
+
+256
+00:18:44,390 --> 00:18:47,350
+And if you think of theta as an X, as vectors,
+
+257
+00:18:47,610 --> 00:18:51,010
+then this is just theta transpose X.
+
+258
+00:18:52,660 --> 00:18:56,300
+And the very final piece of notation is
+
+259
+00:18:57,270 --> 00:19:07,220
+I'm also going to let lower case N be the
+
+260
+00:19:07,370 --> 00:19:09,330
+number of features in my learning problem.
+
+261
+00:19:09,490 --> 00:19:10,410
+And so this actually
+
+262
+00:19:10,560 --> 00:19:19,420
+becomes a sum from I equals zero to N,
+
+263
+00:19:19,780 --> 00:19:21,930
+where in this example if you have two features,
+
+264
+00:19:22,110 --> 00:19:23,990
+N would be equal to two.
+
+265
+00:19:26,880 --> 00:19:30,230
+All right, I realize that was a fair amount of notation,
+
+266
+00:19:30,520 --> 00:19:34,950
+and as I proceed through the rest of the lecture today,
+
+267
+00:19:35,170 --> 00:19:36,830
+or in future weeks as well,
+
+268
+00:19:37,020 --> 00:19:39,790
+if some day you're looking at me write a symbol
+
+269
+00:19:40,030 --> 00:19:41,230
+and you're wondering, gee,
+
+270
+00:19:41,410 --> 00:19:43,220
+what was that simple lower case N again?
+
+271
+00:19:43,390 --> 00:19:44,880
+Or what was that lower case X again,
+
+272
+00:19:45,060 --> 00:19:45,980
+or whatever,
+
+273
+00:19:46,130 --> 00:19:47,200
+please raise hand and I'll answer.
+
+274
+00:19:47,360 --> 00:19:49,120
+This is a fair amount of notation.
+
+275
+00:19:49,260 --> 00:19:53,300
+We'll probably all get used to it in a few days
+
+276
+00:19:53,870 --> 00:19:55,390
+and we'll standardize notation and
+
+277
+00:19:55,570 --> 00:19:56,880
+make a lot of our descriptions of learning
+
+278
+00:19:57,070 --> 00:19:58,380
+algorithms a lot easier.
+
+279
+00:19:58,560 --> 00:19:59,430
+But again,
+
+280
+00:19:59,590 --> 00:20:00,730
+if you see me write some symbol
+
+281
+00:20:00,940 --> 00:20:02,490
+and you don't quite remember what it means,
+
+282
+00:20:02,660 --> 00:20:03,830
+chances are there are others in this
+
+283
+00:20:04,010 --> 00:20:05,080
+class who've forgotten too.
+
+284
+00:20:05,270 --> 00:20:06,480
+So please raise your hand and ask if
+
+285
+00:20:06,670 --> 00:20:08,850
+ou're ever wondering what some symbol means.
+
+286
+00:20:09,650 --> 00:20:12,220
+Any questions you have about any of this?
+
+287
+00:20:20,800 --> 00:20:24,540
+Instructor (Andrew Ng):Say that again.
+
+288
+00:20:26,580 --> 00:20:28,370
+Instructor (Andrew Ng):Right, so, well let me
+
+289
+00:20:34,830 --> 00:20:36,110
+this was going to be next,
+
+290
+00:20:36,290 --> 00:20:39,700
+but the theta or the theta Is are called the parameters.
+
+291
+00:20:46,460 --> 00:20:47,260
+The thetas are called the
+
+292
+00:20:47,400 --> 00:20:49,670
+parameters of our learning algorithm and theta zero
+
+293
+00:20:49,830 --> 00:20:51,640
+theta one, theta two are just real numbers.
+
+294
+00:20:52,310 --> 00:20:54,680
+And then it is the job of the learning algorithm
+
+295
+00:20:55,370 --> 00:20:58,910
+to use the training set to choose or to
+
+296
+00:20:59,090 --> 00:21:01,060
+learn appropriate parameters theta.
+
+297
+00:21:01,790 --> 00:21:03,110
+Okay, is there other questions?
+
+298
+00:21:32,820 --> 00:21:34,520
+All great questions.
+
+299
+00:21:34,520 --> 00:21:35,520
+The answer – so the question was,
+
+300
+00:21:36,600 --> 00:21:38,430
+is this a typical hypothesis or
+
+301
+00:21:38,590 --> 00:21:41,560
+can theta be a function of other variables and so on.
+
+302
+00:21:41,770 --> 00:21:43,070
+And the answer is sort of yes.
+
+303
+00:21:43,390 --> 00:21:45,760
+For now, just for this first
+
+304
+00:21:45,980 --> 00:21:48,430
+learning algorithm we'll
+
+305
+00:21:48,620 --> 00:21:50,400
+talk about using a linear hypothesis class.
+
+306
+00:21:50,950 --> 00:21:53,140
+A little bit actually later this quarter,
+
+307
+00:21:53,430 --> 00:21:54,200
+we'll talk about
+
+308
+00:21:54,370 --> 00:21:55,660
+much more complicated hypothesis classes,
+
+309
+00:21:56,980 --> 00:21:57,770
+and we'll actually talk about
+
+310
+00:21:57,930 --> 00:22:00,480
+higher order functions as well, a little bit later today.
+
+311
+00:22:03,420 --> 00:22:09,330
+Okay, so for the learning problem then.
+
+312
+00:22:10,060 --> 00:22:12,140
+How do we chose the parameters theta
+
+313
+00:22:12,780 --> 00:22:15,300
+so that our hypothesis H will
+
+314
+00:22:15,460 --> 00:22:17,700
+make accurate predictions about all the houses.
+
+315
+00:22:18,240 --> 00:22:21,810
+All right, so one reasonable thing to do seems to be,
+
+316
+00:22:22,010 --> 00:22:23,860
+well, we have a training set.
+
+317
+00:22:23,860 --> 00:22:24,860
+So – and just on the training set,
+
+318
+00:22:27,290 --> 00:22:29,690
+our hypothesis will make some prediction,
+
+319
+00:22:30,270 --> 00:22:31,590
+predictions of the housing prices,
+
+320
+00:22:31,760 --> 00:22:36,590
+of the prices of the houses in the training set.
+
+321
+00:22:37,220 --> 00:22:38,900
+So one thing we could do is just try to
+
+322
+00:22:39,090 --> 00:22:42,740
+make the predictions of a learning algorithm
+
+323
+00:22:43,470 --> 00:22:44,970
+accurate on a training set.
+
+324
+00:22:45,190 --> 00:22:47,750
+So given some features, X,
+
+325
+00:22:47,940 --> 00:22:49,640
+and some correct prices, Y,
+
+326
+00:22:49,930 --> 00:22:53,400
+we might want to make that theta square
+
+327
+00:22:53,600 --> 00:22:54,990
+difference between the prediction of the
+
+328
+00:22:55,160 --> 00:22:56,480
+algorithm and the actual price
+
+329
+00:22:59,400 --> 00:23:01,430
+So to choose parameters theta,
+
+330
+00:23:01,700 --> 00:23:02,760
+unless we want to minimize over
+
+331
+00:23:02,950 --> 00:23:05,370
+the parameters theta, so the squared area
+
+332
+00:23:05,960 --> 00:23:07,890
+between the predicted price and the actual price.
+
+333
+00:23:10,030 --> 00:23:12,870
+And so going to fill this in.
+
+334
+00:23:13,100 --> 00:23:14,770
+We have M training examples.
+
+335
+00:23:14,980 --> 00:23:17,120
+So the sum from I equals one through
+
+336
+00:23:17,280 --> 00:23:19,130
+M of my M training examples,
+
+337
+00:23:19,810 --> 00:23:22,830
+of price predicted on the Ith house
+
+338
+00:23:23,070 --> 00:23:24,360
+in my training set.
+
+339
+00:23:24,580 --> 00:23:27,140
+Mine is the actual target variable.
+
+340
+00:23:27,360 --> 00:23:29,140
+Mine is actual price on the Ith
+
+341
+00:23:29,340 --> 00:23:30,850
+training example.
+
+342
+00:23:32,550 --> 00:23:33,770
+And by convention,
+
+343
+00:23:33,990 --> 00:23:35,110
+instead of minimizing this
+
+344
+00:23:35,520 --> 00:23:37,230
+sum of the squared differences,
+
+345
+00:23:37,410 --> 00:23:38,730
+I'm just going to put a one-half there,
+
+346
+00:23:39,060 --> 00:23:43,550
+which will simplify some of the math we do later.
+
+347
+00:23:44,500 --> 00:23:47,620
+Okay, and so let me go ahead
+
+348
+00:23:47,790 --> 00:23:50,630
+and define J of theta to be equal to just the same,
+
+349
+00:23:50,840 --> 00:23:54,270
+one-half sum from I equals one through
+
+350
+00:23:54,450 --> 00:23:56,630
+M on the number of training examples,
+
+351
+00:23:56,890 --> 00:24:03,400
+of the value predicted by my hypothesis
+
+352
+00:24:03,760 --> 00:24:05,290
+minus the actual value.
+
+353
+00:24:05,870 --> 00:24:13,420
+And so what we'll do, let's say,
+
+354
+00:24:13,660 --> 00:24:16,990
+is minimize as a function of the parameters of theta,
+
+355
+00:24:17,390 --> 00:24:19,170
+this quantity J of theta.
+
+356
+00:24:20,700 --> 00:24:22,410
+I should say, to those of you who have
+
+357
+00:24:22,600 --> 00:24:24,630
+taken sort of linear algebra classes,
+
+358
+00:24:25,250 --> 00:24:28,850
+or maybe basic statistics classes,
+
+359
+00:24:29,060 --> 00:24:31,170
+some of you may have seen things like these
+
+360
+00:24:31,360 --> 00:24:35,990
+before and seen least regression or squares.
+
+361
+00:24:37,600 --> 00:24:39,320
+Many of you will not have seen this before.
+
+362
+00:24:39,530 --> 00:24:41,380
+I think some of you may have seen it before,
+
+363
+00:24:41,720 --> 00:24:43,160
+but either way, regardless of
+
+364
+00:24:43,330 --> 00:24:44,280
+whether you've seen it before,
+
+365
+00:24:44,450 --> 00:24:45,310
+let's keep going.
+
+366
+00:24:45,600 --> 00:24:47,830
+Just for those of you that have seen it before,
+
+367
+00:24:48,090 --> 00:24:49,290
+I should say eventually,
+
+368
+00:24:49,450 --> 00:24:52,130
+we'll actually show that this algorithm is a special
+
+369
+00:24:52,320 --> 00:24:54,280
+case of a much broader class of algorithms.
+
+370
+00:24:54,870 --> 00:24:55,810
+But let's keep going.
+
+371
+00:24:55,980 --> 00:24:57,420
+We'll get there eventually.
+
+372
+00:24:59,490 --> 00:25:06,990
+So I'm going to talk about a couple of
+
+373
+00:25:07,150 --> 00:25:08,650
+different algorithms for performing
+
+374
+00:25:08,850 --> 00:25:11,500
+that minimization over theta of J of theta.
+
+375
+00:25:12,650 --> 00:25:13,810
+The first algorithm I'm going to talk
+
+376
+00:25:13,970 --> 00:25:15,550
+about is a search algorithm,
+
+377
+00:25:16,120 --> 00:25:17,310
+where the basic idea is
+
+378
+00:25:17,490 --> 00:25:25,060
+we'll start with some value of
+
+379
+00:25:25,240 --> 00:25:26,810
+my parameter vector theta.
+
+380
+00:25:30,830 --> 00:25:33,390
+Maybe initialize my parameter vector theta
+
+381
+00:25:33,730 --> 00:25:35,480
+to be the vector of all zeros,
+
+382
+00:25:36,640 --> 00:25:39,490
+and excuse me, have to correct that.
+
+383
+00:25:40,120 --> 00:25:42,670
+I sort of write zero with an arrow
+
+384
+00:25:42,850 --> 00:25:45,110
+on top to denote the vector of all zeros.
+
+385
+00:25:45,670 --> 00:25:48,500
+And then I'm going to keep changing
+
+386
+00:25:51,650 --> 00:25:54,160
+my parameter vector theta
+
+387
+00:25:54,540 --> 00:26:00,660
+to reduce J of theta a little bit,
+
+388
+00:26:00,990 --> 00:26:03,040
+until we hopefully end up at the
+
+389
+00:26:03,240 --> 00:26:05,980
+minimum with respect to theta of J of theta.
+
+390
+00:26:07,260 --> 00:26:11,550
+So switch the laptops please, and lower the big screen.
+
+391
+00:26:12,580 --> 00:26:19,190
+So let me go ahead and show you an animation
+
+392
+00:26:19,560 --> 00:26:23,170
+of this first algorithm for minimizing J of theta,
+
+393
+00:26:23,660 --> 00:26:25,700
+which is an algorithm called grading and descent.
+
+394
+00:26:26,580 --> 00:26:30,170
+So here's the idea.
+
+395
+00:26:30,460 --> 00:26:35,090
+You see on the display a plot and the axes,
+
+396
+00:26:35,280 --> 00:26:38,630
+the horizontal axes are theta zero and theta one.
+
+397
+00:26:38,630 --> 00:26:39,630
+That's usually – minimize J of theta,
+
+398
+00:26:41,020 --> 00:26:44,020
+which is represented by the height of this plot.
+
+399
+00:26:44,700 --> 00:26:47,160
+So the surface represents the function J of theta
+
+400
+00:26:47,510 --> 00:26:49,040
+and the axes of this function,
+
+401
+00:26:49,300 --> 00:26:50,850
+or the inputs of this function are the parameters
+
+402
+00:26:51,030 --> 00:26:52,470
+theta zero and theta one,
+
+403
+00:26:52,660 --> 00:26:53,950
+written down here below.
+
+404
+00:26:54,160 --> 00:26:56,280
+So here's the gradient descent algorithm.
+
+405
+00:26:56,840 --> 00:26:58,820
+I'm going to choose some initial point.
+
+406
+00:26:59,030 --> 00:27:00,530
+It could be vector of all zeros
+
+407
+00:27:00,700 --> 00:27:01,930
+or some randomly chosen point.
+
+408
+00:27:02,150 --> 00:27:03,330
+Let's say we start from that
+
+409
+00:27:03,530 --> 00:27:07,250
+point denoted by the star, by the cross,
+
+410
+00:27:09,070 --> 00:27:11,060
+and now I want you to imagine that
+
+411
+00:27:11,260 --> 00:27:15,270
+this display actually shows a 3D landscape.
+
+412
+00:27:15,490 --> 00:27:17,550
+Imagine you're all in a hilly park or something,
+
+413
+00:27:17,740 --> 00:27:19,970
+and this is the 3D shape of, like,
+
+414
+00:27:20,140 --> 00:27:21,430
+a hill in some park.
+
+415
+00:27:23,270 --> 00:27:24,510
+So imagine you're actually standing
+
+416
+00:27:24,680 --> 00:27:28,030
+physically at the position of that star,
+
+417
+00:27:28,810 --> 00:27:32,990
+of that cross, and imagine you can stand on that hill,
+
+418
+00:27:33,630 --> 00:27:36,600
+right, and look all 360 degrees around
+
+419
+00:27:36,930 --> 00:27:38,460
+you and ask,
+
+420
+00:27:38,610 --> 00:27:39,810
+if I were to take a small step,
+
+421
+00:27:40,040 --> 00:27:42,120
+what would allow me to go downhill the most?
+
+422
+00:27:42,500 --> 00:27:44,090
+Okay, just imagine that this is physically a hill
+
+423
+00:27:44,240 --> 00:27:45,390
+and you're standing there, and would
+
+424
+00:27:45,550 --> 00:27:46,690
+look around ask,
+
+425
+00:27:46,840 --> 00:27:48,060
+"If I take a small step,
+
+426
+00:27:48,270 --> 00:27:50,110
+what is the direction of steepest descent,
+
+427
+00:27:50,290 --> 00:27:52,320
+that would take me downhill as quickly as possible?"
+
+428
+00:27:52,980 --> 00:27:55,040
+So the gradient descent algorithm does exactly that.
+
+429
+00:27:55,220 --> 00:27:56,620
+I'm going to take a small step in this
+
+430
+00:27:57,740 --> 00:27:59,300
+direction of steepest descent,
+
+431
+00:27:59,460 --> 00:28:01,320
+or the direction that the gradient turns out to be.
+
+432
+00:28:01,770 --> 00:28:02,910
+And then you take a small step
+
+433
+00:28:03,070 --> 00:28:05,220
+and you end up at a new point shown there,
+
+434
+00:28:06,510 --> 00:28:07,710
+and it would keep going.
+
+435
+00:28:07,880 --> 00:28:09,370
+You're now at a new point on this hill,
+
+436
+00:28:09,560 --> 00:28:10,900
+and again you're going to look around you,
+
+437
+00:28:11,110 --> 00:28:15,320
+look all 360 degrees around you, and ask,
+
+438
+00:28:15,810 --> 00:28:17,190
+"What is the direction that would take me
+
+439
+00:28:17,370 --> 00:28:19,350
+downhill as quickly as possible?"
+
+440
+00:28:19,520 --> 00:28:21,100
+And we want to go downhill as quickly as possible,
+
+441
+00:28:21,310 --> 00:28:23,780
+because we want to find the minimum of J of theta.
+
+442
+00:28:25,490 --> 00:28:26,600
+So you do that again.
+
+443
+00:28:26,770 --> 00:28:29,590
+You can take another step, okay, and you sort of keep
+
+444
+00:28:29,790 --> 00:28:33,560
+going until you end up at a local
+
+445
+00:28:33,760 --> 00:28:36,000
+minimum of this function, J of theta.
+
+446
+00:28:38,710 --> 00:28:40,660
+One property of gradient descent is that
+
+447
+00:28:40,660 --> 00:28:41,660
+where you end up – in this case,
+
+448
+00:28:43,670 --> 00:28:45,500
+we ended up at this point on the
+
+449
+00:28:46,030 --> 00:28:49,020
+lower left hand corner of this plot.
+
+450
+00:28:49,490 --> 00:28:52,860
+But let's try running gradient descent
+
+451
+00:28:53,040 --> 00:28:54,280
+again from a different position.
+
+452
+00:28:54,550 --> 00:28:57,430
+So that was where I started gradient descent just now.
+
+453
+00:28:57,910 --> 00:28:59,440
+Let's rerun gradient descent,
+
+454
+00:28:59,620 --> 00:29:01,680
+but using a slightly different initial starting point,
+
+455
+00:29:01,890 --> 00:29:05,790
+so a point slightly further up and further to the right.
+
+456
+00:29:06,860 --> 00:29:08,470
+So it turns out if you run gradient
+
+457
+00:29:08,650 --> 00:29:10,060
+descent from that point,
+
+458
+00:29:10,240 --> 00:29:12,810
+then if you take a steepest descent direction again,
+
+459
+00:29:13,790 --> 00:29:15,380
+that's your first step.
+
+460
+00:29:15,650 --> 00:29:19,720
+And if you keep going, it turns out that
+
+461
+00:29:20,240 --> 00:29:22,020
+with a slightly different initial starting point,
+
+462
+00:29:22,220 --> 00:29:22,980
+you can actually end up
+
+463
+00:29:23,130 --> 00:29:24,720
+at a completely different local optimum.
+
+464
+00:29:25,270 --> 00:29:28,130
+Okay, so this is a property of gradient descent,
+
+465
+00:29:28,310 --> 00:29:29,490
+and we'll come back to it in a second.
+
+466
+00:29:29,670 --> 00:29:30,720
+So be aware that
+
+467
+00:29:30,880 --> 00:29:33,160
+gradient descent can sometimes
+
+468
+00:29:33,350 --> 00:29:36,390
+depend on where you initialize your parameters,
+
+469
+00:29:36,570 --> 00:29:37,990
+theta zero and theta one.
+
+470
+00:29:39,060 --> 00:29:40,730
+Switch back to the chalkboard, please.
+
+471
+00:29:41,590 --> 00:29:43,660
+Let's go ahead and work out the
+
+472
+00:29:43,840 --> 00:29:45,260
+math of the gradient descent algorithm.
+
+473
+00:29:45,440 --> 00:29:46,780
+Then we'll come back and revisit
+
+474
+00:29:47,260 --> 00:29:48,950
+this issue of local optimum.
+
+475
+00:30:05,130 --> 00:30:08,170
+So here's the gradient descent algorithm.
+
+476
+00:30:09,180 --> 00:30:11,030
+We're going to take a repeatedly take a step
+
+477
+00:30:11,240 --> 00:30:13,030
+in the direction of steepest descent,
+
+478
+00:30:13,210 --> 00:30:15,120
+and it turns out that you can write that as,
+
+479
+00:30:15,300 --> 00:30:17,870
+which is we're going to update the parameters
+
+480
+00:30:18,050 --> 00:30:26,280
+theta as theta I minus the partial derivative
+
+481
+00:30:26,470 --> 00:30:30,690
+with respect to theta I, J of Theta.
+
+482
+00:30:31,030 --> 00:30:33,030
+Okay, so this is how we're going to update
+
+483
+00:30:33,260 --> 00:30:35,750
+the I parameter, theta I,
+
+484
+00:30:36,450 --> 00:30:37,780
+how we're going to update Theta I
+
+485
+00:30:37,960 --> 00:30:39,890
+on each iteration of gradient descent.
+
+486
+00:30:40,500 --> 00:30:43,160
+Just a point of notation,
+
+487
+00:30:43,660 --> 00:30:45,720
+I use this colon equals notation
+
+488
+00:30:46,400 --> 00:30:50,090
+to denote setting a variable on the left hand side
+
+489
+00:30:50,260 --> 00:30:52,480
+equal to the variable on the right hand side.
+
+490
+00:30:52,670 --> 00:30:55,710
+All right, so if I write A colon equals B,
+
+491
+00:30:56,190 --> 00:30:57,330
+then what I'm saying is,
+
+492
+00:30:57,520 --> 00:30:58,960
+this is part of a computer program,
+
+493
+00:30:59,150 --> 00:31:00,470
+or this is part of an algorithm
+
+494
+00:31:00,740 --> 00:31:02,050
+where we take the value of B,
+
+495
+00:31:02,290 --> 00:31:03,700
+the value on the right hand side,
+
+496
+00:31:03,900 --> 00:31:06,470
+and use that to overwrite the value on the left hand side
+
+497
+00:31:06,860 --> 00:31:09,700
+In contrast, if I write A equals B,
+
+498
+00:31:10,400 --> 00:31:14,070
+then this is an assertion of truth.
+
+499
+00:31:14,240 --> 00:31:15,860
+I'm claiming that the value of A is
+
+500
+00:31:16,070 --> 00:31:17,510
+equal to the value of B,
+
+501
+00:31:17,770 --> 00:31:19,600
+whereas this is computer operation
+
+502
+00:31:19,780 --> 00:31:21,480
+where we overwrite the value of A.
+
+503
+00:31:21,950 --> 00:31:23,230
+If I write A equals B
+
+504
+00:31:23,430 --> 00:31:26,020
+then I'm asserting that the values of A and B are equal.
+
+505
+00:31:26,020 --> 00:31:27,020
+So let's see, this algorithm sort of makes sense –
+
+506
+00:31:32,680 --> 00:31:37,890
+well, actually let's just move on.
+
+507
+00:31:38,130 --> 00:31:39,760
+Let's just go ahead and take this algorithm
+
+508
+00:31:39,960 --> 00:31:41,450
+and apply it to our problem.
+
+509
+00:31:49,010 --> 00:31:52,010
+And to work out gradient descent,
+
+510
+00:31:54,100 --> 00:31:55,220
+let's take gradient descent and just
+
+511
+00:31:55,390 --> 00:31:56,720
+apply it to our problem,
+
+512
+00:31:56,890 --> 00:31:59,400
+and this being the first
+
+513
+00:31:59,630 --> 00:32:01,130
+somewhat mathematical lecture,
+
+514
+00:32:01,350 --> 00:32:04,060
+I'm going to step through derivations much more
+
+515
+00:32:04,250 --> 00:32:06,870
+slowly and carefully than I will later in this quarter.
+
+516
+00:32:07,050 --> 00:32:08,730
+We'll work through the steps of these
+
+517
+00:32:08,930 --> 00:32:12,630
+in much more detail than I will later in this quarter.
+
+518
+00:32:12,870 --> 00:32:14,050
+Let's actually work out what this
+
+519
+00:32:14,220 --> 00:32:15,880
+gradient descent rule is.
+
+520
+00:32:15,880 --> 00:32:16,880
+So – and I'll do this just for the case of,
+
+521
+00:32:21,130 --> 00:32:23,010
+if we had only one training example.
+
+522
+00:32:23,690 --> 00:32:25,750
+Okay, so in this case we need to work out
+
+523
+00:32:25,990 --> 00:32:27,880
+what the partial derivative with respect to the
+
+524
+00:32:28,050 --> 00:32:30,350
+parameter theta I of J of theta.
+
+525
+00:32:33,680 --> 00:32:35,740
+If we have only one training example
+
+526
+00:32:36,420 --> 00:32:38,250
+then J of theta is going to be
+
+527
+00:32:38,430 --> 00:32:44,330
+one-half of script theta, of X minus Y, script.
+
+528
+00:32:44,540 --> 00:32:46,380
+So if you have only one training example
+
+529
+00:32:46,600 --> 00:32:49,180
+comprising one pair, X, Y,
+
+530
+00:32:49,360 --> 00:32:52,070
+then this is what J of theta is going to be.
+
+531
+00:32:52,420 --> 00:32:55,670
+And so taking derivatives, you have
+
+532
+00:32:55,900 --> 00:32:57,580
+one-half something squared.
+
+533
+00:32:57,770 --> 00:32:59,470
+So the two comes down.
+
+534
+00:32:59,640 --> 00:33:01,390
+So you have two times one-half
+
+535
+00:33:01,650 --> 00:33:04,360
+times theta of X minus Y,
+
+536
+00:33:05,130 --> 00:33:08,710
+and then by the derivatives,
+
+537
+00:33:09,130 --> 00:33:11,720
+we also must apply this
+
+538
+00:33:11,920 --> 00:33:14,060
+by the derivative of what's inside the square.
+
+539
+00:33:19,710 --> 00:33:22,990
+Right, the two and the one-half cancel.
+
+540
+00:33:23,420 --> 00:33:31,400
+So this leaves times that,
+
+541
+00:33:32,830 --> 00:33:35,770
+theta zero, X zero plus
+
+542
+00:33:40,840 --> 00:33:44,620
+Okay, and if you look inside this sum,
+
+543
+00:33:46,790 --> 00:33:48,750
+we're taking the partial derivative of this
+
+544
+00:33:48,950 --> 00:33:51,610
+sum with respect to the parameter theta I.
+
+545
+00:33:52,730 --> 00:33:56,110
+But all the terms in the sum, except for one,
+
+546
+00:33:56,320 --> 00:33:57,730
+do not depend on theta I.
+
+547
+00:33:57,910 --> 00:33:59,430
+In this sum,
+
+548
+00:33:59,660 --> 00:34:01,550
+the only term that depends on theta I
+
+549
+00:34:01,970 --> 00:34:05,570
+will be some term here of theta I, X I.
+
+550
+00:34:06,460 --> 00:34:08,240
+And so we take the partial derivative w
+
+551
+00:34:08,240 --> 00:34:09,240
+ith respect to theta I, X I – take the
+
+552
+00:34:11,340 --> 00:34:13,250
+partial derivative with respect to theta
+
+553
+00:34:13,500 --> 00:34:19,690
+I of this term theta I, X I,
+
+554
+00:34:19,690 --> 00:34:23,810
+and so you get that times X I.
+
+555
+00:34:24,640 --> 00:34:27,530
+okay, and so this gives us our learning rule,
+
+556
+00:34:30,690 --> 00:34:34,080
+right, of theta I gets updated as
+
+557
+00:34:34,280 --> 00:34:45,980
+theta I minus alpha times that.
+
+558
+00:34:46,530 --> 00:34:54,830
+Okay, and this Greek alphabet alpha
+
+559
+00:34:54,990 --> 00:34:56,980
+here is a parameter of the algorithm
+
+560
+00:34:57,290 --> 00:34:58,670
+called the learning rate,
+
+561
+00:34:59,020 --> 00:35:01,740
+and this parameter alpha controls
+
+562
+00:35:01,950 --> 00:35:04,120
+how large a step you take.
+
+563
+00:35:04,330 --> 00:35:05,850
+So you're standing on the hill.
+
+564
+00:35:06,070 --> 00:35:09,360
+You decided what direction to take a step in,
+
+565
+00:35:09,570 --> 00:35:12,110
+and so this parameter alpha controls
+
+566
+00:35:12,110 --> 00:35:13,110
+how aggressive – how large a step you take in
+
+567
+00:35:15,800 --> 00:35:17,710
+this direction of steepest descent.
+
+568
+00:35:17,710 --> 00:35:18,710
+And so if you – and this is a parameter
+
+569
+00:35:22,150 --> 00:35:24,200
+of the algorithm that's often set by hand.
+
+570
+00:35:24,700 --> 00:35:27,210
+If you choose alpha to be too small than
+
+571
+00:35:27,380 --> 00:35:28,470
+your steepest descent algorithm
+
+572
+00:35:28,630 --> 00:35:29,750
+will take very tiny steps
+
+573
+00:35:29,920 --> 00:35:31,310
+and take a long time to converge.
+
+574
+00:35:31,470 --> 00:35:34,080
+If alpha is too large then the steepest descent
+
+575
+00:35:34,240 --> 00:35:36,480
+may actually end up overshooting the minimum,
+
+576
+00:35:36,790 --> 00:35:38,960
+if you're taking too aggressive a step.
+
+577
+00:35:41,920 --> 00:35:45,040
+Yeah?
+
+578
+00:35:47,090 --> 00:35:48,340
+Instructor (Andrew Ng):Say that again?
+
+579
+00:35:48,620 --> 00:35:51,290
+Student:Isn't there a one over two missing somewhere?
+
+580
+00:35:53,510 --> 00:35:55,120
+Instructor (Andrew Ng):Is there a one-half missing?
+
+581
+00:35:55,300 --> 00:35:56,440
+Student:I was [inaudible].
+
+582
+00:35:56,600 --> 00:35:58,260
+Instructor (Andrew Ng):Thanks.
+
+583
+00:35:58,430 --> 00:35:59,990
+I do make lots of errors in that.
+
+584
+00:36:01,940 --> 00:36:04,920
+Any questions about this?
+
+585
+00:36:23,170 --> 00:36:30,540
+All right, so let me just wrap this property
+
+586
+00:36:30,710 --> 00:36:31,790
+into an algorithm.
+
+587
+00:36:31,960 --> 00:36:33,320
+So over there I derived the algorithm
+
+588
+00:36:33,510 --> 00:36:35,270
+where you have just one training example,
+
+589
+00:36:36,290 --> 00:36:38,490
+more generally for M training examples,
+
+590
+00:36:38,700 --> 00:36:40,390
+gradient descent becomes the following.
+
+591
+00:36:41,290 --> 00:36:43,990
+We're going to repeat until
+
+592
+00:36:44,160 --> 00:36:48,720
+convergence the following step.
+
+593
+00:36:49,210 --> 00:36:52,770
+Okay, theta I gets updated as theta I
+
+594
+00:36:53,420 --> 00:36:57,180
+and I'm just writing out the appropriate
+
+595
+00:36:57,350 --> 00:36:59,760
+equation for M examples rather than one example.
+
+596
+00:37:01,100 --> 00:37:02,150
+Theta I gets updated.
+
+597
+00:37:02,350 --> 00:37:04,000
+Theta I minus alpha times the sum
+
+598
+00:37:04,150 --> 00:37:06,240
+from I equals one to M.
+
+599
+00:37:28,920 --> 00:37:33,020
+Okay, and I won't bother to show it,
+
+600
+00:37:33,230 --> 00:37:36,610
+but you can go home and sort of verify for yourself
+
+601
+00:37:36,800 --> 00:37:38,260
+that this summation here,
+
+602
+00:37:38,670 --> 00:37:43,710
+this is indeed the partial derivative with respect to
+
+603
+00:37:43,890 --> 00:37:46,010
+theta I of J of theta,
+
+604
+00:37:46,210 --> 00:37:48,860
+where if you use the original definition of J of
+
+605
+00:37:49,020 --> 00:37:51,950
+theta for when you have M training examples.
+
+606
+00:37:51,950 --> 00:37:52,950
+Okay, so I'm just going to show –
+
+607
+00:37:56,560 --> 00:37:57,910
+switch back to the laptop display.
+
+608
+00:37:58,090 --> 00:37:59,390
+I'm going to show you what this looks like
+
+609
+00:37:59,550 --> 00:38:01,250
+when you run the algorithm.
+
+610
+00:38:03,920 --> 00:38:06,380
+So it turns out that for the
+
+611
+00:38:06,550 --> 00:38:08,410
+specific problem of linear regression,
+
+612
+00:38:08,590 --> 00:38:09,700
+or ordinary release squares,
+
+613
+00:38:09,870 --> 00:38:11,160
+which is what we're doing today,
+
+614
+00:38:11,590 --> 00:38:14,500
+the function J of theta actually does not look like
+
+615
+00:38:14,700 --> 00:38:16,120
+this nasty one that I'll show you
+
+616
+00:38:16,290 --> 00:38:17,830
+just now with a multiple local optima.
+
+617
+00:38:18,210 --> 00:38:19,240
+In particular,
+
+618
+00:38:19,410 --> 00:38:21,540
+it turns out for ordinary release squares,
+
+619
+00:38:21,720 --> 00:38:23,870
+the function J of theta is
+
+620
+00:38:23,870 --> 00:38:25,590
+it's just a quadratic function.
+
+621
+00:38:26,190 --> 00:38:28,260
+And so we'll always have a nice bow shape,
+
+622
+00:38:28,520 --> 00:38:31,100
+like what you see up here,
+
+623
+00:38:31,420 --> 00:38:33,510
+and only have one global minimum
+
+624
+00:38:33,690 --> 00:38:35,050
+with no other local optima.
+
+625
+00:38:35,890 --> 00:38:37,870
+So when you run gradient descent,
+
+626
+00:38:38,100 --> 00:38:40,580
+here are actually the contours of the function J.
+
+627
+00:38:40,820 --> 00:38:43,700
+So the contours of a bow shaped function
+
+628
+00:38:43,880 --> 00:38:45,530
+like that are going to be ellipses,
+
+629
+00:38:45,870 --> 00:38:50,820
+and if you run gradient descent on this algorithm,
+
+630
+00:38:51,020 --> 00:38:52,010
+here's what you might get.
+
+631
+00:38:52,200 --> 00:38:53,680
+Let's see, so I initialize the parameters.
+
+632
+00:38:53,980 --> 00:38:55,620
+So let's say randomly at the position
+
+633
+00:38:55,810 --> 00:38:57,440
+of that cross over there, right,
+
+634
+00:38:57,620 --> 00:38:59,560
+that cross on the upper right.
+
+635
+00:38:59,840 --> 00:39:01,670
+And so after one iteration of gradient descent,
+
+636
+00:39:01,880 --> 00:39:06,330
+as you change the space of parameters,
+
+637
+00:39:08,260 --> 00:39:10,540
+so if that's the result of one step of gradient descent,
+
+638
+00:39:11,020 --> 00:39:12,850
+two steps, three steps,
+
+639
+00:39:12,850 --> 00:39:15,150
+four steps, five steps, and so on,
+
+640
+00:39:15,580 --> 00:39:18,340
+and it, you know, converges easily, rapidly
+
+641
+00:39:18,530 --> 00:39:20,980
+to the global minimum of this function J of theta.
+
+642
+00:39:21,680 --> 00:39:26,460
+Okay, and this is a property of regression
+
+643
+00:39:26,870 --> 00:39:28,980
+with a linear hypothesis cost.
+
+644
+00:39:29,160 --> 00:39:31,730
+The function, J of theta has no local optima.
+
+645
+00:39:32,790 --> 00:39:34,340
+Yes, question?
+
+646
+00:39:34,550 --> 00:39:36,490
+Student:Is the alpha changing every time?
+
+647
+00:39:36,670 --> 00:39:38,190
+Because the step is not [inaudible].
+
+648
+00:39:39,880 --> 00:39:41,390
+Instructor (Andrew Ng):So it turns out that
+
+649
+00:39:41,390 --> 00:39:42,390
+yes, so it turns out – this was done with a this is
+
+650
+00:39:45,890 --> 00:39:47,790
+with a fake value of alpha,
+
+651
+00:39:48,000 --> 00:39:50,340
+and one of the properties of gradient descent is that
+
+652
+00:39:50,510 --> 00:39:52,150
+as you approach the local minimum,
+
+653
+00:39:52,550 --> 00:39:54,050
+it actually takes smaller and
+
+654
+00:39:54,220 --> 00:39:55,730
+smaller steps so they'll converge.
+
+655
+00:39:55,730 --> 00:39:56,730
+And the reason is, the update is – you update theta
+
+656
+00:40:01,290 --> 00:40:04,400
+by subtracting from alpha times the gradient.
+
+657
+00:40:04,990 --> 00:40:07,080
+And so as you approach the local minimum,
+
+658
+00:40:07,350 --> 00:40:09,530
+the gradient also goes to zero.
+
+659
+00:40:09,970 --> 00:40:12,260
+As you approach the local minimum,
+
+660
+00:40:12,610 --> 00:40:14,790
+at the local minimum the gradient is zero,
+
+661
+00:40:15,010 --> 00:40:16,290
+and as you approach the local minimum,
+
+662
+00:40:16,480 --> 00:40:18,440
+the gradient also gets smaller and smaller.
+
+663
+00:40:18,950 --> 00:40:21,820
+And so gradient descent will automatically take smaller
+
+664
+00:40:22,010 --> 00:40:24,820
+and smaller steps as you approach the local minimum
+
+665
+00:40:25,500 --> 00:40:27,300
+Make sense?
+
+666
+00:40:30,050 --> 00:40:32,430
+And here's the same plot
+
+667
+00:40:33,330 --> 00:40:36,130
+here's actually a plot of the housing prices data.
+
+668
+00:40:36,590 --> 00:40:39,530
+So here, lets you initialize the parameters
+
+669
+00:40:39,750 --> 00:40:41,950
+to the vector of all zeros,
+
+670
+00:40:42,150 --> 00:40:45,020
+and so this blue line at the bottom shows
+
+671
+00:40:45,260 --> 00:40:48,840
+the hypothesis with the parameters of initialization.
+
+672
+00:40:49,030 --> 00:40:52,070
+So initially theta zero and theta one are both zero,
+
+673
+00:40:52,290 --> 00:40:53,460
+and so your hypothesis predicts
+
+674
+00:40:53,650 --> 00:40:56,410
+that all prices are equal to zero.
+
+675
+00:40:56,860 --> 00:40:59,350
+After one iteration of gradient descent,
+
+676
+00:40:59,570 --> 00:41:01,360
+that's the blue line you get.
+
+677
+00:41:01,770 --> 00:41:03,430
+After two iterations,
+
+678
+00:41:03,730 --> 00:41:06,330
+three, four, five, and after a few more iterations,
+
+679
+00:41:06,730 --> 00:41:08,880
+excuse me, it converges,
+
+680
+00:41:09,100 --> 00:41:13,500
+and you've now found the least square fit for the data.
+
+681
+00:41:14,900 --> 00:41:21,800
+Okay, let's switch back to the chalkboard.
+
+682
+00:41:22,340 --> 00:41:27,060
+Are there questions about this? Yeah?
+
+683
+00:41:38,500 --> 00:41:39,400
+Instructor (Andrew Ng):Yes, right.
+
+684
+00:41:39,550 --> 00:41:40,870
+Student:And converged means that the value
+
+685
+00:41:41,040 --> 00:41:44,280
+will be the same [inaudible] roughly the same?
+
+686
+00:41:44,520 --> 00:41:45,500
+Instructor (Andrew Ng):Yeah,
+
+687
+00:41:45,670 --> 00:41:49,880
+so this is sort of a question of how
+
+688
+00:41:50,050 --> 00:41:51,160
+do you test the convergence.
+
+689
+00:41:51,330 --> 00:41:54,030
+And there's different ways of testing for convergence.
+
+690
+00:41:54,250 --> 00:41:56,540
+One is you can look at two different iterations
+
+691
+00:41:56,730 --> 00:41:58,180
+and see if theta has changed a lot,
+
+692
+00:41:58,370 --> 00:42:00,600
+and if theta hasn't changed much within two iterations,
+
+693
+00:42:00,820 --> 00:42:02,650
+you may say it's sort of more or less converged.
+
+694
+00:42:03,060 --> 00:42:05,800
+Something that's done maybe slightly more often
+
+695
+00:42:05,980 --> 00:42:07,740
+is look at the value of J of theta,
+
+696
+00:42:07,740 --> 00:42:08,740
+and if J of theta – if the quantity you're trying
+
+697
+00:42:11,790 --> 00:42:13,700
+to minimize is not changing much anymore,
+
+698
+00:42:13,880 --> 00:42:16,060
+then you might be inclined to believe it's converged.
+
+699
+00:42:16,300 --> 00:42:18,550
+So these are sort of standard heuristics,
+
+700
+00:42:18,730 --> 00:42:20,250
+or standard rules of thumb that are
+
+701
+00:42:20,460 --> 00:42:23,190
+often used to decide if gradient descent has converged.
+
+702
+00:42:23,480 --> 00:42:25,960
+Yeah?
+
+703
+00:42:25,960 --> 00:42:26,960
+I see. It just turns out that – so the question is,
+
+704
+00:42:53,440 --> 00:42:57,530
+how is gradient descent looking 360 around you
+
+705
+00:42:57,710 --> 00:42:59,300
+and choosing the direction of steepest descent.
+
+706
+00:43:00,910 --> 00:43:02,640
+So it actually turns out
+
+707
+00:43:02,820 --> 00:43:04,270
+I'm not sure I'll answer the second part,
+
+708
+00:43:04,420 --> 00:43:07,670
+but it turns out that if you stand on the hill
+
+709
+00:43:07,670 --> 00:43:08,670
+and if you – it turns out that when you compute
+
+710
+00:43:12,000 --> 00:43:13,200
+the gradient of the function,
+
+711
+00:43:13,380 --> 00:43:14,740
+when you compute the derivative of the function,
+
+712
+00:43:15,110 --> 00:43:16,560
+then it just turns out that that is
+
+713
+00:43:16,740 --> 00:43:18,610
+indeed the direction of steepest descent.
+
+714
+00:43:19,270 --> 00:43:20,780
+By the way, I just want to point out,
+
+715
+00:43:20,950 --> 00:43:21,810
+you would never want to go in
+
+716
+00:43:21,980 --> 00:43:22,800
+the opposite direction
+
+717
+00:43:22,970 --> 00:43:24,360
+because the opposite direction would actually be
+
+718
+00:43:24,520 --> 00:43:26,500
+the direction of steepest ascent, right.
+
+719
+00:43:26,500 --> 00:43:27,500
+So as it turns out –
+
+720
+00:43:28,950 --> 00:43:32,420
+maybe the TAs can talk a bit more
+
+721
+00:43:32,590 --> 00:43:34,820
+about this at the section if there's interest.
+
+722
+00:43:35,090 --> 00:43:35,680
+It turns out,
+
+723
+00:43:35,680 --> 00:43:37,090
+when you take the derivative of a function,
+
+724
+00:43:37,330 --> 00:43:39,850
+the derivative of a function sort of turns out to
+
+725
+00:43:40,040 --> 00:43:41,830
+just give you the direction of steepest descent.
+
+726
+00:43:42,720 --> 00:43:44,540
+And so you don't
+
+727
+00:43:44,740 --> 00:43:47,650
+explicitly look all 360 degrees around you.
+
+728
+00:43:47,880 --> 00:43:49,690
+You sort of just compute the derivative and
+
+729
+00:43:49,870 --> 00:43:51,850
+that turns out to be the direction of steepest descent.
+
+730
+00:43:54,550 --> 00:43:55,770
+Yeah, maybe the TAs
+
+731
+00:43:55,990 --> 00:43:58,430
+can talk a bit more about this on Friday.
+
+732
+00:44:02,670 --> 00:44:25,140
+Okay, let's see, so let me go ahead and
+
+733
+00:44:25,290 --> 00:44:28,160
+give this algorithm a specific name.
+
+734
+00:44:28,410 --> 00:44:29,950
+So this algorithm here is actually
+
+735
+00:44:30,130 --> 00:44:33,690
+called batch gradient descent,
+
+736
+00:44:38,710 --> 00:44:41,410
+and the term batch isn't a great term,
+
+737
+00:44:41,640 --> 00:44:43,350
+but the term batch refers to the fact that
+
+738
+00:44:43,540 --> 00:44:45,480
+on every step of gradient descent
+
+739
+00:44:45,700 --> 00:44:48,330
+you're going to look at your entire training set. Y
+
+740
+00:44:48,500 --> 00:44:50,460
+ou're going to perform a sum over
+
+741
+00:44:50,670 --> 00:44:52,580
+your M training examples.
+
+742
+00:44:52,780 --> 00:44:59,240
+So descent often works very well. I use it very often,
+
+743
+00:44:59,500 --> 00:45:02,870
+and it turns out that sometimes if you have a really,
+
+744
+00:45:03,050 --> 00:45:04,590
+really large training set,
+
+745
+00:45:04,770 --> 00:45:06,220
+imagine that instead of having
+
+746
+00:45:06,410 --> 00:45:09,100
+47 houses from Portland, Oregon in our training set,
+
+747
+00:45:09,330 --> 00:45:10,060
+if you had, say,
+
+748
+00:45:10,230 --> 00:45:11,640
+the U.S. Census Database or something,
+
+749
+00:45:11,840 --> 00:45:13,460
+with U.S. census size databases
+
+750
+00:45:13,660 --> 00:45:15,460
+you often have hundreds of thousands
+
+751
+00:45:15,650 --> 00:45:16,900
+or millions of training examples.
+
+752
+00:45:19,170 --> 00:45:22,610
+so if M is a few million then
+
+753
+00:45:23,160 --> 00:45:24,750
+if you're running batch rate and descent,
+
+754
+00:45:24,930 --> 00:45:26,570
+this means that to perform every step
+
+755
+00:45:26,750 --> 00:45:28,520
+of gradient descent you need to perform
+
+756
+00:45:28,750 --> 00:45:31,610
+a sum from J equals one to a million.
+
+757
+00:45:31,820 --> 00:45:33,940
+That's sort of a lot of training examples
+
+758
+00:45:34,160 --> 00:45:35,720
+where your computer programs have to look at,
+
+759
+00:45:35,940 --> 00:45:38,240
+before you can even take one step
+
+760
+00:45:38,440 --> 00:45:40,210
+downhill on the function J of theta.
+
+761
+00:45:41,130 --> 00:45:43,430
+So it turns out that when you have
+
+762
+00:45:44,310 --> 00:45:45,770
+very large training sets,
+
+763
+00:45:46,080 --> 00:45:49,420
+you should write down an alternative algorithm
+
+764
+00:45:50,850 --> 00:45:53,820
+that is called gradient descent.
+
+765
+00:46:00,490 --> 00:46:02,630
+Sometimes I'll also call it incremental gradient descent,
+
+766
+00:46:03,170 --> 00:46:05,400
+but the algorithm is as follows.
+
+767
+00:46:07,170 --> 00:46:09,860
+Again, it will repeat until convergence
+
+768
+00:46:13,470 --> 00:46:15,710
+and will iterate for J equals one to M,
+
+769
+00:46:22,060 --> 00:46:23,770
+and will perform one of these
+
+770
+00:46:23,940 --> 00:46:25,490
+sort of gradient descent
+
+771
+00:46:25,660 --> 00:46:29,820
+updates using just the J training example.
+
+772
+00:46:29,820 --> 00:46:30,820
+Oh, and as usual, this is really –
+
+773
+00:46:57,970 --> 00:47:00,130
+you update all the parameters data runs.
+
+774
+00:47:00,350 --> 00:47:03,370
+You perform this update for all values of I.
+
+775
+00:47:05,470 --> 00:47:08,100
+For I indexes and the parameter vectors,
+
+776
+00:47:08,290 --> 00:47:09,310
+you just perform this update,
+
+777
+00:47:09,480 --> 00:47:11,280
+all of your parameters simultaneously.
+
+778
+00:47:13,360 --> 00:47:15,500
+And the advantage of this algorithm is that
+
+779
+00:47:17,140 --> 00:47:20,380
+in order to start learning,
+
+780
+00:47:20,560 --> 00:47:22,580
+in order to start modifying the parameters,
+
+781
+00:47:23,370 --> 00:47:25,480
+you only need to look at your first training examples.
+
+782
+00:47:25,670 --> 00:47:27,220
+You should look at your first training example
+
+783
+00:47:27,410 --> 00:47:30,390
+and perform an update using the derivative of the
+
+784
+00:47:30,560 --> 00:47:32,510
+error with respect to just your first training example,
+
+785
+00:47:32,720 --> 00:47:35,250
+and then you look at your second training example
+
+786
+00:47:35,450 --> 00:47:36,700
+and perform another update.
+
+787
+00:47:36,880 --> 00:47:38,330
+And you sort of keep adapting your parameters
+
+788
+00:47:38,490 --> 00:47:41,480
+much more quickly without needing to
+
+789
+00:47:41,710 --> 00:47:45,740
+scan over your entire U.S. Census database
+
+790
+00:47:45,930 --> 00:47:48,020
+before you can even start adapting parameters.
+
+791
+00:47:48,920 --> 00:47:53,770
+So let's see, for launch data sets,
+
+792
+00:47:54,100 --> 00:47:57,060
+so constantly gradient descent is often much faster,
+
+793
+00:47:57,590 --> 00:48:01,050
+and what happens is that constant gradient descent
+
+794
+00:48:01,280 --> 00:48:04,460
+is that it won't actually converge to the
+
+795
+00:48:04,630 --> 00:48:06,310
+global minimum exactly,
+
+796
+00:48:06,590 --> 00:48:12,040
+but if these are the contours of your function,
+
+797
+00:48:12,830 --> 00:48:14,770
+then after you run the constant gradient descent,
+
+798
+00:48:14,970 --> 00:48:16,710
+you sort of tend to wander around.
+
+799
+00:48:17,360 --> 00:48:19,660
+And you may actually end up going uphill occasionally,
+
+800
+00:48:20,010 --> 00:48:22,500
+but your parameters will sort of tender to
+
+801
+00:48:22,690 --> 00:48:25,650
+wander to the region closest to the global minimum,
+
+802
+00:48:25,850 --> 00:48:27,390
+but sort of keep wandering around a little
+
+803
+00:48:27,570 --> 00:48:29,170
+bit near the region of the global.
+
+804
+00:48:29,630 --> 00:48:33,350
+And often that's just fine to have a parameter
+
+805
+00:48:33,930 --> 00:48:38,540
+that wanders around a little bit the global minimum.
+
+806
+00:48:38,900 --> 00:48:41,060
+And in practice,
+
+807
+00:48:41,250 --> 00:48:43,980
+this often works much faster than back gradient
+
+808
+00:48:44,150 --> 00:48:46,400
+descent, especially if you have a large training set.
+
+809
+00:48:54,190 --> 00:48:57,370
+Okay, I'm going to clean a couple of boards.
+
+810
+00:48:57,580 --> 00:48:58,330
+While I do that,
+
+811
+00:48:58,490 --> 00:48:59,820
+why don't you take a look at the equations,
+
+812
+00:48:59,990 --> 00:49:01,560
+and after I'm done cleaning the boards,
+
+813
+00:49:01,750 --> 00:49:03,050
+I'll ask what questions you have.
+
+814
+00:49:43,290 --> 00:49:45,790
+Okay, so what questions do you have about all of this?
+
+815
+00:49:45,790 --> 00:49:46,790
+Student: is it true – are you just sort of
+
+816
+00:49:50,860 --> 00:49:54,390
+rearranging the order that you do the computation?
+
+817
+00:49:54,580 --> 00:49:56,800
+So do you just use the first training example
+
+818
+00:49:57,000 --> 00:49:59,950
+and update all of the theta Is and then step,
+
+819
+00:50:00,170 --> 00:50:03,680
+and then update with the second training example,
+
+820
+00:50:03,890 --> 00:50:05,500
+and update all the theta Is, and then step?
+
+821
+00:50:05,500 --> 00:50:06,500
+And is that why you get sort of this really – ?
+
+822
+00:50:08,880 --> 00:50:10,140
+Instructor (Andrew Ng):Let's see, right.
+
+823
+00:50:10,310 --> 00:50:11,850
+So I'm going to look at my first training example
+
+824
+00:50:12,070 --> 00:50:13,430
+and then I'm going to take a step,
+
+825
+00:50:13,610 --> 00:50:17,260
+and then I'm going to perform the second gradient
+
+826
+00:50:17,430 --> 00:50:20,190
+descent updates using my new parameter vector that
+
+827
+00:50:20,400 --> 00:50:22,560
+has already been modified using my first
+
+828
+00:50:22,740 --> 00:50:24,670
+training example. And then I keep going.
+
+829
+00:50:25,340 --> 00:50:26,970
+Make sense? Yeah?
+
+830
+00:50:27,730 --> 00:50:29,440
+Student:So in each update of all the theta Is,
+
+831
+00:50:29,440 --> 00:50:30,440
+you're only using –
+
+832
+00:50:31,250 --> 00:50:32,170
+Instructor (Andrew Ng):One training example.
+
+833
+00:50:32,320 --> 00:50:33,650
+Student:One training example.
+
+834
+00:50:39,910 --> 00:50:41,240
+Instructor (Andrew Ng):Let's see,
+
+835
+00:50:44,260 --> 00:50:47,680
+I believe this theory that sort of supports that as well.
+
+836
+00:50:48,340 --> 00:50:50,990
+Yeah, the theory that supports that,
+
+837
+00:50:51,220 --> 00:50:53,830
+the of theorem is, I don't remember.
+
+838
+00:50:59,500 --> 00:51:06,540
+Okay, cool. So in what I've done so far,
+
+839
+00:51:06,780 --> 00:51:09,880
+I've talked about an iterative algorithm
+
+840
+00:51:10,480 --> 00:51:14,630
+for performing this minimization in terms of J of theta.
+
+841
+00:51:16,130 --> 00:51:18,810
+And it turns out that there's another way for
+
+842
+00:51:19,000 --> 00:51:21,620
+this specific problem of least squares regression,
+
+843
+00:51:21,830 --> 00:51:23,320
+of ordinary least squares.
+
+844
+00:51:23,710 --> 00:51:24,720
+It turns out there's another way
+
+845
+00:51:24,910 --> 00:51:27,120
+to perform this minimization of J of theta
+
+846
+00:51:27,390 --> 00:51:30,780
+that allows you to solve for the parameters
+
+847
+00:51:30,970 --> 00:51:32,250
+theta in close form,
+
+848
+00:51:32,430 --> 00:51:34,490
+without needing to run an iterative algorithm.
+
+849
+00:51:35,080 --> 00:51:37,640
+And I know some of you may
+
+850
+00:51:37,850 --> 00:51:39,670
+have seen some of what I'm about to do before,
+
+851
+00:51:39,840 --> 00:51:43,330
+in like an undergraduate linear algebra course,
+
+852
+00:51:43,650 --> 00:51:50,250
+and the way it's typically done requires projections,
+
+853
+00:51:50,650 --> 00:51:51,360
+or taking lots of derivatives
+
+854
+00:51:51,360 --> 00:51:52,770
+and writing lots of algebra.
+
+855
+00:51:53,370 --> 00:51:56,300
+What I'd like to do is show you a way
+
+856
+00:51:56,560 --> 00:51:59,780
+to derive the closed form solution of theta
+
+857
+00:52:00,380 --> 00:52:02,530
+in just a few lines of algebra.
+
+858
+00:52:03,470 --> 00:52:04,290
+But to do that,
+
+859
+00:52:04,520 --> 00:52:05,870
+I'll need to introduce a new notation
+
+860
+00:52:06,090 --> 00:52:08,550
+for matrix derivatives, and it turns out that,
+
+861
+00:52:08,780 --> 00:52:13,550
+sort of, the notation I'm about to define here
+
+862
+00:52:13,780 --> 00:52:16,400
+just in my own personal work has turned out to be one
+
+863
+00:52:16,600 --> 00:52:17,760
+of the most useful things
+
+864
+00:52:17,760 --> 00:52:19,310
+that I actually use all the time,
+
+865
+00:52:19,580 --> 00:52:21,410
+to have a notation of
+
+866
+00:52:21,640 --> 00:52:23,340
+how to take derivatives with respect to matrixes,
+
+867
+00:52:23,660 --> 00:52:26,940
+so that you can solve for the minimum of J of thet with,
+
+868
+00:52:27,120 --> 00:52:28,570
+like, a few lines of algebra rather than
+
+869
+00:52:28,760 --> 00:52:31,140
+writing out pagesand pages of matrices and derivatives
+
+870
+00:52:31,950 --> 00:52:34,060
+So then we're going to define this new notation first
+
+871
+00:52:34,270 --> 00:52:36,400
+and then we'll go ahead and work out the minimization.
+
+872
+00:52:37,240 --> 00:52:40,270
+Given a function J,
+
+873
+00:52:41,320 --> 00:52:44,020
+since J is a function of a vector of parameters theta,
+
+874
+00:52:44,550 --> 00:52:47,200
+right, I'm going to define the derivative
+
+875
+00:52:47,410 --> 00:52:49,880
+of the gradient of J with respect to theta,
+
+876
+00:52:51,140 --> 00:53:02,400
+as self of vector. Okay,
+
+877
+00:53:03,080 --> 00:53:05,500
+and so this is going to be an
+
+878
+00:53:05,760 --> 00:53:07,350
+N plus one dimensional vector.
+
+879
+00:53:07,590 --> 00:53:10,680
+Theta is an n plus one dimensional vector with
+
+880
+00:53:10,890 --> 00:53:12,650
+indices ranging from zero to N.
+
+881
+00:53:12,940 --> 00:53:13,970
+And so I'm going to define this
+
+882
+00:53:14,150 --> 00:53:16,130
+derivative to be equal to that.
+
+883
+00:53:17,010 --> 00:53:20,400
+Okay, and so we can actually rewrite
+
+884
+00:53:24,330 --> 00:53:26,480
+the gradient descent algorithm as follows.
+
+885
+00:53:26,710 --> 00:53:28,440
+This is batch gradient descent,
+
+886
+00:53:28,880 --> 00:53:30,330
+and we write gradient descent as
+
+887
+00:53:30,330 --> 00:53:31,330
+updating the parameter vector theta –
+
+888
+00:53:31,330 --> 00:53:32,330
+notice there's no subscript I now –
+
+889
+00:53:35,090 --> 00:53:37,420
+updating the parameter vector theta as the
+
+890
+00:53:37,610 --> 00:53:44,230
+previous parameter minus alpha times the gradient.
+
+891
+00:53:45,090 --> 00:53:50,020
+Okay, and so in this equation all of these quantities,
+
+892
+00:53:50,310 --> 00:53:56,300
+theta, and this gradient vector,
+
+893
+00:53:56,910 --> 00:53:58,850
+all of these are n plus one dimensional vectors.
+
+894
+00:54:01,480 --> 00:54:04,150
+I was using the boards out of order, wasn't I?
+
+895
+00:54:21,240 --> 00:54:23,290
+So more generally,
+
+896
+00:54:24,850 --> 00:54:28,240
+if you have a function F that maps
+
+897
+00:54:28,450 --> 00:54:39,110
+from the space of matrices A, that maps from, say,
+
+898
+00:54:39,290 --> 00:54:41,770
+the space of N by N matrices to
+
+899
+00:54:41,960 --> 00:54:43,180
+the space of real numbers.
+
+900
+00:54:43,370 --> 00:54:46,220
+So if you have a function, F of A,
+
+901
+00:54:47,380 --> 00:54:51,430
+where A is an N by N matrix.
+
+902
+00:54:52,360 --> 00:54:54,720
+So this function is matched from matrices
+
+903
+00:54:54,880 --> 00:54:55,670
+to real numbers,
+
+904
+00:54:55,840 --> 00:54:57,710
+the function that takes this input to matrix.
+
+905
+00:54:58,010 --> 00:55:00,830
+Let me define the derivative with
+
+906
+00:55:01,020 --> 00:55:03,790
+respect to F of the matrix A.
+
+907
+00:55:04,570 --> 00:55:06,230
+Now, I'm just taking the gradient of F
+
+908
+00:55:06,410 --> 00:55:08,510
+with respect to its input, which is the matrix.
+
+909
+00:55:08,780 --> 00:55:12,240
+I'm going to define this itself to be a matrix.
+
+910
+00:55:35,880 --> 00:55:38,200
+Okay, so the derivative of F with
+
+911
+00:55:38,370 --> 00:55:41,210
+respect to A is itself a matrix,
+
+912
+00:55:41,600 --> 00:55:44,770
+and the matrix contains all the partial derivatives
+
+913
+00:55:44,940 --> 00:55:47,720
+of F with respect to the elements of A.
+
+914
+00:55:58,910 --> 00:56:04,560
+One more definition is if A is a square matrix,
+
+915
+00:56:04,810 --> 00:56:09,350
+so if A is an n by n matrix,
+
+916
+00:56:09,600 --> 00:56:11,310
+number of rows equals number of columns,
+
+917
+00:56:11,840 --> 00:56:15,360
+let me define the trace of A to be equal to
+
+918
+00:56:15,540 --> 00:56:17,600
+the sum of A's diagonal elements.
+
+919
+00:56:18,770 --> 00:56:25,270
+So this is just sum over I of A, I, I.
+
+920
+00:56:26,390 --> 00:56:28,110
+For those of you that haven't seen
+
+921
+00:56:28,300 --> 00:56:30,020
+this sort of operator notation before,
+
+922
+00:56:30,200 --> 00:56:32,570
+you can think of trace of A as the trace
+
+923
+00:56:32,800 --> 00:56:35,270
+operator applied to the square matrix A,
+
+924
+00:56:35,650 --> 00:56:36,920
+but it's more commonly written
+
+925
+00:56:37,160 --> 00:56:38,260
+without the parentheses.
+
+926
+00:56:38,450 --> 00:56:40,250
+So I usually write trace of A like this,
+
+927
+00:56:40,440 --> 00:56:42,660
+and this just means the sum of diagonal elements.
+
+928
+00:56:44,420 --> 00:56:50,350
+So here are some facts about the
+
+929
+00:56:50,520 --> 00:56:52,280
+trace operator and about derivatives,
+
+930
+00:56:52,490 --> 00:56:54,140
+and I'm just going to write these without proof.
+
+931
+00:56:54,310 --> 00:56:55,800
+You can also have the TAs prove some
+
+932
+00:56:55,990 --> 00:56:57,580
+of them in the discussion section,
+
+933
+00:56:57,770 --> 00:57:00,550
+or you can actually go home and
+
+934
+00:57:00,730 --> 00:57:02,840
+verify the proofs of all of these.
+
+935
+00:57:03,030 --> 00:57:09,760
+It turns out that given two matrices, A and B,
+
+936
+00:57:09,960 --> 00:57:11,880
+the trace of the matrix A times B is
+
+937
+00:57:12,040 --> 00:57:16,660
+equal to the trace of B, A.
+
+938
+00:57:16,860 --> 00:57:18,180
+Okay, I'm not going to prove this,
+
+939
+00:57:18,370 --> 00:57:19,600
+but you should be able to go home and prove this
+
+940
+00:57:19,780 --> 00:57:22,520
+yourself without too much difficulty.
+
+941
+00:57:24,160 --> 00:57:29,040
+And similarly, the trace of a product of three matrices,
+
+942
+00:57:29,260 --> 00:57:31,060
+so if you can take the matrix at the end
+
+943
+00:57:31,260 --> 00:57:34,100
+and cyclically permeate it to the front.
+
+944
+00:57:34,290 --> 00:57:35,620
+So trace of A times B, times C,
+
+945
+00:57:35,900 --> 00:57:38,260
+is equal to the trace of C, A, B.
+
+946
+00:57:39,050 --> 00:57:40,290
+So take the matrix C at the back
+
+947
+00:57:40,460 --> 00:57:41,770
+and move it to the front,
+
+948
+00:57:41,960 --> 00:57:46,060
+and this is also equal to the trace of B, C.
+
+949
+00:57:46,260 --> 00:57:48,770
+Take the matrix B and move it to the front.
+
+950
+00:57:49,330 --> 00:58:03,450
+Okay, also, suppose you have a function F of A
+
+951
+00:58:03,630 --> 00:58:05,660
+which is defined as a trace of A, B.
+
+952
+00:58:06,660 --> 00:58:09,440
+Okay, so this is, right, the trace is a real number.
+
+953
+00:58:09,640 --> 00:58:11,900
+So the trace of A, B is a function that takes this
+
+954
+00:58:12,080 --> 00:58:14,990
+input of matrix A and output a real number.
+
+955
+00:58:16,300 --> 00:58:20,380
+So then the derivative with respect to the matrix A of
+
+956
+00:58:20,550 --> 00:58:30,440
+this function of trace A, B, is going to be B transposed.
+
+957
+00:58:30,630 --> 00:58:31,770
+And this is just another fact
+
+958
+00:58:31,960 --> 00:58:33,770
+that you can prove by yourself by
+
+959
+00:58:33,940 --> 00:58:35,550
+going back and referring to the definitions of
+
+960
+00:58:35,740 --> 00:58:37,600
+traces and matrix derivatives.
+
+961
+00:58:37,800 --> 00:58:39,900
+I'm not going to prove it. You should work it out.
+
+962
+00:58:40,710 --> 00:58:42,790
+Okay, and lastly a couple of easy ones.
+
+963
+00:58:43,060 --> 00:58:46,590
+The trace of A is equal to the trace of A transposed
+
+964
+00:58:46,800 --> 00:58:49,490
+because the trace is just the sum of diagonal elements.
+
+965
+00:58:50,010 --> 00:58:51,350
+And so if you transpose the matrix,
+
+966
+00:58:51,540 --> 00:58:53,080
+the diagonal, then there's no change.
+
+967
+00:58:53,520 --> 00:58:57,580
+And if lower case A is a real number,
+
+968
+00:58:57,810 --> 00:59:02,050
+then the trace of a real number is just itself.
+
+969
+00:59:02,290 --> 00:59:06,120
+So think of a real number as a one by one matrix.
+
+970
+00:59:06,270 --> 00:59:07,790
+So the trace of a one by one matrix is just
+
+971
+00:59:07,990 --> 00:59:10,200
+whatever that real number is.
+
+972
+00:59:15,820 --> 00:59:20,370
+And lastly, this is a somewhat tricky one.
+
+973
+00:59:28,910 --> 00:59:30,250
+The derivative with respect to
+
+974
+00:59:30,400 --> 00:59:32,830
+the matrix A of the trace of A, B, A,
+
+975
+00:59:44,280 --> 00:59:47,360
+This is sort of just algebra. Work it out yourself.
+
+976
+00:59:48,710 --> 01:00:02,680
+Okay, and so the key facts I'm going to use
+
+977
+01:00:02,870 --> 01:00:08,600
+again about traces and matrix derivatives,
+
+978
+01:00:11,950 --> 01:00:17,040
+I'll use five. Ten minutes. Okay,
+
+979
+01:00:17,220 --> 01:00:19,350
+so armed with these things
+
+980
+01:00:19,350 --> 01:00:20,350
+I'm going to figure out – let's try to come up
+
+981
+01:00:23,960 --> 01:00:26,030
+with a quick derivation for how to
+
+982
+01:00:26,210 --> 01:00:29,490
+minimize J of theta as a function of theta in closed
+
+983
+01:00:29,690 --> 01:00:32,100
+form, and without needing to use an iterative algorithm
+
+984
+01:00:33,370 --> 01:00:39,600
+So work this out. Let me define the matrix X.
+
+985
+01:00:39,840 --> 01:00:42,140
+This is called the design matrix.
+
+986
+01:00:43,090 --> 01:00:44,690
+To be a matrix containing all the
+
+987
+01:00:44,920 --> 01:00:46,870
+inputs from my training set.
+
+988
+01:00:47,310 --> 01:00:51,440
+So X 1 was the vector of inputs to the vector
+
+989
+01:00:51,640 --> 01:00:53,600
+of features for my first training example.
+
+990
+01:00:53,960 --> 01:00:58,260
+So I'm going to set X 1 to be the first
+
+991
+01:00:58,460 --> 01:01:01,250
+row of this matrix X,
+
+992
+01:01:05,550 --> 01:01:08,400
+set my second training example is in place
+
+993
+01:01:08,640 --> 01:01:10,090
+to be the second variable,
+
+994
+01:01:10,250 --> 01:01:11,310
+and so on.
+
+995
+01:01:11,440 --> 01:01:13,470
+And I have M training examples,
+
+996
+01:01:14,120 --> 01:01:18,040
+and so that's going to be my design matrix X.
+
+997
+01:01:18,540 --> 01:01:21,350
+Okay, this is defined as matrix capital X as follows,
+
+998
+01:01:22,110 --> 01:01:26,220
+and so now, let me take this matrix X
+
+999
+01:01:26,430 --> 01:01:28,710
+and multiply it by my parameter vector theta.
+
+1000
+01:01:28,960 --> 01:01:31,350
+This derivation will just take two or three sets.
+
+1001
+01:01:35,690 --> 01:01:37,720
+matrix vector multiplication goes.
+
+1002
+01:01:37,720 --> 01:01:38,720
+So X times theta – remember how
+
+1003
+01:01:37,920 --> 01:01:39,700
+You take this vector and you multiply
+
+1004
+01:01:39,880 --> 01:01:41,420
+it by each of the rows of the matrix.
+
+1005
+01:01:42,260 --> 01:01:44,670
+So X times theta is just going to be
+
+1006
+01:01:46,420 --> 01:01:49,650
+X 1 transposed theta, dot, dot, dot,
+
+1007
+01:01:49,860 --> 01:01:56,700
+down to X M, transposed theta. And this is, of course,
+
+1008
+01:01:56,940 --> 01:02:10,320
+just the predictions of your hypothesis
+
+1009
+01:02:10,660 --> 01:02:12,680
+on each of your M training examples.
+
+1010
+01:02:16,270 --> 01:02:21,130
+Then we also defined the Y vector to be the vector of
+
+1011
+01:02:21,340 --> 01:02:26,990
+all the target values Y1 through YM in my training set.
+
+1012
+01:02:27,520 --> 01:02:29,880
+Okay, so Y vector is an M dimensional vector.
+
+1013
+01:02:48,760 --> 01:02:56,770
+So X theta minus Y contained
+
+1014
+01:02:56,970 --> 01:02:58,420
+the math from the previous board,
+
+1015
+01:02:58,600 --> 01:03:18,260
+this is going to be, right, and now, X theta minus Y,
+
+1016
+01:03:18,470 --> 01:03:19,390
+this is a vector.
+
+1017
+01:03:19,560 --> 01:03:21,020
+This is an M dimensional vector
+
+1018
+01:03:21,180 --> 01:03:22,520
+in M training examples,
+
+1019
+01:03:23,030 --> 01:03:24,440
+and so I'm actually going to take this
+
+1020
+01:03:24,610 --> 01:03:27,250
+vector and take this inner product with itself.
+
+1021
+01:03:27,630 --> 01:03:33,300
+Okay, so we call that if Z is a vector than Z
+
+1022
+01:03:33,330 --> 01:03:38,060
+transpose Z is just sum over I, ZI squared.
+
+1023
+01:03:38,260 --> 01:03:39,840
+Right, that's how you take the inner
+
+1024
+01:03:39,990 --> 01:03:41,940
+product of a vector with a sum.
+
+1025
+01:03:42,130 --> 01:03:44,620
+So you want to take this vector, X theta minus Y,
+
+1026
+01:03:48,400 --> 01:03:51,250
+and take the inner product of this vector with itself,
+
+1027
+01:03:51,860 --> 01:03:59,660
+and so that gives me sum from I equals one to
+
+1028
+01:03:59,820 --> 01:04:06,480
+M, H, F, X, I, minus Y squared.
+
+1029
+01:04:06,870 --> 01:04:08,810
+Okay, since it's just the sum of
+
+1030
+01:04:09,070 --> 01:04:11,520
+the squares of the elements of this vector.
+
+1031
+01:04:12,410 --> 01:04:17,730
+And put a half there for the emphasis.
+
+1032
+01:04:19,470 --> 01:04:22,960
+This is our previous definition of J of theta.
+
+1033
+01:04:23,720 --> 01:04:28,180
+Okay, yeah?
+
+1034
+01:04:33,710 --> 01:04:36,690
+Yeah, I threw a lot of notations at you today.
+
+1035
+01:04:36,880 --> 01:04:40,630
+So M is the number of training examples and the
+
+1036
+01:04:40,780 --> 01:04:43,040
+number of training examples runs from one through M,
+
+1037
+01:04:43,860 --> 01:04:46,250
+and then is the feature vector that runs
+
+1038
+01:04:46,440 --> 01:04:49,420
+from zero through N. Does that make sense?
+
+1039
+01:04:49,720 --> 01:04:52,970
+So this is the sum from one through M.
+
+1040
+01:04:53,670 --> 01:04:59,600
+It's sort of theta transpose X that's equal to sum
+
+1041
+01:04:59,800 --> 01:05:05,470
+from J equals zero through N of theta J, X, J.
+
+1042
+01:05:06,540 --> 01:05:08,430
+Does that make sense?
+
+1043
+01:05:08,730 --> 01:05:12,720
+It's the feature vectors that index from zero through N
+
+1044
+01:05:12,910 --> 01:05:15,690
+where X, zero is equal to one, whereas the training
+
+1045
+01:05:15,870 --> 01:05:17,960
+example is actually indexed from one through M.
+
+1046
+01:05:22,060 --> 01:05:23,670
+So let me clean a few more boards
+
+1047
+01:05:23,840 --> 01:05:25,430
+and take another look at this,
+
+1048
+01:05:26,310 --> 01:06:03,950
+make sure it all makes sense. Okay, yeah?
+
+1049
+01:06:09,040 --> 01:06:12,570
+Oh, yes, thank you. Oh is that what you meant?
+
+1050
+01:06:13,460 --> 01:06:14,980
+Yes, thank you.
+
+1051
+01:06:15,130 --> 01:06:18,580
+Great, I training example. Anything else?
+
+1052
+01:06:24,900 --> 01:06:28,610
+Cool. So we're actually nearly
+
+1053
+01:06:28,790 --> 01:06:30,870
+done with this derivation.
+
+1054
+01:06:31,520 --> 01:06:34,840
+We would like to minimize J of theta with respect
+
+1055
+01:06:35,020 --> 01:06:38,800
+to theta and we've written J of theta fairly
+
+1056
+01:06:38,980 --> 01:06:41,710
+compactly using this matrix vector notation.
+
+1057
+01:06:42,940 --> 01:06:44,480
+So in order to minimize J of theta
+
+1058
+01:06:44,480 --> 01:06:46,010
+with respect to theta,
+
+1059
+01:06:47,690 --> 01:06:50,040
+what we're going to do is take the derivative
+
+1060
+01:06:50,270 --> 01:06:52,350
+with respect to theta of J of theta,
+
+1061
+01:06:54,640 --> 01:06:58,240
+and set this to zero, and solve for theta.
+
+1062
+01:06:59,220 --> 01:07:07,640
+Okay, so we have derivative with respect
+
+1063
+01:07:21,180 --> 01:07:23,490
+I should mention there will be some steps here that
+
+1064
+01:07:23,490 --> 01:07:24,490
+to theta of that is equal to –
+
+1065
+01:07:23,670 --> 01:07:25,340
+I'm just going to do fairly quickly without proof.
+
+1066
+01:07:25,520 --> 01:07:27,080
+So is it really true that the derivative of
+
+1067
+01:07:27,250 --> 01:07:29,130
+half of that is half of the derivative,
+
+1068
+01:07:29,300 --> 01:07:30,560
+and I already exchanged the
+
+1069
+01:07:30,770 --> 01:07:32,290
+derivative and the one-half.
+
+1070
+01:07:32,440 --> 01:07:33,540
+In terms of the answers, yes,
+
+1071
+01:07:33,690 --> 01:07:35,530
+but later on you should go home and
+
+1072
+01:07:35,680 --> 01:07:37,420
+look through the lecture notes
+
+1073
+01:07:37,570 --> 01:07:39,100
+and make sure you understand and
+
+1074
+01:07:39,260 --> 01:07:41,040
+believe why every step is correct.
+
+1075
+01:07:41,190 --> 01:07:42,720
+I'm going to do things relatively quickly here
+
+1076
+01:07:42,960 --> 01:07:45,040
+and you can work through every step
+
+1077
+01:07:45,200 --> 01:07:47,460
+yourself more slowly by referring to the lecture notes.
+
+1078
+01:07:51,180 --> 01:07:53,070
+I'm going to expand now this quadratic function.
+
+1079
+01:07:53,070 --> 01:07:54,070
+Okay, so that's equal to –
+
+1080
+01:07:53,410 --> 01:08:09,450
+So this is going to be, okay,
+
+1081
+01:08:11,290 --> 01:08:13,490
+and this is just sort of taking a quadratic function
+
+1082
+01:08:13,670 --> 01:08:15,100
+and expanding it out by multiplying the.
+
+1083
+01:08:15,280 --> 01:08:17,840
+And again, work through the steps later
+
+1084
+01:08:18,010 --> 01:08:21,450
+yourself if you're not quite sure how I did that.
+
+1085
+01:08:21,820 --> 01:08:26,330
+So this thing, this vector, vector product,
+
+1086
+01:08:26,560 --> 01:08:29,010
+right, this quantity here,
+
+1087
+01:08:29,220 --> 01:08:32,410
+this is just J of theta and so it's just a real number,
+
+1088
+01:08:32,650 --> 01:08:35,670
+and the trace of a real number is just itself.
+
+1089
+01:08:36,690 --> 01:08:41,910
+:Oh, thanks, Dan. Cool, great.
+
+1090
+01:08:42,460 --> 01:08:44,570
+So this quantity in parentheses,
+
+1091
+01:08:44,750 --> 01:08:46,670
+this is J of theta and it's just a real number.
+
+1092
+01:08:47,360 --> 01:08:49,400
+And so the trace of a real number is
+
+1093
+01:08:49,590 --> 01:08:50,840
+just the same real number.
+
+1094
+01:08:51,040 --> 01:08:52,070
+And so you can sort of take a
+
+1095
+01:08:52,240 --> 01:08:54,160
+trace operator without changing anything.
+
+1096
+01:08:56,130 --> 01:09:01,710
+And this is equal to one-half derivative with
+
+1097
+01:09:06,100 --> 01:09:08,560
+second permutation property of trace. You can
+
+1098
+01:09:08,560 --> 01:09:09,560
+respect to theta of the trace of – by the
+
+1099
+01:09:08,730 --> 01:09:11,300
+take this theta at the end and move it to the front.
+
+1100
+01:09:11,800 --> 01:09:12,960
+So this is going to be
+
+1101
+01:09:13,150 --> 01:09:17,130
+trace of theta times theta transposed,
+
+1102
+01:09:18,510 --> 01:09:27,340
+X transpose X minus derivative with respect
+
+1103
+01:09:27,500 --> 01:09:30,480
+to theta of the trace of
+
+1104
+01:09:30,700 --> 01:09:33,760
+I'm going to take that and bring it to the
+
+1105
+01:09:34,880 --> 01:09:38,580
+oh, sorry.
+
+1106
+01:09:39,070 --> 01:09:42,550
+Actually, this thing here is also a real number
+
+1107
+01:09:43,520 --> 01:09:46,350
+and the transpose of a real number is just itself.
+
+1108
+01:09:46,970 --> 01:09:48,440
+Right, so take the transpose of a real
+
+1109
+01:09:48,630 --> 01:09:50,390
+number without changing anything.
+
+1110
+01:09:50,580 --> 01:09:52,640
+So let me go ahead and just take the transpose of this.
+
+1111
+01:09:53,170 --> 01:09:55,020
+A real number transposed itself is
+
+1112
+01:09:55,190 --> 01:09:57,170
+just the same real number.
+
+1113
+01:09:57,340 --> 01:09:59,230
+So this is minus the trace of,
+
+1114
+01:10:00,120 --> 01:10:01,340
+taking the transpose of that.
+
+1115
+01:10:01,540 --> 01:10:07,820
+Here's Y transpose X theta, then minustheta.
+
+1116
+01:10:10,310 --> 01:10:13,260
+Okay, and this last quantity, Y transpose Y.
+
+1117
+01:10:13,450 --> 01:10:15,050
+It doesn't actually depend on theta.
+
+1118
+01:10:15,260 --> 01:10:17,300
+So when I take the derivative of this last term with
+
+1119
+01:10:17,480 --> 01:10:20,140
+respect to theta, it's just zero. So just drop that term.
+
+1120
+01:10:22,760 --> 01:10:31,630
+And lastly, well, the derivative with respect to theta
+
+1121
+01:10:32,030 --> 01:10:39,030
+of the trace of theta, theta transposed, X transpose X.
+
+1122
+01:10:39,570 --> 01:10:42,680
+I'm going to use one of the facts I
+
+1123
+01:10:42,860 --> 01:10:44,580
+wrote down earlier without proof,
+
+1124
+01:10:44,950 --> 01:10:47,860
+and I'm going to let this be A.
+
+1125
+01:10:48,510 --> 01:10:50,700
+There's an identity matrix there,
+
+1126
+01:10:50,880 --> 01:10:54,390
+so this is A, B, A transpose C,
+
+1127
+01:10:54,740 --> 01:10:56,740
+and using a rule that I've written down previously
+
+1128
+01:10:56,920 --> 01:10:58,440
+that you'll find in lecture notes,
+
+1129
+01:10:58,700 --> 01:11:01,030
+because it's still on one of the boards that you had
+
+1130
+01:11:01,220 --> 01:11:08,420
+previously, this is just equal to X transpose X theta.
+
+1131
+01:11:19,280 --> 01:11:26,060
+So this is C, A, B,
+
+1132
+01:11:26,220 --> 01:11:28,190
+which is sort of just the identity matrix,
+
+1133
+01:11:28,640 --> 01:11:33,080
+which you can ignore, plus X transpose X theta
+
+1134
+01:11:33,250 --> 01:11:38,820
+where this is now C transpose C, again times
+
+1135
+01:11:38,990 --> 01:11:41,210
+the identity which we're going to ignore,
+
+1136
+01:11:41,370 --> 01:11:43,490
+times B transposed. And the matrix X
+
+1137
+01:11:43,690 --> 01:11:46,320
+transpose X is the metric, so C transpose is equal to C.
+
+1138
+01:11:49,490 --> 01:11:52,130
+Similarly, the derivative with respect to theta
+
+1139
+01:11:52,320 --> 01:11:58,510
+of the trace of Y transpose theta X,
+
+1140
+01:12:01,230 --> 01:12:11,360
+this is the derivative with respect to
+
+1141
+01:12:12,090 --> 01:12:14,380
+matrix A of the trace of B, A
+
+1142
+01:12:14,860 --> 01:12:17,880
+and this is just X transpose Y.
+
+1143
+01:12:18,350 --> 01:12:21,780
+This is just B transposed, again,
+
+1144
+01:12:21,950 --> 01:12:25,760
+by one of the rules that I wrote down earlier.
+
+1145
+01:12:26,340 --> 01:12:46,900
+And so if you plug this back in,
+
+1146
+01:12:50,260 --> 01:12:56,280
+this board's really bad.
+
+1147
+01:12:56,280 --> 01:12:57,280
+we find, therefore, that the derivative – wow,
+
+1148
+01:13:06,790 --> 01:13:08,920
+So if you plug this back into our
+
+1149
+01:13:09,100 --> 01:13:10,810
+formula for the derivative of J,
+
+1150
+01:13:12,910 --> 01:13:13,750
+you find that the derivative
+
+1151
+01:13:13,750 --> 01:13:15,870
+with respect to theta of J of
+
+1152
+01:13:16,020 --> 01:13:22,980
+theta is equal to one-half X transpose theta,
+
+1153
+01:13:33,620 --> 01:13:37,120
+which is just X transpose X theta minus X.
+
+1154
+01:13:40,250 --> 01:13:45,260
+Okay, so we set this to zero
+
+1155
+01:13:45,690 --> 01:13:52,880
+and we get that,
+
+1156
+01:14:03,030 --> 01:14:04,910
+which is called a normal equation,
+
+1157
+01:14:05,890 --> 01:14:10,820
+and we can now solve this equation
+
+1158
+01:14:11,040 --> 01:14:20,360
+for theta in closed form.
+
+1159
+01:14:20,530 --> 01:14:22,530
+That's X transpose X theta,
+
+1160
+01:14:23,310 --> 01:14:25,170
+inverse times X transpose Y.
+
+1161
+01:14:25,360 --> 01:14:29,910
+And so this gives us a way for solving for the
+
+1162
+01:14:30,090 --> 01:14:32,400
+least square fit to the parameters in closed form,
+
+1163
+01:14:32,680 --> 01:14:34,460
+without needing to use an descent.
+
+1164
+01:14:36,500 --> 01:14:41,060
+Okay, and using this matrix vector notation, I think,
+
+1165
+01:14:41,900 --> 01:14:44,180
+I don't know, I think we did this
+
+1166
+01:14:44,340 --> 01:14:45,640
+whole thing in about ten minutes,
+
+1167
+01:14:45,810 --> 01:14:47,160
+which we couldn't have if I was
+
+1168
+01:14:47,320 --> 01:14:50,870
+writing out reams of algebra.
+
+1169
+01:14:52,610 --> 01:14:55,380
+Okay, some of you look a little bit dazed,
+
+1170
+01:14:55,540 --> 01:14:57,320
+but this is our first learning hour.
+
+1171
+01:14:57,530 --> 01:14:59,310
+Aren't you excited?
+
+1172
+01:15:00,590 --> 01:15:01,970
+Any quick questions about this
+
+1173
+01:15:02,210 --> 01:15:04,630
+before we close for today?
+
+1174
+01:15:08,870 --> 01:15:10,110
+:Say that again.
+
+1175
+01:15:12,610 --> 01:15:14,180
+:What inverse?
+
+1176
+01:15:14,340 --> 01:15:15,380
+Pseudo inverse.
+
+1177
+01:15:15,540 --> 01:15:16,770
+Pseudo inverse?
+
+1178
+01:15:16,930 --> 01:15:18,340
+Pseudo inverse.
+
+1179
+01:15:18,500 --> 01:15:20,190
+Yeah, I turns out that in cases,
+
+1180
+01:15:20,390 --> 01:15:22,190
+if X transpose X is not invertible,
+
+1181
+01:15:22,490 --> 01:15:23,700
+than you use the pseudo inverse
+
+1182
+01:15:23,880 --> 01:15:25,620
+minimized to solve this.
+
+1183
+01:15:26,040 --> 01:15:28,360
+But it turns out X transpose X is not invertible.
+
+1184
+01:15:28,550 --> 01:15:31,260
+That usually means your features were dependent.
+
+1185
+01:15:31,510 --> 01:15:34,150
+It usually means you did something like repeat
+
+1186
+01:15:34,330 --> 01:15:36,370
+the same feature twice in your training set.
+
+1187
+01:15:36,720 --> 01:15:38,180
+So if this is not invertible,
+
+1188
+01:15:38,370 --> 01:15:39,690
+it turns out the minimum is obtained
+
+1189
+01:15:39,880 --> 01:15:41,900
+by the pseudo inverses of the inverse.
+
+1190
+01:15:42,090 --> 01:15:44,220
+If you don't know what I just said, don't worry about it.
+
+1191
+01:15:44,980 --> 01:15:46,910
+It usually won't be a problem.
+
+1192
+01:15:47,280 --> 01:15:53,310
+Anything else?
+
+1193
+01:15:53,490 --> 01:15:54,720
+Let me take that off.
+
+1194
+01:15:54,920 --> 01:15:57,480
+We're running over. Let's close for today
+

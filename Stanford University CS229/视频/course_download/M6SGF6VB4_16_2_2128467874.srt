@@ -1,0 +1,4916 @@
+﻿1
+00:00:18,690 --> 00:00:24,480
+MachineLearning-Lecture16
+
+2
+00:00:24,560 --> 00:00:25,570
+All right, so welcome back.
+
+3
+00:00:25,650 --> 00:00:28,380
+What I want to do today is start a new chapter,
+
+4
+00:00:28,460 --> 00:00:30,120
+a new discussion on machine learning
+
+5
+00:00:30,200 --> 00:00:32,280
+and in particular, I want to talk about
+
+6
+00:00:32,350 --> 00:00:33,750
+a different type of learning problem
+
+7
+00:00:33,830 --> 00:00:35,180
+called reinforcement learning,
+
+8
+00:00:35,260 --> 00:00:37,710
+so that's Markov Decision Processes,
+
+9
+00:00:37,780 --> 00:00:40,060
+value functions, value iteration,
+
+10
+00:00:40,140 --> 00:00:42,100
+and policy iteration.
+
+11
+00:00:42,170 --> 00:00:45,070
+Both of these last two items are algorithms
+
+12
+00:00:45,160 --> 00:00:47,730
+for solving reinforcement learning problems.
+
+13
+00:00:47,830 --> 00:00:50,350
+As you can see, we're also taping
+
+14
+00:00:50,440 --> 00:00:51,640
+a different room today,
+
+15
+00:00:51,730 --> 00:00:52,900
+so the background is a bit different.
+
+16
+00:00:52,990 --> 00:00:56,440
+So just to put this in context, the first of
+
+17
+00:00:56,540 --> 00:00:59,560
+the four major topics we had in this class was
+
+18
+00:00:59,640 --> 00:01:02,590
+supervised learning and in supervised learning,
+
+19
+00:01:02,670 --> 00:01:05,640
+we had the training set in which we were
+
+20
+00:01:05,720 --> 00:01:08,230
+given sort of the "right" answer of every
+
+21
+00:01:08,310 --> 00:01:10,810
+training example and it was then just a drop of
+
+22
+00:01:10,880 --> 00:01:12,320
+the learning algorithms to replicate
+
+23
+00:01:12,420 --> 00:01:13,920
+more of the right answers.
+
+24
+00:01:14,030 --> 00:01:17,350
+And then that was learning theory and then we
+
+25
+00:01:17,430 --> 00:01:19,060
+talked about unsupervised learning, and in
+
+26
+00:01:19,150 --> 00:01:21,340
+unsupervised learning, we had just a bunch of
+
+27
+00:01:21,420 --> 00:01:24,680
+unlabeled data, just the x's, and it was the
+
+28
+00:01:24,790 --> 00:01:26,580
+job in the learning algorithm to discover
+
+29
+00:01:26,680 --> 00:01:28,390
+so-called structure in the data and several
+
+30
+00:01:28,470 --> 00:01:30,460
+algorithms like cluster analysis, K-means, a
+
+31
+00:01:30,580 --> 00:01:32,150
+mixture of all the sort
+
+32
+00:01:32,260 --> 00:01:33,890
+of the PCA, ICA, and so on.
+
+33
+00:01:33,990 --> 00:01:36,630
+Today, I want to talk about a different class of
+
+34
+00:01:36,720 --> 00:01:39,300
+learning algorithms that's sort of in
+
+35
+00:01:39,380 --> 00:01:40,990
+between supervised and unsupervised, so there
+
+36
+00:01:41,070 --> 00:01:43,280
+will be a class of problems where there's
+
+37
+00:01:43,380 --> 00:01:46,180
+a level of supervision that's also much less
+
+38
+00:01:46,290 --> 00:01:48,630
+supervision than what we saw in supervised
+
+39
+00:01:48,730 --> 00:01:51,210
+learning. And this is a problem in formalism
+
+40
+00:01:51,320 --> 00:01:53,130
+called reinforcement learning. So next up
+
+41
+00:01:53,240 --> 00:01:55,310
+here are slides. Let me show you. As a moving
+
+42
+00:01:55,410 --> 00:01:59,630
+example, here's an example of the sorts of
+
+43
+00:01:59,730 --> 00:02:01,380
+things we do with reinforcement learning.
+
+44
+00:02:01,490 --> 00:02:07,410
+So here's a picture of some of this I talked
+
+45
+00:02:07,490 --> 00:02:08,990
+about in Lecture 1 as well, but here's a
+
+46
+00:02:09,070 --> 00:02:10,580
+picture of the we have an autonomous
+
+47
+00:02:10,670 --> 00:02:14,550
+helicopter we have at Stanford. So how would
+
+48
+00:02:14,660 --> 00:02:16,710
+you write a program to make a helicopter like
+
+49
+00:02:16,820 --> 00:02:18,870
+this fly by itself? I'll show you a fun video.
+
+50
+00:02:18,980 --> 00:02:21,280
+This is actually, I think, the same video that I
+
+51
+00:02:21,370 --> 00:02:24,490
+showed in class in the first lecture, but
+
+52
+00:02:24,590 --> 00:02:27,650
+here's a video taken in the football field at
+
+53
+00:02:27,730 --> 00:02:30,540
+Stanford of using machine learning algorithm
+
+54
+00:02:30,630 --> 00:02:32,320
+to fly the helicopter.
+
+55
+00:02:32,460 --> 00:02:34,870
+So let's just play the video.
+
+56
+00:02:34,950 --> 00:02:42,990
+You can zoom in the camera and see the trees in
+
+57
+00:02:43,070 --> 00:02:48,040
+the sky. So in terms of autonomous
+
+58
+00:02:48,150 --> 00:02:51,540
+helicopter flight, this is written then by some of
+
+59
+00:02:51,640 --> 00:02:53,370
+my students and me. In terms of
+
+60
+00:02:53,470 --> 00:02:54,990
+autonomous helicopter flight, this is one of the
+
+61
+00:02:55,090 --> 00:02:57,600
+most difficult aerobatic maneuvers flown
+
+62
+00:02:57,690 --> 00:03:00,290
+and it's actually very hard to write a program to
+
+63
+00:03:00,390 --> 00:03:03,310
+make a helicopter do this and the way
+
+64
+00:03:03,410 --> 00:03:04,940
+this was done was with what's called
+
+65
+00:03:05,040 --> 00:03:06,400
+a reinforcement learning algorithm.
+
+66
+00:03:06,500 --> 00:03:10,470
+So just to make this more concrete, right, the
+
+67
+00:03:10,560 --> 00:03:13,590
+learning problem in helicopter flight is ten
+
+68
+00:03:13,670 --> 00:03:16,260
+times per second, say. Your sensors on the
+
+69
+00:03:16,360 --> 00:03:18,950
+helicopter gives you a very accurate estimate
+
+70
+00:03:19,070 --> 00:03:21,310
+of the position of orientation of the helicopter
+
+71
+00:03:21,400 --> 00:03:22,830
+and so you know where the helicopter is
+
+72
+00:03:22,940 --> 00:03:25,910
+pretty accurately at all points in time. And your
+
+73
+00:03:25,990 --> 00:03:29,190
+job is to take this input, the position
+
+74
+00:03:29,280 --> 00:03:33,560
+orientation, and to output a set of numbers that
+
+75
+00:03:33,670 --> 00:03:35,460
+correspond to where to move the control
+
+76
+00:03:35,560 --> 00:03:38,360
+sticks to control the helicopter, to make it fly, to
+
+77
+00:03:38,460 --> 00:03:40,260
+right side up, fly upside down, actually
+
+78
+00:03:40,350 --> 00:03:41,680
+whatever maneuver you want.
+
+79
+00:03:41,770 --> 00:03:44,230
+And this is different from supervised learning
+
+80
+00:03:44,330 --> 00:03:46,840
+because usually we actually don't know
+
+81
+00:03:46,940 --> 00:03:50,700
+what the "right" control action is. And more
+
+82
+00:03:50,780 --> 00:03:53,590
+specifically, if the helicopter is in a certain
+
+83
+00:03:53,680 --> 00:03:55,550
+position orientation, it's actually very hard to
+
+84
+00:03:55,640 --> 00:03:57,500
+say when the helicopter is doing this, you
+
+85
+00:03:57,580 --> 00:03:59,070
+should move the control sticks exactly these
+
+86
+00:03:59,150 --> 00:04:01,930
+positions. So it's very hard to apply
+
+87
+00:04:02,000 --> 00:04:03,520
+supervised learning algorithms to this problem
+
+88
+00:04:03,620 --> 00:04:05,390
+because we can't come up with a training
+
+89
+00:04:05,480 --> 00:04:08,950
+set where the inputs of the position and the
+
+90
+00:04:09,070 --> 00:04:11,020
+output is all the "right" control actions. It's
+
+91
+00:04:11,070 --> 00:04:12,040
+really hard to come up with
+
+92
+00:04:12,150 --> 00:04:13,440
+a training set like that.
+
+93
+00:04:13,530 --> 00:04:16,780
+Instead of reinforcement learning, we'll give
+
+94
+00:04:16,880 --> 00:04:19,020
+the learning algorithm a different type of
+
+95
+00:04:19,110 --> 00:04:20,490
+feedback, basically called a reward signal,
+
+96
+00:04:20,580 --> 00:04:23,370
+which will tell the helicopter when it's doing
+
+97
+00:04:23,440 --> 00:04:27,330
+well and when it's doing poorly. So what we'll
+
+98
+00:04:27,420 --> 00:04:29,190
+end up doing is we're coming up with
+
+99
+00:04:29,280 --> 00:04:30,790
+something called a reward signal and I'll
+
+100
+00:04:30,870 --> 00:04:34,230
+formalize this later, which will be a measure of
+
+101
+00:04:34,320 --> 00:04:36,440
+how well the helicopter is doing, and then it
+
+102
+00:04:36,520 --> 00:04:38,090
+will be the job of the learning algorithm to
+
+103
+00:04:38,180 --> 00:04:39,570
+take just this reward function
+
+104
+00:04:39,660 --> 00:04:40,940
+as input and try to fly well.
+
+105
+00:04:41,040 --> 00:04:44,670
+Another good example of reinforcement
+
+106
+00:04:44,770 --> 00:04:46,610
+learning is thinking about getting a program to
+
+107
+00:04:46,710 --> 00:04:49,150
+play a game, to play chess, a game of chess. At
+
+108
+00:04:49,230 --> 00:04:53,870
+any stage in the game, we actually don't
+
+109
+00:04:53,980 --> 00:04:57,180
+know what the "optimal" move is, so it's very
+
+110
+00:04:57,300 --> 00:05:01,070
+hard to pose playing chess as a supervised
+
+111
+00:05:01,180 --> 00:05:03,590
+learning problem because we can't say the x's
+
+112
+00:05:03,700 --> 00:05:05,920
+are the board positions and the y's are the
+
+113
+00:05:06,020 --> 00:05:07,710
+optimum moves because we just don't know
+
+114
+00:05:07,820 --> 00:05:09,550
+how we create any training examples of
+
+115
+00:05:09,640 --> 00:05:10,920
+optimum moves of chess.
+
+116
+00:05:11,040 --> 00:05:15,350
+But what we do know is if you have a computer
+
+117
+00:05:15,460 --> 00:05:16,910
+playing games of chess, we know when
+
+118
+00:05:16,980 --> 00:05:18,540
+its won a game and when its lost a game, so
+
+119
+00:05:18,640 --> 00:05:21,560
+what we do is we give it a reward signal, so
+
+120
+00:05:21,680 --> 00:05:25,020
+give it a positive reward when it wins a game of
+
+121
+00:05:25,110 --> 00:05:26,540
+chess and give it a negative reward
+
+122
+00:05:26,630 --> 00:05:27,810
+whenever it loses,
+
+123
+00:05:27,900 --> 00:05:29,180
+and hopefully have it learn to
+
+124
+00:05:29,380 --> 00:05:30,720
+win more and more games by itself over time.
+
+125
+00:05:30,830 --> 00:05:34,820
+So what I'd like you to think about
+
+126
+00:05:34,910 --> 00:05:36,600
+reinforcement learning is think about training a
+
+127
+00:05:36,700 --> 00:05:39,080
+dog. Every time your dog does something good,
+
+128
+00:05:39,180 --> 00:05:40,940
+you sort of tell it, "Good dog," and every time
+
+129
+00:05:41,040 --> 00:05:42,330
+it does something bad, you tell it, "Bad dog,"
+
+130
+00:05:42,430 --> 00:05:44,320
+and over time, your dog learns to do more
+
+131
+00:05:44,440 --> 00:05:46,810
+and more good things over time.
+
+132
+00:05:47,780 --> 00:05:48,900
+So in the same way, when we try to fly a
+
+133
+00:05:48,970 --> 00:05:49,980
+helicopter, every time the helicopter does
+
+134
+00:05:50,060 --> 00:05:51,380
+something good, you say, "Good helicopter,"
+
+135
+00:05:51,470 --> 00:05:53,040
+and every time it crashes, you say, "Bad
+
+136
+00:05:53,130 --> 00:05:56,200
+helicopter," and then over time, it learns to do
+
+137
+00:05:56,300 --> 00:05:57,800
+the right things more and more often.
+
+138
+00:05:57,920 --> 00:06:03,020
+The reason one of the reasons that
+
+139
+00:06:03,100 --> 00:06:05,650
+reinforcement learning is much harder than
+
+140
+00:06:05,720 --> 00:06:07,840
+supervised learning is because this is not a
+
+141
+00:06:07,940 --> 00:06:10,310
+one-shot decision making problem. So in
+
+142
+00:06:10,420 --> 00:06:12,950
+supervised learning, if you have a
+
+143
+00:06:13,050 --> 00:06:14,540
+classification, prediction if someone
+
+144
+00:06:14,620 --> 00:06:16,420
+has cancer or not, you make a prediction and
+
+145
+00:06:16,510 --> 00:06:18,130
+then you're done, right? And your patient either
+
+146
+00:06:18,220 --> 00:06:20,020
+has cancer or not, you're either right or wrong,
+
+147
+00:06:20,110 --> 00:06:22,080
+they live or die, whatever. You make a decision
+
+148
+00:06:22,180 --> 00:06:23,420
+and then you're done.
+
+149
+00:06:23,540 --> 00:06:25,340
+In reinforcement learning, you have to keep
+
+150
+00:06:25,430 --> 00:06:27,830
+taking actions over time, so it's called the
+
+151
+00:06:27,920 --> 00:06:30,900
+sequential decision making. So concretely,
+
+152
+00:06:30,990 --> 00:06:33,220
+suppose a program loses a game of chess on
+
+153
+00:06:33,330 --> 00:06:37,030
+move No. 60. Then it has actually made 60
+
+154
+00:06:37,110 --> 00:06:38,760
+moves before it got this negative reward of
+
+155
+00:06:38,850 --> 00:06:43,420
+losing a game of chess and the thing that makes
+
+156
+00:06:43,500 --> 00:06:45,400
+it hard for the algorithm to learn from
+
+157
+00:06:45,500 --> 00:06:48,050
+this is called the credit assignment problem.
+
+158
+00:06:48,160 --> 00:07:00,390
+And just to state that informally, what this is
+
+159
+00:07:00,490 --> 00:07:02,900
+if the program loses a game of chess in move
+
+160
+00:07:03,000 --> 00:07:05,780
+60, you're actually not quite sure of all the
+
+161
+00:07:05,870 --> 00:07:08,020
+moves he made which ones were the right
+
+162
+00:07:08,100 --> 00:07:10,240
+moves and which ones were the bad moves,
+
+163
+00:07:10,320 --> 00:07:12,660
+and so maybe it's because you've blundered on
+
+164
+00:07:12,780 --> 00:07:14,690
+move No. 23 and then everything else
+
+165
+00:07:14,800 --> 00:07:16,540
+you did may have been perfect, but because you
+
+166
+00:07:16,650 --> 00:07:18,310
+made a mistake on move 23 in your
+
+167
+00:07:18,420 --> 00:07:19,550
+game of chess, you eventually
+
+168
+00:07:19,650 --> 00:07:20,950
+end up losing on move 60.
+
+169
+00:07:21,050 --> 00:07:23,410
+So just to define very loosely for the
+
+170
+00:07:23,490 --> 00:07:25,090
+assignment problem is whether you get a
+
+171
+00:07:25,180 --> 00:07:26,380
+positive or negative reward, so figure out what
+
+172
+00:07:26,470 --> 00:07:29,870
+you actually did right or did wrong to cause the
+
+173
+00:07:29,950 --> 00:07:31,840
+reward so you can do more of the right things
+
+174
+00:07:31,940 --> 00:07:34,250
+and less of the wrong things. And this is sort of
+
+175
+00:07:34,340 --> 00:07:35,560
+one of the things that
+
+176
+00:07:35,650 --> 00:07:36,700
+makes reinforcement learning hard.
+
+177
+00:07:38,780 --> 00:07:42,290
+And in the same way, if the helicopter crashes,
+
+178
+00:07:42,380 --> 00:07:45,860
+you may not know. And in the same way,
+
+179
+00:07:45,940 --> 00:07:48,580
+if the helicopter crashes, it may be something
+
+180
+00:07:48,660 --> 00:07:50,940
+you did many minutes ago that causes the
+
+181
+00:07:51,020 --> 00:07:54,000
+helicopter to crash. In fact, if you ever crash a
+
+182
+00:07:54,070 --> 00:07:55,180
+car and hopefully none of you ever get in
+
+183
+00:07:55,260 --> 00:07:56,440
+a car accident but when someone crashes a
+
+184
+00:07:56,560 --> 00:07:58,360
+car, usually the things they're doing right
+
+185
+00:07:58,440 --> 00:08:00,370
+before they crash is step on the brakes to slow
+
+186
+00:08:00,460 --> 00:08:01,860
+the car down before the impact. And
+
+187
+00:08:01,950 --> 00:08:04,560
+usually stepping on the brakes
+
+188
+00:08:04,660 --> 00:08:05,780
+does not cause a crash.
+
+189
+00:08:05,890 --> 00:08:08,870
+Rather it makes the crash sort of hurt less.
+
+190
+00:08:08,960 --> 00:08:12,880
+But so, reinforcement algorithm, you see this
+
+191
+00:08:12,980 --> 00:08:14,650
+pattern in that you step on the brakes, you
+
+192
+00:08:14,740 --> 00:08:17,100
+crash, it's not the reason you crash and it's hard
+
+193
+00:08:17,180 --> 00:08:18,260
+to figure out that it's not actually your
+
+194
+00:08:18,360 --> 00:08:19,900
+stepping on the brakes that caused the crash,
+
+195
+00:08:19,990 --> 00:08:21,760
+but something you did long before that.
+
+196
+00:08:21,880 --> 00:08:29,260
+So let me go ahead and define the formalize
+
+197
+00:08:29,360 --> 00:08:31,360
+the reinforcement learning problem more,
+
+198
+00:08:31,460 --> 00:08:34,740
+and as a preface, let me say algorithms are
+
+199
+00:08:34,830 --> 00:08:37,050
+applied to a broad range of problems, but
+
+200
+00:08:37,160 --> 00:08:40,180
+because robotics videos are easy to show in the
+
+201
+00:08:40,280 --> 00:08:41,720
+lecture I have a lot of them
+
+202
+00:08:41,830 --> 00:08:43,340
+throughout this lecture I use a bunch of robotics
+
+203
+00:08:43,430 --> 00:08:46,010
+for examples, but later, we'll talk about
+
+204
+00:08:46,120 --> 00:08:47,820
+applications of these ideas, so broader ranges of
+
+205
+00:08:47,900 --> 00:08:49,850
+problems as well. But the basic problem
+
+206
+00:08:49,940 --> 00:08:53,510
+I'm facing is sequential decision making.
+
+207
+00:08:53,620 --> 00:08:56,430
+We need to make many decisions and where
+
+208
+00:08:56,540 --> 00:08:57,890
+your decisions perhaps
+
+209
+00:08:57,990 --> 00:08:59,700
+have long term consequences.
+
+210
+00:08:59,800 --> 00:09:03,720
+So let's formalize the reinforcement learning
+
+211
+00:09:03,800 --> 00:09:08,260
+problem. Reinforcement learning problems
+
+212
+00:09:08,350 --> 00:09:10,690
+model the worlds using something called the
+
+213
+00:09:10,780 --> 00:09:13,410
+MDP or the Markov Decision Process
+
+214
+00:09:13,520 --> 00:09:28,490
+formalism. And let's see, MDP is a five tuple
+
+215
+00:09:28,600 --> 00:09:31,170
+I don't have enough space
+
+216
+00:09:31,270 --> 00:09:35,310
+well, comprising five things.
+
+217
+00:09:46,470 --> 00:09:50,400
+So let me say what these are.
+
+218
+00:09:50,490 --> 00:09:53,540
+Actually, could you please raise the screen?
+
+219
+00:09:53,620 --> 00:09:55,270
+I won't need the laptop anymore today.
+
+220
+00:09:55,360 --> 00:10:04,030
+[Inaudible] more space. Yep, go, great. Thanks.
+
+221
+00:10:04,140 --> 00:10:09,310
+So an MDP comprises a five tuple. The first of
+
+222
+00:10:09,400 --> 00:10:12,720
+these elements, s is a set of states and so
+
+223
+00:10:12,830 --> 00:10:16,170
+for the helicopter example, the set of states
+
+224
+00:10:16,270 --> 00:10:18,110
+would be the possible positions and
+
+225
+00:10:18,230 --> 00:10:24,130
+orientations of a helicopter. A is a set of actions.
+
+226
+00:10:24,220 --> 00:10:27,310
+So again, for the helicopter example,
+
+227
+00:10:27,390 --> 00:10:30,720
+this would be the set of all possible positions
+
+228
+00:10:30,800 --> 00:10:32,770
+that we could put our control sticks into. P,
+
+229
+00:10:32,860 --> 00:10:47,850
+s, a are state transition distributions. So for each
+
+230
+00:10:47,950 --> 00:10:51,090
+state and each action, this is a high
+
+231
+00:10:51,190 --> 00:10:53,430
+probability distribution, so sum over s prime,
+
+232
+00:10:53,510 --> 00:10:59,320
+Psa, s prime equals 1 and Psa s prime is
+
+233
+00:10:59,390 --> 00:11:00,590
+created over zero.
+
+234
+00:11:00,690 --> 00:11:07,110
+And state transition distributions are or state
+
+235
+00:11:07,190 --> 00:11:09,020
+transition probabilities work as follows. P
+
+236
+00:11:09,110 --> 00:11:11,800
+subscript (s, a) gives me the probability
+
+237
+00:11:11,880 --> 00:11:14,780
+distribution over what state I will transition to,
+
+238
+00:11:14,890 --> 00:11:18,130
+what state I wind up in, if I take an action a in a
+
+239
+00:11:18,230 --> 00:11:22,230
+state s. So this is probability distribution
+
+240
+00:11:22,330 --> 00:11:25,800
+over states s prime and then I get to when I take
+
+241
+00:11:25,890 --> 00:11:27,900
+an action a in the state s. Now I'll read
+
+242
+00:11:28,000 --> 00:11:30,160
+this in a second.
+
+243
+00:11:32,140 --> 00:11:34,530
+Gamma is the number called the discount
+
+244
+00:11:34,610 --> 00:11:39,180
+factor. Don't worry about this yet. I'll say what
+
+245
+00:11:39,250 --> 00:11:42,180
+this is in a second. And there's usually a
+
+246
+00:11:42,260 --> 00:11:44,670
+number strictly rated, strictly less than 1 and
+
+247
+00:11:44,790 --> 00:11:50,200
+rated equal to zero. And R is our reward
+
+248
+00:11:50,290 --> 00:11:57,470
+function, so the reward function maps from the
+
+249
+00:11:57,580 --> 00:12:00,790
+set of states to the real numbers and can be
+
+250
+00:12:00,870 --> 00:12:05,140
+positive or negative.
+
+251
+00:12:05,220 --> 00:12:09,530
+This is the set of real numbers.
+
+252
+00:12:09,620 --> 00:12:15,090
+So just to make these elements concrete,
+
+253
+00:12:15,190 --> 00:12:18,590
+let me give a specific example of a MDP.
+
+254
+00:12:18,680 --> 00:12:21,780
+Rather than talking about something
+
+255
+00:12:21,860 --> 00:12:22,840
+as complicated as helicopters,
+
+256
+00:12:22,920 --> 00:12:24,650
+I'm going to use a much smaller MDP
+
+257
+00:12:24,750 --> 00:12:28,260
+as the running example
+
+258
+00:12:28,360 --> 00:12:29,620
+for the rest of today's lecture.
+
+259
+00:12:29,720 --> 00:12:32,410
+We'll look at much more complicated MDPs
+
+260
+00:12:32,490 --> 00:12:34,180
+in subsequent lectures.
+
+261
+00:12:34,280 --> 00:12:37,590
+This is an example that I adapted from
+
+262
+00:12:37,680 --> 00:12:39,570
+a textbook by Stuart Russell and Peter Norvig
+
+263
+00:12:39,660 --> 00:12:41,410
+called Artificial Intelligence: A Modern
+
+264
+00:12:41,490 --> 00:12:44,640
+Approach (Second Edition). And this is a small
+
+265
+00:12:44,710 --> 00:12:47,620
+MDP that models a robot navigation task in
+
+266
+00:12:47,690 --> 00:12:50,170
+which if you imagine you have a robot that
+
+267
+00:12:50,250 --> 00:12:54,170
+lives all over the grid world where the
+
+268
+00:12:54,250 --> 00:12:55,990
+shaded-in cell is an obstacle,
+
+269
+00:12:56,080 --> 00:12:57,450
+so the robot can't go over this cell.
+
+270
+00:12:57,530 --> 00:13:06,510
+And so, let's see. I would really like the robot
+
+271
+00:13:06,600 --> 00:13:08,990
+to get to this upper right north cell, let's
+
+272
+00:13:09,040 --> 00:13:11,890
+say, so I'm going to associate that cell with a +1
+
+273
+00:13:11,990 --> 00:13:14,400
+reward, and I'd really like it to avoid
+
+274
+00:13:14,510 --> 00:13:17,520
+that grid cell, so I'm gonna associate that grid
+
+275
+00:13:17,620 --> 00:13:18,820
+cell with -1 reward.
+
+276
+00:13:18,920 --> 00:13:23,240
+So let's actually iterate through the five
+
+277
+00:13:23,310 --> 00:13:25,610
+elements of the MDP and so see what they are
+
+278
+00:13:25,670 --> 00:13:28,460
+for this problem. So the robot can be in any of
+
+279
+00:13:28,540 --> 00:13:33,430
+these eleven positions and so I have an
+
+280
+00:13:33,490 --> 00:13:36,270
+MDP with 11 states, and it's a set capital S
+
+281
+00:13:36,340 --> 00:13:39,270
+corresponding to the 11 places it could be in.
+
+282
+00:13:39,350 --> 00:13:45,310
+And let's say my robot in this set, highly
+
+283
+00:13:45,400 --> 00:13:48,670
+simplified for a logical example, can try to
+
+284
+00:13:48,750 --> 00:13:50,730
+move in each of the compass directions, so in
+
+285
+00:13:50,800 --> 00:13:52,080
+this MDP, I'll have four actions
+
+286
+00:13:52,170 --> 00:13:55,270
+corresponding to moving in each of the North,
+
+287
+00:13:55,320 --> 00:13:56,660
+South, East, West compass directions.
+
+288
+00:13:56,740 --> 00:14:01,840
+And let's see. Let's say that my robot's
+
+289
+00:14:01,910 --> 00:14:03,530
+dynamics are noisy. If you've worked in
+
+290
+00:14:03,590 --> 00:14:05,560
+robotics before, you know that if you command
+
+291
+00:14:05,630 --> 00:14:08,400
+a robot to go North, because of wheel slip or a
+
+292
+00:14:08,490 --> 00:14:13,510
+core design in how you act or whatever, there's
+
+293
+00:14:13,590 --> 00:14:15,450
+a small chance that your robot will be off
+
+294
+00:14:15,530 --> 00:14:17,320
+side here. So you command your robot to move
+
+295
+00:14:17,400 --> 00:14:19,560
+forward one meter, usually it will move
+
+296
+00:14:19,640 --> 00:14:21,310
+forward somewhere between like 95
+
+297
+00:14:21,390 --> 00:14:23,760
+centimeters or to 105 centimeters.
+
+298
+00:14:23,860 --> 00:14:26,440
+So in this highly simplified grid world,
+
+299
+00:14:26,530 --> 00:14:30,460
+I'm going to model the stochastic dynamics of
+
+300
+00:14:30,550 --> 00:14:32,090
+my robot as follows. I'm going to say that if
+
+301
+00:14:32,190 --> 00:14:35,680
+you command the robot to go north, there's
+
+302
+00:14:35,760 --> 00:14:39,530
+actually a 10 percent chance that it will
+
+303
+00:14:39,630 --> 00:14:41,420
+accidentally veer off to the left and a 10 percent
+
+304
+00:14:41,520 --> 00:14:44,360
+chance it will veer off to the right and only a .8
+
+305
+00:14:44,440 --> 00:14:46,280
+chance that it will manage to go in the
+
+306
+00:14:46,370 --> 00:14:48,350
+direction you commanded it. This is sort of a
+
+307
+00:14:48,440 --> 00:14:50,420
+crude model, wheels slipping on the model
+
+308
+00:14:50,520 --> 00:14:53,320
+robot. And if the robot bounces off a wall, then
+
+309
+00:14:53,440 --> 00:14:55,720
+it just stays where it is and nothing happens.
+
+310
+00:14:55,830 --> 00:15:01,600
+So let's see. Concretely, we would write this
+
+311
+00:15:01,680 --> 00:15:04,140
+down using the state transition probability.
+
+312
+00:15:04,230 --> 00:15:07,730
+So for example, let's take the state let me call
+
+313
+00:15:07,830 --> 00:15:09,920
+it a three comma one state and let's say
+
+314
+00:15:10,020 --> 00:15:13,700
+you command the robot to go north. To specify
+
+315
+00:15:13,800 --> 00:15:15,970
+these noisy dynamics of the robot, you
+
+316
+00:15:16,070 --> 00:15:18,590
+would write down state transition probabilities
+
+317
+00:15:18,670 --> 00:15:20,250
+for the robot as follows. You say that if
+
+318
+00:15:20,360 --> 00:15:22,780
+you're in the state three one and you take the
+
+319
+00:15:22,880 --> 00:15:25,590
+action north, your chance of getting to three
+
+320
+00:15:25,670 --> 00:15:30,120
+two is 0.8. If you're in the state of three one and
+
+321
+00:15:30,190 --> 00:15:32,990
+you take the action north, the chance of
+
+322
+00:15:33,080 --> 00:15:38,380
+getting to four 1 is open 1 and so on.
+
+323
+00:15:38,470 --> 00:15:54,840
+And so on, okay?
+
+324
+00:15:54,920 --> 00:15:57,080
+This last line is that if you're in the state three
+
+325
+00:15:57,160 --> 00:16:01,410
+one and you take the action north, the
+
+326
+00:16:01,490 --> 00:16:04,270
+chance of you getting to the state three three is
+
+327
+00:16:04,360 --> 00:16:05,310
+zero. And this is your chance of
+
+328
+00:16:05,400 --> 00:16:07,090
+transitioning in one-time sets of the state three
+
+329
+00:16:07,160 --> 00:16:09,980
+three is equal to zero. So these are the state
+
+330
+00:16:10,070 --> 00:16:12,730
+transition probabilities for my MDP.
+
+331
+00:16:12,840 --> 00:16:18,980
+Let's see. The last two elements of my five
+
+332
+00:16:19,070 --> 00:16:21,560
+tuple are gamma and the reward function.
+
+333
+00:16:21,660 --> 00:16:24,180
+Let's not worry about gamma for now, but my
+
+334
+00:16:24,300 --> 00:16:26,550
+reward function would be as follows, so I
+
+335
+00:16:26,670 --> 00:16:30,630
+really want the robot to get to the fourth I'm
+
+336
+00:16:30,690 --> 00:16:32,590
+using four comma three. It's indexing to the
+
+337
+00:16:32,700 --> 00:16:35,500
+states by using the numbers I wrote at the sides
+
+338
+00:16:35,600 --> 00:16:36,560
+of the grid.
+
+339
+00:16:36,650 --> 00:16:39,040
+So my reward for getting to the fourth three state
+
+340
+00:16:39,140 --> 00:16:43,250
+is +1 and my reward for getting to the
+
+341
+00:16:43,320 --> 00:16:53,410
+fourth 2-state is -1, and as is common practice
+
+342
+00:16:53,500 --> 00:17:06,240
+let's see. As is fairly common practice in
+
+343
+00:17:06,340 --> 00:17:09,640
+navigation tasks, for all other states, the
+
+344
+00:17:09,740 --> 00:17:12,530
+terminal states, I'm going to associate sort of a
+
+345
+00:17:12,620 --> 00:17:14,760
+small negative reward and you can think of this
+
+346
+00:17:14,850 --> 00:17:17,340
+as a small negative reward that charges
+
+347
+00:17:17,400 --> 00:17:20,910
+my robot for his battery consumption or his fuel
+
+348
+00:17:21,090 --> 00:17:22,590
+consumption for one move around. And
+
+349
+00:17:22,670 --> 00:17:27,060
+so a small negative reward like this that charges
+
+350
+00:17:27,150 --> 00:17:28,500
+the robot for running around randomly
+
+351
+00:17:28,580 --> 00:17:31,650
+tends to cause the system to compute solutions
+
+352
+00:17:31,760 --> 00:17:33,630
+that don't waste time and make its way to
+
+353
+00:17:33,710 --> 00:17:36,890
+the goal as quickly as possible because it's
+
+354
+00:17:36,990 --> 00:17:38,230
+charged for fuel consumption.
+
+355
+00:17:38,330 --> 00:17:48,380
+Okay. So, well, let me just mention, there's
+
+356
+00:17:48,470 --> 00:17:51,520
+actually one other complication that I'm
+
+357
+00:17:51,590 --> 00:17:54,190
+gonna sort of not worry about. In this specific
+
+358
+00:17:54,270 --> 00:17:56,000
+example, unless you're going to assume
+
+359
+00:17:56,090 --> 00:17:57,920
+that when the robot gets to the +1 or the -1
+
+360
+00:17:58,030 --> 00:18:01,660
+reward, then the world ends and so you get to
+
+361
+00:18:01,750 --> 00:18:04,220
+the +1 and then that's it. The world ends. There
+
+362
+00:18:04,310 --> 00:18:06,030
+are no more rewards positive or negative
+
+363
+00:18:06,130 --> 00:18:08,980
+after that, right? And so there are various ways
+
+364
+00:18:09,070 --> 00:18:10,720
+to model that. One way to think about that
+
+365
+00:18:10,810 --> 00:18:15,070
+is you may imagine there's actually a 12th state,
+
+366
+00:18:15,170 --> 00:18:16,700
+something that's called the zero cost
+
+367
+00:18:16,800 --> 00:18:18,580
+absorbing state, so that whenever you get to the
+
+368
+00:18:18,670 --> 00:18:21,070
++1 or the -1, you then transition the
+
+369
+00:18:21,150 --> 00:18:24,670
+probability one to this 12th state and you stay in
+
+370
+00:18:24,740 --> 00:18:26,830
+this 12th state forever with no more
+
+371
+00:18:26,940 --> 00:18:29,570
+rewards. I just mention that, that when you get
+
+372
+00:18:29,660 --> 00:18:31,490
+to the +1 or -1, think of the problems in
+
+373
+00:18:31,580 --> 00:18:35,870
+finishing. The reason I do that is because it
+
+374
+00:18:35,970 --> 00:18:38,270
+makes some of the numbers come up nicer
+
+375
+00:18:38,370 --> 00:18:42,050
+and be easier to understand. It's the sort of state
+
+376
+00:18:42,130 --> 00:18:44,760
+where you go in where sometimes you
+
+377
+00:18:44,870 --> 00:18:47,580
+hear the term zero cost absorbing states. It's
+
+378
+00:18:47,660 --> 00:18:49,390
+another state so that when you enter that
+
+379
+00:18:49,460 --> 00:18:51,010
+state, there are no more rewards; you always
+
+380
+00:18:51,110 --> 00:18:52,670
+stay in that state forever.
+
+381
+00:18:59,190 --> 00:19:00,470
+All right. So let's just see how an MDP works
+
+382
+00:19:00,580 --> 00:19:04,580
+and it works as follows. At time 0,
+
+383
+00:19:04,670 --> 00:19:10,090
+your robot starts off at some state as 0 and,
+
+384
+00:19:10,200 --> 00:19:14,310
+depending on where you are, you get to choose
+
+385
+00:19:14,390 --> 00:19:19,370
+an action a0 to decide to go North, South, East,
+
+386
+00:19:19,450 --> 00:19:22,980
+or West. Depending on your choice, you get
+
+387
+00:19:23,060 --> 00:19:26,640
+to some state s1, which is going to be randomly
+
+388
+00:19:26,710 --> 00:19:28,470
+drawn from the state transition
+
+389
+00:19:28,560 --> 00:19:32,230
+distribution index by state 0 and the action you
+
+390
+00:19:32,310 --> 00:19:33,630
+just chose. So the next state you get to
+
+391
+00:19:33,720 --> 00:19:36,580
+depends well, it depends in the probabilistic
+
+392
+00:19:36,650 --> 00:19:39,990
+way on the previous state and the action
+
+393
+00:19:40,090 --> 00:19:41,740
+you just took. After you get to the state s1, you
+
+394
+00:19:41,830 --> 00:19:47,430
+get to choose a new action a1, and then as
+
+395
+00:19:47,510 --> 00:19:51,260
+a result of that, you get to some new state s2
+
+396
+00:19:51,360 --> 00:19:57,190
+sort of randomly from the state transition
+
+397
+00:19:57,260 --> 00:20:01,430
+distributions and so on. Okay?
+
+398
+00:20:20,430 --> 00:20:22,960
+So after your robot does this for a while, it will
+
+399
+00:20:23,050 --> 00:20:26,470
+have visited some sequence of states s0,
+
+400
+00:20:26,550 --> 00:20:34,170
+s1, s2, and so on, and to evaluate how well we
+
+401
+00:20:34,260 --> 00:20:39,270
+did, we'll take the reward function and
+
+402
+00:20:39,370 --> 00:20:47,310
+we'll apply it to the sequence of states and add
+
+403
+00:20:47,390 --> 00:20:49,850
+up the sum of rewards that your robot
+
+404
+00:20:49,950 --> 00:20:52,300
+obtained on the sequence of states it visited.
+
+405
+00:20:52,370 --> 00:20:55,880
+State s0 is your action, you get to s1, take an
+
+406
+00:20:55,960 --> 00:20:58,270
+action, you get to s2 and so on. So you keep the
+
+407
+00:20:58,370 --> 00:21:00,190
+reward function in the pile to every state
+
+408
+00:21:00,290 --> 00:21:02,570
+in the sequence and this is the sum of rewards
+
+409
+00:21:02,650 --> 00:21:04,910
+you obtain. Let me show you just one more
+
+410
+00:21:05,000 --> 00:21:07,540
+bit. You can multiply this by gamma, gamma
+
+411
+00:21:07,650 --> 00:21:09,960
+squared, and the next term will be
+
+412
+00:21:10,060 --> 00:21:14,030
+multiplied by gamma cubed and so on. And this
+
+413
+00:21:14,120 --> 00:21:20,510
+is called I'm going to call this the Total
+
+414
+00:21:20,620 --> 00:21:27,220
+Payoff for the sequence of states s0, s1, s2, and
+
+415
+00:21:27,310 --> 00:21:32,620
+so on that your robot visited. And so let
+
+416
+00:21:32,690 --> 00:21:33,590
+me also say what gamma is. See the quality
+
+417
+00:21:33,680 --> 00:21:37,170
+gamma is a number that's usually less than
+
+418
+00:21:37,260 --> 00:21:38,860
+one. It usually you think of gamma as a number
+
+419
+00:21:38,960 --> 00:21:43,650
+like open 99. So the effect of gamma is
+
+420
+00:21:43,770 --> 00:21:47,660
+that the reward you obtain at time 1 is given a
+
+421
+00:21:47,740 --> 00:21:49,740
+slightly smaller weight than the reward you
+
+422
+00:21:49,820 --> 00:21:52,380
+get at time zero. And then the reward you get at
+
+423
+00:21:52,490 --> 00:21:54,460
+time 2 is even a little bit smaller than the
+
+424
+00:21:54,560 --> 00:21:58,810
+reward you get at a previous time set and so on.
+
+425
+00:21:58,900 --> 00:22:07,260
+Let's see. And so if this is an economic
+
+426
+00:22:07,360 --> 00:22:11,310
+application, if you're in like stock market
+
+427
+00:22:11,400 --> 00:22:13,170
+trading with Gaussian algorithm or whatever,
+
+428
+00:22:13,260 --> 00:22:15,330
+this is an economic application, then your
+
+429
+00:22:15,410 --> 00:22:20,160
+rewards are dollars earned and lost. Then to
+
+430
+00:22:20,250 --> 00:22:22,290
+this kind of factor, gamma has a very natural
+
+431
+00:22:22,380 --> 00:22:25,260
+interpretation as the time value of money
+
+432
+00:22:25,350 --> 00:22:28,170
+because like a dollar today is worth slightly less
+
+433
+00:22:28,240 --> 00:22:29,420
+than excuse me, the dollar today is
+
+434
+00:22:29,500 --> 00:22:31,070
+worth slightly more than the dollar tomorrow
+
+435
+00:22:31,180 --> 00:22:34,050
+because the dollar in the bank can earn a
+
+436
+00:22:34,130 --> 00:22:37,040
+little bit of interest. And conversely, having to
+
+437
+00:22:37,130 --> 00:22:39,730
+pay out a dollar tomorrow is better than
+
+438
+00:22:39,820 --> 00:22:43,440
+having to pay out a dollar today. So in other
+
+439
+00:22:43,540 --> 00:22:46,160
+words, the effect of this compacted gamma
+
+440
+00:22:46,270 --> 00:22:50,530
+tends to weight wins or losses in the future less
+
+441
+00:22:50,630 --> 00:22:53,060
+than wins or losses in the immediate future
+
+442
+00:22:53,160 --> 00:22:55,710
+tends to weight wins and losses in the distant
+
+443
+00:22:55,810 --> 00:22:58,350
+future less than wins and losses in
+
+444
+00:22:58,450 --> 00:23:05,010
+the immediate. And so the girth of the
+
+445
+00:23:05,110 --> 00:23:07,980
+reinforcement learning algorithm is to choose
+
+446
+00:23:08,070 --> 00:23:16,550
+actions over time, to choose actions a0, a1 and
+
+447
+00:23:16,630 --> 00:23:23,150
+so on to try to maximize the expected
+
+448
+00:23:23,250 --> 00:23:39,260
+value of this total payoff. And more concretely,
+
+449
+00:23:39,360 --> 00:23:44,370
+what we will try to do is have our
+
+450
+00:23:44,450 --> 00:23:46,900
+reinforcement learning algorithms compute a
+
+451
+00:23:46,990 --> 00:23:54,780
+policy, which I denote by the lower case p,
+
+452
+00:23:54,880 --> 00:24:01,610
+which and all a policy is, a definition of a
+
+453
+00:24:01,690 --> 00:24:04,150
+policy is a function mapping from the states
+
+454
+00:24:04,250 --> 00:24:06,860
+of the actions and so it goes to kind of a policy
+
+455
+00:24:06,950 --> 00:24:10,700
+that tells us so for every state, what action
+
+456
+00:24:10,800 --> 00:24:16,170
+it recommends we take in that state. So
+
+457
+00:24:16,260 --> 00:24:26,770
+concretely, here is an example of a policy. And
+
+458
+00:24:26,860 --> 00:24:29,280
+this actually turns out to be the optimal policy
+
+459
+00:24:29,370 --> 00:24:34,790
+for the MDP and I'll tell you later how I
+
+460
+00:24:34,900 --> 00:24:51,720
+computed this. And so this is an example of a
+
+461
+00:24:51,820 --> 00:24:54,260
+policy. A policy is just a mapping from the
+
+462
+00:24:54,350 --> 00:24:56,790
+states to the actions, and so our policy tells me
+
+463
+00:24:56,890 --> 00:24:58,910
+when you're in this state, you should take
+
+464
+00:24:59,000 --> 00:25:03,520
+the left action and so on. And this particular
+
+465
+00:25:03,600 --> 00:25:06,360
+policy I drew out happens to be after a policy
+
+466
+00:25:06,440 --> 00:25:08,980
+in the sense that when you execute this policy,
+
+467
+00:25:09,080 --> 00:25:11,220
+this will maximize your expected value of
+
+468
+00:25:11,300 --> 00:25:13,810
+the total payoff. This will maximize your
+
+469
+00:25:13,910 --> 00:25:16,050
+expected total sum of the counter rewards.
+
+470
+00:25:16,150 --> 00:25:20,470
+Student:if the policy be multitle
+
+471
+00:25:20,570 --> 00:25:22,780
+Yeah, so can policy be over multiple states, can
+
+472
+00:25:22,890 --> 00:25:25,680
+it be over so can it be a function
+
+473
+00:25:25,770 --> 00:25:26,710
+of not only current state,
+
+474
+00:25:26,780 --> 00:25:28,120
+but the state I was in previously as well.
+
+475
+00:25:28,210 --> 00:25:30,570
+So the answer is yes. Sometimes people call
+
+476
+00:25:30,650 --> 00:25:33,160
+them strategies instead of policies, but usually
+
+477
+00:25:33,250 --> 00:25:35,490
+you're going to use policies. It actually turns
+
+478
+00:25:35,570 --> 00:25:39,710
+out that for an MDP, you're allowing
+
+479
+00:25:39,810 --> 00:25:43,450
+policies that depend on my previous states, will
+
+480
+00:25:43,530 --> 00:25:45,490
+not allow you to do any better. At least in
+
+481
+00:25:45,550 --> 00:25:47,750
+the limited context we're talking about. So in
+
+482
+00:25:47,850 --> 00:25:50,180
+other words, there exists a policy that only
+
+483
+00:25:50,250 --> 00:25:52,250
+ever lets the current state ever maximize my
+
+484
+00:25:52,330 --> 00:25:54,810
+expected total payoff. And this statement
+
+485
+00:25:54,890 --> 00:25:56,780
+won't be true for some of the richer models we
+
+486
+00:25:56,890 --> 00:25:58,820
+talk about later, but for now, all we need
+
+487
+00:25:58,920 --> 00:26:00,820
+to do is this suffices to just look at the current
+
+488
+00:26:00,900 --> 00:26:01,690
+states and actions.
+
+489
+00:26:01,780 --> 00:26:06,940
+And sometimes they use the term executable
+
+490
+00:26:07,020 --> 00:26:08,950
+policy to mean that I'm going to take
+
+491
+00:26:09,030 --> 00:26:10,690
+actions according to the policies, so I'm going
+
+492
+00:26:10,770 --> 00:26:12,990
+to execute the policy p. That means I'm
+
+493
+00:26:13,070 --> 00:26:16,350
+going to whenever some state s, I'm going to
+
+494
+00:26:16,460 --> 00:26:21,990
+take the action that the policy p outputs
+
+495
+00:26:22,090 --> 00:26:23,500
+when given the current state.
+
+496
+00:26:23,620 --> 00:26:29,780
+All right. So it turns out that one of the things
+
+497
+00:26:29,860 --> 00:26:34,050
+MDPs are very good at is all right, let's
+
+498
+00:26:34,130 --> 00:26:38,330
+look at our states. Say the optimal policy in this
+
+499
+00:26:38,430 --> 00:26:41,970
+state is to go left. There's actually this
+
+500
+00:26:42,050 --> 00:26:43,810
+probably wasn't very obvious. Why is it that
+
+501
+00:26:43,910 --> 00:26:46,760
+you have actions that go left take a longer
+
+502
+00:26:46,850 --> 00:26:48,610
+path there? The alternative would be to go north
+
+503
+00:26:48,690 --> 00:26:50,480
+and try to find a much shorter path to the
+
+504
+00:26:50,560 --> 00:26:53,520
++1 state, but when you're in this state over here,
+
+505
+00:26:53,610 --> 00:26:58,840
+this, I guess, three comma 2 state, when
+
+506
+00:26:58,910 --> 00:27:01,080
+in that state over there, when you go north,
+
+507
+00:27:01,150 --> 00:27:02,950
+there's a .1 chance you accidentally veer off
+
+508
+00:27:03,030 --> 00:27:06,070
+to the right to the -1 state. And so there will be
+
+509
+00:27:06,160 --> 00:27:07,800
+subtle tradeoffs. Is it better to take the
+
+510
+00:27:07,890 --> 00:27:10,210
+longer, safer route, but the discount factor tends
+
+511
+00:27:10,320 --> 00:27:13,480
+to discourage that and the .02 charge per
+
+512
+00:27:13,580 --> 00:27:15,800
+step will tend to discourage that. Or is it better
+
+513
+00:27:15,880 --> 00:27:17,570
+to take a shorter, riskier route.
+
+514
+00:27:17,680 --> 00:27:21,850
+And so it wasn't obvious to me until
+
+515
+00:27:21,930 --> 00:27:25,930
+I computed it, but just to see also action
+
+516
+00:27:26,010 --> 00:27:26,960
+and this is one of those things
+
+517
+00:27:27,030 --> 00:27:28,160
+that MDP machinery is very good at making,
+
+518
+00:27:28,250 --> 00:27:30,000
+to make subtle tradeoffs to make these optimal.
+
+519
+00:27:30,090 --> 00:27:36,790
+So what I want to do next is make a few more
+
+520
+00:27:36,900 --> 00:27:38,870
+definitions and that will lead us to our first
+
+521
+00:27:38,970 --> 00:27:41,730
+algorithm for computing optimal policies and
+
+522
+00:27:41,810 --> 00:27:43,710
+MDPs, so finding optimal ways to act on
+
+523
+00:27:43,780 --> 00:27:46,300
+MDPs. Before I move on, let's check for any
+
+524
+00:27:46,390 --> 00:27:48,390
+questions about the MDP formalism.
+
+525
+00:27:58,710 --> 00:27:59,660
+Okay, cool.
+
+526
+00:27:59,760 --> 00:28:04,050
+So let's now talk about how we actually go
+
+527
+00:28:04,150 --> 00:28:06,580
+about computing optimal policy like that and
+
+528
+00:28:06,700 --> 00:28:09,200
+to get there, I need to define a few things. So
+
+529
+00:28:09,300 --> 00:28:21,420
+just as a preview of the next moves I'm
+
+530
+00:28:21,520 --> 00:28:24,310
+gonna take, I'm going to define something
+
+531
+00:28:24,390 --> 00:28:28,050
+called Vp and then I'm going to define V* and
+
+532
+00:28:28,160 --> 00:28:32,640
+then I'm going to define p*. And it will be a
+
+533
+00:28:32,720 --> 00:28:35,600
+consequence of my definitions that p* is the
+
+534
+00:28:35,690 --> 00:28:37,230
+optimal policy.
+
+535
+00:28:37,340 --> 00:28:39,720
+And so I'm going to say as I define these
+
+536
+00:28:39,810 --> 00:28:42,420
+things, keep in mind what is a definition and
+
+537
+00:28:42,530 --> 00:28:44,960
+what is a consequence of a definition.
+
+538
+00:28:45,080 --> 00:28:48,430
+In particular, I won't be defining p* to be the
+
+539
+00:28:48,540 --> 00:28:50,920
+optimal policy, but I'll define p* by a different
+
+540
+00:28:51,010 --> 00:28:53,030
+equation and it will be a consequence of
+
+541
+00:28:53,120 --> 00:28:54,620
+my definition that p* is the optimal policy.
+
+542
+00:28:54,710 --> 00:29:00,500
+The first one I want to define is Vp, so for any
+
+543
+00:29:00,590 --> 00:29:06,910
+given policy p, for any policy p, I'm going
+
+544
+00:29:07,020 --> 00:29:15,020
+to define the value function Vp and sometimes
+
+545
+00:29:15,120 --> 00:29:18,580
+I call this the value function for p.
+
+546
+00:29:18,690 --> 00:29:20,710
+So I want to find the value function for Vp,
+
+547
+00:29:20,820 --> 00:29:25,240
+the function mapping from the state's known
+
+548
+00:29:25,320 --> 00:29:31,650
+numbers, such that Vp(s) is the expected payoff
+
+549
+00:29:31,760 --> 00:29:41,950
+is the expected total payoff if you
+
+550
+00:29:42,040 --> 00:29:53,560
+started in the state s and execute p. So in other
+
+551
+00:29:53,680 --> 00:29:58,430
+words, Vp(s) is equal to the expected
+
+552
+00:29:58,490 --> 00:30:01,230
+value of this here, sum of this counted rewards,
+
+553
+00:30:01,340 --> 00:30:07,070
+the total payoff, given that you execute
+
+554
+00:30:07,170 --> 00:30:12,120
+the policy p and the first state in the sequence is
+
+555
+00:30:12,220 --> 00:30:14,510
+zero, is that state s.
+
+556
+00:30:14,630 --> 00:30:17,650
+I say this is slightly sloppy probabilistic
+
+557
+00:30:17,770 --> 00:30:20,560
+notation, so p isn't really in around the variable,
+
+558
+00:30:20,640 --> 00:30:22,050
+so maybe I shouldn't actually be conditioning
+
+559
+00:30:22,140 --> 00:30:26,530
+on p. This is sort of moderately standard
+
+560
+00:30:26,620 --> 00:30:28,250
+notation horror, so we use the steady sloppy
+
+561
+00:30:28,340 --> 00:30:29,450
+policy notation.
+
+562
+00:30:32,040 --> 00:31:11,980
+So as a concrete example, here's a policy
+
+563
+00:31:12,060 --> 00:31:14,850
+and this is not a great policy.
+
+564
+00:31:14,930 --> 00:31:16,210
+This is just some policy p.
+
+565
+00:31:16,300 --> 00:31:17,870
+It's actually a pretty bad policy that
+
+566
+00:31:17,950 --> 00:31:19,810
+for many states, seems to be heading
+
+567
+00:31:19,890 --> 00:31:21,090
+to the 1 rather than the +1.
+
+568
+00:31:24,910 --> 00:31:27,530
+And so the value function is
+
+569
+00:31:27,610 --> 00:31:29,160
+the function mapping from the states of
+
+570
+00:31:29,240 --> 00:31:33,380
+known numbers, so it associates each state with
+
+571
+00:31:33,450 --> 00:31:37,800
+a number and in this case, this is Vp. So
+
+572
+00:31:58,930 --> 00:32:01,730
+that's the value function for this policy.
+
+573
+00:32:01,830 --> 00:32:05,690
+And so you notice, for instance, that for all the
+
+574
+00:32:05,770 --> 00:32:09,990
+states in the bottom two rows, I guess, this
+
+575
+00:32:10,060 --> 00:32:12,590
+is a really bad policy that has a high chance to
+
+576
+00:32:12,680 --> 00:32:14,970
+take you to the -1 state and so all the
+
+577
+00:32:15,080 --> 00:32:19,850
+values for those states in the bottom two rows
+
+578
+00:32:19,940 --> 00:32:22,770
+are negative. So in this expectation, your
+
+579
+00:32:22,890 --> 00:32:25,470
+total payoff would be negative. And if you
+
+580
+00:32:25,560 --> 00:32:28,050
+execute this rather bad policy, you start in any
+
+581
+00:32:28,140 --> 00:32:30,190
+of the states in the bottom row, and if you start
+
+582
+00:32:30,270 --> 00:32:32,480
+in the top row, the total payoff would be
+
+583
+00:32:32,580 --> 00:32:34,980
+positive. This is not a terribly bad policy if it
+
+584
+00:32:35,090 --> 00:32:36,890
+stays in the topmost row.
+
+585
+00:32:37,000 --> 00:32:43,730
+And so given any policy, you can write down
+
+586
+00:32:43,830 --> 00:32:53,180
+a value function for that policy. If some of
+
+587
+00:32:53,280 --> 00:32:54,770
+you are still writing, I'll leave that up for a
+
+588
+00:32:54,870 --> 00:32:56,590
+second while I clean another couple of boards.
+
+589
+00:32:56,700 --> 00:33:19,400
+Okay. So the circumstances of the following,
+
+590
+00:33:19,520 --> 00:33:26,030
+Vp(s) is equal to well, the expected value
+
+591
+00:33:26,140 --> 00:33:30,210
+of R if s is zero, which is the reward you get
+
+592
+00:33:30,310 --> 00:33:33,830
+right away for just being in the initial state s,
+
+593
+00:33:33,950 --> 00:33:37,200
+plus let me write this like this I'm going to
+
+594
+00:33:37,310 --> 00:33:41,370
+write gamma and then R if s1 plus
+
+595
+00:33:41,490 --> 00:33:45,610
+gamma, R of s2 plus dot, dot, dot,
+
+596
+00:33:45,710 --> 00:33:59,030
+what condition of p. Okay?
+
+597
+00:34:07,600 --> 00:34:09,670
+So just de-parenthesize these.
+
+598
+00:34:09,780 --> 00:34:13,100
+This first term here, this is sometimes called the
+
+599
+00:34:13,200 --> 00:34:15,070
+immediate reward. This is the reward
+
+600
+00:34:15,170 --> 00:34:17,580
+you get right away just for starting in the state
+
+601
+00:34:17,680 --> 00:34:20,230
+at zero. And then the second term here,
+
+602
+00:34:20,320 --> 00:34:22,280
+these are sometimes called the future reward,
+
+603
+00:34:22,380 --> 00:34:24,790
+which is the rewards you get sort of one
+
+604
+00:34:24,880 --> 00:34:29,340
+time step into the future and what I want you to
+
+605
+00:34:29,470 --> 00:34:32,280
+note is what this term is. That term there
+
+606
+00:34:32,390 --> 00:34:41,290
+is really just the value function for the state s1
+
+607
+00:34:41,390 --> 00:34:43,170
+because this term here in parentheses, this
+
+608
+00:34:43,250 --> 00:34:44,730
+is really suppose I was to start in the state s1
+
+609
+00:34:44,810 --> 00:34:47,980
+or this is the sum of the counter rewards I
+
+610
+00:34:48,080 --> 00:34:50,250
+would get if I were to start in the state s1. So
+
+611
+00:34:50,330 --> 00:34:52,290
+my immediate reward for starting in s1
+
+612
+00:34:52,360 --> 00:34:54,710
+would be R (s1), then plus gamma times
+
+613
+00:34:54,810 --> 00:34:56,800
+additional future rewards in the future.
+
+614
+00:34:56,920 --> 00:35:04,850
+And so it turns out you can write VRp
+
+615
+00:35:04,930 --> 00:35:13,260
+recursively in terms of itself. And presume that
+
+616
+00:35:13,350 --> 00:35:17,090
+VRp is equal to the immediate reward plus
+
+617
+00:35:17,180 --> 00:35:24,370
+gamma times actually, let me write it
+
+618
+00:35:24,480 --> 00:35:27,250
+would just be mapped as notation s0 gets
+
+619
+00:35:27,360 --> 00:35:29,750
+mapped to s and s1 gets mapped to s prime
+
+620
+00:35:29,850 --> 00:35:31,390
+and it just makes it all right.
+
+621
+00:35:31,500 --> 00:35:35,790
+So value function for p to stay zero is the
+
+622
+00:35:35,880 --> 00:35:38,110
+immediate reward plus this current factor
+
+623
+00:35:38,220 --> 00:35:43,860
+gamma times and now you have Vp of s1.
+
+624
+00:35:43,950 --> 00:35:47,370
+Right here is Vp of s prime. But s prime is a
+
+625
+00:35:47,490 --> 00:35:50,870
+random variable because the next state you get
+
+626
+00:35:50,980 --> 00:35:53,890
+to after one time set is random and so in
+
+627
+00:35:53,990 --> 00:35:57,150
+particular, taking expectations, this is the sum
+
+628
+00:35:57,260 --> 00:36:04,920
+of all states s prime of your probability of
+
+629
+00:36:05,010 --> 00:36:19,750
+getting to that state times that. And just to be
+
+630
+00:36:19,860 --> 00:36:22,260
+clear on this notation, right, this is P
+
+631
+00:36:22,350 --> 00:36:25,410
+subscript (s, a) of s prime is the chance of you
+
+632
+00:36:25,510 --> 00:36:27,210
+getting to the state s prime when you take
+
+633
+00:36:27,310 --> 00:36:28,540
+the action a in state s.
+
+634
+00:36:28,660 --> 00:36:31,730
+And in this case, we're executing the policy p
+
+635
+00:36:31,850 --> 00:36:38,210
+and so this is P(s) p(s) because the action
+
+636
+00:36:38,290 --> 00:36:41,040
+we're going to take in state s is the action p
+
+637
+00:36:41,140 --> 00:36:46,710
+reverse. So this is in other words, this Ps
+
+638
+00:36:46,810 --> 00:36:51,750
+p(s), this distribution overstates s prime that
+
+639
+00:36:51,850 --> 00:36:54,130
+you would transitioned to, the one time step,
+
+640
+00:36:54,200 --> 00:36:58,470
+when you take the action p(s) in the state s.
+
+641
+00:36:58,570 --> 00:37:04,990
+So just to give this a name, this equation is
+
+642
+00:37:05,080 --> 00:37:12,520
+called Bellman's equations and is one of the
+
+643
+00:37:12,620 --> 00:37:15,320
+central equations that we'll use over and over
+
+644
+00:37:15,440 --> 00:37:25,370
+when we solve MDPs. Raise your hand if
+
+645
+00:37:25,450 --> 00:37:30,180
+this equation makes sense. Some of you didn't
+
+646
+00:37:30,730 --> 00:37:33,090
+raise your hands. Do you have questions?
+
+647
+00:37:33,190 --> 00:37:45,610
+So let's try to say this again. Actually, which of
+
+648
+00:37:45,690 --> 00:37:47,400
+the symbols don't make sense for those
+
+649
+00:37:47,480 --> 00:37:50,920
+of you that didn't raise your hands? You're
+
+650
+00:37:51,000 --> 00:37:53,070
+regretting not raising your hand now, aren't
+
+651
+00:37:53,150 --> 00:37:57,680
+you? Let's try saying this one more time and
+
+652
+00:37:57,780 --> 00:38:03,550
+maybe it will come clear later. So what is it?
+
+653
+00:38:03,670 --> 00:38:07,120
+So this equation is sort of like my value at the
+
+654
+00:38:07,200 --> 00:38:12,720
+current state is equal to R(s) plus gamma
+
+655
+00:38:12,800 --> 00:38:15,980
+times and depending on what state I get to
+
+656
+00:38:16,060 --> 00:38:21,420
+next, my expected total payoff from the state
+
+657
+00:38:21,520 --> 00:38:26,660
+s prime is Vp of s prime, whereas prime is the
+
+658
+00:38:26,750 --> 00:38:28,670
+state I get to after one time step. So
+
+659
+00:38:28,760 --> 00:38:31,720
+incurring one state as I'm going to take some
+
+660
+00:38:31,780 --> 00:38:33,700
+action and I get to some state that's prime
+
+661
+00:38:33,800 --> 00:38:36,310
+and this equation is sort of my expected total
+
+662
+00:38:36,390 --> 00:38:37,360
+payoff for executing the policy p
+
+663
+00:38:37,460 --> 00:38:38,670
+from the state s.
+
+664
+00:38:38,770 --> 00:38:43,520
+But s prime is random because the next state
+
+665
+00:38:43,600 --> 00:38:47,660
+I get to is random and well, we'll use the
+
+666
+00:38:47,740 --> 00:38:49,660
+next board. The chance I get to some specific
+
+667
+00:38:49,760 --> 00:38:53,690
+state as prime is given by we have a P
+
+668
+00:38:53,770 --> 00:38:58,100
+subscript (s, a), s prime, where because these
+
+669
+00:38:58,170 --> 00:38:59,270
+are just [inaudible] and probabilities
+
+670
+00:38:59,370 --> 00:39:04,660
+where the action a I chose is given by p(s)
+
+671
+00:39:04,740 --> 00:39:07,770
+because I'm executing the action a in the
+
+672
+00:39:07,880 --> 00:39:11,670
+current state s. And so when you plug this back
+
+673
+00:39:11,760 --> 00:39:15,530
+in, you get P subscript s R(s) as prime,
+
+674
+00:39:15,630 --> 00:39:17,960
+just gives me the distribution over the states in
+
+675
+00:39:18,040 --> 00:39:19,810
+making the transition to it in one step, and
+
+676
+00:39:19,900 --> 00:39:22,260
+hence, that just needs Bellman's equations.
+
+677
+00:39:22,350 --> 00:39:30,320
+So since Bellman's equations gives you a way
+
+678
+00:39:30,400 --> 00:39:36,350
+to solve for the value function for policy in
+
+679
+00:39:36,450 --> 00:39:39,030
+closed form. So again, the problem is suppose
+
+680
+00:39:39,120 --> 00:39:41,350
+I'm given a fixed policy. How do I solve
+
+681
+00:39:41,450 --> 00:39:46,890
+for Vp? How do I solve for the so given fixed
+
+682
+00:39:46,980 --> 00:39:49,410
+policy, how do I solve for this equation?
+
+683
+00:39:49,560 --> 00:39:52,290
+It turns out, Bellman's equation gives you
+
+684
+00:39:52,370 --> 00:39:54,880
+a way of doing this, so coming back to this
+
+685
+00:39:54,980 --> 00:39:59,160
+board, it turns out to be sort of coming back
+
+686
+00:39:59,260 --> 00:40:06,290
+to the previous boards, around could you
+
+687
+00:40:06,390 --> 00:40:07,890
+move the camera to point to this board? Okay,
+
+688
+00:40:07,980 --> 00:40:11,270
+cool. So going back to this board, we work
+
+689
+00:40:11,360 --> 00:40:18,840
+the problem's equation, this equation, right,
+
+690
+00:40:18,940 --> 00:40:20,720
+let's say I have a fixed policy p and I want to
+
+691
+00:40:20,810 --> 00:40:22,360
+solve for the value function for the policy p.
+
+692
+00:40:22,450 --> 00:40:27,070
+Then what this equation is just imposes a set
+
+693
+00:40:27,160 --> 00:40:29,720
+of linear constraints on the value function. So in
+
+694
+00:40:29,820 --> 00:40:31,900
+particular, this says that the value for a
+
+695
+00:40:31,980 --> 00:40:34,800
+given state is equal to some constant, and then
+
+696
+00:40:34,890 --> 00:40:37,860
+some linear function of other values.
+
+697
+00:40:37,960 --> 00:40:41,990
+And so you can write down one such equation
+
+698
+00:40:42,090 --> 00:40:45,120
+for every state in your MDP and this
+
+699
+00:40:45,210 --> 00:40:48,330
+imposes a set of linear constraints on what the
+
+700
+00:40:48,430 --> 00:40:50,960
+value function could be. And then it turns
+
+701
+00:40:51,060 --> 00:40:54,080
+out that by solving the resulting linear system
+
+702
+00:40:54,190 --> 00:40:55,370
+equations, you can then solve for the value
+
+703
+00:40:55,470 --> 00:40:58,740
+function Vp(s). There's a high level description.
+
+704
+00:40:58,830 --> 00:41:00,430
+Let me now make this concrete.
+
+705
+00:41:00,540 --> 00:41:14,070
+So specifically, let me take the three one state,
+
+706
+00:41:14,170 --> 00:41:18,680
+that state we're using as an example. So
+
+707
+00:41:18,790 --> 00:41:21,550
+Bellman's equation tells me that the value for p
+
+708
+00:41:21,650 --> 00:41:25,970
+for the three one state oh, and let's say I
+
+709
+00:41:26,050 --> 00:41:28,590
+have a specific policy so that p are three one
+
+710
+00:41:28,680 --> 00:41:33,150
+let's say it takes a North action, which is
+
+711
+00:41:33,230 --> 00:41:35,620
+not the ultimate action. For this policy,
+
+712
+00:41:35,740 --> 00:41:39,060
+Bellman's equation tells me that Vp of three one
+
+713
+00:41:39,190 --> 00:41:44,750
+is equal to R of the state three one, and then plus
+
+714
+00:41:44,860 --> 00:41:50,800
+gamma times our trans 0.8 I get to the three
+
+715
+00:41:50,900 --> 00:41:58,870
+two state, which translates .1 and gets to the
+
+716
+00:41:58,960 --> 00:42:11,770
+four one state and which times 0.1,
+
+717
+00:42:11,860 --> 00:42:16,330
+I will get to the two one state.
+
+718
+00:42:16,430 --> 00:42:18,550
+And so what I've done is I've written down
+
+719
+00:42:18,650 --> 00:42:20,470
+Bellman's equations for the three one state. I
+
+720
+00:42:20,560 --> 00:42:23,400
+hope you know what it means. It's in my low
+
+721
+00:42:23,500 --> 00:42:27,160
+MDP; I'm indexing the states 1, 2, 3, 4, so
+
+722
+00:42:27,270 --> 00:42:31,250
+this state over there where I drew the circle is
+
+723
+00:42:31,350 --> 00:42:33,360
+the three one state.
+
+724
+00:42:33,440 --> 00:42:37,770
+So for every one of my 11 states in the MDP,
+
+725
+00:42:37,880 --> 00:42:42,050
+I can write down an equation like this. This
+
+726
+00:42:42,130 --> 00:42:44,760
+stands just for one state. And you notice that if
+
+727
+00:42:44,840 --> 00:42:49,110
+I'm trying to solve for the values, so these
+
+728
+00:42:49,200 --> 00:42:54,810
+are the unknowns, then I will have 11 variables
+
+729
+00:42:54,900 --> 00:42:57,770
+because I'm trying to solve for the value
+
+730
+00:42:57,870 --> 00:42:59,810
+function for each of my 11 states, and I will
+
+731
+00:42:59,930 --> 00:43:03,280
+have 11 constraints because I can write down
+
+732
+00:43:03,370 --> 00:43:07,150
+11 equations of this form, one such equation for
+
+733
+00:43:07,250 --> 00:43:08,940
+each one of my states.
+
+734
+00:43:09,040 --> 00:43:11,120
+So if you do this, if you write down this sort of
+
+735
+00:43:11,210 --> 00:43:12,650
+equation for every one of your states and
+
+736
+00:43:12,740 --> 00:43:16,010
+then do these, you have your set of linear
+
+737
+00:43:16,110 --> 00:43:18,950
+equations with 11 unknowns and 11 variables
+
+738
+00:43:19,050 --> 00:43:22,130
+excuse me, 11 constraints or 11 equations with
+
+739
+00:43:22,220 --> 00:43:24,700
+11 unknowns, and so you can solve that
+
+740
+00:43:24,830 --> 00:43:28,850
+linear system of equations to get an explicit
+
+741
+00:43:28,930 --> 00:43:30,430
+solution for Vp.
+
+742
+00:43:30,550 --> 00:43:34,040
+So if you have n states, you
+
+743
+00:43:34,150 --> 00:43:36,490
+end up with n equations and n unknowns and
+
+744
+00:43:36,570 --> 00:43:38,890
+solve that to get the values for all of your states.
+
+745
+00:43:38,980 --> 00:43:50,010
+Okay, cool. So actually, could you
+
+746
+00:43:50,090 --> 00:43:53,210
+just raise your hand if this made sense? Cool.
+
+747
+00:43:53,310 --> 00:43:59,950
+All right, so that was the value function for
+
+748
+00:44:00,040 --> 00:44:02,850
+specific policy and how to solve for it. Let me
+
+749
+00:44:02,940 --> 00:44:14,070
+define one more thing. So the optimal value
+
+750
+00:44:14,220 --> 00:44:21,290
+function when defined as V*(s) equals max
+
+751
+00:44:21,370 --> 00:44:25,800
+over all policies p of Vp(s). So in other words,
+
+752
+00:44:25,900 --> 00:44:28,210
+for any given state s,
+
+753
+00:44:28,290 --> 00:44:29,470
+the optimal value
+
+754
+00:44:29,580 --> 00:44:32,030
+function says suppose I take a max over all
+
+755
+00:44:32,120 --> 00:44:34,660
+possible policies p, what is the best possible
+
+756
+00:44:34,760 --> 00:44:39,030
+expected some of the counter rewards that
+
+757
+00:44:39,120 --> 00:44:40,810
+I can expect to get?
+
+758
+00:44:40,890 --> 00:44:41,720
+Or what is my optimal
+
+759
+00:44:41,800 --> 00:44:44,240
+expected total payoff for starting at state s,
+
+760
+00:44:44,330 --> 00:44:46,010
+so taking a max over all
+
+761
+00:44:46,110 --> 00:44:48,390
+possible control policies p.
+
+762
+00:44:50,610 --> 00:44:52,890
+So it turns out that there's a version of
+
+763
+00:44:52,970 --> 00:44:56,470
+Bellman's equations for V* as well and so this
+
+764
+00:44:56,560 --> 00:45:02,250
+is also called Bellman's equations for V* rather
+
+765
+00:45:02,370 --> 00:45:04,530
+than for Vp and I'll just write that down.
+
+766
+00:45:04,640 --> 00:45:09,040
+So this says that the optimal payoff you can
+
+767
+00:45:09,130 --> 00:45:16,460
+get from the state s is equal to
+
+768
+00:45:16,530 --> 00:45:18,530
+so I'll first write some multi here, so let's see. Just for
+
+769
+00:45:18,600 --> 00:45:20,570
+starting off in the state s, you're going to
+
+770
+00:45:20,670 --> 00:45:25,370
+get your immediate R(s) and then depending on
+
+771
+00:45:25,470 --> 00:45:29,680
+what action a you take your expected
+
+772
+00:45:29,760 --> 00:45:36,720
+total payoff will be given by this. So if I take an
+
+773
+00:45:36,840 --> 00:45:39,950
+action a in some state s, then with
+
+774
+00:45:40,030 --> 00:45:43,510
+probability given by P subscript (s; a) of s
+
+775
+00:45:43,590 --> 00:45:45,080
+prime, by this probability our transition of state
+
+776
+00:45:45,170 --> 00:45:47,560
+s prime, and when we get to the state s prime,
+
+777
+00:45:47,650 --> 00:45:50,170
+I'll expect my total payoff from there to be
+
+778
+00:45:50,250 --> 00:45:51,900
+given by V*(s) prime because I'm now starting
+
+779
+00:45:51,990 --> 00:45:53,410
+to use the s prime.
+
+780
+00:45:53,500 --> 00:45:55,470
+So the only thing in this equation I need to fill
+
+781
+00:45:55,570 --> 00:45:58,750
+in is where is the action a, so in order to
+
+782
+00:45:58,850 --> 00:46:01,590
+actually obtain the optimal expected payoff,
+
+783
+00:46:01,690 --> 00:46:05,730
+and to actually obtain the maximum or the
+
+784
+00:46:05,820 --> 00:46:09,030
+optimal expected total payoff, what you should
+
+785
+00:46:09,120 --> 00:46:11,470
+choose here is the max over our actions a,
+
+786
+00:46:11,570 --> 00:46:16,630
+choose your action a that maximizes the
+
+787
+00:46:16,710 --> 00:46:18,610
+expected value of your total payoffs as well.
+
+788
+00:46:18,750 --> 00:46:21,110
+So it just makes sense. There's a version of
+
+789
+00:46:21,200 --> 00:46:23,510
+Bellman's equations for V* rather than Vp
+
+790
+00:46:23,600 --> 00:46:26,800
+and I'll just say it again. It says that my optimal
+
+791
+00:46:26,890 --> 00:46:28,100
+expected total payoff is my immediate
+
+792
+00:46:28,200 --> 00:46:31,310
+reward plus, and then the best action it can
+
+793
+00:46:31,390 --> 00:46:33,710
+choose, the max over all actions a of my
+
+794
+00:46:33,770 --> 00:46:36,240
+expected future payoff.
+
+795
+00:46:39,840 --> 00:46:44,610
+And these also lead to my definition of p*,
+
+796
+00:46:44,720 --> 00:46:51,530
+which is let's say I'm in some state s and I
+
+797
+00:46:51,640 --> 00:46:55,690
+want to know what action to choose. Well, if
+
+798
+00:46:56,230 --> 00:46:59,520
+I'm in some state s, I'm gonna get here an
+
+799
+00:46:59,610 --> 00:47:02,440
+immediate R(s) anyway, so what's the best
+
+800
+00:47:02,540 --> 00:47:04,700
+action for me to choose is whatever action
+
+801
+00:47:04,790 --> 00:47:07,710
+will enable me to maximize the second term, as
+
+802
+00:47:07,780 --> 00:47:11,480
+well as if my robot is in some state s and
+
+803
+00:47:11,580 --> 00:47:13,290
+it wants to know what action to choose, I want
+
+804
+00:47:13,390 --> 00:47:15,230
+to choose the action that will maximize
+
+805
+00:47:15,330 --> 00:47:20,790
+my expected total payoff and so p*(s) is going
+
+806
+00:47:20,870 --> 00:47:24,140
+to define as R(max) over actions a of this
+
+807
+00:47:24,230 --> 00:47:25,910
+same thing.
+
+808
+00:47:33,230 --> 00:47:35,440
+I could also put the gamma there, but gamma
+
+809
+00:47:35,520 --> 00:47:38,070
+is just a positive. Gamma is almost always
+
+810
+00:47:38,170 --> 00:47:42,670
+positive, so I just drop that because it's just a
+
+811
+00:47:42,770 --> 00:47:44,020
+constant scale you go through
+
+812
+00:47:44,100 --> 00:47:46,130
+and doesn't affect the R(max).
+
+813
+00:47:46,200 --> 00:47:52,160
+And so, the consequence of this definition is
+
+814
+00:47:52,270 --> 00:47:55,310
+that p* is actually the optimal policy because
+
+815
+00:47:55,390 --> 00:47:58,000
+p* will maximize my expected total payoffs.
+
+816
+00:48:03,390 --> 00:48:05,530
+Cool. Any questions at this point?
+
+817
+00:48:14,760 --> 00:48:22,590
+Cool. So what I'd like to do now is
+
+818
+00:48:22,700 --> 00:48:25,550
+talk about how algorithms actually
+
+819
+00:48:25,640 --> 00:48:28,190
+compute high start, compute the optimal policy.
+
+820
+00:48:28,280 --> 00:48:30,310
+I should write down a little bit more
+
+821
+00:48:30,390 --> 00:48:33,510
+before I do that, but notice that
+
+822
+00:48:33,590 --> 00:48:37,740
+if I can compute V*, if I can compute the
+
+823
+00:48:37,820 --> 00:48:41,160
+optimal value function, then I can plug it into
+
+824
+00:48:41,250 --> 00:48:43,180
+this equation and then I'll be done.
+
+825
+00:48:43,270 --> 00:48:46,700
+So if I can compute V*, then you are using this
+
+826
+00:48:46,790 --> 00:48:48,430
+definition for p* and can compute
+
+827
+00:48:48,500 --> 00:48:50,490
+the optimal policy.
+
+828
+00:48:50,540 --> 00:48:51,900
+So my strategy for computing the optimal
+
+829
+00:48:51,980 --> 00:48:55,610
+policy will be to compute V* and then plug it
+
+830
+00:48:55,690 --> 00:48:58,170
+into this equation and that will give me the
+
+831
+00:48:58,250 --> 00:49:00,570
+optimal policy p*. So my goal, my next goal,
+
+832
+00:49:00,650 --> 00:49:02,760
+will really be to compute V*.
+
+833
+00:49:02,890 --> 00:49:07,700
+But the definition of V* here doesn't lead to a
+
+834
+00:49:07,800 --> 00:49:09,930
+nice algorithm for computing it because
+
+835
+00:49:10,040 --> 00:49:12,670
+let's see so I know how to compute Vp for
+
+836
+00:49:12,770 --> 00:49:15,230
+any given policy p by solving that linear
+
+837
+00:49:15,300 --> 00:49:19,140
+system equation, but there's an exponentially
+
+838
+00:49:19,200 --> 00:49:22,070
+large number of policies, so you get 11
+
+839
+00:49:22,150 --> 00:49:25,990
+states and four actions and what the number of
+
+840
+00:49:26,080 --> 00:49:28,150
+policies is froze to the par of 11. This is of
+
+841
+00:49:28,250 --> 00:49:30,770
+a huge space of possible policies and so I can't
+
+842
+00:49:30,870 --> 00:49:33,350
+actually exhaust the union of all policies
+
+843
+00:49:33,440 --> 00:49:35,150
+and then take a max on V*.
+
+844
+00:49:35,250 --> 00:49:38,450
+So I should write down some other things first,
+
+845
+00:49:38,550 --> 00:49:40,520
+just to ground the notations, but what I'll
+
+846
+00:49:40,600 --> 00:49:43,510
+do is eventually come up with an algorithm for
+
+847
+00:49:43,600 --> 00:49:45,990
+computing V*, the optimal value function
+
+848
+00:49:46,070 --> 00:49:48,110
+and then we'll plug them into this and that will
+
+849
+00:49:48,190 --> 00:49:49,790
+give us the optimal policy p*.
+
+850
+00:49:49,890 --> 00:49:55,810
+And so I'll write down the algorithm in a
+
+851
+00:49:55,910 --> 00:49:58,390
+second, but just to ground the notation, well
+
+852
+00:50:08,020 --> 00:50:10,660
+yeah, let's skip that. Let's just talk about the
+
+853
+00:50:10,750 --> 00:50:19,290
+algorithm. So this is an algorithm called
+
+854
+00:50:19,400 --> 00:50:23,510
+value iteration and it makes use of Bellman's
+
+855
+00:50:23,590 --> 00:50:26,790
+equations for the optimal policy to compute
+
+856
+00:50:26,870 --> 00:51:06,130
+V*. So here's the algorithm. Okay, and that's
+
+857
+00:51:06,240 --> 00:51:09,070
+the entirety of the algorithm and oh, you
+
+858
+00:51:09,150 --> 00:51:10,670
+repeat the step, I guess.
+
+859
+00:51:10,730 --> 00:51:12,510
+You repeatedly do this step.
+
+860
+00:51:12,560 --> 00:51:15,030
+So just to be concrete,
+
+861
+00:51:15,110 --> 00:51:16,550
+let's say in my MDP of
+
+862
+00:51:16,630 --> 00:51:19,180
+11 states, the first step is initialize V(s)
+
+863
+00:51:19,260 --> 00:51:20,790
+equals zero, so what that means is
+
+864
+00:51:20,870 --> 00:51:22,340
+I create an array in computer
+
+865
+00:51:22,410 --> 00:51:25,270
+implementation, create an array of 11 elements
+
+866
+00:51:25,370 --> 00:51:27,210
+and say set all of them to zero.
+
+867
+00:51:27,290 --> 00:51:28,740
+Says I can initialize into anything.
+
+868
+00:51:28,810 --> 00:51:30,970
+It doesn't really matter.
+
+869
+00:51:31,050 --> 00:51:32,420
+And now what I'm going to do is I'll take
+
+870
+00:51:32,500 --> 00:51:35,050
+Bellman's equations and we'll keep on taking
+
+871
+00:51:35,130 --> 00:51:37,010
+the right hand side of Bellman's equations and
+
+872
+00:51:37,110 --> 00:51:39,320
+overwriting and start copying down the
+
+873
+00:51:39,390 --> 00:51:42,570
+left hand side. So we'll essentially iteratively
+
+874
+00:51:42,630 --> 00:51:46,960
+try to make Bellman's equations hold true
+
+875
+00:51:47,070 --> 00:51:49,020
+for the numbers V(s) that are stored along the
+
+876
+00:51:49,120 --> 00:51:51,020
+way. So V(s) here is in the array of 11
+
+877
+00:51:51,100 --> 00:51:53,860
+elements and I'm going to repeatedly compute
+
+878
+00:51:53,940 --> 00:51:56,470
+the right hand side and copy that onto V(s).
+
+879
+00:51:56,550 --> 00:52:03,350
+And it turns out that when you do this, this will
+
+880
+00:52:03,440 --> 00:52:14,930
+make V(s) converge to V*(s), so it may
+
+881
+00:52:14,990 --> 00:52:16,450
+be of no surprise because we know V
+
+882
+00:52:16,510 --> 00:52:18,670
+V*(s) set inside Bellman's equations.
+
+883
+00:52:18,760 --> 00:52:23,730
+Just to tell you, some of these ideas that they
+
+884
+00:52:23,830 --> 00:52:25,520
+get more than the problem says, so I won't
+
+885
+00:52:25,590 --> 00:52:29,400
+prove the conversions of this algorithm. Some
+
+886
+00:52:29,480 --> 00:52:33,040
+implementation details, it turns out there's
+
+887
+00:52:33,120 --> 00:52:36,420
+two ways you can do this update. One is when I
+
+888
+00:52:36,500 --> 00:52:39,080
+say for every state s that has performed
+
+889
+00:52:39,180 --> 00:52:43,840
+this update, one way you can do this is for
+
+890
+00:52:43,920 --> 00:52:46,030
+every state s, you can compute the right hand
+
+891
+00:52:46,110 --> 00:52:48,310
+side and then you can simultaneously overwrite
+
+892
+00:52:48,400 --> 00:52:50,510
+the left hand side for every state s. And
+
+893
+00:52:50,590 --> 00:52:52,570
+so if you do that, that's called a sequence
+
+894
+00:52:52,640 --> 00:52:56,160
+update. Right and sequence [inaudible],
+
+895
+00:52:56,250 --> 00:52:59,060
+so update all the states s simultaneously.
+
+896
+00:52:59,160 --> 00:53:02,070
+And if you do that, it's sometimes written as
+
+897
+00:53:02,170 --> 00:53:05,280
+follows. If you do synchronous update, then
+
+898
+00:53:05,340 --> 00:53:08,620
+it's as if you have some value function, you're
+
+899
+00:53:08,700 --> 00:53:10,950
+at the Ith iteration or Tth iteration of the
+
+900
+00:53:11,030 --> 00:53:13,100
+algorithm and then you're going to compute
+
+901
+00:53:13,190 --> 00:53:16,320
+some function of your entire value function,
+
+902
+00:53:16,410 --> 00:53:20,600
+and then you get to set your value function to
+
+903
+00:53:20,680 --> 00:53:23,170
+your new version, so simultaneously update
+
+904
+00:53:23,270 --> 00:53:25,820
+all 11 values in your s space value function.
+
+905
+00:53:25,900 --> 00:53:28,530
+So it's sometimes written like this. My B here
+
+906
+00:53:28,640 --> 00:53:30,730
+is called the Bellman backup operator, so
+
+907
+00:53:30,820 --> 00:53:33,650
+the synchronized valuation you sort of take the
+
+908
+00:53:33,720 --> 00:53:35,090
+value function, you apply the Bellman
+
+909
+00:53:35,180 --> 00:53:37,090
+backup operator to it and then the Bellman
+
+910
+00:53:37,210 --> 00:53:38,820
+backup operator just means computing the
+
+911
+00:53:38,910 --> 00:53:40,710
+right hand side of this for all the states and
+
+912
+00:53:40,800 --> 00:53:43,240
+you've overwritten your entire value function.
+
+913
+00:53:43,320 --> 00:53:46,870
+The only way of performing these updates is
+
+914
+00:53:46,980 --> 00:53:52,310
+asynchronous updates, which is where you
+
+915
+00:53:52,410 --> 00:53:54,650
+update the states one at a time. So you go
+
+916
+00:53:54,730 --> 00:53:57,180
+through the states in some fixed order, so
+
+917
+00:53:57,300 --> 00:54:01,640
+would update V(s) for state No. 1 and then I
+
+918
+00:54:01,700 --> 00:54:03,790
+would like to update V(s) for state No. 2,
+
+919
+00:54:03,870 --> 00:54:06,250
+then state No. 3, and so on. And when I'm
+
+920
+00:54:06,340 --> 00:54:12,210
+updating V(s) for state No. 5, if V(s) prime, if
+
+921
+00:54:12,310 --> 00:54:14,810
+I end up using the values for states 1, 2, 3, and
+
+922
+00:54:14,910 --> 00:54:16,810
+4 on the right hand side, then I'd use my
+
+923
+00:54:16,890 --> 00:54:19,300
+recently updated values on the right hand side.
+
+924
+00:54:19,390 --> 00:54:22,170
+So as you update sequentially, when
+
+925
+00:54:22,250 --> 00:54:24,830
+you're updating in the fifth state, you'd be
+
+926
+00:54:24,910 --> 00:54:28,350
+using values, new values, for states 1, 2, 3, and
+
+927
+00:54:28,420 --> 00:54:30,900
+4. And that's called an asynchronous update.
+
+928
+00:54:30,990 --> 00:54:34,450
+Other versions will cause V(s) conversion to be
+
+929
+00:54:34,530 --> 00:54:38,270
+(s). In synchronized updates, it makes
+
+930
+00:54:38,360 --> 00:54:40,440
+them just a tiny little bit faster but they'll gonna find and
+
+931
+00:54:40,510 --> 00:54:43,630
+then it turns out the analysis of value
+
+932
+00:54:43,710 --> 00:54:45,770
+iterations synchronous updates are also easier
+
+933
+00:54:45,870 --> 00:54:49,310
+to analyze and that just matters [inaudible].
+
+934
+00:54:49,390 --> 00:54:52,100
+Asynchronous has been just a little bit faster.
+
+935
+00:54:52,180 --> 00:55:12,370
+So when you run this algorithm on the MDP
+
+936
+00:55:12,450 --> 00:55:15,750
+I forgot to say all these values were
+
+937
+00:55:15,840 --> 00:55:20,050
+computed with gamma equals open 99 and
+
+938
+00:55:20,140 --> 00:55:25,130
+actually, Roger Gross, who's a, I guess,
+
+939
+00:55:25,230 --> 00:55:27,620
+master [inaudible] helped me with computing
+
+940
+00:55:27,710 --> 00:55:30,300
+some of these numbers. So you compute it.
+
+941
+00:55:30,410 --> 00:55:32,510
+That way you run value relation on this MDP.
+
+942
+00:55:32,630 --> 00:55:37,460
+The numbers you get for V* are as
+
+943
+00:55:37,530 --> 00:55:44,630
+follows: .86, .90 again, the numbers sort of
+
+944
+00:55:44,720 --> 00:55:48,150
+don't matter that much, but just take a look
+
+945
+00:55:48,250 --> 00:55:51,600
+at it and make sure it intuitively makes sense.
+
+946
+00:55:51,690 --> 00:56:03,100
+And then when you plug those in to the formula
+
+947
+00:56:03,190 --> 00:56:05,780
+for computing, that I wrote down earlier,
+
+948
+00:56:05,860 --> 00:56:09,550
+for computing p* as a function of V*, then
+
+949
+00:56:09,640 --> 00:56:12,040
+well, I drew this previously, but here's the
+
+950
+00:56:12,170 --> 00:56:14,160
+optimal policy p*.
+
+951
+00:56:22,750 --> 00:56:25,460
+And so, just to summarize, the process is run
+
+952
+00:56:25,570 --> 00:56:28,570
+value iteration to compute V*, so this would
+
+953
+00:56:28,640 --> 00:56:31,140
+be this table of numbers, and then I use my
+
+954
+00:56:31,220 --> 00:56:33,530
+form of p* to compute the optimal policy,
+
+955
+00:56:33,610 --> 00:56:35,570
+which is this policy in this case.
+
+956
+00:56:35,660 --> 00:56:38,370
+Now, to be just completely concrete, let's look
+
+957
+00:56:38,450 --> 00:56:40,940
+at that three one state again. Is it better to
+
+958
+00:56:41,070 --> 00:56:43,280
+go left or is it better to go north? So let me just
+
+959
+00:56:43,350 --> 00:56:47,150
+illustrate why I'd rather go left than north.
+
+960
+00:56:47,230 --> 00:56:53,430
+In the form of the p*, if I go west, then sum
+
+961
+00:56:53,500 --> 00:57:01,640
+over s prime, P(s, a) s prime, P*(sp), this
+
+962
+00:57:01,740 --> 00:57:04,180
+would be well, let me just write this down.
+
+963
+00:57:13,630 --> 00:57:40,260
+Right, if I go north, then it would be because
+
+964
+00:57:40,350 --> 00:57:46,620
+of that. I wrote it down really quickly, so it's
+
+965
+00:57:46,700 --> 00:57:49,750
+messy writing. The way I got these numbers
+
+966
+00:57:49,820 --> 00:57:52,950
+is suppose I'm in this state, in this three one
+
+967
+00:57:53,020 --> 00:57:56,180
+state. If I choose to go west and with chance
+
+968
+00:57:56,250 --> 00:58:01,710
+.8, I get to .75 to this table 75. With chance .
+
+969
+00:58:01,810 --> 00:58:04,350
+1, I veer off and get to the .69, then at
+
+970
+00:58:04,490 --> 00:58:06,900
+chance .1, I go south and I bounce off the wall
+
+971
+00:58:06,990 --> 00:58:08,530
+and I stay where I am.
+
+972
+00:58:08,620 --> 00:58:10,770
+So that's why my expected future payoff for
+
+973
+00:58:10,830 --> 00:58:14,320
+going west is .8 times .75, plus .1 times .69,
+
+974
+00:58:14,400 --> 00:58:19,230
+plus .1 times .71, the last .71 being if I bounce
+
+975
+00:58:19,300 --> 00:58:21,030
+off the wall to the south and then seeing
+
+976
+00:58:21,110 --> 00:58:22,910
+where I am, that gives you .740.
+
+977
+00:58:22,990 --> 00:58:25,930
+You can then repeat the same process to
+
+978
+00:58:26,010 --> 00:58:29,410
+estimate your expected total payoff if you go
+
+979
+00:58:29,490 --> 00:58:31,850
+north, so if you do that, with a .8 chance, you
+
+980
+00:58:31,910 --> 00:58:34,770
+end up going north, so you get .69. With a
+
+981
+00:58:34,850 --> 00:58:36,850
+.1 chance, you end up here and .1 chance you
+
+982
+00:58:36,930 --> 00:58:39,570
+end up there. This map leads mentally to
+
+983
+00:58:39,650 --> 00:58:42,120
+that expression and compute the expectation,
+
+984
+00:58:42,210 --> 00:58:45,780
+you get .676. And so your total payoff is
+
+985
+00:58:45,870 --> 00:58:48,510
+higher if you go west your expected total
+
+986
+00:58:48,590 --> 00:58:51,090
+payoff is higher if you go west than if you go
+
+987
+00:58:51,210 --> 00:58:52,550
+north. And that's why the optimal action in this
+
+988
+00:58:52,630 --> 00:58:54,100
+state is to go west.
+
+989
+00:59:01,830 --> 00:59:19,420
+So that was value iteration. It turns out there are
+
+990
+00:59:19,520 --> 00:59:24,040
+two sort of standard algorithms for
+
+991
+00:59:24,120 --> 00:59:26,630
+computing optimal policies in MDPs. Value
+
+992
+00:59:26,710 --> 00:59:29,410
+iteration is one. As soon as you finish the
+
+993
+00:59:29,550 --> 00:59:34,350
+writing. So value iteration is one and the other
+
+994
+00:59:34,430 --> 00:59:36,530
+sort of standard algorithm for computing
+
+995
+00:59:36,600 --> 00:59:39,130
+optimal policies in MDPs is called policy
+
+996
+00:59:39,130 --> 00:59:40,130
+iteration. And let me –
+
+997
+00:59:43,330 --> 00:59:45,220
+I'm just going to write this down.
+
+998
+00:59:45,320 --> 00:59:53,460
+In policy iteration, we initialize the policy p
+
+999
+00:59:53,560 --> 00:59:57,350
+randomly, so it doesn't matter. It can be the
+
+1000
+00:59:57,460 --> 00:59:59,770
+policy that always goes north or the policy that
+
+1001
+00:59:59,870 --> 01:00:02,270
+takes actions random or whatever. And
+
+1002
+01:00:02,360 --> 01:00:07,230
+then we'll repeatedly do the following. Okay,
+
+1003
+01:00:37,500 --> 01:00:39,800
+so that's the algorithm.
+
+1004
+01:00:39,890 --> 01:00:44,940
+So the algorithm has two steps.
+
+1005
+01:00:45,010 --> 01:00:46,610
+In the first step, we solve.
+
+1006
+01:00:46,700 --> 01:00:48,580
+We take the current policy p
+
+1007
+01:00:48,680 --> 01:00:51,750
+and we solve Bellman's equations
+
+1008
+01:00:51,820 --> 01:00:53,340
+to obtain Vp.
+
+1009
+01:00:53,420 --> 01:00:56,160
+So remember, earlier I said if you have a
+
+1010
+01:00:56,240 --> 01:00:58,000
+fixed policy p, then yeah,
+
+1011
+01:00:58,080 --> 01:01:00,300
+Bellman's equation defines this system
+
+1012
+01:01:00,380 --> 01:01:02,080
+of linear equations with 11 unknowns
+
+1013
+01:01:02,160 --> 01:01:05,290
+and 11 linear constraints.
+
+1014
+01:01:05,370 --> 01:01:07,490
+And so you solve that linear system equation
+
+1015
+01:01:07,590 --> 01:01:09,660
+so you get the value function for your current
+
+1016
+01:01:09,740 --> 01:01:12,130
+policy p, and by this notation, I mean just let
+
+1017
+01:01:12,220 --> 01:01:14,570
+V be the value function for policy p.
+
+1018
+01:01:14,680 --> 01:01:17,560
+Then the second step is you update the policy.
+
+1019
+01:01:17,640 --> 01:01:19,880
+In other words, you pretend that your
+
+1020
+01:01:19,960 --> 01:01:21,600
+current guess V from the value function is
+
+1021
+01:01:21,700 --> 01:01:23,960
+indeed the optimal value function and you let
+
+1022
+01:01:24,060 --> 01:01:28,010
+p(s) be equal to that out max formula, so as to
+
+1023
+01:01:28,090 --> 01:01:29,280
+update your policy p.
+
+1024
+01:01:29,360 --> 01:01:33,100
+And so it turns out that if you do this, then V
+
+1025
+01:01:33,180 --> 01:01:38,230
+will converge to V* and p will converge to
+
+1026
+01:01:38,310 --> 01:01:41,720
+p*, and so this is another way to find the
+
+1027
+01:01:41,800 --> 01:01:43,430
+optimal policy for MDP.
+
+1028
+01:01:43,510 --> 01:01:49,730
+In terms of tradeoffs, it turns out that
+
+1029
+01:01:49,820 --> 01:01:52,920
+let's see in policy iteration,
+
+1030
+01:01:53,000 --> 01:01:57,990
+the computationally expensive step is this one.
+
+1031
+01:01:58,080 --> 01:02:00,120
+You need to solve this linear system of
+
+1032
+01:02:00,200 --> 01:02:02,090
+equations. You have n equations and
+
+1033
+01:02:02,160 --> 01:02:04,720
+n unknowns, if you have n states. And so
+
+1034
+01:02:04,790 --> 01:02:06,740
+if you have a problem with a reasonably
+
+1035
+01:02:06,800 --> 01:02:08,540
+few number of states, if you have a problem
+
+1036
+01:02:08,620 --> 01:02:09,890
+with like 11 states, you can solve the linear
+
+1037
+01:02:09,990 --> 01:02:12,410
+system equations fairly efficiently, and so
+
+1038
+01:02:12,480 --> 01:02:15,010
+policy iteration tends to work extremely well
+
+1039
+01:02:15,090 --> 01:02:16,920
+for problems with smallish numbers of states
+
+1040
+01:02:17,020 --> 01:02:19,710
+where you can actually solve those linear
+
+1041
+01:02:19,780 --> 01:02:22,470
+systems of equations efficiently.
+
+1042
+01:02:22,540 --> 01:02:24,480
+So if you have a thousand states, anything less
+
+1043
+01:02:24,560 --> 01:02:26,410
+than that, you can solve a system of a
+
+1044
+01:02:26,470 --> 01:02:28,190
+thousand equations very efficiently, so policy
+
+1045
+01:02:28,250 --> 01:02:31,040
+iteration will often work fine. If you have
+
+1046
+01:02:31,130 --> 01:02:34,250
+an MDP with an enormous number of states, so
+
+1047
+01:02:34,330 --> 01:02:37,720
+we'll actually often see MDPs with tens
+
+1048
+01:02:37,820 --> 01:02:39,390
+of thousands or hundreds of thousands or
+
+1049
+01:02:39,480 --> 01:02:42,850
+millions or tens of millions of states. If you
+
+1050
+01:02:42,950 --> 01:02:45,680
+have a problem with 10 million states and you
+
+1051
+01:02:45,780 --> 01:02:47,780
+try to apply policy iteration, then this step
+
+1052
+01:02:47,850 --> 01:02:52,220
+requires solving the linear system of 10 million
+
+1053
+01:02:52,300 --> 01:02:53,960
+equations and this would be
+
+1054
+01:02:54,060 --> 01:02:55,850
+computationally expensive. And so for these
+
+1055
+01:02:55,940 --> 01:02:57,740
+really, really large MDPs, I tend to use
+
+1056
+01:02:57,820 --> 01:02:59,290
+value iteration.
+
+1057
+01:02:59,380 --> 01:03:05,310
+Let's see. Any questions about this?
+
+1058
+01:03:09,250 --> 01:03:11,040
+Student:So this is a convex function where
+
+1059
+01:03:11,120 --> 01:03:13,060
+that it could be good in local
+
+1060
+01:03:13,150 --> 01:03:14,800
+optimization scheme.
+
+1061
+01:03:14,940 --> 01:03:19,470
+Ah, yes, you're right. That's a good question: Is
+
+1062
+01:03:19,550 --> 01:03:21,540
+this a convex function? It actually turns out
+
+1063
+01:03:21,620 --> 01:03:23,450
+that there is a way to pose a problem
+
+1064
+01:03:23,510 --> 01:03:26,220
+of solving for V* as a convex
+
+1065
+01:03:26,300 --> 01:03:28,340
+optimization problem, as a linear program.
+
+1066
+01:03:28,430 --> 01:03:30,450
+For instance, I can break down the
+
+1067
+01:03:30,540 --> 01:03:33,780
+solution you write down V* as a solution, so
+
+1068
+01:03:33,880 --> 01:03:36,020
+linear would be the only problem you can
+
+1069
+01:03:36,120 --> 01:03:43,130
+solve. Policy iteration converges as gamma T
+
+1070
+01:03:43,220 --> 01:03:45,160
+conversion. We're not just stuck with local
+
+1071
+01:03:45,230 --> 01:03:47,270
+optimal, but the proof of the conversions of
+
+1072
+01:03:47,340 --> 01:03:49,380
+policy iteration sort of uses somewhat
+
+1073
+01:03:49,460 --> 01:03:51,190
+different principles in convex optimization. At
+
+1074
+01:03:51,270 --> 01:03:54,640
+least the versions as far as I can see, yeah.
+
+1075
+01:03:54,730 --> 01:03:56,160
+You could probably relate this back to convex
+
+1076
+01:03:56,230 --> 01:03:57,600
+optimization, but not understand the
+
+1077
+01:03:57,670 --> 01:03:59,680
+principle of why this often converges.
+
+1078
+01:03:59,750 --> 01:04:06,230
+The proof is not that difficult, but it is also sort
+
+1079
+01:04:06,300 --> 01:04:07,660
+of longer than I want to go over in this
+
+1080
+01:04:07,760 --> 01:04:13,340
+class. Yeah, that was a good point. Cool.
+
+1081
+01:04:13,420 --> 01:04:14,670
+Actually, any questions for any of these?
+
+1082
+01:04:25,700 --> 01:04:30,060
+Okay, so we now have two algorithms for
+
+1083
+01:04:30,140 --> 01:04:33,360
+solving MDP. There's a given, the five tuple,
+
+1084
+01:04:33,440 --> 01:04:35,450
+given the set of states, the set of actions, the
+
+1085
+01:04:35,520 --> 01:04:37,820
+state transition properties, the discount
+
+1086
+01:04:37,920 --> 01:04:40,550
+factor, and the reward function, you can now
+
+1087
+01:04:40,640 --> 01:04:42,740
+apply policy iteration or value iteration to
+
+1088
+01:04:42,840 --> 01:04:45,650
+compute the optimal policy for the MDP.
+
+1089
+01:04:45,740 --> 01:04:49,380
+The last thing I want to talk about is what if you
+
+1090
+01:04:49,480 --> 01:04:57,860
+don't know the state transition
+
+1091
+01:04:57,980 --> 01:05:00,110
+probabilities, and sometimes you won't know
+
+1092
+01:05:00,180 --> 01:05:01,580
+the reward function R as well, but let's
+
+1093
+01:05:01,660 --> 01:05:05,820
+leave that aside. And so for example, let's say
+
+1094
+01:05:05,900 --> 01:05:08,770
+you're trying to fly a helicopter and you
+
+1095
+01:05:08,860 --> 01:05:11,460
+don't really know in advance what state your
+
+1096
+01:05:11,550 --> 01:05:13,090
+helicopter will transition to and take an
+
+1097
+01:05:13,170 --> 01:05:14,820
+action in a certain state, because helicopter
+
+1098
+01:05:14,890 --> 01:05:16,340
+dynamics are kind of noisy. You sort of often
+
+1099
+01:05:16,420 --> 01:05:18,860
+don't really know what state you end up in.
+
+1100
+01:05:18,940 --> 01:05:24,250
+So the standard thing to do, or one standard
+
+1101
+01:05:24,330 --> 01:05:27,280
+thing to do, is then to try to estimate the state
+
+1102
+01:05:27,370 --> 01:05:29,860
+transition probabilities from data. Let me just
+
+1103
+01:05:29,930 --> 01:05:32,910
+write this out. It turns out that the MDP has
+
+1104
+01:05:32,980 --> 01:05:36,330
+its 5 tuple, right? S, A; you have the transition
+
+1105
+01:05:36,440 --> 01:05:41,550
+probabilities, gamma, and R. S and A you
+
+1106
+01:05:41,610 --> 01:05:43,550
+almost always know. The state space is sort of
+
+1107
+01:05:43,650 --> 01:05:45,970
+up to you to define. What's the state space
+
+1108
+01:05:46,030 --> 01:05:48,250
+at the very bottom, factor you're trying to
+
+1109
+01:05:48,330 --> 01:05:50,890
+control, whatever. Actions is, again, just one of
+
+1110
+01:05:50,980 --> 01:05:52,630
+your actions. Usually, we almost always know
+
+1111
+01:05:52,710 --> 01:05:55,530
+these. Gamma, the discount factor is
+
+1112
+01:05:55,630 --> 01:05:58,490
+something you choose depending on how much
+
+1113
+01:05:58,570 --> 01:06:01,030
+you want to trade off current versus
+
+1114
+01:06:01,100 --> 01:06:03,680
+future rewards. The reward function you
+
+1115
+01:06:03,760 --> 01:06:05,660
+usually know. There are some exceptional
+
+1116
+01:06:05,740 --> 01:06:07,560
+cases. Usually, you come up with a reward
+
+1117
+01:06:07,640 --> 01:06:08,980
+function and so you usually know what the
+
+1118
+01:06:09,070 --> 01:06:10,920
+reward function is. Sometimes you don't,
+
+1119
+01:06:11,010 --> 01:06:12,520
+but let's just leave that aside for now
+
+1120
+01:06:12,610 --> 01:06:15,070
+and the most common thing for you
+
+1121
+01:06:15,170 --> 01:06:16,970
+to have to learn are the state transition
+
+1122
+01:06:17,040 --> 01:06:18,900
+probabilities. So we'll just talk about
+
+1123
+01:06:18,980 --> 01:06:21,710
+how to learn that. So when you don't
+
+1124
+01:06:21,800 --> 01:06:22,980
+know state transition probabilities,
+
+1125
+01:06:23,060 --> 01:06:24,530
+the most common thing to do is just estimate it
+
+1126
+01:06:24,620 --> 01:06:28,650
+from data. So what I mean is imagine some
+
+1127
+01:06:28,730 --> 01:06:30,710
+robot maybe it's a robot roaming around the
+
+1128
+01:06:30,810 --> 01:06:32,890
+hallway, like in that grid example you
+
+1129
+01:06:33,010 --> 01:06:36,370
+would then have the robot just take actions in
+
+1130
+01:06:36,470 --> 01:06:42,690
+the MDP and you would then estimate your
+
+1131
+01:06:42,790 --> 01:06:46,000
+state transition probabilities P subscript (s, a) s
+
+1132
+01:06:46,080 --> 01:06:48,590
+prime to be pretty much exactly what
+
+1133
+01:06:48,680 --> 01:06:49,880
+you'd expect it to be.
+
+1134
+01:06:49,990 --> 01:06:53,040
+This would be the number of times you took
+
+1135
+01:06:53,120 --> 01:07:03,620
+action a in state s and you got to s prime,
+
+1136
+01:07:03,710 --> 01:07:09,360
+divided by the number of times you took action
+
+1137
+01:07:09,460 --> 01:07:18,300
+a in state s. Okay? So the estimate of this
+
+1138
+01:07:18,380 --> 01:07:21,210
+is just all the times you took the action a in the
+
+1139
+01:07:21,260 --> 01:07:23,010
+state s, what's the fraction of times you
+
+1140
+01:07:23,100 --> 01:07:24,910
+actually got to the state s prime. It's pretty
+
+1141
+01:07:24,990 --> 01:07:28,650
+much exactly what you expect it to be. Or you
+
+1142
+01:07:28,770 --> 01:07:35,850
+can or in case you've never actually tried
+
+1143
+01:07:35,930 --> 01:07:39,360
+action a in state s, so if this turns out to be 0
+
+1144
+01:07:39,470 --> 01:07:42,100
+over 0, you can then have some default estimate
+
+1145
+01:07:42,210 --> 01:07:44,050
+for those vector uniform distribution
+
+1146
+01:07:44,140 --> 01:07:45,900
+over all states, this reasonable default.
+
+1147
+01:07:45,980 --> 01:08:02,300
+And so, putting it all together and by the way,
+
+1148
+01:08:02,420 --> 01:08:04,470
+it turns out in reinforcement learning, in
+
+1149
+01:08:04,570 --> 01:08:07,150
+most of the earlier parts of this class where we
+
+1150
+01:08:07,240 --> 01:08:09,090
+did supervised learning, I sort of talked
+
+1151
+01:08:09,170 --> 01:08:10,560
+about the logistic regression algorithm, so it
+
+1152
+01:08:10,670 --> 01:08:13,220
+does the algorithm and most
+
+1153
+01:08:13,300 --> 01:08:16,010
+implementations of logistic regression like a
+
+1154
+01:08:16,070 --> 01:08:18,160
+fairly standard way to do logistic
+
+1155
+01:08:18,260 --> 01:08:20,350
+regression were SVMs or faster analysis or
+
+1156
+01:08:20,430 --> 01:08:22,510
+whatever. It turns out in reinforcement
+
+1157
+01:08:22,590 --> 01:08:26,060
+learning there's more of a mix and match sense,
+
+1158
+01:08:26,170 --> 01:08:28,330
+I guess, so there are often different
+
+1159
+01:08:28,430 --> 01:08:29,990
+pieces of different algorithms you can choose to
+
+1160
+01:08:30,070 --> 01:08:33,310
+use. So in some of the algorithms I write
+
+1161
+01:08:33,390 --> 01:08:36,430
+down, there's sort of more than one way to do it
+
+1162
+01:08:36,510 --> 01:08:38,430
+and I'm sort of giving specific examples,
+
+1163
+01:08:38,530 --> 01:08:41,080
+but if you're faced with an AI problem, some of
+
+1164
+01:08:41,160 --> 01:08:43,760
+you in control of robots, you want to
+
+1165
+01:08:43,850 --> 01:08:46,080
+plug in value iteration here instead of policy
+
+1166
+01:08:46,160 --> 01:08:48,310
+iteration. You want to do something slightly
+
+1167
+01:08:48,400 --> 01:08:50,430
+different than one of the specific things I wrote
+
+1168
+01:08:50,510 --> 01:08:53,450
+down. That's actually fairly common, so
+
+1169
+01:08:53,520 --> 01:08:55,850
+just in reinforcement learning, there's sort of
+
+1170
+01:08:55,950 --> 01:08:57,610
+other major ways to apply different
+
+1171
+01:08:57,690 --> 01:08:59,530
+algorithms and mix and match different
+
+1172
+01:08:59,610 --> 01:09:01,370
+algorithms. And this will come up again in the
+
+1173
+01:09:01,450 --> 01:09:04,010
+weekly lectures. So just putting the things I said
+
+1174
+01:09:04,110 --> 01:09:12,290
+together, here would be a now this
+
+1175
+01:09:12,370 --> 01:09:14,260
+would be an example of how you might
+
+1176
+01:09:14,340 --> 01:09:16,490
+estimate the state transition probabilities in a
+
+1177
+01:09:16,540 --> 01:09:18,860
+MDP and find the policy for it. So you might
+
+1178
+01:09:18,930 --> 01:09:24,110
+repeatedly do the following. Let's see. Take
+
+1179
+01:09:24,180 --> 01:09:37,320
+actions using some policy p to get experience in
+
+1180
+01:09:37,420 --> 01:09:47,290
+the MDP, meaning that just execute the
+
+1181
+01:09:47,390 --> 01:09:50,950
+policy p observed state transitions. Based on
+
+1182
+01:09:51,040 --> 01:09:54,150
+the data you get, you then update estimates
+
+1183
+01:09:54,230 --> 01:10:02,600
+of your state transition probabilities P subscript
+
+1184
+01:10:02,680 --> 01:10:05,810
+(s, a) based on the experience of the
+
+1185
+01:10:05,900 --> 01:10:10,410
+observations you just got. Then you might solve
+
+1186
+01:10:10,500 --> 01:10:18,730
+Bellman's equations using value
+
+1187
+01:10:18,830 --> 01:10:21,560
+iterations, which I'm abbreviating to VI, and by
+
+1188
+01:10:21,640 --> 01:10:25,250
+Bellman's equations, I mean Bellman's
+
+1189
+01:10:25,340 --> 01:10:27,750
+equations for V*, not for Vp. Solve Bellman's
+
+1190
+01:10:27,820 --> 01:10:35,440
+equations using value iteration to get an
+
+1191
+01:10:35,530 --> 01:10:40,440
+estimate for P* and then you update your policy
+
+1192
+01:10:40,530 --> 01:10:44,440
+by events equals [inaudible].
+
+1193
+01:10:59,410 --> 01:11:01,170
+And now you have a new policy so you can
+
+1194
+01:11:01,280 --> 01:11:04,330
+then go back and execute this policy for a bit
+
+1195
+01:11:04,430 --> 01:11:05,930
+more of the MDPs to get some more
+
+1196
+01:11:06,010 --> 01:11:08,820
+observations of state transitions, get the noisy ones in MDP,
+
+1197
+01:11:08,900 --> 01:11:11,080
+use that update to estimate your
+
+1198
+01:11:11,160 --> 01:11:12,870
+state transition probabilities again; use value
+
+1199
+01:11:12,950 --> 01:11:15,480
+iteration or policy iteration to solve for
+
+1200
+01:11:15,570 --> 01:11:17,860
+[inaudible] the value function, get a new policy
+
+1201
+01:11:17,940 --> 01:11:22,570
+and so on. Okay? And it turns out when you do
+
+1202
+01:11:22,660 --> 01:11:24,090
+this, I actually wrote down value iteration
+
+1203
+01:11:24,180 --> 01:11:26,250
+for a reason. It turns out in the third step of the
+
+1204
+01:11:26,350 --> 01:11:28,950
+algorithm, if you're using value iteration
+
+1205
+01:11:29,040 --> 01:11:32,560
+rather than policy iteration, to initialize value
+
+1206
+01:11:32,640 --> 01:11:35,780
+iteration, if you use your solution from the
+
+1207
+01:11:35,870 --> 01:11:38,480
+previous used algorithm, right, then that's a
+
+1208
+01:11:38,570 --> 01:11:41,330
+very good initialization condition and this
+
+1209
+01:11:41,420 --> 01:11:43,070
+will tend to converge much more quickly
+
+1210
+01:11:43,200 --> 01:11:46,780
+because value iteration tries to solve for V(s)
+
+1211
+01:11:46,880 --> 01:11:51,060
+for every state s. It tries to estimate V*(s) and
+
+1212
+01:11:51,160 --> 01:11:55,470
+the s from the * in V(s) and so if you're
+
+1213
+01:11:55,570 --> 01:11:57,740
+looking through this and you initialize your
+
+1214
+01:11:57,860 --> 01:12:01,490
+value iteration algorithm using the values you
+
+1215
+01:12:01,570 --> 01:12:04,460
+have from the previous round through this, then
+
+1216
+01:12:04,560 --> 01:12:07,230
+that will often make this converge faster.
+
+1217
+01:12:07,330 --> 01:12:09,380
+But again, this is again here, you can also adjust
+
+1218
+01:12:09,540 --> 01:12:11,130
+a small part in policy iteration in here as
+
+1219
+01:12:11,230 --> 01:12:13,900
+well and whatever, and this is a fairly typical
+
+1220
+01:12:13,990 --> 01:12:17,180
+example of how you would solve a policy,
+
+1221
+01:12:17,270 --> 01:12:19,700
+correct digits and then key in and try to find a
+
+1222
+01:12:19,790 --> 01:12:22,660
+good policy for a problem for which you
+
+1223
+01:12:22,750 --> 01:12:24,820
+did not know the state transition probabilities in
+
+1224
+01:12:24,910 --> 01:12:26,490
+advance.
+
+1225
+01:12:26,610 --> 01:12:29,290
+Cool. Questions about this?
+
+1226
+01:12:38,030 --> 01:12:40,180
+Cool. So that sure was exciting.
+
+1227
+01:12:40,280 --> 01:12:43,020
+This is like our first two MDP algorithms
+
+1228
+01:12:43,130 --> 01:12:45,620
+in just one lecture. All right,
+
+1229
+01:12:45,620 --> 01:12:50,530
+Let's close for today, thanks
+

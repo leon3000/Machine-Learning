@@ -1,0 +1,5376 @@
+﻿1
+00:00:10,560 --> 00:00:21,020
+Let's see.
+
+2
+00:00:21,180 --> 00:00:25,210
+Okay. So welcome back,
+
+3
+00:00:25,320 --> 00:00:28,890
+and let's continue
+
+4
+00:00:29,000 --> 00:00:31,140
+our discussion of reinforcement learning algorithms.
+
+5
+00:00:31,240 --> 00:00:34,110
+On for today, the first thing I want to do
+
+6
+00:00:34,230 --> 00:00:36,720
+is actually talk a little bit
+
+7
+00:00:36,820 --> 00:00:38,860
+about debugging reinforcement learning algorithms
+
+8
+00:00:38,940 --> 00:00:42,010
+and then I'll continue the technical discussion
+
+9
+00:00:42,100 --> 00:00:44,740
+from last week on LQR, on linear-quadratic regulation.
+
+10
+00:00:44,850 --> 00:00:46,040
+In particular,
+
+11
+00:00:46,150 --> 00:00:47,770
+I want to tell you about an algorithm called
+
+12
+00:00:47,880 --> 00:00:48,710
+the French dynamic programming,
+
+13
+00:00:48,820 --> 00:00:50,860
+which I think is actually a very effective
+
+14
+00:00:50,970 --> 00:00:54,570
+absolute controls lack reinforcement learning algorithm
+
+15
+00:00:54,680 --> 00:00:55,980
+for many problems.
+
+16
+00:00:56,130 --> 00:00:57,890
+Then we'll talk about Kalman filters
+
+17
+00:00:57,990 --> 00:01:00,050
+and linear-quadratic Gaussian control, LGG.
+
+18
+00:01:00,200 --> 00:01:03,010
+Let's start with debugging RL algorithms.
+
+19
+00:01:03,120 --> 00:01:05,820
+And can I switch to the laptop display, please?
+
+20
+00:01:05,930 --> 00:01:19,150
+And so this was actually what I'm about to do here is
+
+21
+00:01:19,260 --> 00:01:23,430
+this is actually a specific example that I had done earlier
+
+22
+00:01:23,540 --> 00:01:25,150
+in this quarter, but that I promised to do again.
+
+23
+00:01:25,250 --> 00:01:28,080
+So remember, you know, what was it?
+
+24
+00:01:28,190 --> 00:01:29,680
+Roughly halfway through the quarter
+
+25
+00:01:29,790 --> 00:01:33,820
+I'd given a lecture on debugging learning algorithms, right?
+
+26
+00:01:33,930 --> 00:01:34,460
+This idea
+
+27
+00:01:34,560 --> 00:01:37,440
+that very often you run a learning algorithm and it,
+
+28
+00:01:37,540 --> 00:01:39,520
+you know, maybe does roughly what you want to
+
+29
+00:01:39,620 --> 00:01:41,510
+and maybe it doesn't do as well as you're hoping.
+
+30
+00:01:41,650 --> 00:01:43,610
+Then what do you do next?
+
+31
+00:01:43,710 --> 00:01:45,750
+And the talk of this idea that, you know,
+
+32
+00:01:45,860 --> 00:01:47,810
+some of the really, really good people in machine learning,
+
+33
+00:01:47,920 --> 00:01:50,170
+the people that really understand learning algorithms,
+
+34
+00:01:50,270 --> 00:01:51,870
+they're really good at getting these things to work.
+
+35
+00:01:51,970 --> 00:01:56,300
+Very often what they're really good at is at figuring out why
+
+36
+00:01:56,440 --> 00:01:58,400
+a learning algorithm is working or is not working
+
+37
+00:01:58,510 --> 00:02:03,120
+and that prevents them from doing things for six months
+
+38
+00:02:03,230 --> 00:02:06,530
+that someone else may be able to just look at and say gee,
+
+39
+00:02:06,630 --> 00:02:09,590
+there was no point collecting more training data,
+
+40
+00:02:09,700 --> 00:02:12,200
+because your learning algorithm had high bias
+
+41
+00:02:12,310 --> 00:02:13,310
+rather than high variance.
+
+42
+00:02:13,430 --> 00:02:15,270
+So that six months you spent collecting more training data
+
+43
+00:02:15,410 --> 00:02:16,850
+I could have told you six months ago
+
+44
+00:02:16,940 --> 00:02:17,880
+it was a waste of time. Right?
+
+45
+00:02:17,990 --> 00:02:19,640
+So these are sorts of things that
+
+46
+00:02:19,720 --> 00:02:21,050
+some of the people are really good at machine learning,
+
+47
+00:02:21,170 --> 00:02:23,020
+that they really get machine learning,
+
+48
+00:02:23,150 --> 00:02:24,400
+are very good at.
+
+49
+00:02:24,540 --> 00:02:29,180
+Well, just a few of my slides.
+
+50
+00:02:29,290 --> 00:02:32,040
+These slides I won't actually talk about these,
+
+51
+00:02:32,180 --> 00:02:34,140
+but these are exactly the same slides you saw last time.
+
+52
+00:02:34,240 --> 00:02:37,730
+Actually, I'll just skip ahead, I guess.
+
+53
+00:02:37,870 --> 00:02:45,640
+So last time you saw this discussion on right.
+
+54
+00:02:45,780 --> 00:02:47,560
+Diagnostics for whether you happen to have a bias
+
+55
+00:02:47,700 --> 00:02:49,050
+problem, or a variance problem,
+
+56
+00:02:49,190 --> 00:02:52,480
+or in other cases where the
+
+57
+00:02:52,580 --> 00:02:54,450
+your optimization algorithm is converging
+
+58
+00:02:54,550 --> 00:02:56,650
+or whether it's the [inaudible] optimization objective
+
+59
+00:02:56,760 --> 00:02:58,610
+and so on. And we'll talk about that again,
+
+60
+00:02:58,760 --> 00:03:01,640
+but the one example that I, sort of, promised to show again
+
+61
+00:03:01,780 --> 00:03:03,470
+was actually a reinforcement learning example,
+
+62
+00:03:03,580 --> 00:03:06,470
+but at that time we hadn't talked about reinforcement
+
+63
+00:03:06,580 --> 00:03:07,580
+learning yet,
+
+64
+00:03:07,680 --> 00:03:09,380
+so I promised to do exactly the same example again,
+
+65
+00:03:09,480 --> 00:03:10,430
+all right?
+
+66
+00:03:10,540 --> 00:03:11,730
+So let's go for the example.
+
+67
+00:03:11,840 --> 00:03:16,730
+The motivating example was robotic control.
+
+68
+00:03:16,830 --> 00:03:18,370
+Let's see. Write a let's say
+
+69
+00:03:18,510 --> 00:03:21,870
+you want to design a controller for this helicopter.
+
+70
+00:03:21,980 --> 00:03:26,220
+So this is a very typical way by which
+
+71
+00:03:26,360 --> 00:03:29,200
+you might apply machine-learning algorithm or several
+
+72
+00:03:29,350 --> 00:03:32,520
+machine-learning algorithms to a control problem, right?
+
+73
+00:03:32,630 --> 00:03:35,090
+Which is you might first build a simulator
+
+74
+00:03:35,230 --> 00:03:37,580
+so control problem is
+
+75
+00:03:37,690 --> 00:03:40,020
+you want to build a controller
+
+76
+00:03:40,160 --> 00:03:41,850
+to make the helicopter hover in place, right?
+
+77
+00:03:41,960 --> 00:03:43,630
+So the first thing you want to do is
+
+78
+00:03:43,770 --> 00:03:45,200
+build a simulator of the helicopter.
+
+79
+00:03:45,300 --> 00:03:49,260
+And this just means model of the state transition
+
+80
+00:03:49,370 --> 00:03:51,810
+probabilities, a piece of SA of the helicopter,
+
+81
+00:03:51,910 --> 00:03:54,020
+and you can do this by many different ways.
+
+82
+00:03:54,130 --> 00:03:56,250
+Maybe you can try reading a helicopter textbook
+
+83
+00:03:56,360 --> 00:03:58,150
+and building a simulator based on
+
+84
+00:03:58,290 --> 00:04:01,070
+what's known about aerodynamics of helicopters.
+
+85
+00:04:01,170 --> 00:04:02,620
+It actually turns out this is very hard to do.
+
+86
+00:04:02,760 --> 00:04:04,300
+Another thing you could do is collect data
+
+87
+00:04:04,450 --> 00:04:06,020
+and maybe fit a linear model,
+
+88
+00:04:06,160 --> 00:04:07,620
+or maybe fit a non-linear model,
+
+89
+00:04:07,760 --> 00:04:12,230
+to what the next stage is as a function of current state
+
+90
+00:04:12,370 --> 00:04:13,360
+and current action. Okay?
+
+91
+00:04:13,470 --> 00:04:14,850
+So there's different ways of
+
+92
+00:04:14,950 --> 00:04:16,420
+estimating the state transition probabilities.
+
+93
+00:04:16,530 --> 00:04:18,500
+So, now, you now have a simulator
+
+94
+00:04:18,640 --> 00:04:21,610
+and I'm showing a screen shot of our simulator
+
+95
+00:04:21,720 --> 00:04:23,820
+we have a stand fit on the upper right there.
+
+96
+00:04:23,930 --> 00:04:26,500
+Second thing you might do is
+
+97
+00:04:26,640 --> 00:04:27,990
+then choose a reward function.
+
+98
+00:04:28,140 --> 00:04:30,160
+So you might choose this sort of quadratic cos function,
+
+99
+00:04:30,270 --> 00:04:30,960
+right?
+
+100
+00:04:31,100 --> 00:04:33,620
+So the reward for being at a state X
+
+101
+00:04:33,730 --> 00:04:36,490
+is going to be minus the norm difference between a
+
+102
+00:04:36,590 --> 00:04:38,640
+current state and some desired state of your one simple
+
+103
+00:04:38,780 --> 00:04:41,060
+example of a reward function.
+
+104
+00:04:41,160 --> 00:04:44,360
+And this, sort of, quadratic reward function is what we've
+
+105
+00:04:44,470 --> 00:04:48,030
+been using in the last lecture in LQR control,
+
+106
+00:04:48,170 --> 00:04:49,710
+linear-quadratic regulation control.
+
+107
+00:04:49,850 --> 00:04:51,440
+And finally, right?
+
+108
+00:04:51,590 --> 00:04:55,650
+Random reinforcement learning algorithm in simulation,
+
+109
+00:04:55,790 --> 00:04:58,570
+meaning that you use your model of the dynamics
+
+110
+00:04:58,710 --> 00:05:02,360
+to try to maximize that final horizon sum of rewards
+
+111
+00:05:02,540 --> 00:05:05,270
+and when you do that you get a policy out,
+
+112
+00:05:05,380 --> 00:05:09,300
+which I'm gonna call the policy pi subscript RL to denote
+
+113
+00:05:09,400 --> 00:05:11,980
+the policy output by the reinforcement learning algorithm.
+
+114
+00:05:12,060 --> 00:05:12,800
+Okay?
+
+115
+00:05:12,880 --> 00:05:17,730
+Let's say you do this and the resulting controller gets much
+
+116
+00:05:17,810 --> 00:05:22,200
+worse performance than a human pilot that you hireto fly
+
+117
+00:05:22,270 --> 00:05:23,550
+the helicopter for you.
+
+118
+00:05:23,610 --> 00:05:27,730
+So how do you go about figuring out what to do next?
+
+119
+00:05:27,810 --> 00:05:29,390
+Well, actually, you have several things you might do,
+
+120
+00:05:29,470 --> 00:05:30,240
+right?
+
+121
+00:05:30,380 --> 00:05:32,190
+You might try to improve the simulator,
+
+122
+00:05:32,300 --> 00:05:33,800
+so there are exactly three steps.
+
+123
+00:05:33,880 --> 00:05:34,870
+You want say
+
+124
+00:05:34,950 --> 00:05:36,740
+maybe after the new model from the helicopter dynamics,
+
+125
+00:05:36,850 --> 00:05:39,000
+but I think it's non it is actually non-linear.
+
+126
+00:05:39,080 --> 00:05:41,290
+Or maybe you want to collect more training data,
+
+127
+00:05:41,360 --> 00:05:43,070
+so you can get a better estimates of
+
+128
+00:05:43,200 --> 00:05:46,570
+the transition probabilities of the helicopter.
+
+129
+00:05:46,660 --> 00:05:49,970
+Or maybe you want to fiddle with
+
+130
+00:05:50,080 --> 00:05:52,130
+the features you used to model the dynamics of your
+
+131
+00:05:52,230 --> 00:05:53,880
+helicopter,  right?
+
+132
+00:05:53,980 --> 00:05:55,750
+Other things you might do is,
+
+133
+00:05:55,850 --> 00:05:57,470
+you might modify the reward function R if you think,
+
+134
+00:05:57,570 --> 00:05:59,510
+you know, it's not just a quadratic function,
+
+135
+00:05:59,610 --> 00:06:00,660
+maybe it's something else.
+
+136
+00:06:00,770 --> 00:06:01,520
+I don't know.
+
+137
+00:06:01,630 --> 00:06:03,110
+Or maybe you're unsatisfied with the
+
+138
+00:06:03,220 --> 00:06:04,150
+reinforcement learning algorithm.
+
+139
+00:06:04,220 --> 00:06:05,210
+Maybe you think, you know,
+
+140
+00:06:05,280 --> 00:06:07,010
+the algorithm isn't quite doing the right thing.
+
+141
+00:06:07,110 --> 00:06:08,910
+Or maybe you think you need to
+
+142
+00:06:09,050 --> 00:06:10,690
+discritize the states more finely
+
+143
+00:06:10,800 --> 00:06:13,330
+in order to apply your reinforcement learning algorithm.
+
+144
+00:06:13,440 --> 00:06:15,590
+Or maybe you need to fiddle with
+
+145
+00:06:15,670 --> 00:06:16,940
+the features you used in value function approximations.
+
+146
+00:06:17,020 --> 00:06:17,960
+Okay?
+
+147
+00:06:18,040 --> 00:06:21,200
+So these are three examples of things you might do and,
+
+148
+00:06:21,270 --> 00:06:25,810
+again, quite often if you chose the wrong one to
+
+149
+00:06:25,810 --> 00:06:26,810
+work on you can easily spend, you know –
+
+150
+00:06:27,160 --> 00:06:29,710
+actually this one I don't want to say six months.
+
+151
+00:06:29,820 --> 00:06:31,110
+You can easily spend a year or two
+
+152
+00:06:31,250 --> 00:06:32,780
+working on the wrong thing.
+
+153
+00:06:32,930 --> 00:06:34,670
+Hey, Dan, this is a favor.
+
+154
+00:06:34,780 --> 00:06:37,570
+I'm, sort of, out of chalk could you wander around
+
+155
+00:06:37,650 --> 00:06:40,080
+and help me get? Thanks.
+
+156
+00:06:40,190 --> 00:06:44,160
+So the team does three things;
+
+157
+00:06:44,260 --> 00:06:46,720
+they'll copy the yellow box to the upper right of this slide.
+
+158
+00:06:46,820 --> 00:06:48,900
+What can you do?
+
+159
+00:06:49,000 --> 00:06:51,440
+So this is the, sort of,
+
+160
+00:06:51,550 --> 00:06:52,490
+reasoning we actually
+
+161
+00:06:52,590 --> 00:06:53,960
+go through on the helicopter project often
+
+162
+00:06:54,110 --> 00:06:56,340
+and to decide what to work on.
+
+163
+00:06:56,450 --> 00:07:00,770
+So let me just step for this example fairly slowly.
+
+164
+00:07:00,910 --> 00:07:03,330
+So this, sort of, reasoning you might go through.
+
+165
+00:07:03,430 --> 00:07:07,690
+Suppose these three assumptions hold true, right?
+
+166
+00:07:07,800 --> 00:07:10,800
+Suppose that the helicopter simulator is accurate,
+
+167
+00:07:10,910 --> 00:07:12,700
+so let's suppose that you built
+
+168
+00:07:12,850 --> 00:07:14,590
+an accurate model of the dynamics.
+
+169
+00:07:14,740 --> 00:07:18,290
+And suppose that, sort of,
+
+170
+00:07:18,400 --> 00:07:19,380
+I turned two under slides,
+
+171
+00:07:19,490 --> 00:07:20,900
+so suppose that the reinforcement learning algorithm
+
+172
+00:07:21,050 --> 00:07:25,340
+correctly controls the helicopter in simulation.
+
+173
+00:07:25,450 --> 00:07:28,360
+So it's a maximized that expected payoff, right?
+
+174
+00:07:28,500 --> 00:07:31,790
+And suppose that maximizing the expected payoff
+
+175
+00:07:31,930 --> 00:07:33,620
+corresponds to autonomous flight, right?
+
+176
+00:07:33,720 --> 00:07:36,520
+If all of these three assumptions holds true,
+
+177
+00:07:36,630 --> 00:07:40,000
+then that means that you would expect
+
+178
+00:07:40,110 --> 00:07:42,930
+the learned controller pi subscript RL
+
+179
+00:07:43,070 --> 00:07:46,630
+to fly well on the actual helicopter. Okay?
+
+180
+00:07:46,810 --> 00:07:52,190
+So this is the I'm, sort of, showing you the source of the
+
+181
+00:07:52,290 --> 00:07:55,460
+reasoning that I go through when I'm trying to come up
+
+182
+00:07:55,560 --> 00:07:57,450
+with a set of diagnostics for this problem.
+
+183
+00:07:57,590 --> 00:07:59,940
+So these are some of the
+
+184
+00:08:00,080 --> 00:08:01,830
+diagnostics we actually use routinely
+
+185
+00:08:01,940 --> 00:08:03,870
+on various revised control problems.
+
+186
+00:08:03,980 --> 00:08:11,510
+So pi subscript RL, right?
+
+187
+00:08:11,640 --> 00:08:13,950
+We said it doesn't fly well on the actual helicopter.
+
+188
+00:08:14,050 --> 00:08:17,710
+So the first diagnostic you want to run
+
+189
+00:08:17,820 --> 00:08:19,480
+is just check if it flies well in simulation,
+
+190
+00:08:19,630 --> 00:08:20,690
+all right?
+
+191
+00:08:20,830 --> 00:08:22,480
+So if it flies well in simulation,
+
+192
+00:08:22,620 --> 00:08:23,810
+but not in real life,
+
+193
+00:08:23,950 --> 00:08:27,580
+then the problem is in the simulator, right?
+
+194
+00:08:27,720 --> 00:08:30,290
+Because the simulator predicts that your controller,
+
+195
+00:08:30,390 --> 00:08:32,190
+the pi subscript RL, flies well,
+
+196
+00:08:32,270 --> 00:08:33,930
+but it doesn't actually fly well in real life.
+
+197
+00:08:34,040 --> 00:08:35,620
+So if this holds true,
+
+198
+00:08:35,700 --> 00:08:38,120
+then that suggests a problem is in the simulator.
+
+199
+00:08:38,220 --> 00:08:39,220
+Question?
+
+200
+00:08:39,330 --> 00:08:42,280
+Student:[Inaudible]
+
+201
+00:08:42,350 --> 00:08:45,400
+the helicopter pilots try to fly on the simulator?
+
+202
+00:08:45,500 --> 00:08:52,210
+Do you have the real helicopter pilots
+
+203
+00:08:52,290 --> 00:08:54,060
+try to fly on the simulator?
+
+204
+00:08:54,170 --> 00:08:55,250
+Instructor (Andrew Ng):
+
+205
+00:08:55,330 --> 00:08:57,740
+Do I try to have the real helicopter flying simulator?
+
+206
+00:08:57,840 --> 00:08:59,260
+Student:Real helicopter pilots.
+
+207
+00:08:59,360 --> 00:09:00,290
+Instructor (Andrew Ng):Oh, I see.
+
+208
+00:09:00,390 --> 00:09:02,020
+Do we ask the helicopter pilots to fly in simulation?
+
+209
+00:09:02,130 --> 00:09:03,780
+So, yeah.
+
+210
+00:09:03,920 --> 00:09:07,840
+It turns out one of the later diagnostics you could do that.
+
+211
+00:09:07,940 --> 00:09:12,000
+On our project we don't do that very often.
+
+212
+00:09:12,100 --> 00:09:14,360
+We informally ask the pilot,
+
+213
+00:09:14,460 --> 00:09:16,630
+who's one of the best pilots in the world,
+
+214
+00:09:16,740 --> 00:09:20,900
+Gary Zoco, to look at the simulator sometimes.
+
+215
+00:09:21,000 --> 00:09:23,180
+We don't very often ask him to fly in the simulator.
+
+216
+00:09:23,310 --> 00:09:28,060
+That answers your question.
+
+217
+00:09:28,160 --> 00:09:29,920
+But let me actually go on and show you some of the
+
+218
+00:09:30,030 --> 00:09:32,520
+other diagnostics that you might use then. Okay?
+
+219
+00:09:32,660 --> 00:09:37,570
+Second is let me use pi subscript human
+
+220
+00:09:37,720 --> 00:09:39,700
+to denote the human control policy, right?
+
+221
+00:09:39,840 --> 00:09:42,460
+This is pi subscript human is policy that, you know,
+
+222
+00:09:42,570 --> 00:09:44,040
+however the human flies it.
+
+223
+00:09:44,180 --> 00:09:49,560
+So one thing to do is look at the value of pi RLcompared to
+
+224
+00:09:49,670 --> 00:09:53,310
+the value of pi subscript human. Okay?
+
+225
+00:09:53,410 --> 00:09:55,160
+So what this means really is,
+
+226
+00:09:55,300 --> 00:09:58,360
+look at how the helicopter looks like
+
+227
+00:09:58,500 --> 00:10:01,320
+when it's flying under control of the pi subscript RL
+
+228
+00:10:01,460 --> 00:10:03,800
+and look at what the helicopter does when it's flying under
+
+229
+00:10:03,940 --> 00:10:05,330
+the human pilot control
+
+230
+00:10:05,500 --> 00:10:08,070
+and evaluate and then,
+
+231
+00:10:08,150 --> 00:10:10,230
+sort of, compute the sum of rewards, right?
+
+232
+00:10:10,340 --> 00:10:11,770
+For your human pilot performance
+
+233
+00:10:11,850 --> 00:10:12,480
+and compute
+
+234
+00:10:12,550 --> 00:10:16,110
+the sum of rewards for the learning controller performance
+
+235
+00:10:16,210 --> 00:10:18,330
+and see on, say,
+
+236
+00:10:18,410 --> 00:10:20,030
+the real helicopter or that question
+
+237
+00:10:20,110 --> 00:10:22,060
+or you can do this on the real helicopter
+
+238
+00:10:22,150 --> 00:10:23,850
+or on simulation actually,
+
+239
+00:10:23,960 --> 00:10:26,770
+but you can see does the human obtain
+
+240
+00:10:26,850 --> 00:10:29,590
+a higher or a lower sum of rewards on average
+
+241
+00:10:29,660 --> 00:10:32,360
+than does the controller you just learned. Okay?
+
+242
+00:10:32,500 --> 00:10:35,940
+And then the way you do this
+
+243
+00:10:36,010 --> 00:10:37,540
+you actually can go and fly the helicopter
+
+244
+00:10:37,680 --> 00:10:39,790
+and just measure the sum of rewards, right?
+
+245
+00:10:39,900 --> 00:10:41,920
+On the actual sequence of states the helicopter flew
+
+246
+00:10:41,990 --> 00:10:43,510
+through, right?
+
+247
+00:10:43,620 --> 00:10:47,640
+So if this condition holds true, right?
+
+248
+00:10:47,750 --> 00:10:52,480
+Where my mouse pointer is if oh, excuse me. Okay.
+
+249
+00:10:52,550 --> 00:10:54,490
+If this condition holds true where my mouse pointer is,
+
+250
+00:10:54,590 --> 00:10:56,310
+if it holds true
+
+251
+00:10:56,380 --> 00:10:59,530
+that pi subscript RL is less than pi subscript human,
+
+252
+00:10:59,630 --> 00:11:01,120
+those of you watching online
+
+253
+00:11:01,230 --> 00:11:02,520
+I don't know if you can see this,
+
+254
+00:11:02,660 --> 00:11:06,000
+but this V pi subscript RL of as zero
+
+255
+00:11:06,100 --> 00:11:08,780
+less than V pi subscript human of as zero.
+
+256
+00:11:08,920 --> 00:11:11,020
+But if this holds true,
+
+257
+00:11:11,120 --> 00:11:12,550
+then that suggests
+
+258
+00:11:12,660 --> 00:11:14,530
+that a problem is in the reinforcement learning algorithm
+
+259
+00:11:14,640 --> 00:11:20,540
+because the human has found a policy that obtainsa higher
+
+260
+00:11:20,650 --> 00:11:23,140
+reward than does the reinforcement learning algorithm.
+
+261
+00:11:23,240 --> 00:11:24,490
+So this proves, or this shows,
+
+262
+00:11:24,600 --> 00:11:26,030
+that your reinforcement learning algorithm
+
+263
+00:11:26,140 --> 00:11:29,480
+is not maximizing the sum of rewards, right?
+
+264
+00:11:29,590 --> 00:11:39,120
+And lastly, the last condition is this
+
+265
+00:11:39,260 --> 00:11:40,740
+the last test is this,
+
+266
+00:11:40,840 --> 00:11:43,030
+if the inequality holds in the opposite direction
+
+267
+00:11:43,130 --> 00:11:46,170
+so if the reinforcement learning algorithm
+
+268
+00:11:46,320 --> 00:11:48,130
+obtains a higher sum of rewards
+
+269
+00:11:48,240 --> 00:11:50,230
+on average than does the human,
+
+270
+00:11:50,340 --> 00:11:53,550
+but the reinforcement learning algorithm
+
+271
+00:11:53,660 --> 00:11:55,850
+still flies worse than the human does, right?
+
+272
+00:11:56,000 --> 00:11:57,200
+Then this suggests that
+
+273
+00:11:57,310 --> 00:11:59,480
+the problem is in the cos functions than
+
+274
+00:11:59,560 --> 00:12:01,350
+the reward function
+
+275
+00:12:01,450 --> 00:12:04,130
+because the reinforcement learning algorithm
+
+276
+00:12:04,210 --> 00:12:06,070
+is obtaining a higher sum of rewards than the human,
+
+277
+00:12:06,210 --> 00:12:07,900
+but it still flies worse than the human.
+
+278
+00:12:08,000 --> 00:12:12,150
+So that suggests that maximizing the sum of rewards
+
+279
+00:12:12,250 --> 00:12:15,660
+does not correspond to very good autonomous flight.
+
+280
+00:12:15,770 --> 00:12:17,180
+So if this holds true,
+
+281
+00:12:17,290 --> 00:12:19,350
+then the problem is in your reward function.
+
+282
+00:12:19,450 --> 00:12:20,680
+Or in other words,
+
+283
+00:12:20,820 --> 00:12:22,990
+the problem is in your optimization objective
+
+284
+00:12:23,100 --> 00:12:25,370
+and then rather than the algorithm
+
+285
+00:12:25,480 --> 00:12:27,440
+that's trying to maximize the optimization objective and,
+
+286
+00:12:27,540 --> 00:12:29,190
+so you might change your optimization objective.
+
+287
+00:12:29,300 --> 00:12:32,530
+In other words, you might change reward function. Okay?
+
+288
+00:12:32,720 --> 00:12:36,030
+So, of course, this is just one example of
+
+289
+00:12:36,170 --> 00:12:38,740
+how you might debug a reinforcement learning algorithm.
+
+290
+00:12:38,840 --> 00:12:41,960
+And these particular set of diagnostics
+
+291
+00:12:42,110 --> 00:12:43,890
+happen to apply only
+
+292
+00:12:44,000 --> 00:12:46,330
+because we're fortunate enough to be able to
+
+293
+00:12:46,430 --> 00:12:49,410
+an amazingly good human pilot
+
+294
+00:12:49,510 --> 00:12:51,580
+who can fly a helicopter for us, right?
+
+295
+00:12:51,680 --> 00:12:53,110
+If you didn't have a very good pilot
+
+296
+00:12:53,220 --> 00:12:55,070
+then maybe some of these diagnostics won't apply
+
+297
+00:12:55,170 --> 00:12:59,100
+and you'll have to come up with other ones.
+
+298
+00:12:59,170 --> 00:13:00,190
+But want to go through this
+
+299
+00:13:00,260 --> 00:13:01,940
+again as an example of the source of diagnostics you use to
+
+300
+00:13:02,020 --> 00:13:03,820
+debug a reinforcement learning algorithm.
+
+301
+00:13:03,930 --> 00:13:05,710
+And the point of this example
+
+302
+00:13:05,810 --> 00:13:08,480
+isn't so much that I want you to remember
+
+303
+00:13:08,550 --> 00:13:10,280
+the specifics of the diagnostics, right?
+
+304
+00:13:10,390 --> 00:13:12,930
+The point of this is really for your own problem,
+
+305
+00:13:13,030 --> 00:13:14,540
+be it supervised learning,
+
+306
+00:13:14,670 --> 00:13:16,650
+unsupervised learning, reinforcement learning,
+
+307
+00:13:16,750 --> 00:13:17,810
+whatever.
+
+308
+00:13:17,920 --> 00:13:20,500
+You very often have to come up with your own diagnostics,
+
+309
+00:13:20,610 --> 00:13:22,320
+your own debugging tools,
+
+310
+00:13:22,450 --> 00:13:23,440
+to figure out why an algorithm is working
+
+311
+00:13:23,550 --> 00:13:24,840
+and why an algorithm isn't working.
+
+312
+00:13:24,990 --> 00:13:26,290
+And this is
+
+313
+00:13:26,390 --> 00:13:28,460
+one example of what we actually do on the helicopter.
+
+314
+00:13:28,560 --> 00:13:29,710
+Okay?
+
+315
+00:13:29,810 --> 00:13:33,280
+Questions about this? Yeah, Justin?
+
+316
+00:13:33,380 --> 00:13:35,540
+Student:I'm just curious how do you collect,
+
+317
+00:13:35,650 --> 00:13:36,940
+like, training data?
+
+318
+00:13:37,050 --> 00:13:38,040
+Like in our homework
+
+319
+00:13:38,150 --> 00:13:39,390
+the pendulum fell over lots of times,
+
+320
+00:13:39,500 --> 00:13:41,060
+but how do you work that with an expensive helicopter?
+
+321
+00:13:41,160 --> 00:13:42,830
+Instructor (Andrew Ng):Yeah.
+
+322
+00:13:42,930 --> 00:13:44,120
+So, I see, right.
+
+323
+00:13:44,270 --> 00:13:45,590
+So on the helicopter
+
+324
+00:13:45,690 --> 00:13:46,910
+the way we collect data
+
+325
+00:13:47,010 --> 00:13:48,700
+to learn [inaudible] and improbabilities
+
+326
+00:13:48,800 --> 00:13:53,170
+is we usually not done lots of things,
+
+327
+00:13:53,280 --> 00:13:54,900
+but to first approximation,
+
+328
+00:13:55,010 --> 00:13:56,790
+the most basic merger is
+
+329
+00:13:56,890 --> 00:13:58,670
+if you ask a human pilot
+
+330
+00:13:58,780 --> 00:14:00,420
+tojust fly the helicopter around for you
+
+331
+00:14:00,560 --> 00:14:01,900
+and he's not gonna crash it.
+
+332
+00:14:02,040 --> 00:14:03,840
+So you can collect lots of data as
+
+333
+00:14:03,980 --> 00:14:05,620
+is being controlled by a human pilot.
+
+334
+00:14:05,720 --> 00:14:07,400
+And, as I say, it turns out
+
+335
+00:14:07,510 --> 00:14:09,840
+in data collection the, sort of,
+
+336
+00:14:09,980 --> 00:14:12,790
+a few standard ways to collect data
+
+337
+00:14:12,890 --> 00:14:17,080
+are to let you so a helicopter can do lots of things
+
+338
+00:14:17,220 --> 00:14:18,590
+and you don't want to collect data
+
+339
+00:14:18,700 --> 00:14:22,490
+representing only one small part of the flight regime.
+
+340
+00:14:22,630 --> 00:14:25,980
+So concretely what we often do is
+
+341
+00:14:26,050 --> 00:14:28,340
+ask the pilot to carry out frequency sweeps and
+
+342
+00:14:28,480 --> 00:14:31,240
+what that means, very informally,
+
+343
+00:14:31,320 --> 00:14:33,360
+is you imagine them holding a control stick, right?
+
+344
+00:14:33,500 --> 00:14:34,770
+In their hand.
+
+345
+00:14:34,870 --> 00:14:36,320
+Frequency sweeps are a process
+
+346
+00:14:36,390 --> 00:14:38,520
+where you start off making very slow
+
+347
+00:14:38,630 --> 00:14:42,020
+oscillations and then you start taking your control stick
+
+348
+00:14:42,170 --> 00:14:44,320
+and moving it back and forth faster and faster,
+
+349
+00:14:44,460 --> 00:14:46,400
+so you sort of sweep out the range of
+
+350
+00:14:46,500 --> 00:14:49,690
+frequencies ranging from very slow slightly [inaudible]
+
+351
+00:14:49,840 --> 00:14:53,000
+by oscillations until you go faster and faster
+
+352
+00:14:53,110 --> 00:14:54,380
+and you're sort of directing the control seat back and forth.
+
+353
+00:14:54,480 --> 00:14:56,130
+So this is oh, good. Thank you.
+
+354
+00:14:56,270 --> 00:14:57,930
+So that's, sort of,
+
+355
+00:14:58,080 --> 00:15:00,890
+one standard way that we use to collect data on
+
+356
+00:15:01,080 --> 00:15:02,840
+various robotics.
+
+357
+00:15:02,990 --> 00:15:05,130
+It may or may not apply to different robots
+
+358
+00:15:05,240 --> 00:15:06,700
+or to different systems you work on.
+
+359
+00:15:06,800 --> 00:15:09,340
+And, as I say,
+
+360
+00:15:09,440 --> 00:15:11,020
+in reality we do a lot of things.
+
+361
+00:15:11,120 --> 00:15:13,060
+Sometimes we have a controllers
+
+362
+00:15:13,170 --> 00:15:14,420
+collect data autonomously too,
+
+363
+00:15:14,500 --> 00:15:17,390
+but that's other more complex algorithms. Anything else?
+
+364
+00:15:17,470 --> 00:15:22,590
+Student:In the first point the goal communicates
+
+365
+00:15:22,700 --> 00:15:25,760
+that the other is perhaps not mapping
+
+366
+00:15:25,870 --> 00:15:28,250
+the actions similar to the simulator,
+
+367
+00:15:28,390 --> 00:15:29,730
+so in [inaudible] this could be very common
+
+368
+00:15:29,870 --> 00:15:32,620
+that you could have [inaudible]?
+
+369
+00:15:32,760 --> 00:15:34,060
+Just any specific matter that
+
+370
+00:15:34,170 --> 00:15:38,610
+pilots use to take care of that variable, so all [inaudible]?
+
+371
+00:15:38,760 --> 00:15:39,780
+Instructor (Andrew Ng):Yeah, right.
+
+372
+00:15:39,920 --> 00:15:41,530
+So you're saying like point one may not
+
+373
+00:15:41,670 --> 00:15:42,680
+be simulated accurate;
+
+374
+00:15:42,820 --> 00:15:45,980
+it may be that the hardware is
+
+375
+00:15:46,120 --> 00:15:47,750
+doing something strange with the control.
+
+376
+00:15:47,890 --> 00:15:50,070
+There is concluding the controls through some action and
+
+377
+00:15:50,180 --> 00:15:53,970
+through some strange transformation
+
+378
+00:15:54,120 --> 00:15:56,490
+because it's actually simulating it as a helicopter.
+
+379
+00:15:56,630 --> 00:15:58,100
+I don't know. Yeah.
+
+380
+00:15:58,250 --> 00:15:59,800
+I've definitely seen that
+
+381
+00:15:59,910 --> 00:16:01,300
+happen on some other robots before.
+
+382
+00:16:01,450 --> 00:16:05,230
+So maybe diagnostic one here is a better form as deciding
+
+383
+00:16:05,370 --> 00:16:08,090
+whether the simulator matches the actual hardware,
+
+384
+00:16:08,190 --> 00:16:10,690
+I don't know. Yeah.
+
+385
+00:16:10,830 --> 00:16:13,110
+That's another class of those to watch out for.
+
+386
+00:16:13,250 --> 00:16:15,070
+If you suspect that's the case,
+
+387
+00:16:15,180 --> 00:16:17,790
+I can't think of a good, sort of, diagnostic right now
+
+388
+00:16:17,900 --> 00:16:19,140
+to confirm that,
+
+389
+00:16:19,250 --> 00:16:20,550
+but that, again, before
+
+390
+00:16:20,730 --> 00:16:22,580
+that would be a good thing
+
+391
+00:16:22,730 --> 00:16:24,800
+to try to come up with a diagnostic for to see
+
+392
+00:16:24,950 --> 00:16:27,090
+if there might be something wrong with the hardware.
+
+393
+00:16:27,200 --> 00:16:31,650
+And I think these are by no means
+
+394
+00:16:31,750 --> 00:16:34,350
+the definitive diagnostics or anything like that.
+
+395
+00:16:34,420 --> 00:16:36,520
+It's just sort of an example, but it would be great
+
+396
+00:16:36,600 --> 00:16:38,710
+if you come up with other diagnostics
+
+397
+00:16:38,830 --> 00:16:40,040
+to check that the hardware is working properly
+
+398
+00:16:40,110 --> 00:16:43,830
+that would be a great thing to do, too. Okay.
+
+399
+00:16:43,940 --> 00:16:45,150
+Is this okay,
+
+400
+00:16:45,300 --> 00:16:46,730
+last couple of questions before we move on?
+
+401
+00:16:46,840 --> 00:16:49,910
+Student:You said the reward function was?
+
+402
+00:16:50,010 --> 00:16:51,400
+Instructor (Andrew Ng):Oh, in this example,
+
+403
+00:16:51,540 --> 00:16:55,910
+what I was just using a quadratic constant.
+
+404
+00:16:56,020 --> 00:16:57,460
+On the helicopter
+
+405
+00:16:57,570 --> 00:16:59,890
+we often use things that are much more complicated.
+
+406
+00:17:00,000 --> 00:17:02,700
+Student:[Inaudible] You have no way of knowing
+
+407
+00:17:02,780 --> 00:17:06,320
+what is the, like, desired focus?
+
+408
+00:17:06,460 --> 00:17:09,190
+Instructor (Andrew Ng):Yeah. So you can, sort of,
+
+409
+00:17:09,300 --> 00:17:13,070
+figure out where ask the human pilot to hover in place
+
+410
+00:17:13,150 --> 00:17:14,250
+and guess what his desire was.
+
+411
+00:17:14,360 --> 00:17:16,980
+Again, these aren't constants telling you to, yeah.
+
+412
+00:17:17,090 --> 00:17:21,310
+Student:[Inaudible]
+
+413
+00:17:21,400 --> 00:17:23,080
+physics that are based learning problems.
+
+414
+00:17:23,210 --> 00:17:25,090
+Do you does it actually
+
+415
+00:17:25,260 --> 00:17:30,730
+work best to use a physical finian model?
+
+416
+00:17:30,870 --> 00:17:32,320
+You know, just, sort of,
+
+417
+00:17:32,430 --> 00:17:33,640
+physics tell or you just sort of do learning on [inaudible]?
+
+418
+00:17:33,720 --> 00:17:34,360
+Instructor (Andrew Ng):Yeah.
+
+419
+00:17:34,470 --> 00:17:35,780
+The physics models work well, right?
+
+420
+00:17:35,920 --> 00:17:37,070
+So the answer is it varies a lot from problem to problem.
+
+421
+00:17:37,180 --> 00:17:39,190
+It turns out that the aerodynamics of helicopters,
+
+422
+00:17:39,290 --> 00:17:41,980
+I think, aren't understood well enough
+
+423
+00:17:42,080 --> 00:17:45,090
+that you can look at the "specs" of a helicopter and
+
+424
+00:17:45,190 --> 00:17:46,920
+build a very good physics simulator.
+
+425
+00:17:47,060 --> 00:17:49,090
+So on the helicopter, we actually learn the dynamics.
+
+426
+00:17:49,240 --> 00:17:51,200
+And I don't know how to build a physics model.
+
+427
+00:17:51,320 --> 00:17:54,240
+For other problems, like if you actually have an inverted
+
+428
+00:17:54,350 --> 00:17:55,460
+pendulum problem or something,
+
+429
+00:17:55,570 --> 00:17:57,600
+there are many other problems for
+
+430
+00:17:57,700 --> 00:17:59,610
+which the aerodynamics are much better understood
+
+431
+00:17:59,750 --> 00:18:02,470
+and for which physic simulators work perfectly fine,
+
+432
+00:18:02,580 --> 00:18:03,870
+but it depends a lot
+
+433
+00:18:03,970 --> 00:18:06,380
+on some problems physic simulators work great
+
+434
+00:18:06,530 --> 00:18:10,840
+on some they probably aren't great on all. Okay? Cool.
+
+435
+00:18:10,950 --> 00:18:18,960
+So, I guess, retract the chalkboard, please. All right.
+
+436
+00:18:19,060 --> 00:18:36,760
+So how much time do I have? Twenty minutes. Okay.
+
+437
+00:18:36,870 --> 00:18:39,040
+So let's go back to our discussion on LQR Control,
+
+438
+00:18:39,150 --> 00:18:40,900
+linear-quadratic regulation control,
+
+439
+00:18:40,980 --> 00:18:43,220
+and then I want to take that a little bit further and tell you
+
+440
+00:18:43,330 --> 00:18:45,110
+about the, sort of, one variation on the LQR
+
+441
+00:18:45,220 --> 00:18:47,470
+called differential dynamic programming.
+
+442
+00:18:47,550 --> 00:18:48,770
+Just to recap,
+
+443
+00:18:48,880 --> 00:18:50,820
+just to remind you of what LQR,
+
+444
+00:18:50,930 --> 00:18:52,260
+or linear-quadratic regulation control, is,
+
+445
+00:18:52,400 --> 00:18:55,780
+in the last lectureI defined
+
+446
+00:18:55,890 --> 00:19:08,220
+a horizon problem where your goal is to maximize, right?
+
+447
+00:19:08,370 --> 00:19:12,120
+Just sort of find the horizon sum of rewards,
+
+448
+00:19:12,230 --> 00:19:13,800
+and there's no discounting anymore,
+
+449
+00:19:13,910 --> 00:19:17,710
+and then we came up with this
+
+450
+00:19:17,860 --> 00:20:06,010
+dynamic programming algorithm, right? Okay.
+
+451
+00:20:06,110 --> 00:20:07,490
+Then we came up with this
+
+452
+00:20:07,610 --> 00:20:09,670
+dynamic programming algorithm in the last lecture,
+
+453
+00:20:09,790 --> 00:20:11,770
+where you compute V star of
+
+454
+00:20:11,840 --> 00:20:15,830
+capital T that's one value function for the last time step.
+
+455
+00:20:15,940 --> 00:20:16,890
+So, in other words,
+
+456
+00:20:17,010 --> 00:20:19,390
+what's the value if your star in the state S
+
+457
+00:20:19,500 --> 00:20:22,580
+and you just get to take one action
+
+458
+00:20:22,660 --> 00:20:24,000
+and then the clock runs out.
+
+459
+00:20:24,120 --> 00:20:25,810
+The aerodynamic programming algorithm
+
+460
+00:20:25,930 --> 00:20:28,720
+that we repeatedly compute V
+
+461
+00:20:28,910 --> 00:20:31,190
+star lowercase t in terms of V
+
+462
+00:20:31,330 --> 00:20:36,930
+star t plus one, so we compute V star capital T
+
+463
+00:20:37,040 --> 00:20:43,120
+and then recurs backwards, right?
+
+464
+00:20:43,220 --> 00:20:48,380
+And so on, until we get down to V star zero
+
+465
+00:20:48,530 --> 00:20:51,740
+and then pi star was given by, as usual,
+
+466
+00:20:51,890 --> 00:20:55,610
+the augmax of the thing we had in the definition of the
+
+467
+00:20:55,680 --> 00:20:56,880
+value function.
+
+468
+00:20:56,980 --> 00:21:02,420
+So last time, the specific example
+
+469
+00:21:02,520 --> 00:21:06,770
+we saw of or one specific example,
+
+470
+00:21:06,880 --> 00:21:15,570
+that sort of define a horizon problem
+
+471
+00:21:15,680 --> 00:21:16,560
+that we solved by DP
+
+472
+00:21:16,660 --> 00:21:19,230
+was the LQR problem where we worked directly
+
+473
+00:21:19,400 --> 00:21:20,590
+with continuous state and actions.
+
+474
+00:21:20,730 --> 00:21:35,010
+And in the LQR problem
+
+475
+00:21:35,120 --> 00:21:36,400
+we had these linear dynamics
+
+476
+00:21:36,510 --> 00:21:38,810
+where the state ST plus one is a linear function
+
+477
+00:21:38,920 --> 00:21:42,570
+of the previous state and action
+
+478
+00:21:42,670 --> 00:21:48,100
+and then plus this Gaussian noise WT,
+
+479
+00:21:48,210 --> 00:21:49,990
+which is covariance sigma W.
+
+480
+00:21:50,100 --> 00:21:53,740
+And I said briefly last time,
+
+481
+00:21:53,840 --> 00:21:57,400
+that one specific way to come up with these
+
+482
+00:21:57,550 --> 00:21:58,910
+linear dynamics, right?
+
+483
+00:21:59,090 --> 00:22:00,770
+Oh, excuse me.
+
+484
+00:22:00,880 --> 00:22:03,690
+One specific way to take
+
+485
+00:22:03,800 --> 00:22:07,090
+a system and come up with a linear model for it is
+
+486
+00:22:07,200 --> 00:22:15,420
+if you have some simulator, say, right?
+
+487
+00:22:15,530 --> 00:22:20,510
+So in this cartoon,
+
+488
+00:22:20,650 --> 00:22:24,310
+the vertical axis represents ST plus one and
+
+489
+00:22:24,430 --> 00:22:26,870
+the horizontal axis represents STAT.
+
+490
+00:22:26,980 --> 00:22:31,960
+So say you have a simulator, right?
+
+491
+00:22:32,110 --> 00:22:33,540
+And let's say it determines [inaudible] simulator,
+
+492
+00:22:33,690 --> 00:22:35,060
+so we have a [inaudible] simulator
+
+493
+00:22:35,170 --> 00:22:37,440
+that tells you what the next state is ST plus one
+
+494
+00:22:37,540 --> 00:22:39,540
+is a function of previous state and action.
+
+495
+00:22:39,650 --> 00:22:42,400
+And then you can choose a point around which
+
+496
+00:22:42,510 --> 00:22:54,130
+to linearize this simulator,
+
+497
+00:22:54,240 --> 00:22:57,560
+by which I mean that you choose a point,
+
+498
+00:22:57,660 --> 00:22:59,360
+an approximate your
+
+499
+00:22:59,460 --> 00:23:02,130
+approximate the function F using a linear function,
+
+500
+00:23:02,220 --> 00:23:04,440
+this tangent, to the function F at that point.
+
+501
+00:23:04,520 --> 00:23:05,700
+So if you do that
+
+502
+00:23:05,770 --> 00:23:20,340
+you have ST plus one equals shoot.
+
+503
+00:23:20,420 --> 00:23:44,230
+Sorry about writing down so many lines,
+
+504
+00:23:44,380 --> 00:23:47,590
+but this will be
+
+505
+00:23:47,730 --> 00:23:51,490
+the linearization approximation to the function F
+
+506
+00:23:51,630 --> 00:23:55,310
+where I've taken a linearization around the specific point as
+
+507
+00:23:55,420 --> 00:23:57,590
+bar T, A bar T. Okay?
+
+508
+00:23:57,720 --> 00:24:00,400
+And so you can take those
+
+509
+00:24:00,500 --> 00:24:11,410
+and just narrow it down to a linear equation
+
+510
+00:24:11,520 --> 00:24:12,990
+like that where the next state ST plus one
+
+511
+00:24:13,100 --> 00:24:15,390
+is now some linear function of the previous state
+
+512
+00:24:15,470 --> 00:24:18,240
+ST and AT and these matrixes, AT and BT,
+
+513
+00:24:18,320 --> 00:24:21,290
+will depend ony your choice of
+
+514
+00:24:21,400 --> 00:24:25,090
+location around which to linearize this function. Okay?
+
+515
+00:24:25,240 --> 00:24:30,190
+I said last time, that this linearization approximation you,
+
+516
+00:24:30,340 --> 00:24:32,140
+sort of, expect to be particularly good
+
+517
+00:24:32,250 --> 00:24:34,830
+in the vicinity of, as bar T, A bar T
+
+518
+00:24:34,970 --> 00:24:36,690
+because this linear function
+
+519
+00:24:36,830 --> 00:24:38,510
+is a pretty good approximation to F, right?
+
+520
+00:24:38,660 --> 00:24:44,360
+So if in this little neighborhood there. And yes?
+
+521
+00:24:44,500 --> 00:24:48,170
+Student:[Inaudible] is there an assumption
+
+522
+00:24:48,280 --> 00:24:53,090
+that you are looking at something the second recently
+
+523
+00:24:53,240 --> 00:24:55,310
+indicates like the helicopter,
+
+524
+00:24:55,440 --> 00:24:58,170
+are you assuming pilot behavior is the same as
+
+525
+00:24:58,310 --> 00:25:00,670
+[inaudible] behavior or
+
+526
+00:25:00,820 --> 00:25:01,630
+Instructor (Andrew Ng):Yeah, right.
+
+527
+00:25:01,730 --> 00:25:05,750
+So let me not call this as an assumption.
+
+528
+00:25:05,890 --> 00:25:07,180
+Let me just say that when I use this algorithm,
+
+529
+00:25:07,280 --> 00:25:08,660
+when I choose to linearize this way,
+
+530
+00:25:08,760 --> 00:25:10,880
+then my approximation would be physically good
+
+531
+00:25:10,980 --> 00:25:13,860
+in the vicinity here and it may be less good elsewhere and,
+
+532
+00:25:13,960 --> 00:25:17,820
+so let me when I actually talk about DDP
+
+533
+00:25:17,970 --> 00:25:19,420
+I actually make use of this property.
+
+534
+00:25:19,520 --> 00:25:21,230
+Which is why I'm going over it now. Okay?
+
+535
+00:25:21,380 --> 00:25:22,980
+But, yeah. There is an intuition that
+
+536
+00:25:23,130 --> 00:25:25,920
+you want to linearize near the vicinity—
+
+537
+00:25:26,070 --> 00:25:27,120
+near of states,
+
+538
+00:25:27,230 --> 00:25:28,530
+so you expect your system to spend the most time.
+
+539
+00:25:28,680 --> 00:25:32,460
+Right.
+
+540
+00:25:32,610 --> 00:25:36,630
+So, okay. So this is how you might come up with a linear
+
+541
+00:25:36,740 --> 00:25:40,340
+model and if you do that then, oh, you can
+
+542
+00:25:40,490 --> 00:25:42,720
+let's see.
+
+543
+00:25:42,820 --> 00:25:43,500
+So for LQR
+
+544
+00:25:43,610 --> 00:25:55,460
+we also have this sort of quadratic reward function, right?
+
+545
+00:25:55,600 --> 00:26:00,110
+Where the matrixes UT and VT are positive semi-definite,
+
+546
+00:26:00,210 --> 00:26:02,980
+so the rewards are always negative, that's this minus sign.
+
+547
+00:26:03,100 --> 00:26:06,110
+And then if you take
+
+548
+00:26:06,220 --> 00:26:07,790
+exactly the dynamic programming algorithm,
+
+549
+00:26:07,900 --> 00:26:11,700
+that I've written down just now, then lets see.
+
+550
+00:26:11,850 --> 00:26:16,250
+It turns out that the value function at every state,
+
+551
+00:26:16,400 --> 00:26:17,670
+excuse me.
+
+552
+00:26:17,780 --> 00:26:19,640
+It turns out the value function for every time
+
+553
+00:26:19,740 --> 00:26:23,300
+step will be a quadratic function of the state
+
+554
+00:26:23,400 --> 00:26:24,500
+and can be written like that.
+
+555
+00:26:24,600 --> 00:26:29,200
+And so you initialize
+
+556
+00:26:29,330 --> 00:26:30,860
+the dynamic programming algorithm as follows.
+
+557
+00:26:30,970 --> 00:26:43,910
+And I just write this down, but
+
+558
+00:26:44,060 --> 00:26:46,900
+there's actually just one property I want to point out later,
+
+559
+00:26:46,970 --> 00:26:55,080
+but this equation is, well, somewhat big and hairy,
+
+560
+00:26:55,190 --> 00:26:57,310
+but don't worry about most of its details.
+
+561
+00:26:57,450 --> 00:27:49,270
+Let me just put this. Shoot,
+
+562
+00:27:49,420 --> 00:27:52,340
+there's one more equation I want to fit in. Well, okay.
+
+563
+00:27:52,440 --> 00:27:54,180
+All right. So it turns out the value function is
+
+564
+00:27:54,290 --> 00:27:57,890
+a quadratic function where V star T is this and,
+
+565
+00:27:58,000 --> 00:28:02,960
+so you initialize the dynamic programming step with this.
+
+566
+00:28:03,060 --> 00:28:06,480
+This fi and this si gives you V capital T
+
+567
+00:28:06,580 --> 00:28:08,100
+and then it records backwards.
+
+568
+00:28:08,200 --> 00:28:10,630
+So these two equations express
+
+569
+00:28:10,780 --> 00:28:19,570
+will give you V subscript T as a function of VT plus one.
+
+570
+00:28:19,720 --> 00:28:21,900
+Okay? So it incurs backwards for this learning algorithm.
+
+571
+00:28:22,000 --> 00:28:25,360
+And the last thing, get this on the same board,
+
+572
+00:28:25,470 --> 00:28:38,840
+so sorry about the disorganized use of the boards.
+
+573
+00:28:38,950 --> 00:28:40,410
+I just wanted this on the same place.
+
+574
+00:28:40,520 --> 00:28:53,380
+And, finally, the actual policy pi star of ST is given by
+
+575
+00:28:53,490 --> 00:28:55,430
+some linear function of ST,
+
+576
+00:28:55,540 --> 00:28:57,160
+so LT here is a matrix
+
+577
+00:28:57,310 --> 00:28:59,200
+where LT is equal to
+
+578
+00:28:59,350 --> 00:29:18,500
+numerous times. Okay?
+
+579
+00:29:18,640 --> 00:29:20,790
+And so when you do this
+
+580
+00:29:20,930 --> 00:29:22,850
+you now have the actual policy, right?
+
+581
+00:29:22,950 --> 00:29:24,140
+So just concretely,
+
+582
+00:29:24,250 --> 00:29:26,160
+you run the dynamic programming algorithm
+
+583
+00:29:26,300 --> 00:29:29,260
+to compute fi T and si T for all values of T
+
+584
+00:29:29,370 --> 00:29:32,520
+and then you plug it in to compute the matrixes LT
+
+585
+00:29:32,620 --> 00:29:34,970
+and now you know the optimal action stake and
+
+586
+00:29:35,080 --> 00:29:36,710
+[inaudible]. Okay?
+
+587
+00:29:36,820 --> 00:29:41,470
+So there's one very interesting property
+
+588
+00:29:41,620 --> 00:29:43,410
+these equations are a huge mess,
+
+589
+00:29:43,560 --> 00:29:45,010
+but you can re-derive them yourself,
+
+590
+00:29:45,190 --> 00:29:46,360
+but don't worry about the details.
+
+591
+00:29:46,470 --> 00:29:48,460
+But this is one specific property of this dynamic
+
+592
+00:29:48,610 --> 00:29:51,040
+programming algorithm
+
+593
+00:29:51,150 --> 00:29:53,090
+that's very interesting that I want to point out.
+
+594
+00:29:53,190 --> 00:29:55,200
+Which is the following.
+
+595
+00:29:55,310 --> 00:29:58,700
+Notice that to compute the optimal policy
+
+596
+00:29:58,840 --> 00:30:01,020
+I need to compute these matrixes LT
+
+597
+00:30:01,170 --> 00:30:06,910
+and notice that LT depends on A,
+
+598
+00:30:07,010 --> 00:30:09,970
+it depends on B, it depends on D, and it depends on fi,
+
+599
+00:30:10,110 --> 00:30:13,520
+but it doesn't depend on si, right?
+
+600
+00:30:13,660 --> 00:30:18,440
+Notice this further
+
+601
+00:30:18,590 --> 00:30:21,200
+that when I carry out my dynamic programming algorithm
+
+602
+00:30:21,350 --> 00:30:29,980
+my recursive definition for si well it depends on oh,
+
+603
+00:30:30,120 --> 00:30:41,060
+excuse me. It should be si T, right. Si T plus one. Okay.
+
+604
+00:30:41,210 --> 00:30:45,110
+In order to carry out my dynamic programming algorithm,
+
+605
+00:30:45,250 --> 00:30:45,980
+right?
+
+606
+00:30:46,120 --> 00:30:48,450
+For si T I need to know what si T plus one is.
+
+607
+00:30:48,550 --> 00:30:51,390
+So si T depends on these things,
+
+608
+00:30:51,530 --> 00:30:54,960
+but in order to carry out the dynamic programming for fi T,
+
+609
+00:30:55,100 --> 00:31:00,210
+fi T doesn't actually depend on si T plus one, right?
+
+610
+00:31:00,360 --> 00:31:04,500
+And so in other words in order to compute the fi T's
+
+611
+00:31:04,640 --> 00:31:06,650
+I don't need these si's.
+
+612
+00:31:06,830 --> 00:31:09,820
+So if all I want is the fi's
+
+613
+00:31:09,920 --> 00:31:13,690
+I can actually omit this step of the
+
+614
+00:31:13,800 --> 00:31:14,980
+dynamic programming algorithm
+
+615
+00:31:15,080 --> 00:31:18,100
+and not bother to carry out
+
+616
+00:31:18,200 --> 00:31:20,980
+the dynamic programming algorithm in terms of the fi's.
+
+617
+00:31:21,130 --> 00:31:24,070
+And then having done my dynamic programming algorithm
+
+618
+00:31:24,170 --> 00:31:26,600
+just for excuse me, I misspoke.
+
+619
+00:31:26,750 --> 00:31:30,410
+You I can forget about the si's
+
+620
+00:31:30,510 --> 00:31:32,910
+and just do the dynamic programming updates for the fi
+
+621
+00:31:33,020 --> 00:31:38,190
+matrixes and then having done my DP updates for the fi T
+
+622
+00:31:38,340 --> 00:31:40,950
+I can then plug this into this formula to compute LT.
+
+623
+00:31:41,050 --> 00:31:42,230
+Okay?
+
+624
+00:31:42,410 --> 00:31:47,070
+And so one other thing about it is you can,
+
+625
+00:31:47,170 --> 00:31:49,130
+to be slightly more efficient
+
+626
+00:31:49,230 --> 00:31:51,480
+efficiency isn't really the issue,
+
+627
+00:31:51,580 --> 00:31:54,190
+but if you want you can actually forget about the fi T's.
+
+628
+00:31:54,290 --> 00:31:56,890
+You actually don't need to compute that at all.
+
+629
+00:31:57,010 --> 00:32:01,050
+Now, the other interesting property of this is
+
+630
+00:32:01,150 --> 00:32:09,300
+that the matrix sigma W appears only
+
+631
+00:32:09,440 --> 00:32:11,930
+in my DV update for the si T's.
+
+632
+00:32:12,040 --> 00:32:14,920
+It doesn't actually appear in my updates for the fi T's.
+
+633
+00:32:15,060 --> 00:32:18,990
+So you remember well,
+
+634
+00:32:19,100 --> 00:32:25,540
+my model was that ST plus one equals ATST plus VT, AT
+
+635
+00:32:25,640 --> 00:32:30,120
+plus WT where these noise terms, WT,
+
+636
+00:32:30,230 --> 00:32:31,990
+had a covariance sigma W
+
+637
+00:32:32,100 --> 00:32:34,450
+and so the only place that appears
+
+638
+00:32:34,560 --> 00:32:35,920
+the covariance of the noise
+
+639
+00:32:36,030 --> 00:32:37,770
+terms of appears is in those IT's,
+
+640
+00:32:37,880 --> 00:32:38,850
+but I just said that
+
+641
+00:32:38,950 --> 00:32:40,140
+they can do this entire [inaudible]
+
+642
+00:32:40,240 --> 00:32:43,460
+ordering algorithm without the si T's.
+
+643
+00:32:43,560 --> 00:32:45,380
+So what this means is
+
+644
+00:32:45,530 --> 00:32:47,640
+that you can actually find the optimal policy
+
+645
+00:32:47,780 --> 00:32:50,710
+without knowing what the covariance of the noise terms
+
+646
+00:32:50,820 --> 00:32:52,460
+are. Okay?
+
+647
+00:32:52,570 --> 00:32:58,190
+So this is a very special property of LQR systems
+
+648
+00:32:58,300 --> 00:33:00,000
+and once you change anything,
+
+649
+00:33:00,100 --> 00:33:02,240
+once you go away from a linear dynamical system,
+
+650
+00:33:02,340 --> 00:33:04,850
+or once you change almost any aspect of
+
+651
+00:33:04,990 --> 00:33:07,270
+this because at discreet states or discreet actions
+
+652
+00:33:07,380 --> 00:33:08,510
+or whatever
+
+653
+00:33:08,620 --> 00:33:10,570
+and once you change almost any aspect of this problem
+
+654
+00:33:10,720 --> 00:33:12,770
+this property will no longer hold true
+
+655
+00:33:12,910 --> 00:33:16,910
+because this is a very special property of LQR systems that
+
+656
+00:33:17,090 --> 00:33:20,620
+the optimal policy does not actually depend on the
+
+657
+00:33:20,760 --> 00:33:23,250
+noise magnitude of these noise terms. Okay?
+
+658
+00:33:23,400 --> 00:33:28,080
+And the only important property is that the
+
+659
+00:33:28,190 --> 00:33:29,730
+noise function of zero mean.
+
+660
+00:33:29,910 --> 00:33:36,550
+So there's this intuition that to compute the optimal policy
+
+661
+00:33:36,700 --> 00:33:38,030
+you can just ignore the noise terms.
+
+662
+00:33:38,180 --> 00:33:40,390
+Or as if, so as long as you know
+
+663
+00:33:40,540 --> 00:33:43,830
+the expected value of your state ST plus one write down.
+
+664
+00:33:43,970 --> 00:33:46,760
+On average ST plus one is ATST plus BTAT,
+
+665
+00:33:46,900 --> 00:33:52,830
+then there's as if you can ignore the noise in your next
+
+666
+00:33:52,940 --> 00:33:54,170
+state ST plus one.
+
+667
+00:33:54,270 --> 00:33:55,820
+And the optimal policy doesn't change. Okay?
+
+668
+00:33:55,920 --> 00:33:59,730
+So we'll actually come back to this in a minute.
+
+669
+00:33:59,810 --> 00:34:02,040
+Later on we'll talk about Kalman filters.
+
+670
+00:34:02,140 --> 00:34:04,590
+We'll actually use this property of LQR systems.
+
+671
+00:34:04,690 --> 00:34:08,900
+Just to point out, note that the value function does depend
+
+672
+00:34:08,990 --> 00:34:10,600
+on the noise covariance, right?
+
+673
+00:34:10,700 --> 00:34:13,570
+The value function here does depend on si T.
+
+674
+00:34:13,680 --> 00:34:15,510
+So the larger the noise in your system
+
+675
+00:34:15,620 --> 00:34:17,060
+the worse your value function.
+
+676
+00:34:17,160 --> 00:34:19,100
+So this does depend on the noise,
+
+677
+00:34:19,180 --> 00:34:20,600
+but it's the optimal policy
+
+678
+00:34:20,710 --> 00:34:24,120
+that doesn't depend on the noise.
+
+679
+00:34:24,220 --> 00:34:28,080
+We'll use this property later. Okay.
+
+680
+00:34:28,220 --> 00:34:33,150
+So let's see how we're doing on time.
+
+681
+00:34:33,300 --> 00:34:47,060
+Let's see. Right. Okay.
+
+682
+00:34:47,210 --> 00:34:49,850
+So let's put this aside for now.
+
+683
+00:34:50,000 --> 00:35:06,560
+What I want to do now is tell you about one
+
+684
+00:35:06,710 --> 00:35:09,280
+specific way of applying LQR
+
+685
+00:35:09,430 --> 00:35:11,500
+that's called differential dynamic programming.
+
+686
+00:35:11,650 --> 00:35:15,020
+And as in most of the example,
+
+687
+00:35:15,120 --> 00:35:17,690
+think of try to control a system,
+
+688
+00:35:17,830 --> 00:35:21,920
+like a helicopter or a car or even a chemical plant,
+
+689
+00:35:22,060 --> 00:35:24,300
+with some continuous state.
+
+690
+00:35:24,410 --> 00:35:27,050
+So for the sake of thinking through this example,
+
+691
+00:35:27,160 --> 00:35:29,780
+just imagine trying to control a helicopter.
+
+692
+00:35:29,930 --> 00:35:38,740
+And let's say you have some simulator
+
+693
+00:35:38,810 --> 00:35:40,700
+that espece with the next state is a function of the previous
+
+694
+00:35:40,780 --> 00:35:42,990
+data in action, right?
+
+695
+00:35:43,100 --> 00:35:44,640
+And for this let's say
+
+696
+00:35:44,740 --> 00:35:47,670
+the model of your simulator is non-linear,
+
+697
+00:35:47,750 --> 00:35:53,060
+but and determinalistic. Okay?
+
+698
+00:35:53,170 --> 00:35:54,160
+So I say just now,
+
+699
+00:35:54,270 --> 00:35:56,390
+that the noise terms don't matter very much.
+
+700
+00:35:56,490 --> 00:36:00,300
+So let's just work with the term simulator for now,
+
+701
+00:36:00,410 --> 00:36:03,150
+but let's say F is non-linear.
+
+702
+00:36:03,250 --> 00:36:07,910
+And let's say there's some specific trajectory
+
+703
+00:36:08,000 --> 00:36:10,320
+that you want the helicopter to follow, all right?
+
+704
+00:36:10,460 --> 00:36:12,660
+So I want to talk about how to apply LQR
+
+705
+00:36:12,730 --> 00:36:15,750
+to get helicopter or a car or a chemical plant
+
+706
+00:36:15,860 --> 00:36:19,310
+where your state variables may depend on the amounts of
+
+707
+00:36:19,380 --> 00:36:20,540
+different chemicals and
+
+708
+00:36:20,610 --> 00:36:22,380
+the mixes of chemicals you have in different batch, really.
+
+709
+00:36:22,460 --> 00:36:23,810
+It's really easy to think about a helicopter.
+
+710
+00:36:23,920 --> 00:36:25,320
+Let's say
+
+711
+00:36:25,420 --> 00:36:27,660
+there's some trajectory you want the helicopter to follow.
+
+712
+00:36:27,780 --> 00:36:29,190
+So
+
+713
+00:36:29,300 --> 00:36:32,820
+here's what the differential dynamic programming it does.
+
+714
+00:36:32,920 --> 00:36:35,000
+First step is
+
+715
+00:36:35,070 --> 00:36:42,780
+come up with what I'm gonna call some nominal trajectory,
+
+716
+00:36:42,920 --> 00:36:47,140
+right?
+
+717
+00:36:47,280 --> 00:36:59,550
+And so we're gonna call this S zero A zero. Okay?
+
+718
+00:36:59,700 --> 00:37:02,670
+So one way to come up with this would be
+
+719
+00:37:02,820 --> 00:37:04,730
+if you had some very bad controller
+
+720
+00:37:04,870 --> 00:37:07,580
+someone hacked a controller for flying a helicopter
+
+721
+00:37:07,690 --> 00:37:09,630
+is not a good controller at all.
+
+722
+00:37:09,730 --> 00:37:13,170
+But you might then go ahead and fly the helicopter using a
+
+723
+00:37:13,280 --> 00:37:15,180
+very bad, a very sloppy, controller
+
+724
+00:37:15,280 --> 00:37:17,140
+and you get out some
+
+725
+00:37:17,250 --> 00:37:19,160
+sequence of states and actions, right?
+
+726
+00:37:19,230 --> 00:37:21,310
+So I'm gonna
+
+727
+00:37:21,380 --> 00:37:23,070
+and I just call this sequence of states and actions the
+
+728
+00:37:23,170 --> 00:37:25,460
+trajectory the nominal trajectory.
+
+729
+00:37:25,560 --> 00:37:38,820
+Then I will linearize F around this normal trajectory.
+
+730
+00:37:38,930 --> 00:37:50,650
+Okay? So i.e., right?
+
+731
+00:37:50,750 --> 00:37:52,310
+I'll use that same thing.
+
+732
+00:37:52,420 --> 00:37:57,440
+So for times si T our approximate ST plus one,
+
+733
+00:37:57,540 --> 00:38:01,170
+as this linearization thing that we just saw,
+
+734
+00:38:01,270 --> 00:38:22,090
+times plus the other term. Okay?
+
+735
+00:38:22,240 --> 00:38:32,640
+And then you distill this down to sum ATST plus BTST.
+
+736
+00:38:32,790 --> 00:38:33,780
+Okay?
+
+737
+00:38:33,930 --> 00:38:35,580
+So this will actually be the first time
+
+738
+00:38:35,720 --> 00:38:40,140
+that I'll make explicit use of the ability of LQR
+
+739
+00:38:40,240 --> 00:38:41,390
+or these finer horizon problems
+
+740
+00:38:41,510 --> 00:38:43,900
+to handle non-stationery dynamics.
+
+741
+00:38:44,040 --> 00:38:46,370
+In particular, for this example,
+
+742
+00:38:46,470 --> 00:38:51,180
+it will be important that AT and BT depend on time
+
+743
+00:38:51,180 --> 00:38:52,180
+–	oh,excuse me. Okay?
+
+744
+00:38:56,050 --> 00:38:58,830
+So the intuition is that
+
+745
+00:38:58,970 --> 00:39:01,440
+even if this is a pretty sloppy controller,
+
+746
+00:39:01,580 --> 00:39:03,190
+or even if you had a pretty bad controller
+
+747
+00:39:03,340 --> 00:39:06,130
+come up with your original normal trajectory,
+
+748
+00:39:06,280 --> 00:39:10,220
+you still expect maybe, right?
+
+749
+00:39:10,360 --> 00:39:13,120
+You'd expect your state and action at time T
+
+750
+00:39:13,230 --> 00:39:21,080
+to be maybe reasonably similar to
+
+751
+00:39:21,220 --> 00:39:23,480
+what even the sloppy controller had done, right?
+
+752
+00:39:23,590 --> 00:39:24,620
+So you want a fly trajectory
+
+753
+00:39:24,760 --> 00:39:26,590
+maybe you want to make a 90-degree turn.
+
+754
+00:39:26,740 --> 00:39:28,080
+Maybe if a bad controller
+
+755
+00:39:28,190 --> 00:39:29,490
+that does a pretty sloppy job,
+
+756
+00:39:29,600 --> 00:39:31,310
+but at any given in time
+
+757
+00:39:31,410 --> 00:39:33,200
+you're still moving around this trajectory.
+
+758
+00:39:33,300 --> 00:39:37,140
+So this is really telling you where along, say,
+
+759
+00:39:37,280 --> 00:39:40,060
+the 90-degree turn trajectory, just very roughly,
+
+760
+00:39:40,170 --> 00:39:41,180
+where along the trajectory
+
+761
+00:39:41,330 --> 00:39:43,130
+you expect to be at any given time
+
+762
+00:39:43,260 --> 00:39:48,410
+and so let's linearize around that point. Okay?
+
+763
+00:39:48,520 --> 00:40:07,160
+Then you would having found the linear model
+
+764
+00:40:07,300 --> 00:40:08,920
+you run LQR to get the
+
+765
+00:40:09,070 --> 00:40:12,080
+optimal policy for this specific linear model
+
+766
+00:40:12,260 --> 00:40:16,150
+and now you have a better policy.
+
+767
+00:40:16,290 --> 00:40:21,580
+And the final thing you do is boy,
+
+768
+00:40:21,690 --> 00:40:46,950
+I'll write this on a different board, I guess. Okay. Shoot.
+
+769
+00:40:47,060 --> 00:40:54,610
+The last step is you use a simulator, a model,
+
+770
+00:40:54,760 --> 00:40:57,750
+to come up with a new normal trajectory.
+
+771
+00:40:57,890 --> 00:41:32,960
+So i.e., okay?
+
+772
+00:41:33,110 --> 00:41:35,170
+So now you take the controller you just learned
+
+773
+00:41:35,280 --> 00:41:38,150
+and basically try flying your helicopter in your simulator.
+
+774
+00:41:38,300 --> 00:41:41,070
+So you initialize the simulator to the initial state,
+
+775
+00:41:41,170 --> 00:41:42,730
+and I'll call the S bar zero,
+
+776
+00:41:42,840 --> 00:41:44,410
+and you'll run every time step.
+
+777
+00:41:44,560 --> 00:41:46,990
+You choose an action which I'll call A bar T,
+
+778
+00:41:47,090 --> 00:41:50,340
+using the controller pi T that you just learned using LQR.
+
+779
+00:41:50,440 --> 00:41:53,200
+And then you simulate forward in time, right?
+
+780
+00:41:53,300 --> 00:41:54,840
+You use the simulator, the function F,
+
+781
+00:41:54,950 --> 00:41:59,810
+to tell you what the next state S bar T plus one will be
+
+782
+00:41:59,910 --> 00:42:01,320
+when your previous state and action is bar T A bar T.
+
+783
+00:42:01,430 --> 00:42:10,260
+And then you linearize around this new trajectory
+
+784
+00:42:10,410 --> 00:42:18,480
+and repeat. Okay?
+
+785
+00:42:18,590 --> 00:42:21,950
+So now you have a new normal trajectory
+
+786
+00:42:22,090 --> 00:42:25,380
+and you linearize your simulator around this new trajectory
+
+787
+00:42:25,480 --> 00:42:27,810
+and then you repeat the whole procedure.
+
+788
+00:42:27,920 --> 00:42:29,780
+I guess going back to step two of the algorithm.
+
+789
+00:42:29,930 --> 00:42:33,810
+And this turns out to be a surprisingly effective procedure.
+
+790
+00:42:33,970 --> 00:42:43,570
+So the cartoon of what this algorithm may do is as follows.
+
+791
+00:42:43,670 --> 00:42:44,970
+Let's say
+
+792
+00:42:45,080 --> 00:42:47,560
+you want to make a 90-degree turn on the helicopter
+
+793
+00:42:47,640 --> 00:42:50,080
+let's see one, you know,
+
+794
+00:42:50,190 --> 00:42:52,140
+a helicopter to follow a trajectory like that.
+
+795
+00:42:52,290 --> 00:42:55,370
+Follow up of a very bad controller,
+
+796
+00:42:55,480 --> 00:42:56,570
+I just, you know,
+
+797
+00:42:56,690 --> 00:42:57,870
+hack up some controller, whatever.
+
+798
+00:42:57,980 --> 00:42:59,540
+Have some way to come up with
+
+799
+00:42:59,640 --> 00:43:01,290
+an initial normal trajectory.
+
+800
+00:43:01,430 --> 00:43:07,940
+Maybe your initial controller overshoots the turn,
+
+801
+00:43:08,080 --> 00:43:09,710
+takes the turn wide, right?
+
+802
+00:43:09,820 --> 00:43:11,910
+But now you can use
+
+803
+00:43:12,010 --> 00:43:13,950
+these points to linearize the simulator.
+
+804
+00:43:14,050 --> 00:43:16,360
+So linearize in a very non-linear simulator
+
+805
+00:43:16,540 --> 00:43:18,060
+and the idea is that
+
+806
+00:43:18,160 --> 00:43:20,450
+maybe this state isn't such a bad approximation.
+
+807
+00:43:20,550 --> 00:43:23,190
+That maybe a linearization approximation
+
+808
+00:43:23,290 --> 00:43:26,990
+at this sequence of states will actually be reasonable
+
+809
+00:43:27,100 --> 00:43:30,450
+because your helicopter won't exactly be on the states,
+
+810
+00:43:30,560 --> 00:43:32,760
+but will be close to the sequence of states of every time
+
+811
+00:43:32,860 --> 00:43:35,960
+step. So after one duration of DDP,
+
+812
+00:43:36,070 --> 00:43:41,760
+that's the target trajectory, maybe you get a little bit closer
+
+813
+00:43:41,860 --> 00:43:46,470
+and now you have an even better place around
+
+814
+00:43:46,570 --> 00:43:47,720
+to linearize.
+
+815
+00:43:47,830 --> 00:43:49,620
+Then after another linearization of DDP
+
+816
+00:43:49,770 --> 00:43:56,930
+you get closer and closer to
+
+817
+00:43:57,040 --> 00:43:59,770
+finding exactly the trajectory you want. Okay?
+
+818
+00:43:59,950 --> 00:44:04,720
+So turns out DDP is a sort of
+
+819
+00:44:04,870 --> 00:44:07,820
+it turns out to be a form of a local search algorithm in
+
+820
+00:44:07,940 --> 00:44:09,890
+which you on each iteration
+
+821
+00:44:10,000 --> 00:44:12,460
+you find a slightly better place to linearize.
+
+822
+00:44:12,530 --> 00:44:14,650
+So you end up with a slightly better control and you repeat.
+
+823
+00:44:14,650 --> 00:44:15,650
+And we actually do this –
+
+824
+00:44:16,800 --> 00:44:18,720
+this is actually one of the things we do on the helicopter.
+
+825
+00:44:18,870 --> 00:44:21,110
+And this works very well on many this works
+
+826
+00:44:21,220 --> 00:44:23,110
+surprisingly well this works very well
+
+827
+00:44:23,230 --> 00:44:28,150
+on many problems. Cool.
+
+828
+00:44:28,220 --> 00:44:29,830
+think I was actually going to show some
+
+829
+00:44:29,910 --> 00:44:31,220
+helicopter videos,
+
+830
+00:44:31,290 --> 00:44:32,380
+but in the interest of time,
+
+831
+00:44:32,480 --> 00:44:33,720
+let me just defer that to the next lecture.
+
+832
+00:44:33,870 --> 00:44:35,380
+I'll show you a bunch of cool helicopter things
+
+833
+00:44:35,520 --> 00:44:36,710
+in the next lecture,
+
+834
+00:44:36,850 --> 00:44:37,970
+but let me just check if
+
+835
+00:44:38,080 --> 00:44:44,940
+there are questions about this before I move on. Yeah?
+
+836
+00:44:45,050 --> 00:44:48,810
+Student:[Inaudible]
+
+837
+00:44:48,920 --> 00:44:50,590
+Instructor (Andrew Ng):In this sample?
+
+838
+00:44:50,690 --> 00:44:53,430
+Yes, yeah, right, yeah. So I'm going to
+
+839
+00:44:53,570 --> 00:44:55,090
+let's pick some kind of horizon T.
+
+840
+00:44:55,230 --> 00:44:57,520
+So I'm going to run through my entire trajectory in my
+
+841
+00:44:57,630 --> 00:45:08,080
+simulator, so I end up with a new nominal trajectory
+
+842
+00:45:08,180 --> 00:45:11,960
+to linearize around, right? Okay?
+
+843
+00:45:12,060 --> 00:45:15,140
+Yeah?
+
+844
+00:45:15,240 --> 00:45:17,840
+Student:So does this method give you,
+
+845
+00:45:17,940 --> 00:45:21,690
+like, a Gaussian for performing, like, a certain action?
+
+846
+00:45:21,790 --> 00:45:24,080
+Like you talked about, like,
+
+847
+00:45:24,190 --> 00:45:25,500
+the 90-degree turn thing or something.
+
+848
+00:45:25,640 --> 00:45:27,050
+Instructor (Andrew Ng):Right.
+
+849
+00:45:27,160 --> 00:45:29,040
+Student:So is this from one, like,
+
+850
+00:45:29,140 --> 00:45:32,680
+is this from one, like, one 90-degree turn or can you
+
+851
+00:45:32,780 --> 00:45:33,790
+[inaudible]?
+
+852
+00:45:33,860 --> 00:45:35,180
+Instructor (Andrew Ng):Yeah. So
+
+853
+00:45:35,280 --> 00:45:37,500
+it turns out what so this is used clear
+
+854
+00:45:37,640 --> 00:45:39,400
+let's see.
+
+855
+00:45:39,500 --> 00:45:40,860
+Go and think about this
+
+856
+00:45:40,960 --> 00:45:43,420
+as if there's a specific trajectory that you want to follow.
+
+857
+00:45:43,520 --> 00:45:44,900
+I'm just gonna,
+
+858
+00:45:45,000 --> 00:45:46,910
+car or helicopter or it could be in a chemical plant,
+
+859
+00:45:46,980 --> 00:45:48,120
+right?
+
+860
+00:45:48,260 --> 00:45:50,330
+If there's some specific sequence of states
+
+861
+00:45:50,440 --> 00:45:52,450
+you expect the system to go through over time,
+
+862
+00:45:52,590 --> 00:45:57,230
+so that you actually want to linearize at different times
+
+863
+00:45:57,330 --> 00:45:59,910
+excuse me. So, therefore, the different times you
+
+864
+00:46:00,020 --> 00:46:02,820
+want different linear approximations, your dynamics, right?
+
+865
+00:46:02,920 --> 00:46:10,710
+So I actually start to laugh over stationary simulator,
+
+866
+00:46:10,820 --> 00:46:12,120
+right? I mean, this function F,
+
+867
+00:46:12,220 --> 00:46:14,400
+it may be the same function F for all time steps,
+
+868
+00:46:14,500 --> 00:46:16,170
+but the point of DDP is
+
+869
+00:46:16,280 --> 00:46:18,570
+that I may want to use different linearizations for
+
+870
+00:46:18,720 --> 00:46:20,180
+different time steps.
+
+871
+00:46:20,250 --> 00:46:22,930
+So a lot of the inner loop of the algorithm
+
+872
+00:46:23,040 --> 00:46:25,230
+is just coming up with better and better
+
+873
+00:46:25,330 --> 00:46:27,940
+places around to linearize.
+
+874
+00:46:28,080 --> 00:46:30,420
+Where at different times
+
+875
+00:46:30,530 --> 00:46:32,470
+I'll linearize around different points. Does that make sense?
+
+876
+00:46:32,580 --> 00:46:36,850
+Cool. Okay, cool. So that was DDP.
+
+877
+00:46:36,960 --> 00:46:40,460
+And I'll show examples of DDP results in the next lecture.
+
+878
+00:46:40,560 --> 00:46:50,040
+So the last thing I wanted to do
+
+879
+00:46:50,180 --> 00:47:02,040
+was talk about Kalman filters and LQG control,
+
+880
+00:47:02,120 --> 00:47:03,680
+linear-quadratic Gaussian control.
+
+881
+00:47:03,780 --> 00:47:06,730
+And what I want to do is
+
+882
+00:47:06,840 --> 00:47:09,680
+actually talk about a different type of MDP problem
+
+883
+00:47:09,780 --> 00:47:13,120
+where we don't get to observe the state explicitly, right?
+
+884
+00:47:13,190 --> 00:47:15,540
+So far in every one I've been talking about,
+
+885
+00:47:15,610 --> 00:47:17,920
+I've been assuming that every time step
+
+886
+00:47:17,990 --> 00:47:19,910
+you know what the state of the system is,
+
+887
+00:47:20,020 --> 00:47:22,280
+so you can compute
+
+888
+00:47:22,350 --> 00:47:25,190
+a policy to some function of the state is in.
+
+889
+00:47:25,300 --> 00:47:26,400
+If you've all ready had that,
+
+890
+00:47:26,510 --> 00:47:29,990
+you know, the action we take is LT times ST,
+
+891
+00:47:30,060 --> 00:47:30,950
+right?
+
+892
+00:47:31,090 --> 00:47:31,910
+So to compute the action
+
+893
+00:47:32,050 --> 00:47:33,230
+you need to know what the state is.
+
+894
+00:47:33,330 --> 00:47:35,650
+What I want to do now is
+
+895
+00:47:35,760 --> 00:47:37,180
+talk about the different type of problem
+
+896
+00:47:37,280 --> 00:47:40,120
+where you don't get to observe the state explicitly.
+
+897
+00:47:40,240 --> 00:47:43,290
+The fact before we even talk about the control
+
+898
+00:47:43,390 --> 00:47:44,940
+let me just talk about the different problem where
+
+899
+00:47:45,010 --> 00:47:47,830
+just forget about control for now
+
+900
+00:47:47,940 --> 00:47:49,680
+and just look at some dynamical systems
+
+901
+00:47:49,790 --> 00:47:51,930
+where you may not get to observe the state explicitly
+
+902
+00:47:52,040 --> 00:47:54,530
+and then only later we'll tie this back to controlling some
+
+903
+00:47:54,650 --> 00:47:57,500
+systems. Okay? As a concrete example,
+
+904
+00:47:57,620 --> 00:48:01,210
+let's say as, sort of,
+
+905
+00:48:01,320 --> 00:48:02,650
+just an example to think about,
+
+906
+00:48:02,790 --> 00:48:06,110
+imagine using a radar to track the helicopter, right?
+
+907
+00:48:06,220 --> 00:48:09,800
+So we may model a helicopter,
+
+908
+00:48:09,910 --> 00:48:13,660
+and this will be an amazingly simplified model of a
+
+909
+00:48:13,770 --> 00:48:16,480
+helicopter, as, you know, some linear dynamical systems.
+
+910
+00:48:16,600 --> 00:48:19,480
+So [inaudible] ST plus one equals AST plus WT,
+
+911
+00:48:19,630 --> 00:48:21,790
+and we'll forget about controls for now, okay?
+
+912
+00:48:21,900 --> 00:48:23,700
+We'll fill the controls back in.
+
+913
+00:48:23,810 --> 00:48:26,300
+And just with this example,
+
+914
+00:48:26,450 --> 00:48:35,640
+I'm gonna use an extremely simplified state, right?
+
+915
+00:48:35,750 --> 00:48:36,970
+Where my state is just
+
+916
+00:48:37,080 --> 00:48:39,520
+a position in velocity in the X and Y directions,
+
+917
+00:48:39,670 --> 00:48:47,270
+so you may choose an A matrix like this as a okay?
+
+918
+00:48:47,420 --> 00:49:03,130
+As an extremely simple as a, sort of,
+
+919
+00:49:03,220 --> 00:49:04,130
+an extremely simplified model
+
+920
+00:49:04,240 --> 00:49:06,290
+of what the dynamics of, like, a plane or object
+
+921
+00:49:07,430 --> 00:49:07,530
+moving in 2-D may look like.
+
+922
+00:49:09,020 --> 00:49:11,190
+So just imagine that you have simulation
+
+923
+00:49:11,310 --> 00:49:12,050
+and you have a radar
+
+924
+00:49:12,160 --> 00:49:14,080
+and you're tracking blips on your radar
+
+925
+00:49:14,190 --> 00:49:15,980
+and you want to estimate the position,
+
+926
+00:49:16,120 --> 00:49:19,070
+or the state, of the helicopter as just as its XY position and
+
+927
+00:49:19,180 --> 00:49:22,530
+its XY velocity and you have a very simple dynamical model
+
+928
+00:49:22,640 --> 00:49:23,970
+of what the helicopter may do.
+
+929
+00:49:24,100 --> 00:49:27,570
+So this matrix, this just says
+
+930
+00:49:27,670 --> 00:49:34,640
+that XT plus one equals XT plus X star T plus noise,
+
+931
+00:49:34,740 --> 00:49:40,240
+so that's this first equation.
+
+932
+00:49:40,350 --> 00:49:43,910
+The second equation says that X star T plus one
+
+933
+00:49:44,020 --> 00:49:46,630
+equals 0.9 times X star T plus nine.
+
+934
+00:49:46,740 --> 00:49:51,670
+Yes, this is an amazingly simplified model
+
+935
+00:49:51,780 --> 00:49:55,000
+of what a flying vehicle may look like.
+
+936
+00:49:55,150 --> 00:50:00,330
+Here's the more interesting part,
+
+937
+00:50:00,430 --> 00:50:01,520
+which is that with
+
+938
+00:50:01,620 --> 00:50:04,950
+if you're tracking a helicopter with some sensor
+
+939
+00:50:05,060 --> 00:50:08,530
+you won't get to observe the full state explicitly.
+
+940
+00:50:08,640 --> 00:50:10,170
+But just for this cartoon example,
+
+941
+00:50:10,270 --> 00:50:13,910
+let's say that we get to observe YT,
+
+942
+00:50:14,060 --> 00:50:26,650
+which is CST plus VT where the VT is a random variables
+
+943
+00:50:26,760 --> 00:50:28,030
+Gaussian random variables with, say,
+
+944
+00:50:28,140 --> 00:50:30,030
+zero mean and a Gaussian noise with covariance
+
+945
+00:50:30,130 --> 00:50:31,830
+given by sigma V. Okay?
+
+946
+00:50:31,980 --> 00:50:45,930
+So in this example let's say that C is that and
+
+947
+00:50:46,040 --> 00:50:53,940
+so CST is equal to XY, right?
+
+948
+00:50:54,050 --> 00:50:57,080
+Take this state vector and multiply it by Z, you just get XY.
+
+949
+00:50:57,190 --> 00:50:58,710
+So let's see what the sensor,
+
+950
+00:50:58,860 --> 00:51:00,330
+maybe a radar, maybe a vision system,
+
+951
+00:51:00,440 --> 00:51:03,190
+I don't know, something that only gets to observe the
+
+952
+00:51:03,300 --> 00:51:07,090
+position of the helicopter that you're trying to track.
+
+953
+00:51:07,250 --> 00:51:15,240
+So here's the cartoon.
+
+954
+00:51:15,380 --> 00:51:29,750
+So a helicopter may fly through some sequence of states,
+
+955
+00:51:29,870 --> 00:51:33,170
+let's say it flies through some smooth trajectory,
+
+956
+00:51:33,280 --> 00:51:42,570
+whatever.
+
+957
+00:51:42,680 --> 00:51:44,790
+It makes a slow turn.
+
+958
+00:51:44,910 --> 00:51:47,260
+So the true state is four-dimensional,
+
+959
+00:51:47,340 --> 00:51:48,990
+but I'm just drawing two dimensions, right?
+
+960
+00:51:49,100 --> 00:51:52,930
+So maybe you have a camera sensor down here,
+
+961
+00:51:53,040 --> 00:51:57,950
+or a radar or whatever, and for this cartoon example,
+
+962
+00:51:58,070 --> 00:52:00,040
+let's say the noise in your observations is
+
+963
+00:52:00,160 --> 00:52:02,820
+largerin the vertical axis than the horizontal axis.
+
+964
+00:52:02,930 --> 00:52:04,900
+So what you get is actually
+
+965
+00:52:04,980 --> 00:52:09,760
+one sample from the sequence of five Gaussians.
+
+966
+00:52:09,830 --> 00:52:13,240
+So you may observe the helicopter there at times step one,
+
+967
+00:52:13,390 --> 00:52:14,730
+observe it there at time step two,
+
+968
+00:52:14,880 --> 00:52:18,760
+observe it there at time three, time four, time five.
+
+969
+00:52:18,870 --> 00:52:20,180
+Okay?
+
+970
+00:52:20,180 --> 00:52:21,180
+All right. So that's what your –
+
+971
+00:52:22,280 --> 00:52:23,940
+there's a sequence of positions
+
+972
+00:52:24,060 --> 00:52:25,390
+that your camera estimate gives you.
+
+973
+00:52:25,470 --> 00:52:31,410
+And given these sorts of observations,
+
+974
+00:52:31,550 --> 00:52:35,070
+can you estimate the actual state of the system? Okay?
+
+975
+00:52:35,220 --> 00:52:39,270
+So these orange things, I guess, right? Okay?
+
+976
+00:52:39,420 --> 00:52:49,380
+These orange things are your observations YT.
+
+977
+00:52:49,480 --> 00:52:53,700
+And test for the state of helicopter every time.
+
+978
+00:52:53,840 --> 00:52:56,710
+Just for it, so the position of the helicopter at every time.
+
+979
+00:52:56,820 --> 00:52:58,820
+Clearly you don't want to just rely on the orange crosses
+
+980
+00:52:58,910 --> 00:52:59,920
+because that's too noisy
+
+981
+00:52:59,980 --> 00:53:03,030
+and they also don't give you velocities, right?
+
+982
+00:53:03,130 --> 00:53:05,020
+So you only observe the subset of the state of variables.
+
+983
+00:53:05,120 --> 00:53:09,660
+So what can you do? So concretely well,
+
+984
+00:53:09,770 --> 00:53:12,710
+you don't actually ever get to observe the true positions,
+
+985
+00:53:12,820 --> 00:53:13,610
+right?
+
+986
+00:53:13,710 --> 00:53:16,710
+All you get to do is observe those orange crosses.
+
+987
+00:53:16,810 --> 00:53:20,180
+I guess I should erase the ellipses if I can. Right.
+
+988
+00:53:20,290 --> 00:53:26,670
+You get the idea. The question is given yeah.
+
+989
+00:53:26,770 --> 00:53:28,910
+You know what I'm trying to do.
+
+990
+00:53:29,010 --> 00:53:33,280
+Given just the orange crosses
+
+991
+00:53:33,390 --> 00:53:36,410
+can you get a good estimate of the state of the system
+
+992
+00:53:36,520 --> 00:53:38,130
+at every time step?
+
+993
+00:53:38,230 --> 00:53:40,600
+So it turns out that well,
+
+994
+00:53:40,740 --> 00:53:45,540
+so what you want to do is to estimate the distribution on
+
+995
+00:53:45,640 --> 00:53:54,050
+the state given all the previous observations, right?
+
+996
+00:53:54,150 --> 00:53:55,960
+So given observations, you know,
+
+997
+00:53:56,070 --> 00:53:57,460
+one, two, three, four, and five,
+
+998
+00:53:57,610 --> 00:53:59,230
+where is the helicopter currently?
+
+999
+00:53:59,340 --> 00:54:04,450
+So it turns out that the random variables,
+
+1000
+00:54:04,560 --> 00:54:09,200
+S zero, S one, up to ST and Y1 are to ST,
+
+1001
+00:54:09,310 --> 00:54:11,100
+have a joint Gaussian distribution, right?
+
+1002
+00:54:11,200 --> 00:54:24,630
+So one thing you could do is
+
+1003
+00:54:24,750 --> 00:54:27,150
+construct a joint Gaussian distribution
+
+1004
+00:54:27,260 --> 00:54:31,850
+can define vector value random variable Z, S zero, S one,
+
+1005
+00:54:31,960 --> 00:54:36,280
+up to ST, Y1 up to YT, right?
+
+1006
+00:54:36,390 --> 00:54:38,200
+So it turns out that
+
+1007
+00:54:38,350 --> 00:54:45,960
+Z will have some Gaussian distribution with some mean
+
+1008
+00:54:46,070 --> 00:54:47,580
+and some covariance matrix.
+
+1009
+00:54:47,690 --> 00:54:51,860
+Using the Gaussian marginalization
+
+1010
+00:54:51,970 --> 00:54:54,310
+and conditioning formulas.
+
+1011
+00:54:54,490 --> 00:54:55,700
+But I think way back
+
+1012
+00:54:55,810 --> 00:54:58,400
+when we talked about factor analysis in this class,
+
+1013
+00:54:58,510 --> 00:55:00,230
+we talked about how to compute marginal distributions
+
+1014
+00:55:00,330 --> 00:55:02,470
+and conditional distributions of Gaussians.
+
+1015
+00:55:02,590 --> 00:55:03,930
+But using those formulas
+
+1016
+00:55:04,040 --> 00:55:05,420
+you can actually compute this thing.
+
+1017
+00:55:05,520 --> 00:55:10,680
+can compute, right?
+
+1018
+00:55:10,790 --> 00:55:12,530
+You can compute that conditional distribution.
+
+1019
+00:55:12,630 --> 00:55:16,030
+This will give a good estimate of the current state ST. Okay
+
+1020
+00:55:16,100 --> 00:55:19,190
+But clearly this is
+
+1021
+00:55:19,300 --> 00:55:22,000
+a extremely computationally inefficient way to do so
+
+1022
+00:55:22,110 --> 00:55:29,030
+because these means and covariance matrixes will
+
+1023
+00:55:29,170 --> 00:55:30,670
+grow linearly with the number of time steps as you're t
+
+1024
+00:55:30,780 --> 00:55:33,330
+racking a helicopter over tens of thousands of time steps.
+
+1025
+00:55:33,400 --> 00:55:36,100
+They were huge covariance matrixes,
+
+1026
+00:55:36,210 --> 00:55:37,620
+so this is a conceptually correct way,
+
+1027
+00:55:37,780 --> 00:55:38,930
+but just a computational
+
+1028
+00:55:39,120 --> 00:55:40,950
+not reasonable way to perform this computation.
+
+1029
+00:55:41,100 --> 00:55:46,350
+So, instead,
+
+1030
+00:55:46,500 --> 00:55:54,560
+there's an algorithm called the Kalman filter that
+
+1031
+00:55:54,670 --> 00:55:56,190
+allows you to organize your computations
+
+1032
+00:55:56,340 --> 00:55:58,910
+efficiently and do this.
+
+1033
+00:55:59,010 --> 00:56:02,030
+Just on the side, if you remember
+
+1034
+00:56:02,170 --> 00:56:06,600
+Dan's discussion section on HMM's the Kalman filter model
+
+1035
+00:56:06,710 --> 00:56:08,860
+turns out to actually be a hidden Markov model.
+
+1036
+00:56:08,970 --> 00:56:11,730
+These Kalman's are only for those of you
+
+1037
+00:56:11,840 --> 00:56:13,200
+that attended Dan's discussion section.
+
+1038
+00:56:13,310 --> 00:56:16,460
+If not then what I'm about to say may not make sense.
+
+1039
+00:56:16,570 --> 00:56:17,950
+But if you remember
+
+1040
+00:56:18,060 --> 00:56:19,820
+Dan's kind of section of the hidden Markov model,
+
+1041
+00:56:19,930 --> 00:56:23,260
+it actually turns out that the Kalman filter model,
+
+1042
+00:56:23,370 --> 00:56:24,810
+this linear dynamical system with observations
+
+1043
+00:56:24,910 --> 00:56:28,610
+is actually an HMM problem where
+
+1044
+00:56:28,760 --> 00:56:38,430
+let's see. Unfortunately, the notation's a bit different
+
+1045
+00:56:38,540 --> 00:56:41,890
+because Dan was drawing from, sort of, a clash of
+
+1046
+00:56:42,000 --> 00:56:45,190
+multiple research communities using these same ideas.
+
+1047
+00:56:45,300 --> 00:56:47,980
+So the notation that Dan used, I think,
+
+1048
+00:56:48,090 --> 00:56:51,750
+was developed in a different community that clashes a bit
+
+1049
+00:56:51,860 --> 00:56:54,010
+with the reinforcement learning community notations.
+
+1050
+00:56:54,120 --> 00:57:00,730
+So in Dan's notation in the HMM section,
+
+1051
+00:57:00,840 --> 00:57:01,950
+Z and X were used to
+
+1052
+00:57:02,060 --> 00:57:03,340
+denote the state and the observations.
+
+1053
+00:57:03,460 --> 00:57:05,180
+Today, I'm using S and X
+
+1054
+00:57:05,290 --> 00:57:07,130
+to denote the state and the observations. Okay?
+
+1055
+00:57:07,240 --> 00:57:11,180
+But it turns out what I'm about to do
+
+1056
+00:57:11,290 --> 00:57:15,490
+turns out to be a hidden Markov model with continuous
+
+1057
+00:57:15,600 --> 00:57:17,020
+states rather than discrete states,
+
+1058
+00:57:17,160 --> 00:57:19,290
+which is under the discretion section. Okay.
+
+1059
+00:57:19,440 --> 00:57:21,440
+If you didn't attend that discussion section
+
+1060
+00:57:21,590 --> 00:57:24,170
+then forget everything I just said in the last minute.
+
+1061
+00:57:24,270 --> 00:57:31,350
+So here's the outline of the Kalman filter.
+
+1062
+00:57:31,460 --> 00:57:38,380
+It turns out that, so it's a cursive algorithm.
+
+1063
+00:57:38,480 --> 00:57:41,130
+So it turns out that if I have computed P of ST
+
+1064
+00:57:41,240 --> 00:57:43,020
+given Y1 up to YT,
+
+1065
+00:57:43,160 --> 00:57:49,470
+the Kalman filter organizes these computations into steps.
+
+1066
+00:57:49,620 --> 00:57:52,640
+The first step is called the predict step.
+
+1067
+00:57:52,760 --> 00:57:56,390
+Where given P of ST
+
+1068
+00:57:56,510 --> 00:58:00,390
+where you all ready have P of ST given Y1 up to YT and
+
+1069
+00:58:00,500 --> 00:58:04,550
+you compute what P of ST plus one given Y1 up to YT is.
+
+1070
+00:58:04,660 --> 00:58:18,100
+And then the other step is called the update step.
+
+1071
+00:58:18,220 --> 00:58:20,530
+Where given this second line you compute this third line.
+
+1072
+00:58:20,670 --> 00:58:23,320
+Okay? Where having taken account only observations of
+
+1073
+00:58:23,420 --> 00:58:26,120
+the time T you know incorporate the lots of the
+
+1074
+00:58:26,190 --> 00:58:29,190
+observations up to time T plus one.
+
+1075
+00:58:29,270 --> 00:58:33,930
+So concretely oh, and let's see.
+
+1076
+00:58:34,010 --> 00:58:47,560
+In the predict step it turns out that
+
+1077
+00:58:47,630 --> 00:58:53,580
+so what I'm going to do
+
+1078
+00:58:53,700 --> 00:58:56,960
+is actually just outline the main steps of the Kalman filter.
+
+1079
+00:58:57,040 --> 00:59:00,060
+I won't actually derive the algorithm
+
+1080
+00:59:00,140 --> 00:59:01,560
+and prove it's correct.
+
+1081
+00:59:01,710 --> 00:59:04,330
+It turns out that, I don't know,
+
+1082
+00:59:04,410 --> 00:59:06,810
+working out the actual proof of what I'm about to derive is
+
+1083
+00:59:06,920 --> 00:59:09,500
+probably significantly it's probably, I don't know,
+
+1084
+00:59:09,610 --> 00:59:11,520
+about as hard,or maybe slightly easier,
+
+1085
+00:59:11,630 --> 00:59:13,680
+than many of the homework's you've done already.
+
+1086
+00:59:13,830 --> 00:59:16,030
+So and you've done some pretty amazingly hard
+
+1087
+00:59:16,170 --> 00:59:17,940
+homework, so you can work out the proof for yourself.
+
+1088
+00:59:18,050 --> 00:59:19,470
+It's just write out the main outlines
+
+1089
+00:59:19,590 --> 00:59:23,160
+and the conclusion of the algorithm.
+
+1090
+00:59:23,260 --> 00:59:27,440
+So for the acceptance of the vest T given Y1 after YT.
+
+1091
+00:59:27,550 --> 00:59:34,390
+If that is given by that
+
+1092
+00:59:34,460 --> 00:59:55,390
+then where okay?
+
+1093
+00:59:55,500 --> 01:00:24,430
+So given ST,
+
+1094
+01:00:24,540 --> 01:00:28,450
+having computed the distribution ST given Y1 through YT
+
+1095
+01:00:28,560 --> 01:00:31,380
+and computed the distribution of ST plus one given Y1
+
+1096
+01:00:31,490 --> 01:00:32,780
+through YT as Gaussian,
+
+1097
+01:00:32,900 --> 01:00:34,440
+with this mean and this covariance,
+
+1098
+01:00:34,580 --> 01:00:35,630
+where you compute
+
+1099
+01:00:35,750 --> 01:00:37,140
+the mean and covariance using these two formulas.
+
+1100
+01:00:37,250 --> 01:00:39,650
+And just as a point of notation, right?
+
+1101
+01:00:39,760 --> 01:00:43,240
+I'm using ST and YT
+
+1102
+01:00:43,340 --> 01:00:45,940
+to denote the true states in observations.
+
+1103
+01:00:46,090 --> 01:00:49,730
+So the ST is the unknown true state. Okay?
+
+1104
+01:00:49,840 --> 01:00:51,890
+ST is whatever state this one is in and you actually don't
+
+1105
+01:00:52,000 --> 01:00:54,130
+know what ST is because you don't get to observe this.
+
+1106
+01:00:54,280 --> 01:00:56,190
+And, in contrast,
+
+1107
+01:00:56,380 --> 01:00:59,480
+I'm using these things like ST given T,
+
+1108
+01:00:59,630 --> 01:01:04,580
+ST plus one given T, sigma T given T, and so on.
+
+1109
+01:01:04,690 --> 01:01:08,750
+These things are the results of your computations, right?
+
+1110
+01:01:08,860 --> 01:01:14,350
+So these things are actually things you compute.
+
+1111
+01:01:14,420 --> 01:01:15,920
+So I hope the notations are okay,
+
+1112
+01:01:16,000 --> 01:01:18,480
+but these ST is the unknown true state, right?
+
+1113
+01:01:18,590 --> 01:01:20,760
+Whereas these things, ST equals one given T and so on,
+
+1114
+01:01:20,870 --> 01:01:22,570
+these are things that you compute inside your algorithm.
+
+1115
+01:01:22,680 --> 01:01:23,670
+Okay?
+
+1116
+01:01:23,810 --> 01:01:28,630
+So that was the predict step.
+
+1117
+01:01:28,750 --> 01:01:58,740
+And in the update step, you find that well, okay?
+
+1118
+01:01:58,850 --> 01:03:24,810
+And so that's the updates of the Kalman filterwhere
+
+1119
+01:03:24,910 --> 01:03:29,840
+you compute this in terms of your ST given Y1 through YT.
+
+1120
+01:03:29,960 --> 01:03:35,850
+So after having performed the most recent Kalman filter
+
+1121
+01:03:35,960 --> 01:03:38,250
+update you find that, right?
+
+1122
+01:03:38,370 --> 01:03:41,080
+Your perceived distribution on the estimate of ST plus one,
+
+1123
+01:03:41,150 --> 01:03:43,440
+given all your observations so far,
+
+1124
+01:03:43,550 --> 01:03:47,860
+is that it's Gaussian with mean given by this and
+
+1125
+01:03:47,960 --> 01:03:49,220
+variance given by that.
+
+1126
+01:03:49,330 --> 01:03:51,770
+So, informally,
+
+1127
+01:03:51,880 --> 01:03:55,370
+this thing ST plus one
+
+1128
+01:03:55,490 --> 01:04:00,890
+given T plus one is our best estimate for ST plus one,
+
+1129
+01:04:01,000 --> 01:04:09,460
+right? Given
+
+1130
+01:04:09,570 --> 01:04:15,480
+all the observations we've had up to that time.
+
+1131
+01:04:15,560 --> 01:04:16,310
+Okay?
+
+1132
+01:04:16,430 --> 01:04:19,050
+And, again, the correctness of these equations the fact
+
+1133
+01:04:19,130 --> 01:04:20,870
+that I'm actually computing this mean
+
+1134
+01:04:20,980 --> 01:04:24,660
+and covariance of this conditional Gaussian distribution,
+
+1135
+01:04:24,770 --> 01:04:27,120
+you can I'll leave you to sort of
+
+1136
+01:04:27,230 --> 01:04:31,480
+prove that at home if you want. Okay?
+
+1137
+01:04:31,590 --> 01:04:34,090
+I'm actually gonna put this together with LQR control
+
+1138
+01:04:34,200 --> 01:04:36,210
+in a second, but, so before I do that let me check
+
+1139
+01:04:36,320 --> 01:04:38,120
+if you've got questions about this?
+
+1140
+01:04:38,270 --> 01:04:41,740
+Actually let me erase the board
+
+1141
+01:04:41,850 --> 01:05:27,070
+while you take a look at that. Right. Okay.
+
+1142
+01:05:27,180 --> 01:05:30,030
+Any questions for Kalman filters? Yeah?
+
+1143
+01:05:30,180 --> 01:05:33,370
+Student:How is it computationally less intensive
+
+1144
+01:05:33,440 --> 01:05:38,980
+than compute some drawing Gaussian distribution
+
+1145
+01:05:39,090 --> 01:05:41,170
+and then find the conditional
+
+1146
+01:05:41,280 --> 01:05:44,040
+Instructor (Andrew Ng):Very quickly. Yeah, of course.
+
+1147
+01:05:44,160 --> 01:05:46,630
+So how is this less computationally intensive
+
+1148
+01:05:46,630 --> 01:05:48,580
+than the original method I talked about, right?
+
+1149
+01:05:48,650 --> 01:05:51,760
+So in the original method I talked about wow,
+
+1150
+01:05:51,870 --> 01:05:55,950
+this is really back and forth.
+
+1151
+01:05:56,060 --> 01:05:59,130
+I said, let's construct a Z,
+
+1152
+01:05:59,250 --> 01:06:01,230
+which was this huge Gaussian thing, right?
+
+1153
+01:06:01,380 --> 01:06:09,500
+And figure out what the mean and covariance matrix of Z
+
+1154
+01:06:09,600 --> 01:06:13,560
+is. So sigma will be like R it'll be well,
+
+1155
+01:06:13,670 --> 01:06:18,210
+it'll be roughly, right? A T by T matrix, right?
+
+1156
+01:06:18,350 --> 01:06:24,030
+This is actually or the T by T is actually T times
+
+1157
+01:06:24,140 --> 01:06:26,390
+number of state variables plus
+
+1158
+01:06:26,540 --> 01:06:30,200
+number of observation variables by that.
+
+1159
+01:06:30,310 --> 01:06:31,760
+This is a huge matrix
+
+1160
+01:06:31,830 --> 01:06:34,830
+and as the number of times it increases
+
+1161
+01:06:34,930 --> 01:06:36,760
+sigma will become bigger and bigger.
+
+1162
+01:06:36,870 --> 01:06:42,220
+So the conditional and marginalization operations require
+
+1163
+01:06:42,370 --> 01:06:45,770
+things like computing the inverse of T or subsets of T.
+
+1164
+01:06:45,880 --> 01:06:49,140
+So the nave way of doing this
+
+1165
+01:06:49,220 --> 01:06:52,490
+will cos on the order of TQ computation,
+
+1166
+01:06:52,600 --> 01:06:55,190
+if you do things naively, right?
+
+1167
+01:06:55,270 --> 01:06:56,160
+If because inverting
+
+1168
+01:06:56,280 --> 01:06:57,900
+like a T by T matrix cos on the order of TQ, roughly.
+
+1169
+01:06:58,010 --> 01:07:01,890
+In contrast, the Kalman filter algorithm,
+
+1170
+01:07:02,000 --> 01:07:04,800
+like I said, over here.
+
+1171
+01:07:04,910 --> 01:07:06,430
+I just have the update step. On the other board
+
+1172
+01:07:06,540 --> 01:07:08,330
+I had the predict step.
+
+1173
+01:07:08,440 --> 01:07:10,330
+But you can carry out
+
+1174
+01:07:10,470 --> 01:07:11,950
+the computation on both of these lines
+
+1175
+01:07:12,070 --> 01:07:13,630
+and it's actually constant time.
+
+1176
+01:07:13,750 --> 01:07:15,170
+So on every time step you
+
+1177
+01:07:15,290 --> 01:07:17,000
+perform these Kalman filter updates.
+
+1178
+01:07:17,110 --> 01:07:19,510
+So if every time you get one more observation
+
+1179
+01:07:19,620 --> 01:07:21,600
+you perform one more Kalman filter update
+
+1180
+01:07:21,710 --> 01:07:25,530
+and the computation of that doesn't depend on it's
+
+1181
+01:07:25,610 --> 01:07:27,930
+or the one time for every time step.
+
+1182
+01:07:28,040 --> 01:07:31,910
+So the amount of stuff you need to keep around in memory
+
+1183
+01:07:32,030 --> 01:07:34,760
+doesn't grow linearly with the number of time steps you
+
+1184
+01:07:34,870 --> 01:07:36,060
+see. Okay?
+
+1185
+01:07:36,210 --> 01:07:38,890
+Because actually what
+
+1186
+01:07:39,000 --> 01:07:40,540
+I think I just realized why so, yes.
+
+1187
+01:07:40,650 --> 01:07:42,760
+Actually this is the way we actually run Kalman filters,
+
+1188
+01:07:42,870 --> 01:07:47,740
+which is initially I have just my first observation.
+
+1189
+01:07:47,860 --> 01:07:51,580
+So I then compute P of X1 given Y1, right?
+
+1190
+01:07:51,690 --> 01:07:53,840
+And now I know why I think
+
+1191
+01:07:53,950 --> 01:07:55,490
+my helicopter is at time step one.
+
+1192
+01:07:55,600 --> 01:07:56,520
+Having computed this
+
+1193
+01:07:56,630 --> 01:07:57,730
+there may be some time passes,
+
+1194
+01:07:57,840 --> 01:08:00,830
+like a second passes, and then I get another observation
+
+1195
+01:08:00,950 --> 01:08:02,830
+and what I'll do is I
+
+1196
+01:08:02,880 --> 01:08:06,100
+'ll combine these two together to get P of X2
+
+1197
+01:08:06,210 --> 01:08:09,160
+given Y1 and Y2, right?
+
+1198
+01:08:09,270 --> 01:08:11,000
+And then may be another second passes in time
+
+1199
+01:08:11,120 --> 01:08:12,360
+and I get another observation.
+
+1200
+01:08:12,510 --> 01:08:14,260
+So my helicopters move a little bit more,
+
+1201
+01:08:14,370 --> 01:08:15,590
+because another second's passed
+
+1202
+01:08:15,700 --> 01:08:17,200
+and I get another observation.
+
+1203
+01:08:17,350 --> 01:08:21,710
+What I do is I combine these two to compute P of SV
+
+1204
+01:08:21,820 --> 01:08:23,750
+given Y1, Y2, Y3.
+
+1205
+01:08:23,860 --> 01:08:26,470
+And it turns out that in order to compute this
+
+1206
+01:08:26,590 --> 01:08:30,710
+I don't need to remember any of these earlier
+
+1207
+01:08:30,820 --> 01:08:32,750
+observations. Okay?
+
+1208
+01:08:32,900 --> 01:08:37,050
+So this is how you actually run it in real time say. Okay?
+
+1209
+01:08:37,160 --> 01:08:43,710
+Cool. So oh, drat, running out of time.
+
+1210
+01:08:43,820 --> 01:08:45,440
+The last thing I want to do is actually
+
+1211
+01:08:45,550 --> 01:08:47,360
+put these things together.
+
+1212
+01:08:47,510 --> 01:08:48,810
+So putting it together
+
+1213
+01:08:48,930 --> 01:09:00,670
+putting Kalman filters together with LQR control you get an
+
+1214
+01:09:00,740 --> 01:09:02,400
+algorithm called LQG control,
+
+1215
+01:09:02,500 --> 01:09:04,800
+which stands for linear-quadratic Gaussian.
+
+1216
+01:09:04,910 --> 01:09:06,620
+But in this type of control problem,
+
+1217
+01:09:06,730 --> 01:09:09,380
+we have a linear dynamical system.
+
+1218
+01:09:09,460 --> 01:09:13,050
+So I'm now adding actions back in, right?
+
+1219
+01:09:13,160 --> 01:09:14,180
+So now B times AT. Okay?
+
+1220
+01:09:24,350 --> 01:09:33,660
+And then, so LQG problem,
+
+1221
+01:09:33,760 --> 01:09:35,520
+or linear-quadratic Gaussian problem,
+
+1222
+01:09:35,620 --> 01:09:38,080
+I have a linear dynamical system that I want to control
+
+1223
+01:09:38,200 --> 01:09:41,740
+and I don't get to observe the states directly.
+
+1224
+01:09:41,850 --> 01:09:45,930
+I only get to observe these variables YT. Okay?
+
+1225
+01:09:46,080 --> 01:09:49,030
+So I only get noisy observations of the actual state.
+
+1226
+01:09:49,180 --> 01:09:51,490
+So it turns out that
+
+1227
+01:09:51,630 --> 01:09:55,970
+you can solve an LGG control problem as follows.
+
+1228
+01:09:56,080 --> 01:09:58,650
+At every time step,
+
+1229
+01:09:58,760 --> 01:10:12,710
+we'll use a Kalman filter to estimate the state, right?
+
+1230
+01:10:12,820 --> 01:10:16,350
+So concretely let's say you know the initial state.
+
+1231
+01:10:16,470 --> 01:10:18,570
+Then you initialize this to be like that.
+
+1232
+01:10:18,640 --> 01:10:22,900
+If you know that the initial state is some state as zero,
+
+1233
+01:10:22,980 --> 01:10:31,660
+you initialize that as zero and that or, whatever, right?
+
+1234
+01:10:31,780 --> 01:10:40,600
+And this is just well, okay?
+
+1235
+01:10:40,680 --> 01:10:41,880
+If you don't know the initial state exactly,
+
+1236
+01:10:42,030 --> 01:10:44,570
+then this is just a mean of your initial state estimate
+
+1237
+01:10:44,680 --> 01:10:45,690
+and that would be your
+
+1238
+01:10:45,770 --> 01:10:46,970
+covariance or your initial state estimate.
+
+1239
+01:10:47,090 --> 01:10:49,800
+So just initialize your Kalman filter this way.
+
+1240
+01:10:49,910 --> 01:10:52,010
+And then you use the Kalman filter on every step
+
+1241
+01:10:52,090 --> 01:10:53,560
+to estimate what the state is.
+
+1242
+01:10:53,640 --> 01:10:57,380
+So here's the predict step, right?
+
+1243
+01:10:57,460 --> 01:11:20,010
+Previously we had ST plus one give T equals and so on.
+
+1244
+01:11:20,120 --> 01:11:21,430
+So this is your predict step
+
+1245
+01:11:21,500 --> 01:11:22,910
+and then you have an update step, same as before.
+
+1246
+01:11:23,020 --> 01:11:24,890
+The one change I'm gonna make to the predict step
+
+1247
+01:11:24,990 --> 01:11:28,690
+is now I'm going to take this into account as well.
+
+1248
+01:11:28,760 --> 01:11:30,930
+This is just saying suppose my previous state was
+
+1249
+01:11:31,040 --> 01:11:32,330
+ST given T,
+
+1250
+01:11:32,440 --> 01:11:35,010
+what do I think my next state ST plus one given T
+
+1251
+01:11:35,120 --> 01:11:36,940
+will be given no other
+
+1252
+01:11:37,010 --> 01:11:38,920
+observations and the answer is, you know,
+
+1253
+01:11:39,000 --> 01:11:42,720
+it's really just this equation, AST given T plus BAT.
+
+1254
+01:11:42,830 --> 01:11:49,170
+And then, so this takes care of, sort of, the observations.
+
+1255
+01:11:49,280 --> 01:11:54,130
+And then the other thing you do
+
+1256
+01:11:54,210 --> 01:12:02,480
+is compute LT's using LQR, right?
+
+1257
+01:12:02,550 --> 01:12:10,510
+Assuming then the other thing you do
+
+1258
+01:12:10,620 --> 01:12:12,610
+is you just look at the linear dynamical systems,
+
+1259
+01:12:12,730 --> 01:12:14,190
+and forget about the observations for now,
+
+1260
+01:12:14,270 --> 01:12:18,750
+and compute the optimal policy oh, right.
+
+1261
+01:12:18,870 --> 01:12:19,830
+Previously we had
+
+1262
+01:12:19,900 --> 01:12:24,420
+that you would choose actions AT equals to LT times ST,
+
+1263
+01:12:24,540 --> 01:12:25,810
+right?
+
+1264
+01:12:25,920 --> 01:12:27,850
+So the optimal policy we said was these matrixes,
+
+1265
+01:12:27,960 --> 01:12:29,560
+LT times ST.
+
+1266
+01:12:29,720 --> 01:12:31,920
+So the other part of this problem
+
+1267
+01:12:32,030 --> 01:12:35,260
+you would use LQR to compute these matrixes LT,
+
+1268
+01:12:35,370 --> 01:12:37,820
+ignoring the fact that you don't actually observe the state.
+
+1269
+01:12:37,820 --> 01:12:38,820
+And the very final step of LQR control is that –
+
+1270
+01:12:42,870 --> 01:12:44,870
+well, when you're actually flying a helicopter,
+
+1271
+01:12:44,990 --> 01:12:47,020
+when you're actually doing whatever you're doing,
+
+1272
+01:12:47,130 --> 01:12:48,960
+you can't actually plug in the actual state
+
+1273
+01:12:49,080 --> 01:12:50,690
+because in LGG problem
+
+1274
+01:12:50,760 --> 01:12:52,120
+you don't get to observe the state exactly.
+
+1275
+01:12:52,230 --> 01:12:57,420
+So what you do when you actually execute the policy is
+
+1276
+01:12:57,570 --> 01:13:00,350
+you choose the action
+
+1277
+01:13:00,460 --> 01:13:05,170
+according to your best estimate of the state. Okay?
+
+1278
+01:13:05,250 --> 01:13:06,640
+So in other words,
+
+1279
+01:13:06,750 --> 01:13:08,670
+you don't know what ST is,
+
+1280
+01:13:08,780 --> 01:13:10,900
+but your best estimate of the state at any time
+
+1281
+01:13:11,010 --> 01:13:12,430
+is this S of T given T.
+
+1282
+01:13:12,550 --> 01:13:15,310
+So you just plug those in
+
+1283
+01:13:15,420 --> 01:13:16,580
+and take LT times your best estimate of the state
+
+1284
+01:13:16,690 --> 01:13:18,470
+and then you go ahead and
+
+1285
+01:13:18,590 --> 01:13:21,620
+execute the action AT on your system, on your helicopter,
+
+1286
+01:13:21,740 --> 01:13:24,040
+or whatever. Okay?
+
+1287
+01:13:24,160 --> 01:13:27,620
+And it turns out that for this specific class of problems,
+
+1288
+01:13:27,730 --> 01:13:29,950
+this is actually optimal procedure.
+
+1289
+01:13:30,070 --> 01:13:32,660
+This will actually cause
+
+1290
+01:13:32,740 --> 01:13:34,640
+you to act optimally in your LQG problem.
+
+1291
+01:13:34,750 --> 01:13:38,140
+And there's this intuition that,
+
+1292
+01:13:38,250 --> 01:13:41,710
+earlier I said, in LQR problems it's almost
+
+1293
+01:13:41,790 --> 01:13:43,040
+as if the noise doesn't matter
+
+1294
+01:13:43,130 --> 01:13:46,180
+and in a pure LQR problem the WT terms don't matter. It's
+
+1295
+01:13:46,260 --> 01:13:47,720
+as if you can ignore the noise.
+
+1296
+01:13:47,840 --> 01:13:50,530
+So it turns out that by elaborating that proof,
+
+1297
+01:13:50,640 --> 01:13:52,250
+which I'm not gonna do you can
+
+1298
+01:13:52,330 --> 01:13:56,440
+you're welcome to proof for yourself at home.
+
+1299
+01:13:56,520 --> 01:13:57,870
+It's that intuition means that you can actually ignore
+
+1300
+01:13:57,950 --> 01:13:59,170
+the noise in your observations as well.
+
+1301
+01:13:59,260 --> 01:14:01,070
+The ST given T is some of your best estimate.
+
+1302
+01:14:01,180 --> 01:14:06,870
+So it's as if your true state
+
+1303
+01:14:06,970 --> 01:14:13,140
+ST is equal to ST given T plus noise.
+
+1304
+01:14:13,250 --> 01:14:15,640
+So in LQG control,
+
+1305
+01:14:15,710 --> 01:14:17,190
+what we're going to do is ignore the noise
+
+1306
+01:14:17,300 --> 01:14:19,270
+and just plug in this ST given T
+
+1307
+01:14:19,340 --> 01:14:21,780
+and this turns out the optimal thing to do.
+
+1308
+01:14:21,890 --> 01:14:24,260
+I should say, this turns out to be a
+
+1309
+01:14:24,410 --> 01:14:26,940
+very special case of a problem
+
+1310
+01:14:27,090 --> 01:14:29,830
+where you can ignore the noise
+
+1311
+01:14:29,930 --> 01:14:33,770
+and still act optimally and this property
+
+1312
+01:14:33,880 --> 01:14:36,960
+this actually is something called the separation principle
+
+1313
+01:14:37,070 --> 01:14:40,830
+where you can design an algorithm for estimate the states
+
+1314
+01:14:40,980 --> 01:14:42,600
+and design an algorithm for controlling your system.
+
+1315
+01:14:42,710 --> 01:14:44,800
+So just glom the two together
+
+1316
+01:14:44,920 --> 01:14:46,370
+and that turns out to be optimal.
+
+1317
+01:14:46,440 --> 01:14:47,780
+This is a very unusual property
+
+1318
+01:14:47,880 --> 01:14:50,140
+and it pretty much was true only for LQG.
+
+1319
+01:14:50,260 --> 01:14:52,340
+It doesn't hold true for many systems.
+
+1320
+01:14:52,450 --> 01:14:53,590
+Once you change anything,
+
+1321
+01:14:53,700 --> 01:14:56,910
+one's that's non-linear, you know, some other noise
+
+1322
+01:14:57,020 --> 01:14:59,890
+model of one that's non-linear once this I don't know.
+
+1323
+01:15:00,000 --> 01:15:01,480
+Once you change almost anything in this problem
+
+1324
+01:15:01,630 --> 01:15:03,040
+this will no longer hold true.
+
+1325
+01:15:03,190 --> 01:15:04,720
+The and just estimate the states
+
+1326
+01:15:04,830 --> 01:15:06,700
+and plug that into a controller that was designed,
+
+1327
+01:15:06,820 --> 01:15:08,380
+assuming you could observe the states fully.
+
+1328
+01:15:08,490 --> 01:15:12,090
+But that once you change almost anything
+
+1329
+01:15:12,170 --> 01:15:13,980
+this will no longer turn out to be optimal.
+
+1330
+01:15:14,090 --> 01:15:16,110
+But for the LQG problem specifically,
+
+1331
+01:15:16,220 --> 01:15:17,720
+it's kind of convenient that you can do this.
+
+1332
+01:15:17,830 --> 01:15:19,910
+Just one quick question to actually close
+
+1333
+01:15:20,010 --> 01:15:23,470
+Student:[Inaudible]
+
+1334
+01:15:23,550 --> 01:15:24,630
+Instructor (Andrew Ng):Oh, yes. Yeah.
+
+1335
+01:15:24,740 --> 01:15:26,060
+In every embassy wing
+
+1336
+01:15:26,160 --> 01:15:27,650
+in everything I've described
+
+1337
+01:15:27,760 --> 01:15:29,250
+I'm assuming that you're already learned A and B or s
+
+1338
+01:15:29,330 --> 01:15:30,980
+omething, so to
+
+1339
+01:15:31,080 --> 01:15:32,700
+Student:[Inaudible]
+
+1340
+01:15:32,810 --> 01:15:33,860
+Instructor (Andrew Ng):Yeah, right. Okay.
+
+1341
+01:15:33,960 --> 01:15:35,240
+Sorry we're running a little bit late;
+
+1342
+01:15:35,350 --> 01:15:36,330
+let's close for today and next time
+
+1343
+01:15:36,330 --> 01:15:37,680
+I'll talk a bit more about
+
+1344
+01:15:37,760 --> 01:15:39,180
+these partially observed problems.
+

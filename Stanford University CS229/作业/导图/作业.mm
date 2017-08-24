@@ -3,7 +3,7 @@
 <node COLOR="#000000" CREATED="1503456066531" ID="ID_1646638926" MODIFIED="1503459292383" TEXT="&#x4f5c;&#x4e1a;">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
-<node COLOR="#0033ff" CREATED="1503456087397" FOLDED="true" ID="ID_848554012" MODIFIED="1503459292371" POSITION="right" TEXT="1 Supervided Learning">
+<node COLOR="#0033ff" CREATED="1503456087397" ID="ID_848554012" MODIFIED="1503468312628" POSITION="right" TEXT="1 Supervided Learning">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503456121060" ID="ID_723600342" MODIFIED="1503459292371" TEXT="1 Newoton&apos;s method for computing least squares">
@@ -93,13 +93,53 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503456090762" ID="ID_1720310248" MODIFIED="1503459292382" POSITION="right" TEXT="3">
+<node COLOR="#0033ff" CREATED="1503456090762" ID="ID_1720310248" MODIFIED="1503468113122" POSITION="right" TEXT="3 Learning Theory and Unsupervised Learning">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1503468113123" ID="ID_100511085" MODIFIED="1503468125605" TEXT="1. Uniform convergence and model SElection">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
 </node>
-<node COLOR="#0033ff" CREATED="1503456091701" ID="ID_1042838766" MODIFIED="1503459292383" POSITION="right" TEXT="4">
+<node COLOR="#00b439" CREATED="1503468125818" ID="ID_321542576" MODIFIED="1503468137819" TEXT="2. VC Demension">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468138000" ID="ID_945383643" MODIFIED="1503468156714" TEXT="3. l regularization for least squares">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468156912" ID="ID_216758657" MODIFIED="1503468173209" TEXT="4. K-Means Clustering">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468173405" ID="ID_984283053" MODIFIED="1503468181281" TEXT="5. The Generalized EM algorithm">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1503456091701" ID="ID_1042838766" MODIFIED="1503468222428" POSITION="right" TEXT="4 Unsupervised Learning and Reinforcement Learning">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1503468222429" ID="ID_21306747" MODIFIED="1503468236598" TEXT="1. EM for supervised learning">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468237117" ID="ID_1870673390" MODIFIED="1503468249105" TEXT="2. Factor Analysis and PCA">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468249287" ID="ID_1524652680" MODIFIED="1503468264658" TEXT="3. PCA and ICA for Natural Images">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468264851" ID="ID_1195388156" MODIFIED="1503468280041" TEXT="4. Convergence of Policy Iteration">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1503468280266" ID="ID_97543402" MODIFIED="1503468296285" TEXT="5. Reinforcement Learning: The mountain Car">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 </node>
 </map>
