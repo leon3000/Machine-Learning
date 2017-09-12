@@ -1,7 +1,8 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1504750512903" ID="ID_308759156" MODIFIED="1504767410607" TEXT="Kaggle&#x653b;&#x7565;&#xff08;CRISP DM&#xff09;">
+<node COLOR="#000000" CREATED="1504750512903" ID="ID_308759156" MODIFIED="1505100332681" TEXT="Kaggle&#x653b;&#x7565;&#xff08;CRISP DM&#xff09;">
 <font NAME="SansSerif" SIZE="20"/>
+<hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1504750973910" ID="ID_1035339705" MODIFIED="1504751675817" POSITION="right" TEXT=" Business understanding">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
@@ -77,8 +78,7 @@
   <body>
     <img src="&#x6807;&#x51c6;&#x5316;.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#111111" CREATED="1504765645515" ID="ID_996717530" MODIFIED="1504766312985" TEXT="&#x533a;&#x95f4;&#x7f29;&#x653e;&#x6cd5;MinMaxScaler">
@@ -90,8 +90,7 @@
   <body>
     <img src="&#x533a;&#x95f4;&#x7f29;&#x653e;.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#111111" CREATED="1504765651468" ID="ID_961268227" MODIFIED="1504766380365" TEXT="&#x6807;&#x51c6;&#x5316;&#x4e0e;&#x5f52;&#x4e00;&#x5316;Normalizer&#x7684;&#x533a;&#x522b;">
@@ -106,8 +105,7 @@
   <body>
     <img src="&#x89c4;&#x5219;&#x4e3a;l2&#x7684;&#x5f52;&#x4e00;&#x5316;&#x516c;&#x5f0f;.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>
@@ -122,8 +120,7 @@
   <body>
     <img src="&#x5b9a;&#x91cf;&#x7279;&#x5f81;&#x4e8c;&#x503c;&#x5316;.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#111111" CREATED="1504765339309" ID="ID_495419178" MODIFIED="1504766354317" TEXT="&#x5bf9;&#x5b9a;&#x6027;&#x7279;&#x5f81;&#x54d1;&#x7f16;&#x7801;oneHotEncoder"/>
@@ -157,8 +154,7 @@
   <body>
     <img src="&#x5361;&#x65b9;&#x68c0;&#x9a8c;.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>
@@ -172,8 +168,7 @@
   <body>
     <img src="&#x4e92;&#x4fe1;&#x606f;&#x8ba1;&#x7b97;&#x516c;&#x5f0f;.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>
@@ -254,6 +249,48 @@
 <node COLOR="#00b439" CREATED="1504751126558" ID="ID_932834656" MODIFIED="1504751137367" TEXT="Submit result to Kaggle leaderboard">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1505100193493" ID="ID_1795914428" MODIFIED="1505100332647" POSITION="right" TEXT="Getting Started">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1505100235787" ID="ID_1121604919" MODIFIED="1505100332653" TEXT="Titanic: Machine Learning from Disaster">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1505100237344" ID="ID_752502792" MODIFIED="1505100332656" TEXT="Binary classification">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1505100249430" ID="ID_208152756" MODIFIED="1505100332659" TEXT="Python and R basics">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1505100200003" ID="ID_1283977899" MODIFIED="1505180921750" TEXT="House Prices: Advanced Regression Techniques">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1505181073690" ID="ID_502931447" MODIFIED="1505181075280" TEXT="Practice Skills">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1505100266412" ID="ID_1620872825" MODIFIED="1505181081623" TEXT="Creative feature engineering">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#111111" CREATED="1505100267617" ID="ID_1955342" MODIFIED="1505181083794" TEXT="Advanced regression techniques like random forest and gradient boostin">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1505181037218" ID="ID_1610246615" MODIFIED="1505181040254" TEXT="Comprehensive data exploration with Python ">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1505181088370" ID="ID_1890051593" MODIFIED="1505181128331" TEXT="zoomed heatmap style"/>
+<node COLOR="#111111" CREATED="1505181103362" ID="ID_1735515007" MODIFIED="1505181122229" TEXT="move like Jagger style"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1505100306037" ID="ID_1627482252" MODIFIED="1505100332677" TEXT="Digit Recognizer">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1505100306998" ID="ID_1910939002" MODIFIED="1505100332677" TEXT="Computer vision fundamentals including simple neural networks">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1505100318898" ID="ID_877387445" MODIFIED="1505100332678" TEXT="Classification methods such as SVM and K-nearest neighbors">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 </node>
 </node>
