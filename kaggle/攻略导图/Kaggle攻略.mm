@@ -251,47 +251,5 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1505100193493" ID="ID_1795914428" MODIFIED="1505100332647" POSITION="right" TEXT="Getting Started">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1505100235787" ID="ID_1121604919" MODIFIED="1505100332653" TEXT="Titanic: Machine Learning from Disaster">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1505100237344" ID="ID_752502792" MODIFIED="1505100332656" TEXT="Binary classification">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-<node COLOR="#990000" CREATED="1505100249430" ID="ID_208152756" MODIFIED="1505100332659" TEXT="Python and R basics">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1505100200003" ID="ID_1283977899" MODIFIED="1505180921750" TEXT="House Prices: Advanced Regression Techniques">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1505181073690" ID="ID_502931447" MODIFIED="1505181075280" TEXT="Practice Skills">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1505100266412" ID="ID_1620872825" MODIFIED="1505181081623" TEXT="Creative feature engineering">
-<font NAME="SansSerif" SIZE="12"/>
-</node>
-<node COLOR="#111111" CREATED="1505100267617" ID="ID_1955342" MODIFIED="1505181083794" TEXT="Advanced regression techniques like random forest and gradient boostin">
-<font NAME="SansSerif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" CREATED="1505181037218" ID="ID_1610246615" MODIFIED="1505181040254" TEXT="Comprehensive data exploration with Python ">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1505181088370" ID="ID_1890051593" MODIFIED="1505181128331" TEXT="zoomed heatmap style"/>
-<node COLOR="#111111" CREATED="1505181103362" ID="ID_1735515007" MODIFIED="1505181122229" TEXT="move like Jagger style"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1505100306037" ID="ID_1627482252" MODIFIED="1505100332677" TEXT="Digit Recognizer">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1505100306998" ID="ID_1910939002" MODIFIED="1505100332677" TEXT="Computer vision fundamentals including simple neural networks">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-<node COLOR="#990000" CREATED="1505100318898" ID="ID_877387445" MODIFIED="1505100332678" TEXT="Classification methods such as SVM and K-nearest neighbors">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
-</node>
 </node>
 </map>
