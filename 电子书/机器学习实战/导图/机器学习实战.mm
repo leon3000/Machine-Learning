@@ -116,6 +116,21 @@
 <node COLOR="#00b439" CREATED="1505284985888" ID="ID_763968915" MODIFIED="1505284985888" TEXT="&#x7b2c;5&#x7ae0;&#x3000;Logistic&#x56de;&#x5f52;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1505615949929" ID="ID_1713371576" MODIFIED="1505615950641" TEXT="5.1 &#x3000;&#x57fa;&#x4e8e;Logistic&#x56de;&#x5f52;&#x548c;Sigmoid&#x51fd;&#x6570;&#x7684;&#x5206;&#x7c7b;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1505615951015" ID="ID_1497785816" MODIFIED="1505615958726" TEXT="5.2 &#x3000;&#x57fa;&#x4e8e;&#x6700;&#x4f18;&#x5316;&#x65b9;&#x6cd5;&#x7684;&#x6700;&#x4f73;&#x56de;&#x5f52;&#x7cfb;&#x6570;&#x786e;&#x5b9a;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1505615975272" ID="ID_1669252218" MODIFIED="1505615975873" TEXT="5.2.1 &#x3000;&#x68af;&#x5ea6;&#x4e0a;&#x5347;&#x6cd5;"/>
+<node COLOR="#111111" CREATED="1505615976087" ID="ID_1284411552" MODIFIED="1505615981951" TEXT="5.2.2 &#x3000;&#x8bad;&#x7ec3;&#x7b97;&#x6cd5;&#xff1a;&#x4f7f;&#x7528;&#x68af;&#x5ea6;&#x4e0a;&#x5347;&#x627e;&#x5230;&#x6700;&#x4f73;&#x53c2;&#x6570;"/>
+<node COLOR="#111111" CREATED="1505615982167" ID="ID_94213232" MODIFIED="1505615987651" TEXT="5.2.3 &#x3000;&#x5206;&#x6790;&#x6570;&#x636e;&#xff1a;&#x753b;&#x51fa;&#x51b3;&#x7b56;&#x8fb9;&#x754c;"/>
+<node COLOR="#111111" CREATED="1505615987831" ID="ID_258505053" MODIFIED="1505615995542" TEXT="5.2.4 &#x3000;&#x8bad;&#x7ec3;&#x7b97;&#x6cd5;&#xff1a;&#x968f;&#x673a;&#x68af;&#x5ea6;&#x4e0a;&#x5347;"/>
+</node>
+<node COLOR="#990000" CREATED="1505615958927" ID="ID_1058002656" MODIFIED="1505615965523" TEXT="5.3 &#x3000;&#x793a;&#x4f8b;&#xff1a;&#x4ece;&#x759d;&#x6c14;&#x75c5;&#x75c7;&#x9884;&#x6d4b;&#x75c5;&#x9a6c;&#x7684;&#x6b7b;&#x4ea1;&#x7387;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1505615998975" ID="ID_558364403" MODIFIED="1505615999652" TEXT="5.3.1 &#x3000;&#x51c6;&#x5907;&#x6570;&#x636e;&#xff1a;&#x5904;&#x7406;&#x6570;&#x636e;&#x4e2d;&#x7684;&#x7f3a;&#x5931;&#x503c;"/>
+<node COLOR="#111111" CREATED="1505615999846" ID="ID_179209626" MODIFIED="1505616006457" TEXT="5.3.2 &#x3000;&#x6d4b;&#x8bd5;&#x7b97;&#x6cd5;&#xff1a;&#x7528;Logistic&#x56de;&#x5f52;&#x8fdb;&#x884c;&#x5206;&#x7c7b;"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1505284996454" ID="ID_650733950" MODIFIED="1505284996454" TEXT="&#x7b2c;6&#x7ae0;&#x3000;&#x652f;&#x6301;&#x5411;&#x91cf;&#x673a;">
 <edge STYLE="bezier" WIDTH="thin"/>
