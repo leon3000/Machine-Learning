@@ -119,7 +119,7 @@ DLCS_REQUEST_TIMEOUT = 444 # Seconds before socket triggers timeout
 DLCS_API_HOST = 'https://api.del.icio.us'
 DLCS_API_PATH = 'v1'
 DLCS_API = "%s/%s" % (DLCS_API_HOST, DLCS_API_PATH)
-DLCS_RSS = 'http://del.icio.us/rss/'
+DLCS_RSS = 'http://feeds.delicious.com/v2/rss/'
 
 ISO_8601_DATETIME = '%Y-%m-%dT%H:%M:%SZ'
 
@@ -745,11 +745,7 @@ class DeliciousAPI:
     }
 
     def get_url(self, url):
-        """Return the del.icio.us url at which the HTML page with posts for
-        ``url`` can be found.
-        """
-        return "http://del.icio.us/url/?url=%s" % (url,)
-
+return "http://feeds.delicious.com/v2/rss" % (url,)
 
 ### Convenience functions on this package
 
@@ -803,7 +799,7 @@ def get_urlposts(url):
     return getrss(url = url)
 
 def get_popular(tag = ""):
-    return getrss(tag = tag, popular = 1)
+return getrss(tag = tag, popular = 0)
 
 
 ### @TODO: implement JSON fetching
