@@ -161,7 +161,7 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502807226500" FOLDED="true" ID="ID_1965555317" MODIFIED="1503469891614" POSITION="right" TEXT="&#x611f;&#x77e5;&#x673a;">
+<node COLOR="#0033ff" CREATED="1502807226500" ID="ID_1965555317" MODIFIED="1506410250780" POSITION="right" TEXT="&#x611f;&#x77e5;&#x673a;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1502807443670" ID="ID_887261313" MODIFIED="1503455846103" TEXT="&#x524d;&#x8a00;">
@@ -215,7 +215,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502807229346" FOLDED="true" ID="ID_1814355866" MODIFIED="1503391657013" POSITION="right" TEXT="k&#x8fd1;&#x90bb;&#x6cd5;">
+<node COLOR="#0033ff" CREATED="1502807229346" ID="ID_1814355866" MODIFIED="1506410262978" POSITION="right" TEXT="k&#x8fd1;&#x90bb;&#x6cd5;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503303101452" FOLDED="true" ID="ID_1855288937" MODIFIED="1503391656997" TEXT="&#x524d;&#x8a00;">
@@ -262,7 +262,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502807259990" FOLDED="true" ID="ID_1067786304" MODIFIED="1503391657013" POSITION="right" TEXT="&#x6734;&#x7d20;&#x8d1d;&#x53f6;&#x65af;&#x6cd5;">
+<node COLOR="#0033ff" CREATED="1502807259990" FOLDED="true" ID="ID_1067786304" MODIFIED="1506410344627" POSITION="right" TEXT="&#x6734;&#x7d20;&#x8d1d;&#x53f6;&#x65af;&#x6cd5;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503112459601" FOLDED="true" ID="ID_242387002" MODIFIED="1503391657013" TEXT="&#x524d;&#x8a00;">
@@ -319,7 +319,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502807268117" FOLDED="true" ID="ID_893598091" MODIFIED="1503469916814" POSITION="right" TEXT="&#x51b3;&#x7b56;&#x6811;">
+<node COLOR="#0033ff" CREATED="1502807268117" FOLDED="true" ID="ID_893598091" MODIFIED="1506410342071" POSITION="right" TEXT="&#x51b3;&#x7b56;&#x6811;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503391675097" ID="ID_1874397054" MODIFIED="1503391697313" TEXT="&#x51b3;&#x7b56;&#x6811;&#x6a21;&#x578b;&#x4e0e;&#x5b66;&#x4e60;">
@@ -393,7 +393,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502807270251" FOLDED="true" ID="ID_1266699698" MODIFIED="1503454227833" POSITION="right" TEXT="&#x903b;&#x8f91;&#x65af;&#x5e1d;&#x56de;&#x5f52;&#x4e8e;&#x6700;&#x5927;&#x71b5;&#x6a21;&#x578b;">
+<node COLOR="#0033ff" CREATED="1502807270251" ID="ID_1266699698" MODIFIED="1506410331435" POSITION="right" TEXT="&#x903b;&#x8f91;&#x65af;&#x5e1d;&#x56de;&#x5f52;&#x4e8e;&#x6700;&#x5927;&#x71b5;&#x6a21;&#x578b;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503391852913" ID="ID_1607875495" MODIFIED="1503391864441" TEXT="&#x903b;&#x8f91;&#x65af;&#x8482;&#x56de;&#x5f52;&#x6a21;&#x578b;">
@@ -584,7 +584,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502807304357" FOLDED="true" ID="ID_1699903349" MODIFIED="1503454656943" POSITION="right" TEXT="&#x63d0;&#x5347;&#x65b9;&#x6cd5;">
+<node COLOR="#0033ff" CREATED="1502807304357" FOLDED="true" ID="ID_1699903349" MODIFIED="1506410357211" POSITION="right" TEXT="&#x63d0;&#x5347;&#x65b9;&#x6cd5;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503454267917" ID="ID_538572709" MODIFIED="1503454353894" TEXT="&#x63d0;&#x5347;boost&#x65b9;&#x6cd5;AdaBoost&#x7b97;&#x6cd5;">
@@ -693,7 +693,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503298704574" FOLDED="true" ID="ID_602692382" MODIFIED="1503455851136" POSITION="right" TEXT="&#x9690;&#x9a6c;&#x5c14;&#x53ef;&#x592b;&#x6a21;&#x578b;">
+<node COLOR="#0033ff" CREATED="1503298704574" FOLDED="true" ID="ID_602692382" MODIFIED="1506410360684" POSITION="right" TEXT="&#x9690;&#x9a6c;&#x5c14;&#x53ef;&#x592b;&#x6a21;&#x578b;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503454709241" ID="ID_614401198" MODIFIED="1503454727215" TEXT="&#x9690;&#x9a6c;&#x5c14;&#x53ef;&#x592b;&#x6a21;&#x578b;hidden Markov model HMM&#x7684;&#x57fa;&#x672c;&#x6982;&#x5ff5;">
@@ -754,7 +754,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503298712993" FOLDED="true" ID="ID_1239107461" MODIFIED="1503455235236" POSITION="right" TEXT="&#x6761;&#x4ef6;&#x968f;&#x673a;&#x573a;">
+<node COLOR="#0033ff" CREATED="1503298712993" FOLDED="true" ID="ID_1239107461" MODIFIED="1506410363932" POSITION="right" TEXT="&#x6761;&#x4ef6;&#x968f;&#x673a;&#x573a;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503454986120" ID="ID_551433459" MODIFIED="1503455028514" TEXT="&#x6982;&#x7387;&#x65e0;&#x5411;&#x56fe;probabilistic undirected graphical mode &#x6a21;&#x578b; &#x4e5f;&#x79f0;&#x9a6c;&#x5c14;&#x53ef;&#x592b;&#x968f;&#x673a;&#x573a; Markov random field">
