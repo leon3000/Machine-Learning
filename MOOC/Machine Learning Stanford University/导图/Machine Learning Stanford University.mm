@@ -1,9 +1,8 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1500645005325" ID="ID_1296215895" MODIFIED="1503370221937" TEXT="Machine Learning Stanford University">
+<node COLOR="#000000" CREATED="1500645005325" ID="ID_1296215895" MODIFIED="1506691905354" TEXT="Machine Learning Stanford University">
 <edge COLOR="#000000" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="20"/>
-<hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1500645169018" ID="ID_14276957" MODIFIED="1503370221886" POSITION="right" TEXT="1">
 <edge COLOR="#0033ff" STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
