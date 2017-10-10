@@ -148,9 +148,6 @@
 <node COLOR="#990000" CREATED="1502811690919" ID="ID_434369189" MODIFIED="1503391174367" TEXT="&#x5206;&#x7c7b;&#x8fc7;&#x7a0b;&#x5305;&#x62ec;&#x5b66;&#x4e60;&#x548c;&#x5206;&#x7c7b;&#x4e24;&#x4e2a;&#x8fc7;&#x7a0b;">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#990000" CREATED="1502811730300" ID="ID_588759639" MODIFIED="1503391174368" TEXT="&#x4e8c;&#x7c7b;&#x5206;&#x7c7b;&#x95ee;&#x9898;&#x5e38;&#x7528;&#x7684;&#x8bc4;&#x4ef7;&#x6307;&#x6807;&#x662f;&#x7cbe;&#x786e;&#x7387;precision&#x548c;&#x53ec;&#x56de;&#x7387;recall">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
 </node>
 <node COLOR="#00b439" CREATED="1502810076181" ID="ID_778707969" MODIFIED="1503391174368" TEXT="&#x6807;&#x6ce8;tagging&#x95ee;&#x9898;">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -169,6 +166,9 @@
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1502807448476" ID="ID_769784602" MODIFIED="1503391174370" TEXT="&#x611f;&#x77e5;&#x673a;&#x662f;&#x4e8c;&#x7c7b;&#x5206;&#x7c7b;&#x7684;&#x7ebf;&#x6027;&#x5206;&#x7c7b;&#xff08;&#x5224;&#x522b;&#xff09;&#x6a21;&#x578b;&#xff0c;&#x5176;&#x8f93;&#x5165;&#x4e3a;&#x5b9e;&#x4f8b;&#x7684;&#x7279;&#x5f81;&#x5411;&#x91cf;&#xff0c;&#x8f93;&#x51fa;&#x4e3a;&#x5b9e;&#x4f8b;&#x7684;&#x7c7b;&#x522b;&#xff0c;&#x53d6;+1&#x548c;-1&#x4e24;&#x503c;">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1502811730300" ID="ID_588759639" MODIFIED="1507601634407" TEXT="&#x4e8c;&#x7c7b;&#x5206;&#x7c7b;&#x95ee;&#x9898;&#x5e38;&#x7528;&#x7684;&#x8bc4;&#x4ef7;&#x6307;&#x6807;&#x662f;&#x7cbe;&#x786e;&#x7387;precision&#x548c;&#x53ec;&#x56de;&#x7387;recall">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
 </node>
 <node COLOR="#990000" CREATED="1507544659191" ID="ID_1456301453" MODIFIED="1507544732309" TEXT="&#x611f;&#x77e5;&#x673a;&#x5b66;&#x4e60;&#x65e8;&#x5728;&#x6c42;&#x51fa;&#x5c06;&#x8bad;&#x7ec3;&#x6570;&#x636e;&#x8fdb;&#x884c;&#x6570;&#x636e;&#x5212;&#x5206;&#x7684;&#x5206;&#x79bb;&#x8d85;&#x5e73;&#x9762;">
 <font NAME="SansSerif" SIZE="14"/>
@@ -205,7 +205,7 @@
 </node>
 <node COLOR="#990000" CREATED="1502807405569" ID="ID_136706212" MODIFIED="1507544469779" TEXT="&#x7b97;&#x6cd5;&#x7684;&#x6536;&#x655b;&#x6027;">
 <font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1502809454126" ID="ID_807252004" MODIFIED="1503391174370" TEXT="novikoff&#x5b9a;&#x7406;"/>
+<node COLOR="#111111" CREATED="1502809454126" ID="ID_807252004" MODIFIED="1507600013941" TEXT="novikoff&#x8bfa;&#x7ef4;&#x79d1;&#x592b;&#x5b9a;&#x7406;"/>
 <node COLOR="#111111" CREATED="1502809470007" ID="ID_1152908131" MODIFIED="1503391174370" TEXT="&#x8bef;&#x5206;&#x7c7b;&#x7684;&#x6b21;&#x6570;k&#x6709;&#x4e0a;&#x754c;&#xff0c;&#x7ecf;&#x8fc7;&#x6709;&#x9650;&#x6b21;&#x641c;&#x7d22;&#x53ef;&#x4ee5;&#x627e;&#x5230;&#x5c06;&#x8bad;&#x7ec3;&#x6570;&#x636e;&#x5b8c;&#x5168;&#x6b63;&#x786e;&#x5206;&#x5f00;&#x7684;&#x5206;&#x79bb;&#x8d85;&#x5e73;&#x9762;"/>
 <node COLOR="#111111" CREATED="1502809528978" ID="ID_1850082498" MODIFIED="1503391174370" TEXT="&#x5f53;&#x8bad;&#x7ec3;&#x6570;&#x636e;&#x7ebf;&#x6027;&#x53ef;&#x5206;&#xff0c;&#x611f;&#x77e5;&#x673a;&#x5b66;&#x4e60;&#x7b97;&#x6cd5;&#x7684;&#x539f;&#x59cb;&#x8fed;&#x4ee3;&#x662f;&#x6536;&#x655b;&#x7684;"/>
 <node COLOR="#111111" CREATED="1502809558863" ID="ID_1395066122" MODIFIED="1503391174370" TEXT="&#x611f;&#x77e5;&#x673a;&#x7b97;&#x6cd5;&#x5b58;&#x5728;&#x8bb8;&#x591a;&#x89e3;&#xff0c;&#x8fd9;&#x4e9b;&#x89e3;&#x65e2;&#x4f9d;&#x8d56;&#x4e8e;&#x521d;&#x503c;&#x7684;&#x9009;&#x62e9;&#xff0c;&#x4e5f;&#x4f9d;&#x8d56;&#x4e8e;&#x8fed;&#x4ee3;&#x8fc7;&#x7a0b;&#x4e2d;&#x8bef;&#x5206;&#x7c7b;&#x70b9;&#x7684;&#x9009;&#x62e9;&#x987a;&#x5e8f;"/>
@@ -243,12 +243,20 @@
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1503303199080" ID="ID_1596422725" MODIFIED="1503391174385" TEXT="&#x6a21;&#x578b;">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1507601384461" ID="ID_440290693" MODIFIED="1507601386464" TEXT="cell"/>
 </node>
 <node COLOR="#990000" CREATED="1503303214310" ID="ID_1666591009" MODIFIED="1503391174385" TEXT="&#x8ddd;&#x79bb;&#x5ea6;&#x91cf;">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1507601270854" ID="ID_1591099979" MODIFIED="1507601277378" TEXT="Lp&#x8ddd;&#x79bb;"/>
+<node COLOR="#111111" CREATED="1507601277589" ID="ID_594680494" MODIFIED="1507601284964" TEXT="Minkowski&#x8ddd;&#x79bb;"/>
+<node COLOR="#111111" CREATED="1507601285799" ID="ID_473471702" MODIFIED="1507601302984" TEXT="&#x6b27;&#x6c0f;&#x8ddd;&#x79bb;"/>
+<node COLOR="#111111" CREATED="1507601303272" ID="ID_1609375943" MODIFIED="1507601308226" TEXT="&#x66fc;&#x54c8;&#x987f;&#x8ddd;&#x79bb;"/>
 </node>
 <node COLOR="#990000" CREATED="1503303236047" ID="ID_1718229407" MODIFIED="1503391174385" TEXT="k&#x503c;&#x7684;&#x9009;&#x62e9;">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1507601767307" ID="ID_1404828553" MODIFIED="1507601772984" TEXT="&#x592a;&#x5927;"/>
+<node COLOR="#111111" CREATED="1507601773193" ID="ID_658221339" MODIFIED="1507601774836" TEXT="&#x5927;&#x5c0f;"/>
+<node COLOR="#111111" CREATED="1507601775374" ID="ID_1691393622" MODIFIED="1507601788636" TEXT="&#x4ea4;&#x53c9;&#x9a8c;&#x8bc1;&#x9009;&#x6700;&#x4f18;"/>
 </node>
 <node COLOR="#990000" CREATED="1503303250159" ID="ID_457914564" MODIFIED="1503391174385" TEXT="&#x5206;&#x7c7b;&#x51b3;&#x7b56;&#x89c4;&#x5219;">
 <font NAME="SansSerif" SIZE="14"/>
