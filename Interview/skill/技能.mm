@@ -208,7 +208,8 @@
 <node COLOR="#990000" CREATED="1506409947716" ID="ID_1255610261" MODIFIED="1508134883647" TEXT="DT">
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1506409950542" ID="ID_866742691" MODIFIED="1506409954349" TEXT="GBDT">
-<node COLOR="#111111" CREATED="1506410786570" ID="ID_1541941218" MODIFIED="1506410788439" TEXT="GBDT(Gradient Boosting Decision Tree) &#x53c8;&#x53eb; MART&#xff08;Multiple Additive Regression Tree)"/>
+<node COLOR="#111111" CREATED="1506410786570" ID="ID_1541941218" MODIFIED="1508168429289" TEXT="GBDT(Gradient Boosting Decision Tree) &#x53c8;&#x53eb; MART&#xff08;Multiple Additive Regression Tree) GBT&#xff08;Gradient Boosting Tree&#xff09;, GTB&#xff08;Gradient Tree Boosting &#xff09;&#xff0c; GBRT&#xff08;Gradient Boosting Regression Tree&#xff09;"/>
+<node COLOR="#111111" CREATED="1508168398914" ID="ID_444035522" MODIFIED="1508168411098" TEXT="&#x7b97;&#x6cd5;&#x601d;&#x60f3;&#xff1a;&#x672c;&#x8f6e;&#x8fed;&#x4ee3;&#x627e;&#x5230;&#x51b3;&#x7b56;&#x6811;&#xff0c;&#x8981;&#x8ba9;&#x6837;&#x672c;&#x7684;&#x635f;&#x5931;&#x5c3d;&#x91cf;&#x53d8;&#x5f97;&#x66f4;&#x5c0f;"/>
 </node>
 <node COLOR="#111111" CREATED="1507685601191" ID="ID_84955555" MODIFIED="1507685608260" TEXT="CART"/>
 <node COLOR="#111111" CREATED="1507684738945" ID="ID_684555445" MODIFIED="1507684748680" TEXT="&#x53ef;&#x5206;&#x7c7b;&#x53ef;&#x56de;&#x5f52;"/>
@@ -321,10 +322,6 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>
-</node>
-<node COLOR="#0033ff" CREATED="1506392507281" ID="ID_1337446003" MODIFIED="1506392516632" POSITION="right" TEXT="Android&#x5e73;&#x53f0;&#x5e94;&#x7528;&#x5f00;&#x53d1;&#x548c;&#x7cfb;&#x7edf;&#x5f00;&#x53d1;">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="SansSerif" SIZE="18"/>
 </node>
 </node>
 </map>
