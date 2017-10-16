@@ -1,5 +1,6 @@
 *.mat
 *.tar
+*.zip
 *.pickle
 *.whl
 *.mp4

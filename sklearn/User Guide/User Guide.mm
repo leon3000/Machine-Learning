@@ -6,7 +6,7 @@
 <node COLOR="#0033ff" CREATED="1506407830279" ID="ID_1306604028" MODIFIED="1506408795424" POSITION="right" TEXT="1. Supervised learning">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1506407942659" FOLDED="true" ID="ID_1385232281" MODIFIED="1506670153936" TEXT="1.1 Generalized Linear Models &#x5e7f;&#x4e49;&#x7ebf;&#x6027;&#x6a21;&#x578b; GLM">
+<node COLOR="#00b439" CREATED="1506407942659" ID="ID_1385232281" MODIFIED="1508135765523" TEXT="1.1 Generalized Linear Models &#x5e7f;&#x4e49;&#x7ebf;&#x6027;&#x6a21;&#x578b; GLM">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1506667552684" ID="ID_1004830343" MODIFIED="1506667601795" TEXT="1.1.1. Ordinary Least Squares &#x4e00;&#x822c;&#x6700;&#x5c0f;&#x4e8c;&#x4e58;&#x65b9; OLS">
@@ -35,8 +35,7 @@
   <body>
     <img src="2017-09-29_145744.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node COLOR="#111111" CREATED="1506668875156" ID="ID_1407201243" MODIFIED="1506668895173" TEXT="&#x3b1;&#x8d8a;&#x5927;&#xff0c;&#x6536;&#x7f29;&#x6027;&#x8d8a;&#x597d;&#xff0c;&#x9c81;&#x68d2;&#x6027;&#x66f4;&#x5f3a;"/>
 <node COLOR="#111111" CREATED="1506667967673" ID="ID_1781289721" MODIFIED="1506667967674" TEXT="1.1.1.1. Ordinary Least Squares Complexity"/>
@@ -52,8 +51,7 @@
   <body>
     <img src="2017-09-29_150956.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node COLOR="#111111" CREATED="1506667983266" ID="ID_1542540015" MODIFIED="1506669198249" TEXT="1.1.3.1. Setting regularization parameter">
 <node COLOR="#111111" CREATED="1506667987488" ID="ID_472879359" MODIFIED="1506667987488" TEXT="1.1.3.1.1. Using cross-validation"/>
@@ -71,8 +69,7 @@
   <body>
     <img src="2017-09-29_151434.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node COLOR="#111111" CREATED="1506669294145" ID="ID_1950269162" MODIFIED="1506669295593">
 <richcontent TYPE="NODE"><html>
@@ -82,8 +79,7 @@
   <body>
     <img src="2017-09-29_151440.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node COLOR="#111111" CREATED="1506669295990" ID="ID_1630939696" MODIFIED="1506669297417">
 <richcontent TYPE="NODE"><html>
@@ -93,8 +89,7 @@
   <body>
     <img src="2017-09-29_151446.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#990000" CREATED="1506667671753" ID="ID_1048953415" MODIFIED="1506667758092" TEXT="1.1.5. Elastic Net &#x5f39;&#x6027;&#x7f51;&#x7edc;">
@@ -107,8 +102,7 @@
   <body>
     <img src="2017-09-29_151406.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#990000" CREATED="1506667679236" ID="ID_101705303" MODIFIED="1506667679237" TEXT="1.1.6. Multi-task Elastic Net">
@@ -124,8 +118,7 @@
   <body>
     <img src="2017-09-29_151552.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node COLOR="#111111" CREATED="1506669376818" ID="ID_475397399" MODIFIED="1506669378339">
 <richcontent TYPE="NODE"><html>
@@ -135,8 +128,7 @@
   <body>
     <img src="2017-09-29_151558.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#990000" CREATED="1506667686916" ID="ID_705695281" MODIFIED="1506667686917" TEXT="1.1.8. LARS Lasso">
@@ -156,8 +148,7 @@
   <body>
     <img src="2017-09-29_151701.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node COLOR="#111111" CREATED="1506668016157" ID="ID_425244204" MODIFIED="1506668016157" TEXT="1.1.10.1. Bayesian Ridge Regression">
 <node COLOR="#111111" CREATED="1506669439215" ID="ID_1509227034" MODIFIED="1506669441120">
@@ -168,8 +159,7 @@
   <body>
     <img src="2017-09-29_151707.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#111111" CREATED="1506668020230" ID="ID_697779157" MODIFIED="1506669475364" TEXT="1.1.10.2. Automatic Relevance Determination - ARD &#x81ea;&#x52a8;&#x76f8;&#x5173;&#x786e;&#x5b9a;">
@@ -181,8 +171,7 @@
   <body>
     <img src="2017-09-29_151816.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>
@@ -197,8 +186,7 @@
   <body>
     <img src="2017-09-29_152248.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#111111" CREATED="1506669783077" ID="ID_1440079822" MODIFIED="1506669787886" TEXT="L1&#x89c4;&#x5219;&#x5316;">
@@ -210,8 +198,7 @@
   <body>
     <img src="2017-09-29_152254.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>
@@ -242,8 +229,7 @@
   <body>
     <img src="2017-09-29_152810.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node COLOR="#111111" CREATED="1506670104001" ID="ID_896283100" MODIFIED="1506670105383">
 <richcontent TYPE="NODE"><html>
@@ -253,8 +239,7 @@
   <body>
     <img src="2017-09-29_152816.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#111111" CREATED="1506668046344" ID="ID_1309217946" MODIFIED="1506668059208" TEXT="1.1.15.5. Notes"/>
@@ -266,6 +251,21 @@
 <node COLOR="#00b439" CREATED="1506408017318" ID="ID_979796781" MODIFIED="1506408795438" TEXT="1.2. Linear and Quadratic Discriminant Analysis &#x7ebf;&#x6027;&#x548c;&#x4e8c;&#x6b21;&#x5224;&#x522b;&#x5206;&#x6790;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508136754757" ID="ID_931097671" MODIFIED="1508136754758" TEXT="1.2.1. Dimensionality reduction using Linear Discriminant Analysis&#xb6;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136761922" ID="ID_456654953" MODIFIED="1508136761923" TEXT="1.2.2. Mathematical formulation of the LDA and QDA classifiers">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136768438" ID="ID_1621482626" MODIFIED="1508136768439" TEXT="1.2.3. Mathematical formulation of LDA dimensionality reduction">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136773090" ID="ID_1645184236" MODIFIED="1508136773091" TEXT="1.2.4. Shrinkage">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136778113" ID="ID_585058711" MODIFIED="1508136778114" TEXT="1.2.5. Estimation algorithms">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506408085170" ID="ID_753695972" MODIFIED="1506408795446" TEXT="1.3. Kernel ridge regression &#x6838;&#x5cad;&#x56de;&#x5f52; KRR">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -274,14 +274,178 @@
 <node COLOR="#00b439" CREATED="1506408122639" ID="ID_219236801" MODIFIED="1506409748864" TEXT="1.4. Support Vector Machines &#x652f;&#x6301;&#x5411;&#x91cf;&#x673a; SVM">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508135950986" ID="ID_397275586" MODIFIED="1508135955181" TEXT="&#x524d;&#x8a00;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508135980984" ID="ID_1712024491" MODIFIED="1508135983617">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_143921.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+<node COLOR="#111111" CREATED="1508135984395" ID="ID_1745039138" MODIFIED="1508135985807">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_143936.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1508135993786" ID="ID_1090800451" MODIFIED="1508136115346" TEXT="1.4.1. Classification">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136001784" ID="ID_1201580224" MODIFIED="1508136001785" TEXT="1.4.1.1. Multi-class classification"/>
+<node COLOR="#111111" CREATED="1508136009710" ID="ID_1875845524" MODIFIED="1508136009710" TEXT="1.4.1.2. Scores and probabilities"/>
+<node COLOR="#111111" CREATED="1508136014256" ID="ID_200911205" MODIFIED="1508136014257" TEXT="1.4.1.3. Unbalanced problems"/>
+</node>
+<node COLOR="#990000" CREATED="1508136021967" ID="ID_1069218560" MODIFIED="1508136021976" TEXT="1.4.2. Regression">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136028706" ID="ID_890524961" MODIFIED="1508136028707" TEXT="1.4.3. Density estimation, novelty detection">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136034849" ID="ID_279679423" MODIFIED="1508136034850" TEXT="1.4.4. Complexity">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136038959" ID="ID_825623460" MODIFIED="1508136038963" TEXT="1.4.5. Tips on Practical Use">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136137619" ID="ID_1771726901" MODIFIED="1508136140638">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_144214.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1508136044302" ID="ID_665557871" MODIFIED="1508136044304" TEXT="1.4.6. Kernel functions">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136051412" ID="ID_1996241597" MODIFIED="1508136051412" TEXT="1.4.6.1. Custom Kernels">
+<node COLOR="#111111" CREATED="1508136057965" ID="ID_1508998506" MODIFIED="1508136057966" TEXT="1.4.6.1.1. Using Python functions as kernels"/>
+<node COLOR="#111111" CREATED="1508136064995" ID="ID_1453344430" MODIFIED="1508136064996" TEXT="1.4.6.1.2. Using the Gram matrix"/>
+<node COLOR="#111111" CREATED="1508136071739" ID="ID_538888341" MODIFIED="1508136071740" TEXT="1.4.6.1.3. Parameters of the RBF Kernel"/>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1508136077857" ID="ID_1355549920" MODIFIED="1508136077858" TEXT="1.4.7. Mathematical formulation">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136084594" ID="ID_1941835805" MODIFIED="1508136084595" TEXT="1.4.7.1. SVC"/>
+<node COLOR="#111111" CREATED="1508136093223" ID="ID_1952819720" MODIFIED="1508136093224" TEXT="1.4.7.2. NuSVC"/>
+<node COLOR="#111111" CREATED="1508136099146" ID="ID_1141993948" MODIFIED="1508136099146" TEXT="1.4.7.3. SVR"/>
+</node>
+<node COLOR="#990000" CREATED="1508136107056" ID="ID_334921290" MODIFIED="1508136107057" TEXT="1.4.8. Implementation details">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506408140206" ID="ID_803519617" MODIFIED="1506408795450" TEXT="1.5. Stochastic Gradient Descent &#x968f;&#x673a;&#x68af;&#x5ea6;&#x4e0b;&#x964d; SGD">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508136185036" ID="ID_571393205" MODIFIED="1508136188199" TEXT="&#x524d;&#x8a00;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136188201" ID="ID_397374298" MODIFIED="1508136190378">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_144254.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+<node COLOR="#111111" CREATED="1508136190843" ID="ID_1478450923" MODIFIED="1508136192093">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_144301.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1508136200336" ID="ID_517561111" MODIFIED="1508136200338" TEXT="1.5.1. Classification">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136208473" ID="ID_449380994" MODIFIED="1508136208475" TEXT="1.5.2. Regression">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136214596" ID="ID_657654351" MODIFIED="1508136214597" TEXT="1.5.3. Stochastic Gradient Descent for sparse data">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136221107" ID="ID_529636158" MODIFIED="1508136221109" TEXT="1.5.4. Complexity">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136226126" ID="ID_1261963905" MODIFIED="1508136226127" TEXT="1.5.5. Tips on Practical Use">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136238715" ID="ID_1468392428" MODIFIED="1508136241078">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_144355.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1508136251546" ID="ID_1179621183" MODIFIED="1508136251547" TEXT="1.5.6. Mathematical formulation">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136260094" ID="ID_554253564" MODIFIED="1508136260095" TEXT="1.5.6.1. SGD"/>
+</node>
+<node COLOR="#990000" CREATED="1508136266660" ID="ID_637407919" MODIFIED="1508136266661" TEXT="1.5.7. Implementation details">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506408188885" ID="ID_90478299" MODIFIED="1506408795452" TEXT="1.6. Nearest Neighbors &#x6700;&#x8fd1;&#x90bb; NN">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508136321769" ID="ID_861098860" MODIFIED="1508136449896" TEXT="1.6.1. Unsupervised Nearest Neighbors">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136328087" ID="ID_1290010378" MODIFIED="1508136328087" TEXT="1.6.1.1. Finding the Nearest Neighbors"/>
+<node COLOR="#111111" CREATED="1508136335281" ID="ID_494963566" MODIFIED="1508136335282" TEXT="1.6.1.2. KDTree and BallTree Classes"/>
+</node>
+<node COLOR="#990000" CREATED="1508136339580" ID="ID_37549293" MODIFIED="1508136339581" TEXT="1.6.2. Nearest Neighbors Classification">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136347405" ID="ID_1178144837" MODIFIED="1508136347406" TEXT="1.6.3. Nearest Neighbors Regression">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136353680" ID="ID_1042335506" MODIFIED="1508136353682" TEXT="1.6.4. Nearest Neighbor Algorithms">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136358425" ID="ID_1991349707" MODIFIED="1508136358425" TEXT="1.6.4.1. Brute Force"/>
+<node COLOR="#111111" CREATED="1508136370571" ID="ID_632948983" MODIFIED="1508136370572" TEXT="1.6.4.2. K-D Tree"/>
+<node COLOR="#111111" CREATED="1508136380251" ID="ID_1601127899" MODIFIED="1508136380251" TEXT="1.6.4.3. Ball Tree"/>
+<node COLOR="#111111" CREATED="1508136396304" ID="ID_1373353466" MODIFIED="1508136396305" TEXT="1.6.4.4. Choice of Nearest Neighbors Algorithm">
+<node COLOR="#111111" CREATED="1508136506495" ID="ID_974352915" MODIFIED="1508136508403">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_144817.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#111111" CREATED="1508136412718" ID="ID_1789432044" MODIFIED="1508136412719" TEXT="1.6.4.5. Effect of leaf_size"/>
+</node>
+<node COLOR="#990000" CREATED="1508136427546" ID="ID_500167610" MODIFIED="1508136453922" TEXT="1.6.5. Nearest Centroid Classifier">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136436206" ID="ID_772718409" MODIFIED="1508136436207" TEXT="1.6.5.1. Nearest Shrunken Centroid"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506408214281" ID="ID_745952964" MODIFIED="1506408795454" TEXT="1.7. Gaussian Processes &#x9ad8;&#x65af;&#x8fc7;&#x7a0b;">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -294,10 +458,81 @@
 <node COLOR="#00b439" CREATED="1506408225830" ID="ID_1561748651" MODIFIED="1506408795457" TEXT="1.9. Naive Bayes &#x6734;&#x7d20;&#x8d1d;&#x53f6;&#x65af; NB">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508136542216" ID="ID_449093496" MODIFIED="1508136571376" TEXT="1.9.1. Gaussian Naive Bayes">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136548286" ID="ID_943049673" MODIFIED="1508136548287" TEXT="1.9.2. Multinomial Naive Bayes">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136556271" ID="ID_157133939" MODIFIED="1508136556272" TEXT="1.9.3. Bernoulli Naive Bayes">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136563290" ID="ID_1800505342" MODIFIED="1508136563291" TEXT="1.9.4. Out-of-core naive Bayes model fitting">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506408229674" ID="ID_1646383993" MODIFIED="1506408795459" TEXT="1.10. Decision Trees &#x51b3;&#x7b56;&#x6811;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508135449083" ID="ID_387647603" MODIFIED="1508135503847" TEXT="&#x524d;&#x8a00;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508135503850" ID="ID_1860598972" MODIFIED="1508135598368">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_143214.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+<node COLOR="#111111" CREATED="1508135600284" ID="ID_617715353" MODIFIED="1508135602066">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_143308.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1508135620680" ID="ID_388293609" MODIFIED="1508135620681" TEXT="1.10.1. Classification">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508135629418" ID="ID_1652970663" MODIFIED="1508135629419" TEXT="1.10.2. Regression">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508135635936" ID="ID_124753252" MODIFIED="1508135679956" TEXT="1.10.3. Multi-output problems">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508135648053" ID="ID_596715319" MODIFIED="1508135648054" TEXT="1.10.4. Complexity">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508135657236" ID="ID_1928502427" MODIFIED="1508135682721" TEXT="1.10.5. Tips on practical use">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508135684904" ID="ID_1101315869" MODIFIED="1508135686835">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="2017-10-16_143432.png" />
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1508135697430" ID="ID_1216874142" MODIFIED="1508135697431" TEXT="1.10.6. Tree algorithms: ID3, C4.5, C5.0 and CART">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508135707408" ID="ID_785085653" MODIFIED="1508135707409" TEXT="1.10.7. Mathematical formulation">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508135720872" ID="ID_1853715062" MODIFIED="1508135720873" TEXT="1.10.7.1. Classification criteria"/>
+<node COLOR="#111111" CREATED="1508135725863" ID="ID_1763035479" MODIFIED="1508135725864" TEXT="1.10.7.2. Regression criteria"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506408233004" ID="ID_1985262965" MODIFIED="1506408795460" TEXT="1.11. Ensemble methods &#x7ec4;&#x5408;&#x65b9;&#x6cd5;">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -310,6 +545,23 @@
 <node COLOR="#00b439" CREATED="1506408241067" ID="ID_827762747" MODIFIED="1506408795463" TEXT="1.13. Feature selection &#x7279;&#x5f81;&#x9009;&#x62e9;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508136620842" ID="ID_1167969026" MODIFIED="1508136620842" TEXT="1.13.1. Removing features with low variance">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136625295" ID="ID_1505100215" MODIFIED="1508136625296" TEXT="1.13.2. Univariate feature selection">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136638804" ID="ID_502485199" MODIFIED="1508136638806" TEXT="1.13.3. Recursive feature elimination">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508136643767" ID="ID_1897125940" MODIFIED="1508136643768" TEXT="1.13.4. Feature selection using SelectFromModel">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508136652666" ID="ID_1465955579" MODIFIED="1508136652667" TEXT="1.13.4.1. L1-based feature selection"/>
+<node COLOR="#111111" CREATED="1508136661562" ID="ID_1408483165" MODIFIED="1508136661562" TEXT="1.13.4.2. Tree-based feature selection"/>
+</node>
+<node COLOR="#990000" CREATED="1508136668455" ID="ID_436810003" MODIFIED="1508136668456" TEXT="1.13.5. Feature selection as part of a pipeline">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506408248665" ID="ID_1375019028" MODIFIED="1506408795463" TEXT="1.14. Semi-Supervised &#x534a;&#x76d1;&#x7763;">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -353,7 +605,7 @@
 <node COLOR="#111111" CREATED="1506670243430" ID="ID_1624305416" MODIFIED="1506670243430" TEXT="2.1.2.3. The Dirichlet Process"/>
 </node>
 </node>
-<node COLOR="#00b439" CREATED="1506408914864" FOLDED="true" ID="ID_1179220169" MODIFIED="1506670874656" TEXT="2.2. Manifold learning &#x6d41;&#x5f62;&#x5b66;&#x4e60;">
+<node COLOR="#00b439" CREATED="1506408914864" FOLDED="true" ID="ID_1179220169" MODIFIED="1508136687947" TEXT="2.2. Manifold learning &#x6d41;&#x5f62;&#x5b66;&#x4e60;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1506670267735" ID="ID_1578126923" MODIFIED="1506670267736" TEXT="2.2.1. Introduction">
@@ -400,8 +652,7 @@
   <body>
     <img src="2017-09-29_154157.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#990000" CREATED="1506670692165" ID="ID_1702235431" MODIFIED="1506670692166" TEXT="2.3.2. K-means">
@@ -414,8 +665,7 @@
   <body>
     <img src="2017-09-29_154214.png" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node COLOR="#990000" CREATED="1506670697542" ID="ID_1875077565" MODIFIED="1506670992231" TEXT="2.3.3. Affinity Propagation &#x8fd1;&#x90bb;&#x4f20;&#x64ad; &#x7b97;&#x6cd5;">
