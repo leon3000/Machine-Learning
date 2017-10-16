@@ -251,7 +251,7 @@
 <node COLOR="#00b439" CREATED="1506408017318" ID="ID_979796781" MODIFIED="1506408795438" TEXT="1.2. Linear and Quadratic Discriminant Analysis &#x7ebf;&#x6027;&#x548c;&#x4e8c;&#x6b21;&#x5224;&#x522b;&#x5206;&#x6790;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1508136754757" ID="ID_931097671" MODIFIED="1508136754758" TEXT="1.2.1. Dimensionality reduction using Linear Discriminant Analysis&#xb6;">
+<node COLOR="#990000" CREATED="1508136754757" ID="ID_931097671" MODIFIED="1508136787275" TEXT="1.2.1. Dimensionality reduction using Linear Discriminant Analysis">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 <node COLOR="#990000" CREATED="1508136761922" ID="ID_456654953" MODIFIED="1508136761923" TEXT="1.2.2. Mathematical formulation of the LDA and QDA classifiers">
