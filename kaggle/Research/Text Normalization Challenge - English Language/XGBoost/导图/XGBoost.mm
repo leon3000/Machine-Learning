@@ -102,7 +102,7 @@
 <node COLOR="#111111" CREATED="1508253583226" ID="ID_1693318045" MODIFIED="1508253583226" TEXT="&#x201c;logloss&#x201d;: negative log-likelihood"/>
 <node COLOR="#111111" CREATED="1508253598674" ID="ID_1599714707" MODIFIED="1508253598674" TEXT="&#x201c;error&#x201d;: Binary classification error rate"/>
 <node COLOR="#111111" CREATED="1508253608818" ID="ID_377754956" LINK="mailto:error@t" MODIFIED="1508253608818" TEXT="error@t"/>
-<node COLOR="#111111" CREATED="1508253616650" ID="ID_664572479" MODIFIED="1508253616650" TEXT="merror&#x201d;: Multiclass classification error rat"/>
+<node COLOR="#111111" CREATED="1508253616650" ID="ID_664572479" MODIFIED="1508292692492" TEXT="merror&#x201d;: Multiclass classification error rate"/>
 <node COLOR="#111111" CREATED="1508253622242" ID="ID_131385346" MODIFIED="1508253622242" TEXT="&#x201c;mlogloss&#x201d;: Multiclass logloss"/>
 <node COLOR="#111111" CREATED="1508253626610" ID="ID_1184899221" MODIFIED="1508253626610" TEXT="&#x201c;auc&#x201d;: Area under the curve for ranking evaluation."/>
 <node COLOR="#111111" CREATED="1508253630778" ID="ID_1503246535" MODIFIED="1508253630778" TEXT="&#x201c;ndcg&#x201d;:Normalized Discounted Cumulative Gain"/>

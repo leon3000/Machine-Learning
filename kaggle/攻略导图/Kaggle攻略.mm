@@ -21,26 +21,67 @@
 <node COLOR="#00b439" CREATED="1504751046802" ID="ID_632676088" MODIFIED="1504751052814" TEXT="Import Libraries">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508222292442" ID="ID_96685717" MODIFIED="1508222409125" TEXT="numpy &#x77e9;&#x9635;&#x8fd0;&#x7b97;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222305909" ID="ID_1065646068" MODIFIED="1508222411326" TEXT="pandas &#x6570;&#x636e;&#x5206;&#x6790;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222322384" ID="ID_1176029961" MODIFIED="1508222413092" TEXT="sklearn &#x673a;&#x5668;&#x5b66;&#x4e60;&#x7b97;&#x6cd5;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222340515" ID="ID_1726035570" MODIFIED="1508222351038" TEXT="matplotlib &#x753b;&#x56fe;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222364886" ID="ID_929867276" MODIFIED="1508222404743" TEXT="seaborn &#x6570;&#x636e;&#x53ef;&#x89c6;&#x5316;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1504751496812" ID="ID_1703825458" MODIFIED="1504751503114" TEXT="Setup helper Functions">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508222464814" ID="ID_33723623" MODIFIED="1508222466123" TEXT="plot_histograms">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222466845" ID="ID_1867274202" MODIFIED="1508222471618" TEXT="plot_distribution">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222471808" ID="ID_496236452" MODIFIED="1508222475951" TEXT="plot_categories">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222476152" ID="ID_147575908" MODIFIED="1508222480467" TEXT="plot_correlation_map">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222486436" ID="ID_1374916291" MODIFIED="1508222487747" TEXT="describe_more">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1504751053005" ID="ID_1355445997" MODIFIED="1504751055577" TEXT="Load data">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508222501482" ID="ID_557546273" MODIFIED="1508222517780" TEXT="train = pd.read_csv(&quot;train.csv&quot;)">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1508222537803" ID="ID_872588976" MODIFIED="1508222557181" TEXT="test = pd.read_csv(&quot;test.csv&quot;)">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1504751055770" ID="ID_1100786346" MODIFIED="1504751065069" TEXT="Statistical summaries and visualisations">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1504751883509" ID="ID_977101330" MODIFIED="1504751901056" TEXT="Next have a look at some key information about the variables">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508221001563" ID="ID_445966351" MODIFIED="1508221383827" TEXT="print(train.shape);"/>
+<node COLOR="#111111" CREATED="1508220994969" ID="ID_1299559726" MODIFIED="1508221184894" TEXT="train.head(100)"/>
+<node COLOR="#111111" CREATED="1508221373324" ID="ID_489862655" MODIFIED="1508221380211" TEXT="train.describe()"/>
 </node>
 <node COLOR="#990000" CREATED="1504751910179" ID="ID_1474878859" MODIFIED="1504751938457" TEXT="A heat map of correlation may give us a understanding of which variables are important">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508222846007" ID="ID_1864621954" MODIFIED="1508222846008" TEXT="plot_correlation_map"/>
 </node>
 <node COLOR="#990000" CREATED="1504751944794" ID="ID_1596421890" MODIFIED="1504751982778" TEXT="explore the relationship between the features and survival of passengers">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508222885462" ID="ID_568472745" MODIFIED="1508222885463" TEXT="plot_distribution"/>
 </node>
 </node>
 </node>
@@ -50,10 +91,17 @@
 <node COLOR="#00b439" CREATED="1504752284925" ID="ID_54163133" MODIFIED="1504752303343" TEXT="Categorical variables need to be transformed to numeric vairables">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508222922946" ID="ID_1301109999" MODIFIED="1508222922948" TEXT="pd.Series">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1504751072554" ID="ID_1617262553" MODIFIED="1504751082404" TEXT="Missing values imputation">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1508222942643" ID="ID_693848329" MODIFIED="1508222942645" TEXT="Fill missing values in variables">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1508222958873" ID="ID_251765853" MODIFIED="1508222958874" TEXT="fillna"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1504751082590" ID="ID_688376119" MODIFIED="1504751089190" TEXT="Feature Engineering">
 <edge STYLE="bezier" WIDTH="thin"/>
