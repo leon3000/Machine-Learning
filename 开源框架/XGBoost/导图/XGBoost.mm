@@ -359,5 +359,13 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
+<node COLOR="#0033ff" CREATED="1509234450840" ID="ID_420559741" MODIFIED="1509234456856" POSITION="right" TEXT="GPU Support">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509234456856" ID="ID_670585592" MODIFIED="1509237739330" TEXT="python benchmark.py --tree_method gpu_hist/gpu_exact">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+</node>
 </node>
 </map>

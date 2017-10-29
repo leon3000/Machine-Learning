@@ -1,6 +1,6 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1509117106747" ID="ID_537541676" MODIFIED="1509117160686" TEXT="API Reference">
+<node COLOR="#000000" CREATED="1509117106747" ID="ID_537541676" MODIFIED="1509273400312" TEXT="http://scikit-learn.org/stable/modules/classes.html">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1509117171384" ID="ID_357256379" MODIFIED="1509117183500" POSITION="right" TEXT="Base classes and utility functions">

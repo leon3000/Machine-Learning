@@ -1,6 +1,6 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1506407794936" ID="ID_1334495605" MODIFIED="1506408795476" TEXT="User Guide">
+<node COLOR="#000000" CREATED="1506407794936" ID="ID_1334495605" MODIFIED="1509273376006" TEXT="http://scikit-learn.org/stable/user_guide.html">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1506407830279" ID="ID_1306604028" MODIFIED="1506408795424" POSITION="right" TEXT="1. Supervised learning">
@@ -635,7 +635,7 @@
 <node COLOR="#111111" CREATED="1506670243430" ID="ID_1624305416" MODIFIED="1506670243430" TEXT="2.1.2.3. The Dirichlet Process"/>
 </node>
 </node>
-<node COLOR="#00b439" CREATED="1506408914864" FOLDED="true" ID="ID_1179220169" MODIFIED="1508136687947" TEXT="2.2. Manifold learning &#x6d41;&#x5f62;&#x5b66;&#x4e60;">
+<node COLOR="#00b439" CREATED="1506408914864" ID="ID_1179220169" MODIFIED="1509273301991" TEXT="2.2. Manifold learning &#x6d41;&#x5f62;&#x5b66;&#x4e60;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1506670267735" ID="ID_1578126923" MODIFIED="1506670267736" TEXT="2.2.1. Introduction">
@@ -818,7 +818,7 @@
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" CREATED="1506409189617" ID="ID_48947247" MODIFIED="1506409285577" TEXT="3.2. Tuning the hyper-parameters of an estimator &#x8c03;&#x53c2;">
+<node COLOR="#00b439" CREATED="1506409189617" ID="ID_48947247" MODIFIED="1509265206152" TEXT="3.2. Tuning the hyper-parameters of an estimator &#x8c03;&#x53c2;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1506671381034" ID="ID_24347403" MODIFIED="1506671381034" TEXT="3.2.1. Exhaustive Grid Search">
@@ -827,11 +827,20 @@
 <node COLOR="#990000" CREATED="1506671386349" ID="ID_766230945" MODIFIED="1506671386349" TEXT="3.2.2. Randomized Parameter Optimization">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#990000" CREATED="1506671390309" ID="ID_1139058" MODIFIED="1506671390309" TEXT="3.2.3. Tips for parameter search">
+<node COLOR="#990000" CREATED="1506671390309" ID="ID_1139058" MODIFIED="1509273871618" TEXT="3.2.3. Tips for parameter search">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1509273858946" ID="ID_1167649442" MODIFIED="1509273858946" TEXT="3.2.3.1. Specifying an objective metric"/>
+<node COLOR="#111111" CREATED="1509273877122" ID="ID_991744705" MODIFIED="1509273903249" TEXT="3.2.3.2. Specifying multiple metrics for evaluation"/>
+<node COLOR="#111111" CREATED="1509273885874" ID="ID_123140597" MODIFIED="1509273905463" TEXT="3.2.3.3. Composite estimators and parameter spaces"/>
+<node COLOR="#111111" CREATED="1509273897602" ID="ID_27039281" MODIFIED="1509273907654" TEXT="3.2.3.4. Model selection: development and evaluation"/>
+<node COLOR="#111111" CREATED="1509273925536" ID="ID_1826587059" MODIFIED="1509273925536" TEXT="3.2.3.5. Parallelism"/>
+<node COLOR="#111111" CREATED="1509273930417" ID="ID_380487669" MODIFIED="1509273930417" TEXT="3.2.3.6. Robustness to failure"/>
 </node>
 <node COLOR="#990000" CREATED="1506671398181" ID="ID_1035068143" MODIFIED="1506671398181" TEXT="3.2.4. Alternatives to brute force parameter search">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1509274042442" ID="ID_1014007511" MODIFIED="1509274056074" TEXT="3.2.4.1. Model specific cross-validation"/>
+<node COLOR="#111111" CREATED="1509274047458" ID="ID_917063793" MODIFIED="1509274057469" TEXT="3.2.4.2. Information Criterion"/>
+<node COLOR="#111111" CREATED="1509274053401" ID="ID_648235574" MODIFIED="1509274059007" TEXT="3.2.4.3. Out of Bag Estimates"/>
 </node>
 </node>
 <node COLOR="#00b439" CREATED="1506409193809" ID="ID_1969798835" MODIFIED="1506409295632" TEXT="3.3. Model evaluation: quantifying the quality of predictions &#x6a21;&#x578b;&#x8bc4;&#x4f30;">
@@ -877,23 +886,74 @@
 <node COLOR="#00b439" CREATED="1506409311788" ID="ID_152903899" MODIFIED="1506409482517" TEXT="4.1. Pipeline and FeatureUnion: combining estimators &#x7ba1;&#x9053;&#x548c;&#x7279;&#x5f81;&#x8054;&#x5408;&#xff1a;&#x7ec4;&#x5408;&#x4f30;&#x8ba1;&#x5668;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509265270620" ID="ID_21231440" MODIFIED="1509265270620" TEXT="4.1.1. Pipeline: chaining estimators">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265274364" ID="ID_1070746717" MODIFIED="1509265274364" TEXT="4.1.2. FeatureUnion: composite feature spaces">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506409312553" ID="ID_1150756020" MODIFIED="1506409417466" TEXT="4.2. Feature extraction &#x7279;&#x5f81;&#x63d0;&#x53d6;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509265305132" ID="ID_841712261" MODIFIED="1509265305132" TEXT="4.2.1. Loading features from dicts">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265310108" ID="ID_1091826194" MODIFIED="1509265310108" TEXT="4.2.2. Feature hashing">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265313165" ID="ID_33272448" MODIFIED="1509265313165" TEXT="4.2.3. Text feature extraction">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265317693" ID="ID_687797271" MODIFIED="1509265317693" TEXT="4.2.4. Image feature extraction">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506409316828" ID="ID_664467265" MODIFIED="1506409425503" TEXT="4.3. Preprocessing data &#x6570;&#x636e;&#x9884;&#x5904;&#x7406;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509265344661" ID="ID_1009357086" MODIFIED="1509265344661" TEXT="4.3.1. Standardization, or mean removal and variance scaling">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265348316" ID="ID_1114771813" MODIFIED="1509265348316" TEXT="4.3.2. Non-linear transformation">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265352764" ID="ID_602878289" MODIFIED="1509265352764" TEXT="4.3.3. Normalization">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265356108" ID="ID_1793607429" MODIFIED="1509265356108" TEXT="4.3.4. Binarization">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265361356" ID="ID_1036263096" MODIFIED="1509265361356" TEXT="4.3.5. Encoding categorical features">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265370733" ID="ID_733675740" MODIFIED="1509265370733" TEXT="4.3.6. Imputation of missing values">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265373940" ID="ID_1329101310" MODIFIED="1509265373940" TEXT="4.3.7. Generating polynomial features">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265376579" ID="ID_92291611" MODIFIED="1509265376579" TEXT="4.3.8. Custom transformers">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506409321630" ID="ID_1398399492" MODIFIED="1506409411457" TEXT="4.4. Unsupervised dimensionality reduction &#x65e0;&#x76d1;&#x7763;&#x964d;&#x7ef4;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509265491548" ID="ID_1761280023" MODIFIED="1509265491548" TEXT="4.4.1. PCA: principal component analysis">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265496252" ID="ID_789297259" MODIFIED="1509265496252" TEXT="4.4.2. Random projections">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265500052" ID="ID_420102339" MODIFIED="1509265500052" TEXT="4.4.3. Feature agglomeration">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506409325764" ID="ID_1574655516" MODIFIED="1506409330178" TEXT="4.5. Random Projection">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1506409348652" ID="ID_106443026" MODIFIED="1506409349719" TEXT="4.5.1. The Johnson-Lindenstrauss lemma">
+<node COLOR="#990000" CREATED="1506409348652" ID="ID_106443026" MODIFIED="1509265692231" TEXT="4.5.1. The Johnson-Lindenstrauss lemma &#x7ea6;&#x7ff0;&#x900a;&#x6797;&#x767b;&#x53f2;&#x7279;&#x52b3;&#x65af;&#x5f15;&#x7406;">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 <node COLOR="#990000" CREATED="1506409349940" ID="ID_846280676" MODIFIED="1506409353704" TEXT="4.5.2. Gaussian random projection">
@@ -906,14 +966,56 @@
 <node COLOR="#00b439" CREATED="1506409330372" ID="ID_1592103495" MODIFIED="1506409500999" TEXT="4.6. Kernel Approximation &#x6838;&#x4f30;&#x8ba1;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509265528908" ID="ID_479740118" MODIFIED="1509265622158" TEXT="4.6.1. Nystroem Method for Kernel Approximation &#x5bf9;&#x4e8e;&#x6838;&#x8fd1;&#x4f3c;&#x5948;&#x65af;&#x7279;&#x9f99;&#x7684;&#x65b9;&#x6cd5;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265533108" ID="ID_304536134" MODIFIED="1509265533108" TEXT="4.6.2. Radial Basis Function Kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265535996" ID="ID_1267120650" MODIFIED="1509265535996" TEXT="4.6.3. Additive Chi Squared Kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265539036" ID="ID_1456402461" MODIFIED="1509265539036" TEXT="4.6.4. Skewed Chi Squared Kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265542300" ID="ID_1617888526" MODIFIED="1509265542300" TEXT="4.6.5. Mathematical Details">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506409334698" ID="ID_1046566309" MODIFIED="1506409339061" TEXT="4.7. Pairwise metrics, Affinities and Kernels">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509265551628" ID="ID_23839880" MODIFIED="1509265551628" TEXT="4.7.1. Cosine similarity">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265554437" ID="ID_1969581779" MODIFIED="1509265554437" TEXT="4.7.2. Linear kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265557036" ID="ID_1877508429" MODIFIED="1509265557036" TEXT="4.7.3. Polynomial kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265560052" ID="ID_863257244" MODIFIED="1509265560052" TEXT="4.7.4. Sigmoid kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265563076" ID="ID_736051350" MODIFIED="1509265563076" TEXT="4.7.5. RBF kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265566573" ID="ID_962036394" MODIFIED="1509265566573" TEXT="4.7.6. Laplacian kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265569493" ID="ID_626533126" MODIFIED="1509265569493" TEXT="4.7.7. Chi-squared kernel">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1506409339556" ID="ID_1484115499" MODIFIED="1506409344284" TEXT="4.8. Transforming the prediction target (y)">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509265582100" ID="ID_652435593" MODIFIED="1509265582100" TEXT="4.8.1. Label binarization">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509265584900" ID="ID_824221188" MODIFIED="1509265584900" TEXT="4.8.2. Label encoding">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 </node>
 <node COLOR="#0033ff" CREATED="1506407886620" ID="ID_1786443897" MODIFIED="1506408795473" POSITION="right" TEXT="5. Dataset loading utilities">
