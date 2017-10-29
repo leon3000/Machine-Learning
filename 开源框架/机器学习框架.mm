@@ -51,5 +51,17 @@
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 </node>
+<node COLOR="#0033ff" CREATED="1509286380862" ID="ID_400978209" MODIFIED="1509286389977" POSITION="right" TEXT="Hyperopt">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+</node>
+<node COLOR="#0033ff" CREATED="1509286390837" ID="ID_1200016050" MODIFIED="1509286408066" POSITION="right" TEXT="scikit-optimize">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+</node>
+<node COLOR="#0033ff" CREATED="1509286408580" ID="ID_1929624681" MODIFIED="1509286414949" POSITION="right" TEXT="sklearn_pandas">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+</node>
 </node>
 </map>
