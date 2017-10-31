@@ -1,6 +1,6 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1500883598010" ID="ID_673438381" MODIFIED="1503370166648" TEXT="UFLDL">
+<node COLOR="#000000" CREATED="1500883598010" ID="ID_673438381" MODIFIED="1509376733984" TEXT="http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial">
 <edge COLOR="#000000" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
