@@ -3,7 +3,7 @@
 <node COLOR="#000000" CREATED="1503369458896" ID="ID_1625008046" MODIFIED="1503469687929" TEXT="&#x590d;&#x4e60;&#x7b14;&#x8bb0;">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/HierarchicalIcons.properties"/>
-<node COLOR="#0033ff" CREATED="1502675416936" FOLDED="true" ID="ID_747077059" MODIFIED="1503468352475" POSITION="right" TEXT="Linear Algebra Review and Reference">
+<node COLOR="#0033ff" CREATED="1502675416936" ID="ID_747077059" MODIFIED="1509343183388" POSITION="right" TEXT="Linear Algebra Review and Reference">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1502675533435" ID="ID_1783234702" MODIFIED="1503370274003" TEXT="Basic Concepts and Notation">
@@ -456,7 +456,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1502761228708" FOLDED="true" HGAP="33" ID="ID_335456667" MODIFIED="1503469676426" POSITION="right" TEXT="Probability Theory Review for Machine Learning" VSHIFT="-7">
+<node COLOR="#0033ff" CREATED="1502761228708" HGAP="33" ID="ID_335456667" MODIFIED="1509343176048" POSITION="right" TEXT="Probability Theory Review for Machine Learning" VSHIFT="-7">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1502761556054" ID="ID_816197445" MODIFIED="1503370274043" TEXT="Basic Concepts">
@@ -645,7 +645,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503457771004" FOLDED="true" ID="ID_638527329" MODIFIED="1503468796038" POSITION="right" TEXT="Convex Optimization Overveiw">
+<node COLOR="#0033ff" CREATED="1503457771004" ID="ID_638527329" MODIFIED="1509343171727" POSITION="right" TEXT="Convex Optimization Overveiw">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503468356830" ID="ID_1717062656" MODIFIED="1503468361141" TEXT="Introduction">
@@ -695,7 +695,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503468545041" FOLDED="true" ID="ID_169912820" MODIFIED="1503468942389" POSITION="right" TEXT="Convex Optimization Overview(cnt&apos;d)">
+<node COLOR="#0033ff" CREATED="1503468545041" ID="ID_169912820" MODIFIED="1509343166364" POSITION="right" TEXT="Convex Optimization Overview(cnt&apos;d)">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503468562643" ID="ID_1579743630" MODIFIED="1503468566167" TEXT="Recap">
@@ -746,7 +746,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503468960671" FOLDED="true" ID="ID_500873311" MODIFIED="1503469180419" POSITION="right" TEXT="Hidden Markov Models Fundamentals">
+<node COLOR="#0033ff" CREATED="1503468960671" ID="ID_500873311" MODIFIED="1509343159333" POSITION="right" TEXT="Hidden Markov Models Fundamentals">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503468982844" ID="ID_1738280652" MODIFIED="1503468988983" TEXT="Markov Models">
@@ -775,7 +775,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1503469182926" FOLDED="true" ID="ID_355535064" MODIFIED="1503469343311" POSITION="right" TEXT="Gaussian processes">
+<node COLOR="#0033ff" CREATED="1503469182926" ID="ID_355535064" MODIFIED="1509343155709" POSITION="right" TEXT="Gaussian processes">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1503469189675" ID="ID_542575507" MODIFIED="1503469214273" TEXT="Bayesian methods">

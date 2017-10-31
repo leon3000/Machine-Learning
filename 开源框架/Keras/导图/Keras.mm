@@ -1,12 +1,12 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1509286435582" ID="ID_1923253165" MODIFIED="1509289851900" TEXT="https://blog.keras.io/">
+<node COLOR="#000000" CREATED="1509286435582" ID="ID_1923253165" MODIFIED="1509437442357" TEXT="https://keras.io/">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1509286549965" ID="ID_397370635" MODIFIED="1509286552740" POSITION="right" TEXT="Getting started">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1509286552741" ID="ID_429264965" MODIFIED="1509286568073" TEXT="Guide to the Sequential model">
+<node COLOR="#00b439" CREATED="1509286552741" ID="ID_429264965" MODIFIED="1509429801931" TEXT="Guide to the Sequential model &#x5e8f;&#x8d2f;&#x6a21;&#x578b;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1509287083565" ID="ID_604679869" MODIFIED="1509287083565" TEXT="Getting started with the Keras Sequential model">
@@ -21,8 +21,11 @@
 <node COLOR="#990000" CREATED="1509287105445" ID="ID_739954555" MODIFIED="1509287105445" TEXT="Training">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
+<node COLOR="#990000" CREATED="1509438532942" ID="ID_327580199" MODIFIED="1509438535732" TEXT="Examples">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#00b439" CREATED="1509286568284" ID="ID_1266831865" MODIFIED="1509286573265" TEXT="Guide to the Functional API">
+</node>
+<node COLOR="#00b439" CREATED="1509286568284" ID="ID_1266831865" MODIFIED="1509429805470" TEXT="Guide to the Functional API &#x51fd;&#x6570;&#x5f0f;&#x6a21;&#x578b;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1509287114268" ID="ID_5677626" MODIFIED="1509287114268" TEXT="Getting started with the Keras functional API">
@@ -73,9 +76,21 @@
 </node>
 <node COLOR="#990000" CREATED="1509287145068" ID="ID_1861135319" MODIFIED="1509287145069" TEXT="Useful attributes of Model">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1509438594134" ID="ID_1711811486" MODIFIED="1509438594135" TEXT="model.layers"/>
 </node>
 <node COLOR="#990000" CREATED="1509287147588" ID="ID_58031028" MODIFIED="1509287147589" TEXT="Sequential model methods">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1509438596499" ID="ID_1511520214" MODIFIED="1509438601554" TEXT="compile"/>
+<node COLOR="#111111" CREATED="1509438608195" ID="ID_123016162" MODIFIED="1509438609137" TEXT="fit"/>
+<node COLOR="#111111" CREATED="1509438630344" ID="ID_1562134152" MODIFIED="1509438634464" TEXT="evaluate"/>
+<node COLOR="#111111" CREATED="1509438654231" ID="ID_984645461" MODIFIED="1509438657401" TEXT="predict"/>
+<node COLOR="#111111" CREATED="1509438664300" ID="ID_697017542" MODIFIED="1509438669634" TEXT="train_on_batch"/>
+<node COLOR="#111111" CREATED="1509438676364" ID="ID_541867640" MODIFIED="1509438680434" TEXT="test_on_batch"/>
+<node COLOR="#111111" CREATED="1509438685742" ID="ID_1632100208" MODIFIED="1509438690019" TEXT="predict_on_batch"/>
+<node COLOR="#111111" CREATED="1509438690230" ID="ID_1052104172" MODIFIED="1509438693006" TEXT="fit_generator"/>
+<node COLOR="#111111" CREATED="1509438745679" ID="ID_410149853" MODIFIED="1509438747293" TEXT="evaluate_generator"/>
+<node COLOR="#111111" CREATED="1509438759057" ID="ID_655196386" MODIFIED="1509438760515" TEXT="predict_generator"/>
+<node COLOR="#111111" CREATED="1509438769255" ID="ID_1925526468" MODIFIED="1509438770479" TEXT="get_layer"/>
 </node>
 </node>
 <node COLOR="#00b439" CREATED="1509286628397" ID="ID_1826761792" MODIFIED="1509286628397" TEXT="Model (functional API)">
@@ -407,10 +422,119 @@
 <node COLOR="#0033ff" CREATED="1509287266796" ID="ID_1258304607" MODIFIED="1509287387660" POSITION="right" TEXT="Losses">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509438108613" ID="ID_1156026446" MODIFIED="1509438108616" TEXT="Usage of loss functions">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509438213561" ID="ID_485109990" MODIFIED="1509438216209" TEXT="y_true">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#0033ff" CREATED="1509287273780" ID="ID_1306484804" MODIFIED="1509287387660" POSITION="right" TEXT="Metrics">
+<node COLOR="#990000" CREATED="1509438218600" ID="ID_1486855046" MODIFIED="1509438218606" TEXT="y_pred">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1509287266796" ID="ID_1602680268" MODIFIED="1509438274409" TEXT="Available loss functions">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509438143671" ID="ID_97314653" MODIFIED="1509438240211" TEXT="mean_squared_error">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438147562" ID="ID_3548861" MODIFIED="1509438240211" TEXT="mean_absolute_error">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438151617" ID="ID_1984178361" MODIFIED="1509438240212" TEXT="mean_absolute_percentage_error">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438155331" ID="ID_1028139218" MODIFIED="1509438240213" TEXT="mean_squared_logarithmic_error">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438160144" ID="ID_680602326" MODIFIED="1509438240213" TEXT="squared_hinge">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438163072" ID="ID_1361420506" MODIFIED="1509438240213" TEXT="hinge">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438169671" ID="ID_1245287980" MODIFIED="1509438240214" TEXT="categorical_hinge">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438176989" ID="ID_1863171422" MODIFIED="1509438240227" TEXT="categorical_hinge">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438180615" ID="ID_803121138" MODIFIED="1509438240227" TEXT="logcosh">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438183723" ID="ID_1113430377" MODIFIED="1509438240228" TEXT="categorical_crossentropy">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438186303" ID="ID_441778308" MODIFIED="1509438240228" TEXT="sparse_categorical_crossentropy">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438189611" ID="ID_742863265" MODIFIED="1509438240229" TEXT="binary_crossentropy">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438192526" ID="ID_628329951" MODIFIED="1509438240229" TEXT="kullback_leibler_divergence">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438195312" ID="ID_1948967970" MODIFIED="1509438240230" TEXT="poisson">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438198834" ID="ID_364788638" MODIFIED="1509438240230" TEXT="cosine_proximity">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1509287273780" ID="ID_1306484804" MODIFIED="1509430530690" POSITION="right" TEXT="Metrics &#x6027;&#x80fd;&#x8bc4;&#x4f30;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509438317532" ID="ID_1792184378" MODIFIED="1509438317534" TEXT="Usage of metrics">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509438320959" ID="ID_672329424" MODIFIED="1509438320962" TEXT="Arguments">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509438324237" ID="ID_517946358" MODIFIED="1509438324264" TEXT="Returns">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509438330398" ID="ID_1245196470" MODIFIED="1509438330401" TEXT="Available metrics">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509438335393" ID="ID_1842901049" MODIFIED="1509438335394" TEXT="binary_accuracy">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438338659" ID="ID_508604055" MODIFIED="1509438338661" TEXT="categorical_accuracy">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438342385" ID="ID_54920267" MODIFIED="1509438342386" TEXT="sparse_categorical_accuracy">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438345262" ID="ID_1640022021" MODIFIED="1509438345264" TEXT="top_k_categorical_accuracy">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509438348462" ID="ID_1010694533" MODIFIED="1509438348464" TEXT="sparse_top_k_categorical_accuracy">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1509438352863" ID="ID_181846117" MODIFIED="1509438352865" TEXT="Custom metrics">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1509287278612" ID="ID_1953367431" MODIFIED="1509287387660" POSITION="right" TEXT="Optimizers">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
@@ -422,6 +546,12 @@
 <node COLOR="#00b439" CREATED="1509287497508" ID="ID_1318818647" MODIFIED="1509287497508" TEXT="Parameters common to all Keras optimizers">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509418831293" ID="ID_871358108" MODIFIED="1509418831301" TEXT="clipnorm">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509418843615" ID="ID_1137881690" MODIFIED="1509418843626" TEXT="clipvalue">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1509287502012" ID="ID_1107313547" MODIFIED="1509287502013" TEXT="SGD">
 <edge STYLE="bezier" WIDTH="thin"/>
