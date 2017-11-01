@@ -589,18 +589,181 @@
 <node COLOR="#0033ff" CREATED="1509287286884" ID="ID_709851344" MODIFIED="1509287286884" POSITION="right" TEXT="Activations">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509516342736" ID="ID_287836827" MODIFIED="1509516342739" TEXT="Usage of activations">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516347957" ID="ID_485921307" MODIFIED="1509516347959" TEXT="Available activations">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509516352105" ID="ID_1638361209" MODIFIED="1509516352107" TEXT="softmax">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516355360" ID="ID_1139785110" MODIFIED="1509516355362" TEXT="elu">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516358240" ID="ID_1949367013" MODIFIED="1509516358241" TEXT="selu">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516366395" ID="ID_513409479" MODIFIED="1509516366396" TEXT="softplus">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516369877" ID="ID_1203657071" MODIFIED="1509516369878" TEXT="softsign">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516373691" ID="ID_1440158421" MODIFIED="1509516373692" TEXT="relu">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516378029" ID="ID_1835113118" MODIFIED="1509516378030" TEXT="tanh">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516381673" ID="ID_165295930" MODIFIED="1509516381674" TEXT="sigmoid">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516385263" ID="ID_1290907353" MODIFIED="1509516385265" TEXT="hard_sigmoid">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516389118" ID="ID_1739194216" MODIFIED="1509516389120" TEXT="linear">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1509516394625" ID="ID_364386200" MODIFIED="1509516394628" TEXT="On &quot;Advanced Activations&quot;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1509287302124" ID="ID_1982407727" MODIFIED="1509287410148" POSITION="right" TEXT="Callbacks">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509516418185" ID="ID_1025370139" MODIFIED="1509516418189" TEXT="Usage of callbacks">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516422564" ID="ID_1937498254" MODIFIED="1509516422567" TEXT="Callback">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516426474" ID="ID_1320825892" MODIFIED="1509516426477" TEXT="BaseLogger">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516429317" ID="ID_654173356" MODIFIED="1509516429319" TEXT="TerminateOnNaN">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516433030" ID="ID_1870445154" MODIFIED="1509516433033" TEXT="ProgbarLogger">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516436265" ID="ID_717700761" MODIFIED="1509516436266" TEXT="History">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516440670" ID="ID_908083391" MODIFIED="1509516440672" TEXT="ModelCheckpoint">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516443835" ID="ID_67689694" MODIFIED="1509516443837" TEXT="EarlyStopping">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516447200" ID="ID_1623751000" MODIFIED="1509516447201" TEXT="RemoteMonitor">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516450360" ID="ID_1038891999" MODIFIED="1509516450363" TEXT="LearningRateScheduler">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516453650" ID="ID_1622022146" MODIFIED="1509516453652" TEXT="TensorBoard">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516458635" ID="ID_1984090580" MODIFIED="1509516458672" TEXT="ReduceLROnPlateau">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516461167" ID="ID_1833482224" MODIFIED="1509516461170" TEXT="CSVLogger">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516464199" ID="ID_408745378" MODIFIED="1509516464201" TEXT="LambdaCallback">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516470282" ID="ID_417102670" MODIFIED="1509516470284" TEXT="Create a callback">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516474081" ID="ID_228581133" MODIFIED="1509516474083" TEXT="Example: recording loss history">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516477359" ID="ID_929790962" MODIFIED="1509516477362" TEXT="Example: model checkpoints">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1509287306916" ID="ID_1348058338" MODIFIED="1509287419636" POSITION="right" TEXT="Datasets">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509516501422" ID="ID_455385855" MODIFIED="1509516501424" TEXT="CIFAR10 small image classification">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516504450" ID="ID_1924315802" MODIFIED="1509516504451" TEXT="CIFAR100 small image classification">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516507260" ID="ID_1311124743" MODIFIED="1509516507262" TEXT="IMDB Movie reviews sentiment classification">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516513322" ID="ID_172414377" MODIFIED="1509516513324" TEXT="Reuters newswire topics classification">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516517110" ID="ID_1667865931" MODIFIED="1509516517111" TEXT="MNIST database of handwritten digits">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516519600" ID="ID_150220918" MODIFIED="1509516519601" TEXT="Fashion-MNIST database of fashion articles">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509516522251" ID="ID_287200002" MODIFIED="1509516522253" TEXT="Boston housing price regression dataset">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1509287310804" ID="ID_1092064804" MODIFIED="1509287424660" POSITION="right" TEXT="Applications">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509516569536" ID="ID_1497126872" MODIFIED="1509516569539" TEXT="Available models">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1509516574184" ID="ID_628169064" MODIFIED="1509516574185" TEXT="Xception">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516577775" ID="ID_738578398" MODIFIED="1509516577776" TEXT="VGG16">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516580759" ID="ID_1278063384" MODIFIED="1509516580760" TEXT="VGG19">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516583651" ID="ID_913034680" MODIFIED="1509516583652" TEXT="ResNet50">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516586144" ID="ID_1861065600" MODIFIED="1509516586145" TEXT="InceptionV3">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516589152" ID="ID_1682495441" MODIFIED="1509516589153" TEXT="InceptionResNetV2">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1509516591844" ID="ID_209127516" MODIFIED="1509516591844" TEXT="MobileNet">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1509287313669" ID="ID_630325318" MODIFIED="1509287430156" POSITION="right" TEXT="Backend">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
