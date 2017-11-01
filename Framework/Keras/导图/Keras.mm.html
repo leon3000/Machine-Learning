@@ -1,0 +1,784 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>https://keras.io/</title>
+<style type="text/css">
+    li { list-style: none;  margin: 0; }
+    p { margin: 0; }
+
+    span.l { color: red; font-weight: bold; }
+
+    a.mapnode:link {text-decoration: none; color: black; }
+    a.mapnode:visited {text-decoration: none; color: black; }
+    a.mapnode:active {text-decoration: none; color: black; }
+    a.mapnode:hover {text-decoration: none; color: black; background: #eeeee0; }
+
+</style>
+<!-- ^ Position is not set to relative / absolute here because of Mozilla -->
+</head>
+<body>
+<p><span style="color: #000000;font-size: 166%;font-family: SansSerif, sans-serif; ">https://keras.io/</span>
+<ul><li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Getting started</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Guide to the Sequential model &#24207;&#36143;&#27169;&#22411;</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Getting started with the Keras Sequential model</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Specifying the input shape</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Compilation</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Training</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Examples</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Guide to the Functional API &#20989;&#25968;&#24335;&#27169;&#22411;</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Getting started with the Keras functional API</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">First example: a densely-connected network</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">All models are callable, just like layers</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Multi-input and multi-output models</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Shared layers</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">The concept of layer "node"</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">FAQ</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">What does "sample", "batch", "epoch" mean</span>
+<ul><li><span style="color: #111111;">sample &#21333;&#20010;&#26679;&#26412;</span>
+
+</li>
+<li><span style="color: #111111;">batch &#19968;&#25209;&#26679;&#26412;</span>
+
+</li>
+<li><span style="color: #111111;">epoch &#38454;&#27573;</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Models</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">About Keras models</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">About Keras models</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Sequential</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">The Sequential model API</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Useful attributes of Model</span>
+<ul><li><span style="color: #111111;">model.layers</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Sequential model methods</span>
+<ul><li><span style="color: #111111;">compile</span>
+
+</li>
+<li><span style="color: #111111;">fit</span>
+
+</li>
+<li><span style="color: #111111;">evaluate</span>
+
+</li>
+<li><span style="color: #111111;">predict</span>
+
+</li>
+<li><span style="color: #111111;">train_on_batch</span>
+
+</li>
+<li><span style="color: #111111;">test_on_batch</span>
+
+</li>
+<li><span style="color: #111111;">predict_on_batch</span>
+
+</li>
+<li><span style="color: #111111;">fit_generator</span>
+
+</li>
+<li><span style="color: #111111;">evaluate_generator</span>
+
+</li>
+<li><span style="color: #111111;">predict_generator</span>
+
+</li>
+<li><span style="color: #111111;">get_layer</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Model (functional API)</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Model class API</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Useful attributes of Model</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Methods</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Layers</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">About Keras layers</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Core Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Dense</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Activation</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Dropout</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Flatten</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Reshape</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Permute</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">RepeatVector</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Lambda</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ActivityRegularization</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Masking</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Convolutional Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Conv1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Conv2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">SeparableConv2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Conv2DTranspose</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Conv3D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Cropping1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Cropping2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Cropping3D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">UpSampling1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">UpSampling2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">UpSampling3D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ZeroPadding1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ZeroPadding2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ZeroPadding3D</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Pooling Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">MaxPooling1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">MaxPooling2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">MaxPooling3D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">AveragePooling1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">AveragePooling2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">AveragePooling3D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GlobalMaxPooling1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GlobalAveragePooling1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GlobalMaxPooling2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GlobalAveragePooling2D</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Locally-connected Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">LocallyConnected1D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">LocallyConnected2D</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Recurrent Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">RNN</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">SimpleRNN</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GRU</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">LSTM</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ConvLSTM2D</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GRUCell</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">LSTMCell</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">StackedRNNCells</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">CuDNNGRU</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">CuDNNLSTM</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Embedding Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Embedding</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Merge Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Add</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Subtract</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Multiply</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Average</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Maximum</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Concatenate</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Dot</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">add</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">subtract</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">multiply</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">average</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">maximum</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">concatenate</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">dot</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Advanced Activations Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">LeakyReLU</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">PReLU</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ELU</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ThresholdedReLU</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Normalization Layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">BatchNormalization</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Noise layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GaussianNoise</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">GaussianDropout</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">AlphaDropout</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Layer wrappers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">TimeDistributed</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Bidirectional</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Writing your own Keras layers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Writing your own Keras layers</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Preprocessing</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Sequence Preprocessing</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">pad_sequences</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">skipgrams</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">make_sampling_table</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Text Preprocessing</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">text_to_word_sequence</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">one_hot</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">hashing_trick</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Tokenizer</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Image Preprocessing</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ImageDataGenerator</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Losses</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Usage of loss functions</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">y_true</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">y_pred</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Available loss functions</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">mean_squared_error</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">mean_absolute_error</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">mean_absolute_percentage_error</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">mean_squared_logarithmic_error</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">squared_hinge</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">hinge</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">categorical_hinge</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">categorical_hinge</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">logcosh</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">categorical_crossentropy</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">sparse_categorical_crossentropy</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">binary_crossentropy</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">kullback_leibler_divergence</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">poisson</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">cosine_proximity</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Metrics &#24615;&#33021;&#35780;&#20272;</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Usage of metrics</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Arguments</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Returns</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Available metrics</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">binary_accuracy</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">categorical_accuracy</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">sparse_categorical_accuracy</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">top_k_categorical_accuracy</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">sparse_top_k_categorical_accuracy</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Custom metrics</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Optimizers</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Usage of optimizers</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Parameters common to all Keras optimizers</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">clipnorm</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">clipvalue</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">SGD</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">RMSprop</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Adagrad</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Adadelta</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Adam</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Adamax</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Nadam</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">TFOptimizer</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Activations</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Usage of activations</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Available activations</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">softmax</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">elu</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">selu</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">softplus</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">softsign</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">relu</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">tanh</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">sigmoid</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">hard_sigmoid</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">linear</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">On "Advanced Activations"</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Callbacks</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Usage of callbacks</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Callback</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">BaseLogger</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">TerminateOnNaN</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">ProgbarLogger</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">History</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">ModelCheckpoint</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">EarlyStopping</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">RemoteMonitor</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">LearningRateScheduler</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">TensorBoard</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">ReduceLROnPlateau</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">CSVLogger</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">LambdaCallback</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Create a callback</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Example: recording loss history</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Example: model checkpoints</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Datasets</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">CIFAR10 small image classification</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">CIFAR100 small image classification</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">IMDB Movie reviews sentiment classification</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Reuters newswire topics classification</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">MNIST database of handwritten digits</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Fashion-MNIST database of fashion articles</span>
+
+</li>
+<li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Boston housing price regression dataset</span>
+
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Applications</span>
+<ul><li><span style="color: #00b439;font-size: 133%;font-family: SansSerif, sans-serif; ">Available models</span>
+<ul><li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">Xception</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">VGG16</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">VGG19</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">ResNet50</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">InceptionV3</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">InceptionResNetV2</span>
+
+</li>
+<li><span style="color: #990000;font-size: 116%;font-family: SansSerif, sans-serif; ">MobileNet</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Backend</span>
+
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Initializers</span>
+
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Regularizers</span>
+
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Constraints</span>
+
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Visualization</span>
+
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Scikit-learn API</span>
+
+</li>
+<li><span style="color: #0033ff;font-size: 150%;font-family: SansSerif, sans-serif; ">Utils</span>
+
+</li>
+
+</ul></body>
+</html>
