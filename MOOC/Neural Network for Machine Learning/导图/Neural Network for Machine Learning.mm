@@ -89,6 +89,26 @@
 <node COLOR="#0033ff" CREATED="1509465802351" ID="ID_1758567850" MODIFIED="1509465938990" POSITION="right" TEXT="3.The backpropagation learning procedure">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1509500654305" ID="ID_120320897" MODIFIED="1509500675614" TEXT="a.Learning the weights of a linear neuron">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509500676351" ID="ID_1100832182" MODIFIED="1509500698362" TEXT="b.The error surface for a linear neuron">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509500709029" ID="ID_336287986" MODIFIED="1509500734596" TEXT="c.Learning the weights of a logistic output neuron">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509500735209" ID="ID_1095772743" MODIFIED="1509500750109" TEXT="d.The backpropagation algorithm">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1509500761109" ID="ID_246929443" MODIFIED="1509500785359" TEXT="e.How to use the derivatives comuted by the abckpropagation algorithm">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1509465807790" ID="ID_1470664774" MODIFIED="1509465944125" POSITION="right" TEXT="4.Learning feature vectors for words">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
