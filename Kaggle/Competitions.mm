@@ -1,6 +1,6 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1509697486308" ID="ID_1003708897" MODIFIED="1509697604093" TEXT="Competitions">
+<node COLOR="#000000" CREATED="1509697486308" ID="ID_1003708897" MODIFIED="1509697715711" TEXT="Competitions and Kernels">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1509697509206" ID="ID_1059624954" MODIFIED="1509697604084" POSITION="right" TEXT="Featured">
