@@ -86,6 +86,43 @@
 <node COLOR="#00b439" CREATED="1505100306037" ID="ID_1627482252" MODIFIED="1509697655604" TEXT="Digit Recognizer">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1510067156482" ID="ID_1099719937" MODIFIED="1510067156484" TEXT="Interactive Intro to Dimensionality Reduction">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510067171677" ID="ID_1923304460" MODIFIED="1510067745708" TEXT="Principal Component Analysis ( PCA ) - Unsupervised, linear method">
+<icon BUILTIN="help"/>
+</node>
+<node COLOR="#111111" CREATED="1510067178029" ID="ID_968232714" MODIFIED="1510067748360" TEXT="Linear Discriminant Analysis (LDA) - Supervised, linear method">
+<icon BUILTIN="help"/>
+</node>
+<node COLOR="#111111" CREATED="1510067188029" ID="ID_1374488791" MODIFIED="1510067750400" TEXT="t-distributed Stochastic Neighbour Embedding (t-SNE) - Nonlinear, probabilistic method">
+<icon BUILTIN="help"/>
+</node>
+<node COLOR="#111111" CREATED="1510067819021" ID="ID_71687923" MODIFIED="1510067828128" TEXT=" The interactive plots are amazing">
+<icon BUILTIN="yes"/>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1510069040448" ID="ID_536307375" MODIFIED="1510069040448" TEXT="The interactive plots are amazing">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510069048632" ID="ID_293622961" MODIFIED="1510069064329" TEXT="&#x4e0d;&#x9519;&#x7684;&#x5206;&#x6570;0.97828"/>
+</node>
+<node COLOR="#990000" CREATED="1510069042088" ID="ID_32758984" MODIFIED="1510069042088" TEXT="">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1510069350112" ID="ID_241457809" MODIFIED="1510069350112" TEXT="CNN Keras Swish activation - Acc 0.996 (top 7%)">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1510069462672" ID="ID_1536077853" MODIFIED="1510069462672" TEXT="Keras CNN (LB .9971 with full version)">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1510069584623" ID="ID_284667052" MODIFIED="1510069584623" TEXT="CNN with Keras, score: 0.995+">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1510069595287" ID="ID_723201278" MODIFIED="1510069595287" TEXT="Keras CNN - 0.99457">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1510069608856" ID="ID_826683735" MODIFIED="1510069608856" TEXT="Keras CNN w/ 99%+ acc (Peter Grenholm tut.)">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 </node>
 <node COLOR="#0033ff" CREATED="1509697591672" ID="ID_535963644" MODIFIED="1509697604093" POSITION="right" TEXT="Playground">
