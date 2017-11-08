@@ -82,6 +82,13 @@
 <node COLOR="#00b439" CREATED="1505100200003" ID="ID_1283977899" MODIFIED="1509697649522" TEXT="House Prices: Advanced Regression Techniques">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1510141882218" ID="ID_1180018899" MODIFIED="1510141882218" TEXT="Stacked Regressions : Top 4% on LeaderBoard">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510148210673" ID="ID_1387051936" MODIFIED="1510148210673" TEXT="Less simple Stacking : Adding a Meta-model"/>
+<node COLOR="#111111" CREATED="1510157276718" ID="ID_103152323" MODIFIED="1510157282793" TEXT="http://blog.kaggle.com/2016/12/27/a-kagglers-guide-to-model-stacking-in-practice/">
+<icon BUILTIN="yes"/>
+</node>
+</node>
 </node>
 <node COLOR="#00b439" CREATED="1505100306037" ID="ID_1627482252" MODIFIED="1509697655604" TEXT="Digit Recognizer">
 <edge STYLE="bezier" WIDTH="thin"/>
