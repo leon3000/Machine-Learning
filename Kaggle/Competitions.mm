@@ -6,6 +6,44 @@
 <node COLOR="#0033ff" CREATED="1509697509206" ID="ID_1059624954" MODIFIED="1509697604084" POSITION="right" TEXT="Featured">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1510369985224" ID="ID_1026681113" MODIFIED="1510369985228" TEXT="Porto Seguro&#x2019;s Safe Driver Prediction">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1510370018124" ID="ID_656653646" MODIFIED="1510370052265" TEXT="Discussion">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510382018852" ID="ID_843954888" MODIFIED="1510382023395" TEXT="&#x7f29;&#x5199;">
+<node COLOR="#111111" CREATED="1510382023395" ID="ID_838893847" MODIFIED="1510382038300" TEXT="Ind:individual"/>
+<node COLOR="#111111" CREATED="1510382038532" ID="ID_73612869" MODIFIED="1510382048581" TEXT="reg:region"/>
+<node COLOR="#111111" CREATED="1510382048788" ID="ID_1110360029" MODIFIED="1510382055267" TEXT="car:car"/>
+<node COLOR="#111111" CREATED="1510382055492" ID="ID_74640027" MODIFIED="1510382072831" TEXT="calc:calculated"/>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1510381826540" ID="ID_1909609723" MODIFIED="1510381826540" TEXT="Aggregate 20 kernel csvs by median rank - LB .285">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510381831004" ID="ID_1929555443" MODIFIED="1510381833126" TEXT="0.285"/>
+<node COLOR="#111111" CREATED="1510381833332" ID="ID_1086748976" MODIFIED="1510381912833" TEXT="573/4170"/>
+<node COLOR="#111111" CREATED="1510384078381" ID="ID_633450264" MODIFIED="1510384099321" TEXT="&#x9009;&#x62e9;&#x522b;&#x4eba;&#x7684;20&#x4e2a;&#x7ed3;&#x679c;&#x6765;&#x6c42;&#x5e73;&#x5747;&#xff0c;&#x8fd9;&#x90fd;&#x884c;&#xff1f;"/>
+</node>
+<node COLOR="#990000" CREATED="1510390502213" ID="ID_1712380412" MODIFIED="1510390502213" TEXT="Interactive Porto Insights - A Plot.ly Tutorial">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510390505404" ID="ID_722240730" MODIFIED="1510390511729" TEXT="&#x4ea4;&#x4e92;&#x56fe; nice"/>
+<node COLOR="#111111" CREATED="1510390587140" ID="ID_1588514194" MODIFIED="1510390593857" TEXT="ploy.ly"/>
+<node COLOR="#111111" CREATED="1510390747613" ID="ID_660041472" MODIFIED="1510390747613" TEXT="Feature importance ranking via learning models"/>
+</node>
+<node COLOR="#990000" CREATED="1510450546111" ID="ID_1731302186" MODIFIED="1510450546111" TEXT="LB 0.286 with submission file">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510450549952" ID="ID_818813634" MODIFIED="1510450554807" TEXT="0.286"/>
+<node COLOR="#111111" CREATED="1510450555024" ID="ID_260778434" MODIFIED="1510450579417" TEXT="&#x9009;&#x62e9;4&#x4e2a;&#x7ed3;&#x679c;&#x6c42;&#x5e73;&#x5747;"/>
+</node>
+<node COLOR="#990000" CREATED="1510500081925" ID="ID_110872207" MODIFIED="1510500081925" TEXT="XGBoost CV (LB .284)">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1510500137781" ID="ID_469128999" MODIFIED="1510500137781" TEXT="Stacking with Log-Odds and No Intercept">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510500210365" ID="ID_282598234" MODIFIED="1510500210365" TEXT="apply a log-odds transformation to the base models&apos; predictions. Since the top-level model is a logistic regression, it takes a linear combination of its inputs and then applies a logistic transformation (the inverse of log-odds) to the result. If the inputs are themselves expressed as probabilities, then it&apos;s kind of like doing the logistic transformation twice (and if one of the base models were a logistic regression, it would be exactly like doing the logistic transformation twice), which would be hard to justify. To put the base model predictions in &quot;units that a linear model understands,&quot; I express them as log odds ratios rather than probabilities."/>
+<node COLOR="#111111" CREATED="1510500243749" ID="ID_792584178" MODIFIED="1510500243749" TEXT="fit the logistic regression without an intercept. Although the intercept might be necessary without the log-odds transformation, the regression with log odds gives reasonable results without it, and it&apos;s not clear why it should be there. In my view, since the gini coefficient depends on order, an added constant has no substantive meaning, and the opportunity to add one is simply an opportunity to overfit. (If we cared about the actual probabilities, you could make a case for using a constant term as being sort of like adding another base model that always predicts the same number, but here that justification doesn&apos;t apply.)"/>
+</node>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1509697571545" ID="ID_700662396" MODIFIED="1509697604087" POSITION="right" TEXT="Research">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
