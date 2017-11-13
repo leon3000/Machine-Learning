@@ -9,43 +9,46 @@
 <node COLOR="#00b439" CREATED="1510369985224" ID="ID_1026681113" MODIFIED="1510369985228" TEXT="Porto Seguro&#x2019;s Safe Driver Prediction">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1510370018124" ID="ID_656653646" MODIFIED="1510370052265" TEXT="Discussion">
+</node>
+<node COLOR="#00b439" CREATED="1510554514415" ID="ID_1413298968" MODIFIED="1510554514415" TEXT="Statoil/C-CORE Iceberg Classifier Challenge">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1510554542933" ID="ID_470324854" MODIFIED="1510554542934" TEXT="Corporaci&#xf3;n Favorita Grocery Sales Forecasting">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1510554548731" ID="ID_1955198206" MODIFIED="1510554548732" TEXT="Cdiscount&#x2019;s Image Classification Challenge">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1510553262744" ID="ID_1570686475" MODIFIED="1510555068080" TEXT="Mercedes-Benz Greener Manufacturing">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1510554601638" ID="ID_1830090155" MODIFIED="1510554601639" TEXT="evaluation">
 <font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510382018852" ID="ID_843954888" MODIFIED="1510382023395" TEXT="&#x7f29;&#x5199;">
-<node COLOR="#111111" CREATED="1510382023395" ID="ID_838893847" MODIFIED="1510382038300" TEXT="Ind:individual"/>
-<node COLOR="#111111" CREATED="1510382038532" ID="ID_73612869" MODIFIED="1510382048581" TEXT="reg:region"/>
-<node COLOR="#111111" CREATED="1510382048788" ID="ID_1110360029" MODIFIED="1510382055267" TEXT="car:car"/>
-<node COLOR="#111111" CREATED="1510382055492" ID="ID_74640027" MODIFIED="1510382072831" TEXT="calc:calculated"/>
-</node>
-</node>
-<node COLOR="#990000" CREATED="1510381826540" ID="ID_1909609723" MODIFIED="1510381826540" TEXT="Aggregate 20 kernel csvs by median rank - LB .285">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510381831004" ID="ID_1929555443" MODIFIED="1510381833126" TEXT="0.285"/>
-<node COLOR="#111111" CREATED="1510381833332" ID="ID_1086748976" MODIFIED="1510381912833" TEXT="573/4170"/>
-<node COLOR="#111111" CREATED="1510384078381" ID="ID_633450264" MODIFIED="1510384099321" TEXT="&#x9009;&#x62e9;&#x522b;&#x4eba;&#x7684;20&#x4e2a;&#x7ed3;&#x679c;&#x6765;&#x6c42;&#x5e73;&#x5747;&#xff0c;&#x8fd9;&#x90fd;&#x884c;&#xff1f;"/>
-</node>
-<node COLOR="#990000" CREATED="1510390502213" ID="ID_1712380412" MODIFIED="1510390502213" TEXT="Interactive Porto Insights - A Plot.ly Tutorial">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510390505404" ID="ID_722240730" MODIFIED="1510390511729" TEXT="&#x4ea4;&#x4e92;&#x56fe; nice"/>
-<node COLOR="#111111" CREATED="1510390587140" ID="ID_1588514194" MODIFIED="1510390593857" TEXT="ploy.ly"/>
-<node COLOR="#111111" CREATED="1510390747613" ID="ID_660041472" MODIFIED="1510390747613" TEXT="Feature importance ranking via learning models"/>
-</node>
-<node COLOR="#990000" CREATED="1510450546111" ID="ID_1731302186" MODIFIED="1510450546111" TEXT="LB 0.286 with submission file">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510450549952" ID="ID_818813634" MODIFIED="1510450554807" TEXT="0.286"/>
-<node COLOR="#111111" CREATED="1510450555024" ID="ID_260778434" MODIFIED="1510450579417" TEXT="&#x9009;&#x62e9;4&#x4e2a;&#x7ed3;&#x679c;&#x6c42;&#x5e73;&#x5747;"/>
-</node>
-<node COLOR="#990000" CREATED="1510500081925" ID="ID_110872207" MODIFIED="1510500081925" TEXT="XGBoost CV (LB .284)">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-<node COLOR="#990000" CREATED="1510500137781" ID="ID_469128999" MODIFIED="1510500137781" TEXT="Stacking with Log-Odds and No Intercept">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510500210365" ID="ID_282598234" MODIFIED="1510500210365" TEXT="apply a log-odds transformation to the base models&apos; predictions. Since the top-level model is a logistic regression, it takes a linear combination of its inputs and then applies a logistic transformation (the inverse of log-odds) to the result. If the inputs are themselves expressed as probabilities, then it&apos;s kind of like doing the logistic transformation twice (and if one of the base models were a logistic regression, it would be exactly like doing the logistic transformation twice), which would be hard to justify. To put the base model predictions in &quot;units that a linear model understands,&quot; I express them as log odds ratios rather than probabilities."/>
-<node COLOR="#111111" CREATED="1510500243749" ID="ID_792584178" MODIFIED="1510500243749" TEXT="fit the logistic regression without an intercept. Although the intercept might be necessary without the log-odds transformation, the regression with log odds gives reasonable results without it, and it&apos;s not clear why it should be there. In my view, since the gini coefficient depends on order, an added constant has no substantive meaning, and the opportunity to add one is simply an opportunity to overfit. (If we cared about the actual probabilities, you could make a case for using a constant term as being sort of like adding another base model that always predicts the same number, but here that justification doesn&apos;t apply.)"/>
+<node COLOR="#111111" CREATED="1510554608417" ID="ID_691255671" MODIFIED="1510554608418" TEXT="coefficient of determination">
+<node COLOR="#111111" CREATED="1510554621220" ID="ID_614144397" MODIFIED="1510554640570" TEXT="&#x53ef;&#x51b3;&#x7cfb;&#x6570;&#xff0c;&#x53c8;&#x79f0;R&#x65b9;"/>
+<node COLOR="#111111" CREATED="1510554640918" ID="ID_1550896243" MODIFIED="1510554669327" TEXT="&#x56de;&#x5f52;&#x5e73;&#x65b9;&#x548c;&#xff08;ESS-explained sum of squares&#xff09;&#x5728;&#x603b;&#x53d8;&#x5dee;&#xff08;TSS-total sum of squares&#xff09;&#x4e2d;&#x6240;&#x5360;&#x7684;&#x6bd4;&#x91cd;&#x3002;&#xff08;&#x5176;&#x4e2d;TSS=ESS+RSS&#x6216;SSR+SSE&#xff08;ESS-explaiined sum of squares, RSS-residual sum of squares; SSR-sum of squares due to regression, SSE-sum of squares due to error&#xff09;"/>
+<node COLOR="#111111" CREATED="1510554669556" ID="ID_1711742201" MODIFIED="1510554702196" TEXT="&#x53ef;&#x51b3;&#x7cfb;&#x6570;&#x53ef;&#x4ee5;&#x4f5c;&#x4e3a;&#x7efc;&#x5408;&#x5ea6;&#x91cf;&#x56de;&#x5f52;&#x6a21;&#x578b;&#x5bf9;&#x6837;&#x672c;&#x89c2;&#x6d4b;&#x503c;&#x62df;&#x5408;&#x4f18;&#x5ea6;&#x7684;&#x5ea6;&#x91cf;&#x6307;&#x6807;"/>
+<node COLOR="#111111" CREATED="1510554702419" ID="ID_149238563" MODIFIED="1510554707286" TEXT="&#x8d8a;&#x5927;&#x8d8a;&#x597d;"/>
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1509697571545" ID="ID_700662396" MODIFIED="1509697604087" POSITION="right" TEXT="Research">
+<node COLOR="#00b439" CREATED="1510554881709" ID="ID_452576281" MODIFIED="1510554881710" TEXT="Sberbank Russian Housing Market">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1510554925226" ID="ID_310759656" MODIFIED="1510554925227" TEXT="Instacart Market Basket Analysis">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1510554972313" ID="ID_1488363858" MODIFIED="1510554972314" TEXT="The Nature Conservancy Fisheries Monitoring">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1509697571545" ID="ID_700662396" MODIFIED="1510556116373" POSITION="right" TEXT="Research">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1510022370556" ID="ID_1430897765" MODIFIED="1510022370559" TEXT="Text Normalization Challenge - English Language">
@@ -53,106 +56,124 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1509697587739" ID="ID_1913011107" MODIFIED="1509697604090" POSITION="right" TEXT="Getting Started">
+<node COLOR="#0033ff" CREATED="1509697587739" FOLDED="true" ID="ID_1913011107" MODIFIED="1510556301920" POSITION="right" TEXT="Getting Started">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1505100235787" ID="ID_1121604919" MODIFIED="1509697643988" TEXT="Titanic: Machine Learning from Disaster">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1510030198026" ID="ID_412826279" MODIFIED="1510030198027" TEXT="Exploring Survival on the Titanic">
+<node COLOR="#990000" CREATED="1510556013615" ID="ID_25899213" MODIFIED="1510556016770" TEXT="Kernel">
 <font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510044250096" ID="ID_1634599395" MODIFIED="1510044254553" TEXT="&#x5973;&#x7a0b;&#x5e8f;&#x5458;&#x4f5c;&#x54c1;"/>
-<node COLOR="#111111" CREATED="1510044254835" ID="ID_134593188" MODIFIED="1510044256025" TEXT="R"/>
-<node COLOR="#111111" CREATED="1510044256455" ID="ID_795731692" MODIFIED="1510044258431" TEXT="&#x592a;&#x706b;&#x7206;"/>
+<node COLOR="#111111" CREATED="1510030198026" ID="ID_1714271706" MODIFIED="1510556027665" TEXT="Exploring Survival on the Titanic">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510044250096" ID="ID_37134305" MODIFIED="1510044254553" TEXT="&#x5973;&#x7a0b;&#x5e8f;&#x5458;&#x4f5c;&#x54c1;"/>
+<node COLOR="#111111" CREATED="1510044254835" ID="ID_720606981" MODIFIED="1510044256025" TEXT="R"/>
+<node COLOR="#111111" CREATED="1510044256455" ID="ID_132399426" MODIFIED="1510044258431" TEXT="&#x592a;&#x706b;&#x7206;"/>
 </node>
-<node COLOR="#990000" CREATED="1510030211124" ID="ID_1737425251" MODIFIED="1510030211126" TEXT="Titanic: Machine Learning from Disaster ~ 0.842">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510035111878" ID="ID_1024222013" MODIFIED="1510035120242" TEXT="&#x7b80;&#x5355;&#x6709;&#x6548;&#x9ad8;&#x5206;"/>
-<node COLOR="#111111" CREATED="1510035120793" ID="ID_1024626096" MODIFIED="1510036563292" TEXT="RandomForestClassifier"/>
+<node COLOR="#111111" CREATED="1510030211124" ID="ID_1461825509" MODIFIED="1510556032266" TEXT="Titanic: Machine Learning from Disaster ~ 0.842">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510035111878" ID="ID_1678346269" MODIFIED="1510035120242" TEXT="&#x7b80;&#x5355;&#x6709;&#x6548;&#x9ad8;&#x5206;"/>
+<node COLOR="#111111" CREATED="1510035120793" ID="ID_724121898" MODIFIED="1510036563292" TEXT="RandomForestClassifier"/>
 </node>
-<node COLOR="#990000" CREATED="1510030266498" ID="ID_1426586727" MODIFIED="1510044350819" TEXT="Divide and Conquer [0.82296]">
-<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510030266498" ID="ID_1275193760" MODIFIED="1510556035073" TEXT="Divide and Conquer [0.82296]">
+<font NAME="SansSerif" SIZE="12"/>
 <icon BUILTIN="yes"/>
-<node COLOR="#111111" CREATED="1510044122647" ID="ID_374994840" MODIFIED="1510044124057" TEXT="R"/>
-<node COLOR="#111111" CREATED="1510044124409" ID="ID_1091774293" MODIFIED="1510044125419" TEXT="&#x9ad8;&#x5206;"/>
+<node COLOR="#111111" CREATED="1510044122647" ID="ID_812867336" MODIFIED="1510044124057" TEXT="R"/>
+<node COLOR="#111111" CREATED="1510044124409" ID="ID_308143591" MODIFIED="1510044125419" TEXT="&#x9ad8;&#x5206;"/>
 </node>
-<node COLOR="#990000" CREATED="1510035628166" ID="ID_819423669" MODIFIED="1510035629447" TEXT="Introduction to Ensembling/Stacking in Python ">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510035629449" ID="ID_1073710042" MODIFIED="1510036277249" TEXT="Ensembling &amp; Stacking models">
-<node COLOR="#111111" CREATED="1510036006134" ID="ID_830464255" MODIFIED="1510036264558" TEXT="Generating our Base First-Level Models">
-<node COLOR="#111111" CREATED="1510036419782" ID="ID_10220688" MODIFIED="1510036419782" TEXT="Output of the First level Predictions"/>
-<node COLOR="#111111" CREATED="1510036440442" ID="ID_1454017593" MODIFIED="1510036440443" TEXT="Feature importances generated from the different classifiers"/>
+<node COLOR="#111111" CREATED="1510035628166" ID="ID_697176631" MODIFIED="1510556037562" TEXT="Introduction to Ensembling/Stacking in Python ">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510035629449" ID="ID_568959404" MODIFIED="1510036277249" TEXT="Ensembling &amp; Stacking models">
+<node COLOR="#111111" CREATED="1510036006134" ID="ID_600573157" MODIFIED="1510036264558" TEXT="Generating our Base First-Level Models">
+<node COLOR="#111111" CREATED="1510036419782" ID="ID_587111281" MODIFIED="1510036419782" TEXT="Output of the First level Predictions"/>
+<node COLOR="#111111" CREATED="1510036440442" ID="ID_1099481979" MODIFIED="1510036440443" TEXT="Feature importances generated from the different classifiers"/>
 </node>
-<node COLOR="#111111" CREATED="1510036060328" ID="ID_866708646" MODIFIED="1510036165619" TEXT="Second-Level Predictions from the First-level Output">
-<node COLOR="#111111" CREATED="1510036174540" ID="ID_483497431" MODIFIED="1510036174562" TEXT="First-level output as new features"/>
-<node COLOR="#111111" CREATED="1510036223127" ID="ID_1343440347" MODIFIED="1510036223128" TEXT="Second level learning model via XGBoost"/>
+<node COLOR="#111111" CREATED="1510036060328" ID="ID_650488757" MODIFIED="1510036165619" TEXT="Second-Level Predictions from the First-level Output">
+<node COLOR="#111111" CREATED="1510036174540" ID="ID_866423657" MODIFIED="1510036174562" TEXT="First-level output as new features"/>
+<node COLOR="#111111" CREATED="1510036223127" ID="ID_46547330" MODIFIED="1510036223128" TEXT="Second level learning model via XGBoost"/>
 </node>
 </node>
 </node>
-<node COLOR="#990000" CREATED="1510036845304" ID="ID_1579338673" MODIFIED="1510036846548" TEXT="An Interactive Data Science Tutorial ">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510036846552" ID="ID_1445894361" MODIFIED="1510036876899" TEXT="&#x6570;&#x636e;&#x6316;&#x6398;&#x5957;&#x8def;CRISP-DM"/>
+<node COLOR="#111111" CREATED="1510036845304" ID="ID_631805515" MODIFIED="1510556045834" TEXT="An Interactive Data Science Tutorial ">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510036846552" ID="ID_1143750952" MODIFIED="1510036876899" TEXT="&#x6570;&#x636e;&#x6316;&#x6398;&#x5957;&#x8def;CRISP-DM"/>
 </node>
-<node COLOR="#990000" CREATED="1510037236915" ID="ID_45773682" MODIFIED="1510037238063" TEXT="Titanic Survival Prediction End to End ML Pipeline ">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510037247985" ID="ID_574087487" MODIFIED="1510037514013" TEXT="VotingClassifier(estimators=[(&apos;lr&apos;, lr), (&apos;rf&apos;, rf), (&apos;adb&apos;, adb)], voting=&apos;soft&apos;)"/>
+<node COLOR="#111111" CREATED="1510037236915" ID="ID_583571329" MODIFIED="1510556048360" TEXT="Titanic Survival Prediction End to End ML Pipeline ">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510037247985" ID="ID_868031073" MODIFIED="1510037514013" TEXT="VotingClassifier(estimators=[(&apos;lr&apos;, lr), (&apos;rf&apos;, rf), (&apos;adb&apos;, adb)], voting=&apos;soft&apos;)"/>
 </node>
-<node COLOR="#990000" CREATED="1510037429779" ID="ID_267276717" MODIFIED="1510037431707" TEXT="EDA To Prediction(DieTanic) ">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510037431709" ID="ID_1018566439" MODIFIED="1510037445645" TEXT="&#x63a2;&#x7d22;&#x6027;&#x6570;&#x636e;&#x5206;&#x6790;Exploratory Data Analysis(EDA)"/>
+<node COLOR="#111111" CREATED="1510037429779" ID="ID_713065770" MODIFIED="1510556053006" TEXT="EDA To Prediction(DieTanic) ">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510037431709" ID="ID_736038199" MODIFIED="1510037445645" TEXT="&#x63a2;&#x7d22;&#x6027;&#x6570;&#x636e;&#x5206;&#x6790;Exploratory Data Analysis(EDA)"/>
 </node>
-<node COLOR="#990000" CREATED="1510043148689" ID="ID_1295940010" MODIFIED="1510044359179" TEXT="Titanic Top 4% with ensemble modeling ">
-<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1510043148689" FOLDED="true" ID="ID_940298205" MODIFIED="1510556057146" TEXT="Titanic Top 4% with ensemble modeling ">
+<font NAME="SansSerif" SIZE="12"/>
 <icon BUILTIN="yes"/>
-<node COLOR="#111111" CREATED="1510043158574" ID="ID_936835019" MODIFIED="1510043163597" TEXT="&#x8be5;&#x6709;&#x7684;&#x5957;&#x8def;&#x90fd;&#x6709;&#x4e86;"/>
-<node COLOR="#111111" CREATED="1510043163813" ID="ID_79111407" MODIFIED="1510043210987" TEXT="Hyperparamater tunning for best models"/>
-<node COLOR="#111111" CREATED="1510043211812" ID="ID_1790190875" MODIFIED="1510044226324" TEXT="Plot learning curves &#x600e;&#x4e48;&#x770b;&#x5b66;&#x4e60;&#x66f2;&#x7ebf;">
+<node COLOR="#111111" CREATED="1510043158574" ID="ID_1408426781" MODIFIED="1510043163597" TEXT="&#x8be5;&#x6709;&#x7684;&#x5957;&#x8def;&#x90fd;&#x6709;&#x4e86;"/>
+<node COLOR="#111111" CREATED="1510043163813" ID="ID_1651199384" MODIFIED="1510043210987" TEXT="Hyperparamater tunning for best models"/>
+<node COLOR="#111111" CREATED="1510043211812" ID="ID_495105422" MODIFIED="1510044226324" TEXT="Plot learning curves &#x600e;&#x4e48;&#x770b;&#x5b66;&#x4e60;&#x66f2;&#x7ebf;">
 <icon BUILTIN="help"/>
 </node>
-<node COLOR="#111111" CREATED="1510043242387" ID="ID_1776313329" MODIFIED="1510043243458" TEXT="Combining models">
-<node COLOR="#111111" CREATED="1510043268688" ID="ID_1019986903" MODIFIED="1510043269639" TEXT="VotingClassifier"/>
+<node COLOR="#111111" CREATED="1510043242387" ID="ID_358746840" MODIFIED="1510043243458" TEXT="Combining models">
+<node COLOR="#111111" CREATED="1510043268688" ID="ID_903999208" MODIFIED="1510043269639" TEXT="VotingClassifier"/>
 </node>
-<node COLOR="#111111" CREATED="1510043906031" ID="ID_1656933339" MODIFIED="1510044231043" TEXT="K fold">
+<node COLOR="#111111" CREATED="1510043906031" ID="ID_481309061" MODIFIED="1510044231043" TEXT="K fold">
 <icon BUILTIN="help"/>
 </node>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1510556017226" ID="ID_1155855801" MODIFIED="1510556019846" TEXT="Discussion">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" CREATED="1505100200003" ID="ID_1283977899" MODIFIED="1509697649522" TEXT="House Prices: Advanced Regression Techniques">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1510141882218" ID="ID_1180018899" MODIFIED="1510141882218" TEXT="Stacked Regressions : Top 4% on LeaderBoard">
+<node COLOR="#990000" CREATED="1510556077012" ID="ID_1620481663" MODIFIED="1510556081089" TEXT="Kernel">
 <font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510148210673" ID="ID_1387051936" MODIFIED="1510148210673" TEXT="Less simple Stacking : Adding a Meta-model"/>
-<node COLOR="#111111" CREATED="1510157276718" ID="ID_103152323" MODIFIED="1510157282793" TEXT="http://blog.kaggle.com/2016/12/27/a-kagglers-guide-to-model-stacking-in-practice/">
+<node COLOR="#111111" CREATED="1510141882218" ID="ID_1600416138" MODIFIED="1510556088723" TEXT="Stacked Regressions : Top 4% on LeaderBoard">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510148210673" ID="ID_1790231343" MODIFIED="1510148210673" TEXT="Less simple Stacking : Adding a Meta-model"/>
+<node COLOR="#111111" CREATED="1510157276718" ID="ID_1592934887" MODIFIED="1510157282793" TEXT="http://blog.kaggle.com/2016/12/27/a-kagglers-guide-to-model-stacking-in-practice/">
 <icon BUILTIN="yes"/>
 </node>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1510556081294" ID="ID_1582480618" MODIFIED="1510556084514" TEXT="Discussion">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" CREATED="1505100306037" ID="ID_1627482252" MODIFIED="1509697655604" TEXT="Digit Recognizer">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1510067156482" ID="ID_1099719937" MODIFIED="1510067156484" TEXT="Interactive Intro to Dimensionality Reduction">
+<node COLOR="#990000" CREATED="1510556093839" ID="ID_6603111" MODIFIED="1510556097070" TEXT="Kernel">
 <font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510067171677" ID="ID_1923304460" MODIFIED="1510067745708" TEXT="Principal Component Analysis ( PCA ) - Unsupervised, linear method">
+<node COLOR="#111111" CREATED="1510067156482" ID="ID_1899197745" MODIFIED="1510556103351" TEXT="Interactive Intro to Dimensionality Reduction">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510067171677" ID="ID_1965949520" MODIFIED="1510067745708" TEXT="Principal Component Analysis ( PCA ) - Unsupervised, linear method">
 <icon BUILTIN="help"/>
 </node>
-<node COLOR="#111111" CREATED="1510067178029" ID="ID_968232714" MODIFIED="1510067748360" TEXT="Linear Discriminant Analysis (LDA) - Supervised, linear method">
+<node COLOR="#111111" CREATED="1510067178029" ID="ID_148443513" MODIFIED="1510067748360" TEXT="Linear Discriminant Analysis (LDA) - Supervised, linear method">
 <icon BUILTIN="help"/>
 </node>
-<node COLOR="#111111" CREATED="1510067188029" ID="ID_1374488791" MODIFIED="1510067750400" TEXT="t-distributed Stochastic Neighbour Embedding (t-SNE) - Nonlinear, probabilistic method">
+<node COLOR="#111111" CREATED="1510067188029" ID="ID_420018096" MODIFIED="1510067750400" TEXT="t-distributed Stochastic Neighbour Embedding (t-SNE) - Nonlinear, probabilistic method">
 <icon BUILTIN="help"/>
 </node>
-<node COLOR="#111111" CREATED="1510067819021" ID="ID_71687923" MODIFIED="1510067828128" TEXT=" The interactive plots are amazing">
+<node COLOR="#111111" CREATED="1510067819021" ID="ID_1422755270" MODIFIED="1510067828128" TEXT=" The interactive plots are amazing">
 <icon BUILTIN="yes"/>
 </node>
 </node>
-<node COLOR="#990000" CREATED="1510069040448" ID="ID_536307375" MODIFIED="1510069040448" TEXT="The interactive plots are amazing">
-<font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510069048632" ID="ID_293622961" MODIFIED="1510069064329" TEXT="&#x4e0d;&#x9519;&#x7684;&#x5206;&#x6570;0.97828"/>
+<node COLOR="#111111" CREATED="1510069040448" ID="ID_765804535" MODIFIED="1510556105600" TEXT="The interactive plots are amazing">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510069048632" ID="ID_382604636" MODIFIED="1510069064329" TEXT="&#x4e0d;&#x9519;&#x7684;&#x5206;&#x6570;0.97828"/>
 </node>
-<node COLOR="#990000" CREATED="1510069608856" ID="ID_826683735" MODIFIED="1510069608856" TEXT="Keras CNN w/ 99%+ acc (Peter Grenholm tut.)">
+<node COLOR="#111111" CREATED="1510069608856" ID="ID_1663574915" MODIFIED="1510556107664" TEXT="Keras CNN w/ 99%+ acc (Peter Grenholm tut.)">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#111111" CREATED="1510130181157" ID="ID_1135917631" MODIFIED="1510130185945" TEXT="0.99285"/>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1510556097272" ID="ID_1304943980" MODIFIED="1510556099736" TEXT="Discussion">
 <font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" CREATED="1510130181157" ID="ID_371541536" MODIFIED="1510130185945" TEXT="0.99285"/>
 </node>
 </node>
 </node>
