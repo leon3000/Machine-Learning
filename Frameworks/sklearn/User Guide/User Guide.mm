@@ -1,6 +1,6 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1506407794936" ID="ID_1334495605" MODIFIED="1509273376006" TEXT="http://scikit-learn.org/stable/user_guide.html">
+<node COLOR="#000000" CREATED="1506407794936" ID="ID_1334495605" MODIFIED="1510198828635" TEXT="http://scikit-learn.org/stable/user_guide.html">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1506407830279" ID="ID_1306604028" MODIFIED="1506408795424" POSITION="right" TEXT="1. Supervised learning">
