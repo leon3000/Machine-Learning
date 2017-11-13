@@ -27,6 +27,14 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
+<node COLOR="#0033ff" CREATED="1510544627312" ID="ID_1521941798" MODIFIED="1510544636801" POSITION="right" TEXT="&#x6570;&#x636e;&#x6316;&#x6398;">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1510544636804" ID="ID_188198622" MODIFIED="1510544638503" TEXT="R">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+</node>
 <node COLOR="#0033ff" CREATED="1506390517121" ID="ID_609012151" MODIFIED="1506390527259" POSITION="right" TEXT="&#x5e38;&#x7528;&#x6570;&#x636e;&#x7ed3;&#x6784;&#x548c;&#x7b97;&#x6cd5;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
