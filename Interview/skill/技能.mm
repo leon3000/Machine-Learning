@@ -14,7 +14,7 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>
-<node COLOR="#00b439" CREATED="1506390500192" ID="ID_728968132" MODIFIED="1506390513536" TEXT="Matlab">
+<node COLOR="#00b439" CREATED="1506390500192" ID="ID_728968132" MODIFIED="1510625354841" TEXT="Matlab/Octave">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>
@@ -81,6 +81,10 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 <node COLOR="#00b439" CREATED="1506391958654" ID="ID_1658673016" MODIFIED="1506392148188" TEXT="pandas&#xff08;&#x6570;&#x636e;&#x5206;&#x6790;&#xff09;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1510625716709" ID="ID_832239394" MODIFIED="1510625734513" TEXT="seaborn&#xff08;&#x753b;&#x56fe;&#xff09;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>

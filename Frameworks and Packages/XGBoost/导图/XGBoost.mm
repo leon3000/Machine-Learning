@@ -1,6 +1,6 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#000000" CREATED="1508250976842" ID="ID_84232396" MODIFIED="1508250990900" TEXT="XGBoost">
+<node COLOR="#000000" CREATED="1508250976842" ID="ID_84232396" MODIFIED="1510647733427" TEXT="http://xgboost.readthedocs.io/en/latest/">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" CREATED="1508251008735" ID="ID_1338107638" MODIFIED="1508252241797" POSITION="right" TEXT="Parameters">
